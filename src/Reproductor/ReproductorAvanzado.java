@@ -7,7 +7,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import javax.swing.JScrollBar;
+
 import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 import javazoom.jl.player.advanced.AdvancedPlayer;
 
 /**
@@ -23,6 +26,7 @@ public class ReproductorAvanzado extends AdvancedPlayer implements Runnable {
 	
 	private boolean enPausa;
 	
+	private JScrollBar progreso;
 	
 	
 	/**
@@ -31,11 +35,11 @@ public class ReproductorAvanzado extends AdvancedPlayer implements Runnable {
 	 * @throws FileNotFoundException 
 	 * @throws FileNotFoundException 
 	 */
-	public ReproductorAvanzado(String filename) throws JavaLayerException, FileNotFoundException {
+	public ReproductorAvanzado(String filename, JScrollBar p) throws JavaLayerException, FileNotFoundException {
 		
 		super(new FileInputStream( filename ));
 		frameActual = 0;
-		
+		progreso = p;
 	}
 	
 	public boolean getEnPausa(){
@@ -92,6 +96,8 @@ public class ReproductorAvanzado extends AdvancedPlayer implements Runnable {
 					try {
 						//synchronized (this) {
 							decodeFrame();
+							if ((progreso.getValue() < 99) && ((frameActual % 50) == 0)) progreso.setValue(progreso.getValue()+1);
+							//System.out.println(frameActual);
 						//}
 						
 					} catch (JavaLayerException e) {
