@@ -26,7 +26,14 @@ public class ReproductorAvanzado extends AdvancedPlayer implements Runnable {
 	
 	private boolean enPausa;
 	
+
+	private String filename;
+	
+	private int framesTotales;
+	
+
 	private JScrollBar progreso;
+
 	
 	
 	/**
@@ -39,7 +46,20 @@ public class ReproductorAvanzado extends AdvancedPlayer implements Runnable {
 		
 		super(new FileInputStream( filename ));
 		frameActual = 0;
+
+		this.filename = filename;
+		
+
 		progreso = p;
+
+	}
+	
+public ReproductorAvanzado(String filename,int framesTotales) throws JavaLayerException, FileNotFoundException {
+		
+		super(new FileInputStream( filename ));
+		frameActual = 0;
+		this.filename = filename;
+		framesTotales = framesTotales;
 	}
 	
 	public boolean getEnPausa(){
@@ -61,6 +81,10 @@ public class ReproductorAvanzado extends AdvancedPlayer implements Runnable {
 	
 	public void play(){
 		enReproduccion = true;
+		
+	}
+	
+	public void getFramesTotales() {
 		
 	}
 	
