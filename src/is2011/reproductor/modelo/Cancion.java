@@ -1,6 +1,7 @@
 package is2011.reproductor.modelo;
 
 public interface Cancion {
+	public String getPath();
 	public int getTrackLength();
 	public String getMpegVersion();
 	public String getMpegLayer();

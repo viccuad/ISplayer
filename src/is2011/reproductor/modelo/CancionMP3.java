@@ -15,9 +15,11 @@ public class CancionMP3 implements Cancion{
 
 	private MP3AudioHeader mp3AudioHeader;
 	private File cancion;
+	private String path;
 	
-	public CancionMP3(String path){
+	public CancionMP3(String p){
 		
+		path = p;
 		cancion = new File(path);
 		
 		try {
@@ -30,6 +32,11 @@ public class CancionMP3 implements Cancion{
 
 
 	}
+	
+	public String getPath(){
+		return path;
+	}
+	
 	public int getTrackLength() {
 		return mp3AudioHeader.getTrackLength();
 		
