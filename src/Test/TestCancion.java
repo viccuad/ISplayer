@@ -4,9 +4,6 @@ import is2011.reproductor.modelo.CancionMP3;
 
 public class TestCancion {
 
-	public TestCancion(){
-		
-	}
 	public static void main(String[] args){
 		
 		System.out.println("Test");
