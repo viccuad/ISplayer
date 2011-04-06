@@ -6,6 +6,7 @@ package is2011.reproductor.modelo;
 import java.io.File;
 
 import javazoom.jlgui.basicplayer.BasicPlayerException;
+import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
 /**
  * @author Administrator
@@ -29,4 +30,6 @@ public interface Reproductor {
 	
 	public void open(File f) throws BasicPlayerException;
 	
+	
+	public void addBasicPlayerListener(BasicPlayerListener bpl);
 }

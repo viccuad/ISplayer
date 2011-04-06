@@ -3,8 +3,11 @@
  */
 package is2011.reproductor.modelo;
 
+
+
 import javazoom.jlgui.basicplayer.BasicPlayer;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
+
 
 /**
  * 
@@ -48,9 +51,10 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 	
 	@Override
 	public void irA(float porcentaje) throws BasicPlayerException {
-		if ((int)porcentaje > 0 && (int)porcentaje < 1) {
+		if ((int)porcentaje >= 0 && (int)porcentaje <= 1) {
 			super.seek((long)(super.encodedLength*porcentaje));
 		}
 	}
+	
 
 }

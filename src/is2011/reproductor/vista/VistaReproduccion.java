@@ -5,6 +5,10 @@ package is2011.reproductor.vista;
 
 import java.util.Map;
 
+import javax.swing.JFrame;
+import javax.swing.JProgressBar;
+import javax.swing.plaf.ProgressBarUI;
+
 import javazoom.jlgui.basicplayer.BasicController;
 import javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
@@ -15,13 +19,20 @@ import javazoom.jlgui.basicplayer.BasicPlayerListener;
  */
 public class VistaReproduccion implements BasicPlayerListener {
 
+	private long tiempoTotal;
+	private int tiempoActual = 0;
+	private int bytesPorSegundo;
 	
+	private JProgressBar progreso;
+	
+	private int rate;
 	/**
 	 * Archivo abierto. Mostramos el tiempo total de la cancion, asi como el bitrate.
 	 */
 	public void opened(Object arg0, Map properties) {
 		System.out.println("Archivo abierto");
-		System.out.println("Tiempo total estimado: " + this.getTimeLengthEstimation(properties));
+		tiempoTotal = this.getTimeLengthEstimation(properties);
+		System.out.println("Tiempo total estimado: " + tiempoTotal);
 		
 		if (properties.containsKey("audio.samplesize.bits"))
         {
@@ -37,10 +48,31 @@ public class VistaReproduccion implements BasicPlayerListener {
 	@Override
 	public void progress(int bytesread, long arg1, byte[] arg2, Map properties) {
 		
-		int audioFramerate = (Integer)properties.get("mp3.frame.size.bytes");
-		int audioFramesize = (Integer)properties.get("mp3.frame.bitrate");
-		System.out.println("Tiempo..." + ((bytesread / audioFramerate*audioFramesize/8)/1000000));
+		int audioFramesize = (Integer)properties.get("mp3.frame.size.bytes");
+		int audioFramerate = (Integer)properties.get("mp3.frame.bitrate");
+		long mp3Frame = (Long)properties.get("mp3.frame");
+		long mp3PositionByte = (Long)properties.get("mp3.position.byte");
+		
+		
+		
+		
+		int tiempo = (int)( mp3PositionByte/ (audioFramerate/8));
+		//int tiempo = (int) this.getActualTimeEstimated((long)bytesread, properties);
+		if(tiempo != tiempoActual) {
+			System.out.println("BytesRead" + bytesread);
+			System.out.println("audioFramerate " + audioFramerate);
+			System.out.println("audioFramesize " + audioFramesize);
+			System.out.println("mp3Frame " + mp3Frame);
+			System.out.println("mp3PositionByte " + mp3PositionByte);
+			System.out.println("************************************\n");
+			tiempoActual = tiempo;
+			escribirInfo();
+		}
 
+	}
+	
+	private void escribirInfo() {
+		System.out.println("Progreso... " + tiempoActual + "/" + (tiempoTotal/1000)); 
 	}
 
 	/* (non-Javadoc)
@@ -100,15 +132,30 @@ public class VistaReproduccion implements BasicPlayerListener {
                 }
                 if (bitspersample > 0)
                 {
+                	bytesPorSegundo = (int) (samplerate * channels * (bitspersample / 8));
                     milliseconds = (int) (1000.0f * byteslength / (samplerate * channels * (bitspersample / 8)));
                 }
                 else
                 {
+                	bytesPorSegundo =  (int) (samplerate * framesize);
                     milliseconds = (int) (1000.0f * byteslength / (samplerate * framesize));
                 }
             }
         }
         return milliseconds;
     }
+	
+	public static void main(String args[]) {
+		JFrame v = new JFrame();
+		
+		v.setVisible(true);
+		v.setSize(300,300);
+		
+		JProgressBar pb = new JProgressBar();
+		pb.setVisible(true);
+		pb.setSize(200,200);
+		v.add(pb);		
+	}
+
 
 }
