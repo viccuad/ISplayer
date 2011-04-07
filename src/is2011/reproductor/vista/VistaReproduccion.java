@@ -8,14 +8,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
 
-import javax.swing.JFrame;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollBar;
-import javax.swing.plaf.ProgressBarUI;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+import javax.swing.JScrollBar;
+
+
+
 
 import javazoom.jlgui.basicplayer.BasicController;
 import javazoom.jlgui.basicplayer.BasicPlayerEvent;
@@ -61,9 +61,15 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	
 	private int posicionDeseada;
 	
-	private int bytesTotales;
+	private int bytesMusica;
 	
 	private boolean buscando;
+
+	private int bytesArchivo;
+
+	private int byteInicioMusica;
+
+	private int bitrate;
 
 	// ********************************************************************** //
 	// *************              CONSTRUCTOR                   ************* //
@@ -116,7 +122,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	 */
 	public void opened(Object arg0, Map properties) {
 		System.out.println("Archivo abierto");
-		tiempoTotal = this.getTimeLengthEstimation(properties)/ 1000;
+		tiempoTotal = this.getTimeLengthEstimation(properties);
 		System.out.println("Tiempo total estimado: " + tiempoTotal);
 		
 		posicion = 0;
@@ -145,7 +151,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		long mp3Frame = (Long)properties.get("mp3.frame");
 		long mp3PositionByte = (Long)properties.get("mp3.position.byte");
 		
-		int nuevaPosicion = Math.round(((float)mp3Frame / framesTotales)*1000f);
+		int nuevaPosicion = Math.round((((float)bytesread - byteInicioMusica) / bytesMusica)*1000f);
 		if(nuevaPosicion != posicion) {
 			posicion = nuevaPosicion;
 			synchronized (this.progreso) {
@@ -155,12 +161,13 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 			}
 		}
 		
-		
-		//int tiempo = (int)( mp3PositionByte/ (framerate/8));
-		int tiempo = Math.round((mp3Frame / framesPorSegundo));
-		if(tiempo != tiempoActual) {
-			System.out.println("BytesRead" + bytesread);
-			System.out.println("bytesTotales" + bytesTotales);
+		int tiempo =  Math.round(( (float)bytesread - byteInicioMusica) / (bitrate/8));
+		//if(tiempo != tiempoActual) {
+			System.out.println("TamañoArchivo " + this.bytesArchivo);
+			System.out.println("Tamaño Musica " + this.bytesMusica);
+			System.out.println("Bytes leidos del archivo" + bytesread);
+			System.out.println("Bytes leidos de musica" + (bytesread-byteInicioMusica));
+			
 			System.out.println("audioFramerate " + framerate);
 			System.out.println("audioFramesize " + audioFramesize);
 			System.out.println("mp3Frame " + mp3Frame);
@@ -168,7 +175,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 			System.out.println("************************************\n");
 			tiempoActual = tiempo;
 			escribirInfo();
-		}
+		//}
 
 	}
 	
@@ -217,104 +224,29 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	//basicplayer.sourcedataline, bitrate, mp3.mode, comment, mp3.vbr, 
 	//audio.samplerate.hz, mp3.original
 	{
+		int tiempo = -1;
 		System.out.println(properties.toString().replace(",", "\n"));
-        long milliseconds = -1;
-        int byteslength = -1;
-        int seconds = -1;
         if (properties != null)
-        {	//System.out.println(properties.keySet());
-            if (properties.containsKey("audio.length.bytes"))
-            {
-                byteslength = ((Integer) properties.get("audio.length.bytes")).intValue();
-               // bytesTotales = byteslength;
-            }
+        {	
+            //Calculamos el tamaño del fichero
+        	bytesArchivo = ((Integer) properties.get("mp3.length.bytes")).intValue();
             
-            if (properties.containsKey("mp3.length.frames"))
-            {
-                byteslength = ((Integer) properties.get("mp3.length.frames")).intValue();
-                bytesTotales = byteslength;
-            }
+        	//Calculamos en que byte se inicia la musica
+        	byteInicioMusica    = ((Integer) properties.get("mp3.header.pos")).intValue();
             
-           
+        	//Calculamos el numero de bytes dedicados a la musica
+        	bytesMusica = bytesArchivo - byteInicioMusica;
             
-            if (properties.containsKey("mp3.length.frames"))
-            {
-            	framesTotales = (((Integer) properties.get("mp3.length.frames")).intValue());
-                System.out.println(((Integer) properties.get("mp3.length.frames")).intValue());
-                System.out.println(((Integer) properties.get("audio.length.frames")).intValue());
-                System.out.println("\n\n\n\n");
-            }
+        	//Numero de bits por segundo.
+            bitrate = ((Integer) properties.get("mp3.bitrate.nominal.bps")).intValue();
             
-            if (properties.containsKey("mp3.framerate.fps"))
-            {
-            	framesPorSegundo = (Float)properties.get("mp3.framerate.fps");
-            	
-                System.out.println((properties.get("mp3.framerate.fps")));
-                System.out.println((properties.get("audio.framerate.fps")));
-                System.out.println("\n\n");
-            }
-            
-            return  (int)(((float)framesTotales / framesPorSegundo)*1000);
-            
-            /*
-            if (properties.containsKey("bitrate"))
-            {
-                int bitrate = ((Integer) properties.get("bitrate")).intValue();
-                seconds = (int)( byteslength/ (bitrate/8));
-                return seconds*1000;
-            }
-            */
-            /*
-            if (properties.containsKey("duration"))
-            {
-                milliseconds = (int) (((Long) properties.get("duration")).longValue()) / 1000;
-            }
-            else
-            {
-                // Try to compute duration
-                int bitspersample = -1;
-                int channels = -1;
-                float samplerate = -1.0f;
-                int framesize = -1;
-                if (properties.containsKey("audio.samplesize.bits"))
-                {
-                	bitspersample = ((Integer) properties.get("audio.samplesize.bits")).intValue();
-                    System.out.println("bitspersample " + bitspersample);
-                }
-                if (properties.containsKey("audio.channels"))
-                {
-                    channels = ((Integer) properties.get("audio.channels")).intValue();
-                    System.out.println("channels " + channels);
-                }
-                if (properties.containsKey("audio.samplerate.hz"))
-                {
-                    samplerate = ((Float) properties.get("audio.samplerate.hz")).floatValue();
-                    System.out.println("samplerate " + samplerate);
-                }
-                
-                if (properties.containsKey("bitrate"))
-                {
-                    int bitrate = ((Integer) properties.get("bitrate")).intValue();
-                    System.out.println("bitrate " + bitrate);
-                }
-                if (properties.containsKey("audio.framesize.bytes"))
-                {
-                    framesize = ((Integer) properties.get("audio.framesize.bytes")).intValue();
-                    System.out.println("framesize " + framesize);
-                }
-                if (bitspersample > 0)
-                {
-                	//bytesPorSegundo = (int) (samplerate * channels * (bitspersample / 8));
-                    milliseconds = (int) (1000.0f * byteslength / (samplerate * channels * (bitspersample / 8)));
-                }
-                else
-                {
-                	//bytesPorSegundo =  (int) (samplerate * framesize);
-                    milliseconds = (int) (1000.0f * byteslength / (samplerate * framesize));
-                }
-            }*/
+            tiempo = Math.round(( (float)bytesMusica / (bitrate/8)));
         }
-        return milliseconds;
+        
+        if (tiempo == -1) {
+        	//System.out.println("");
+        }
+        return tiempo;
     }
 	
 	
@@ -325,11 +257,11 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 
 	
 	/**
-	 * @return
+	 * 
+	 * @return La posicion donde debemos colocar el reproductor.
 	 */
 	public int getPos() {
 		return posicionDeseada;
 	}
-	
-	
+
 }
