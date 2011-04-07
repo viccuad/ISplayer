@@ -86,16 +86,18 @@ public class VistaPrincipal extends JFrame
 		layout.putConstraint(SpringLayout.WEST, atrasar,96,SpringLayout.WEST, panelPpal);
 		layout.putConstraint(SpringLayout.NORTH, atrasar,0,SpringLayout.NORTH, panelPpal);
 
-		tiempo = new JScrollBar(JScrollBar.HORIZONTAL, 0, 20, 0, 100);
+		tiempo = new JScrollBar(JScrollBar.HORIZONTAL, 0, 50, 0, 1000);
 		layout.putConstraint(SpringLayout.WEST, tiempo,5,SpringLayout.EAST, avanzar);
 		layout.putConstraint(SpringLayout.NORTH, tiempo,20,SpringLayout.NORTH, panelPpal);
 		
-		tiempo.setPreferredSize(new Dimension(100, 20));
+		tiempo.setPreferredSize(new Dimension(500, 20));
 		tiempo.addMouseListener(new MouseAdapter(){
 
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-				
+						pos = tiempo.getValue();
+						controlador.irA((float)pos/1000);
+						System.out.println("Dirigido a " + (float)pos/1000);
 					}
 				
 			}
@@ -159,14 +161,20 @@ public class VistaPrincipal extends JFrame
 
 	}
 
-
+	public void setProgreso(float porcentaje) {
+	if( porcentaje > 0 && porcentaje < 1) {
+		tiempo.setValue((int)porcentaje*1000);
+		
+	}
+		
+}
 	public void initialize()
 	{
 		this.setTitle("ISPlayer v0.1");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setContentPane(getContenido());
 		this.setVisible(true);
-		this.setSize(400,400);
+		this.setSize(800,200);
 		fd = new FileDialog(this, "Reproductor", FileDialog.LOAD);
 		
 		

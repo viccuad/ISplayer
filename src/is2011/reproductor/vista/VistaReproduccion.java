@@ -6,7 +6,9 @@ package is2011.reproductor.vista;
 import java.util.Map;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollBar;
 import javax.swing.plaf.ProgressBarUI;
 
 import javazoom.jlgui.basicplayer.BasicController;
@@ -17,13 +19,13 @@ import javazoom.jlgui.basicplayer.BasicPlayerListener;
  * @author Administrator
  *
  */
-public class VistaReproduccion implements BasicPlayerListener {
+public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 
 	private long tiempoTotal;
 	private int tiempoActual = 0;
 	private int bytesPorSegundo;
 	
-	private JProgressBar progreso;
+	private JScrollBar progreso;
 	
 	private int rate;
 	/**
@@ -56,7 +58,7 @@ public class VistaReproduccion implements BasicPlayerListener {
 		
 		
 		
-		int tiempo = (int)( mp3PositionByte/ (audioFramerate/8));
+		int tiempo = (int)( bytesread/ (audioFramerate/8));
 		//int tiempo = (int) this.getActualTimeEstimated((long)bytesread, properties);
 		if(tiempo != tiempoActual) {
 			System.out.println("BytesRead" + bytesread);
@@ -149,12 +151,12 @@ public class VistaReproduccion implements BasicPlayerListener {
 		JFrame v = new JFrame();
 		
 		v.setVisible(true);
-		v.setSize(300,300);
+		v.setSize(1000,20);
 		
-		JProgressBar pb = new JProgressBar();
+		JScrollBar pb = new JScrollBar(JScrollBar.HORIZONTAL,0,0,0,1000);
 		pb.setVisible(true);
-		pb.setSize(200,200);
-		v.add(pb);		
+		
+		
 	}
 
 

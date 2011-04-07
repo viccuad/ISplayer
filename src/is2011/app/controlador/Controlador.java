@@ -89,4 +89,19 @@ public class Controlador implements iAppController {
 		
 	}
 
+
+	/* (non-Javadoc)
+	 * @see is2011.app.controlador.iAppController#irA(int)
+	 */
+	@Override
+	public void irA(float i) {
+		try {
+			reproductor.irA(i);
+		} catch (BasicPlayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
 }

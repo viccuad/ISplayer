@@ -38,6 +38,11 @@ public interface iAppController {
 	void open(File file);
 
 	/**
+	 * @param i
+	 */
+	void irA(float i);
+
+	/**
 	 * 
 	 */
 	
