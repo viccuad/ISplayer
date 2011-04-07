@@ -1,23 +1,24 @@
 /**
- * 
+ * Clase encargada de manejar el reproductor y el playList.
  */
-package is2011.app.controlador;
+package is2011.reproductor.controlador;
+
+import is2011.reproductor.modelo.Reproductor;
+import is2011.reproductor.modelo.ReproductorIS;
+import is2011.reproductor.vista.VistaReproduccion;
 
 import java.io.File;
 
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
-import is2011.reproductor.modelo.*;
-import is2011.reproductor.vista.VistaReproduccion;
-
 /**
  * @author Administrator
  *
  */
-public class Controlador implements iAppController {
+public class Controlador {
 
-	private Reproductor reproductor;
+private Reproductor reproductor;
 	
 	public Controlador() {
 		//TODO poner esto donde debe estar.
@@ -30,7 +31,6 @@ public class Controlador implements iAppController {
 	}
 	
 	
-	@Override
 	public void fastForward() {
 		try {
 			this.reproductor.fastForward(4);
@@ -42,7 +42,7 @@ public class Controlador implements iAppController {
 	}
 
 	
-	@Override
+	
 	public void play() {
 		try {
 			this.reproductor.play();
@@ -53,7 +53,7 @@ public class Controlador implements iAppController {
 		
 	}
 
-	@Override
+	
 	public void rewind() {
 		try {
 			this.reproductor.rewind(4);
@@ -64,7 +64,7 @@ public class Controlador implements iAppController {
 		
 	}
 	
-	@Override
+	
 	public void stop() {
 		try {
 			this.reproductor.stop();
@@ -75,10 +75,7 @@ public class Controlador implements iAppController {
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see is2011.app.controlador.iAppController#open(java.io.File)
-	 */
-	@Override
+	
 	public void open(File file) {
 		try {
 			this.reproductor.open(file);
@@ -90,10 +87,6 @@ public class Controlador implements iAppController {
 	}
 
 
-	/* (non-Javadoc)
-	 * @see is2011.app.controlador.iAppController#irA(int)
-	 */
-	@Override
 	public void irA(float i) {
 		try {
 			reproductor.irA(i);

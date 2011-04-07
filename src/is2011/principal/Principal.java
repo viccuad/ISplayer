@@ -3,8 +3,8 @@
  */
 package is2011.principal;
 
-import is2011.app.controlador.Controlador;
-import is2011.app.controlador.iAppController;
+import is2011.app.controlador.AppController;
+import is2011.app.controlador.IAppController;
 import is2011.app.vista.VistaPrincipal;
 
 /**
@@ -20,7 +20,7 @@ public class Principal {
 
 		VistaPrincipal vista = new VistaPrincipal();
 		
-		iAppController controlador = new Controlador();
+		IAppController controlador = new AppController();
 		
 	}
 

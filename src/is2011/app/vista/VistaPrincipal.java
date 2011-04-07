@@ -1,8 +1,8 @@
 package is2011.app.vista;
 
 
-import is2011.app.controlador.Controlador;
-import is2011.app.controlador.iAppController;
+import is2011.app.controlador.AppController;
+import is2011.app.controlador.IAppController;
 
 import java.awt.Dimension;
 import java.awt.FileDialog;
@@ -32,7 +32,7 @@ import org.jaudiotagger.tag.Tag;
 
 public class VistaPrincipal extends JFrame 	
 {
-	private iAppController controlador;
+	private IAppController controlador;
 	
 	private String nombre;
 	private int pos;
@@ -47,7 +47,7 @@ public class VistaPrincipal extends JFrame
 	public VistaPrincipal(){
 		super();
 		//TODO poner esto en su sitio
-		controlador = new Controlador();
+		controlador = new AppController();
 		
 		initialize();
 		pos = 0;
