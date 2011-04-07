@@ -82,7 +82,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		this.estado = "";
 		this.framerate = 0;
 		
-		this.progreso = new JScrollBar(JScrollBar.HORIZONTAL, 0, 50, 0, 1000);
+		this.progreso = new JScrollBar(JScrollBar.HORIZONTAL, 0, 10, 0, 1000);
 	
 		this.setLayout(new GridLayout(3,1));
 		this.add(this.progreso);
