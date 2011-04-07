@@ -13,21 +13,22 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
 /**
+ * Clase con una instancia del reproductor y otra del playList. Se encarga de
+ * reproducir el playList segun las operaciones del usuario.
+ * 
  * @author Administrator
  *
  */
 public class Controlador {
 
-private Reproductor reproductor;
+	private Reproductor reproductor;
 	
 	public Controlador() {
-		//TODO poner esto donde debe estar.
-		this.reproductor = new ReproductorIS();
 		
-		BasicPlayerListener bpl = new VistaReproduccion();
-		
-		this.reproductor.addBasicPlayerListener(bpl);
-		
+	}
+	
+	public void setReproductor(Reproductor rep) {
+		this.reproductor = rep;
 	}
 	
 	
@@ -95,6 +96,11 @@ private Reproductor reproductor;
 			e.printStackTrace();
 		}
 		
+	}
+
+
+	public Reproductor getReproductor() {
+		return reproductor;
 	}
 
 }

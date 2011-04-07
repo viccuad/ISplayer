@@ -1,6 +1,3 @@
-/**
- * 
- */
 package is2011.reproductor.modelo;
 
 import java.io.File;
@@ -9,27 +6,69 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
 /**
+ * 
+ * Interfaz que deberan implementar todas las clases que funcionen como un 
+ * reproductor.
  * @author Administrator
  *
  */
 public interface Reproductor {
 
+	/**
+	 * Empieza a reproducir la cancion en caso de estar esta cargada con open
+	 * @throws BasicPlayerException
+	 */
 	public void play() throws BasicPlayerException;
 	
+	/**
+	 * Para al cancion
+	 * @throws BasicPlayerException
+	 */
 	public void stop() throws BasicPlayerException;
 	
+	/**
+	 * Pausa
+	 * @throws BasicPlayerException
+	 */
 	public void pause() throws BasicPlayerException;
 	
+	/**
+	 * Despausa
+	 * @throws BasicPlayerException
+	 */
 	public void resume() throws BasicPlayerException;
 	
+	/**
+	 * Pasa rapido hacia delante
+	 * @param velocidad Parametro de 1 a 4 que indica al velocidad de avance
+	 * @throws BasicPlayerException
+	 */
 	public void fastForward(int velocidad) throws BasicPlayerException;
 	
+	/**
+	 * Rebobinado
+	 * @param velocidad Parametro de 1 a 4 que indica la velocidad de retroceso
+	 * @throws BasicPlayerException
+	 */
 	public void rewind(int velocidad) throws BasicPlayerException;
 	
+	/**
+	 * Va a un punto de la cancion , determinado por el porcentaje de 0 a 1
+	 * @param porcentaje
+	 * @throws BasicPlayerException
+	 */
 	public void irA(float porcentaje) throws BasicPlayerException;
 	
+	/**
+	 * Abre el fichero que le pasamos como parametro para su reproduccion
+	 * @param f El fichero que queremos abrir
+	 * @throws BasicPlayerException
+	 */
 	public void open(File f) throws BasicPlayerException;
 	
-	
+	/**
+	 * Añade un oyente al reproductor
+	 * @param bpl El oyente que queremos añadir
+	 */
 	public void addBasicPlayerListener(BasicPlayerListener bpl);
 }

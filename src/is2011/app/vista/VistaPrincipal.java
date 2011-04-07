@@ -3,6 +3,7 @@ package is2011.app.vista;
 
 import is2011.app.controlador.AppController;
 import is2011.app.controlador.IAppController;
+import is2011.reproductor.vista.VistaReproduccion;
 
 import java.awt.Dimension;
 import java.awt.FileDialog;
@@ -41,7 +42,9 @@ public class VistaPrincipal extends JFrame
 	private JButton stop;
 	private JButton avanzar;
 	private JButton atrasar;
-	private JScrollBar tiempo;
+	
+	private VistaReproduccion vistaReproduccion;
+	//private JScrollBar tiempo;
 	private FileDialog fd;
 
 	public VistaPrincipal(){
@@ -86,7 +89,7 @@ public class VistaPrincipal extends JFrame
 		layout.putConstraint(SpringLayout.WEST, atrasar,96,SpringLayout.WEST, panelPpal);
 		layout.putConstraint(SpringLayout.NORTH, atrasar,0,SpringLayout.NORTH, panelPpal);
 
-		tiempo = new JScrollBar(JScrollBar.HORIZONTAL, 0, 50, 0, 1000);
+		/*tiempo = new JScrollBar(JScrollBar.HORIZONTAL, 0, 50, 0, 1000);
 		layout.putConstraint(SpringLayout.WEST, tiempo,5,SpringLayout.EAST, avanzar);
 		layout.putConstraint(SpringLayout.NORTH, tiempo,20,SpringLayout.NORTH, panelPpal);
 		
@@ -103,7 +106,7 @@ public class VistaPrincipal extends JFrame
 			}
 			
 		
-		);
+		);*/
 		
 		/*
 		tiempo.addAdjustmentListener (new AdjustmentListener(){
@@ -124,7 +127,7 @@ public class VistaPrincipal extends JFrame
 		panelPpal.add(stop);
 		panelPpal.add(atrasar);
 		panelPpal.add(avanzar);
-		panelPpal.add(tiempo);
+		//panelPpal.add(tiempo);
 
 		play.addActionListener(new ActionListener(){
 			@Override
@@ -161,13 +164,18 @@ public class VistaPrincipal extends JFrame
 
 	}
 
-	public void setProgreso(float porcentaje) {
-	if( porcentaje > 0 && porcentaje < 1) {
-		tiempo.setValue((int)porcentaje*1000);
+	public void setVistaReproductor( VistaReproduccion vistaRep) {
+		vistaReproduccion = vistaRep;
+		this.add(vistaRep);
+		vistaReproduccion.addListenerProgreso (new MouseAdapter() {
+			
+		public void mouseReleased(MouseEvent arg0) {
+					pos = vistaReproduccion.getPos();
+					controlador.irA((float)pos/1000);
+				}
+		});
 		
 	}
-		
-}
 	public void initialize()
 	{
 		this.setTitle("ISPlayer v0.1");

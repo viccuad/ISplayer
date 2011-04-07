@@ -8,70 +8,53 @@ import java.io.File;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
+import is2011.reproductor.controlador.Controlador;
 import is2011.reproductor.modelo.*;
 import is2011.reproductor.vista.VistaReproduccion;
 
 /**
+ * 
+ * Controlador que recoje las ordenes de la vista
+ * 
  * @author Administrator
  *
  */
 public class AppController implements IAppController {
 
-	private Reproductor reproductor;
+	private Controlador reproductor;
 	
 	public AppController() {
 		//TODO poner esto donde debe estar.
-		this.reproductor = new ReproductorIS();
+		this.reproductor = new Controlador();
 		
 		BasicPlayerListener bpl = new VistaReproduccion();
 		
-		this.reproductor.addBasicPlayerListener(bpl);
+		this.reproductor.getReproductor().addBasicPlayerListener(bpl);
 		
 	}
 	
 	
 	@Override
 	public void fastForward() {
-		try {
-			this.reproductor.fastForward(4);
-		} catch (BasicPlayerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		reproductor.fastForward();
 		
 	}
 
 	
 	@Override
 	public void play() {
-		try {
-			this.reproductor.play();
-		} catch (BasicPlayerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		reproductor.play();
 		
 	}
 
 	@Override
 	public void rewind() {
-		try {
-			this.reproductor.rewind(4);
-		} catch (BasicPlayerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		reproductor.rewind();
 	}
 	
 	@Override
 	public void stop() {
-		try {
-			this.reproductor.stop();
-		} catch (BasicPlayerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		reproductor.stop();
 		
 	}
 
@@ -80,12 +63,7 @@ public class AppController implements IAppController {
 	 */
 	@Override
 	public void open(File file) {
-		try {
-			this.reproductor.open(file);
-		} catch (BasicPlayerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		reproductor.open(file);
 		
 	}
 
@@ -95,12 +73,7 @@ public class AppController implements IAppController {
 	 */
 	@Override
 	public void irA(float i) {
-		try {
-			reproductor.irA(i);
-		} catch (BasicPlayerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		reproductor.irA(i);
 		
 	}
 
