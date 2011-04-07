@@ -37,6 +37,7 @@ public class VistaPrincipal extends JFrame
 	private JButton stop;
 	private JButton avanzar;
 	private JButton atrasar;
+	private JButton aniadir;
 	
 	private VistaReproduccion vistaReproduccion;
 	
@@ -53,7 +54,7 @@ public class VistaPrincipal extends JFrame
 
 
 		JPanel panelPpal = new JPanel();
-		panelPpal.setLayout(new GridLayout(1,5));
+		panelPpal.setLayout(new GridLayout(1,6));
 		
 		play = new JButton();
 		play.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
@@ -76,14 +77,26 @@ public class VistaPrincipal extends JFrame
 		atrasar.setIcon(new ImageIcon(getClass().getResource("/Recursos/rew.png")));
 		panelPpal.add(atrasar);		
 		
+		aniadir= new JButton("mas");
 		
+		panelPpal.add(aniadir);	
+		
+		aniadir.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (nombre == null) {
+					controlador.aniadir(controlador.abrirArchivo());
+				}
+				}}
+			
+		);
 		
 		play.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (nombre == null) {
+				/*if (nombre == null) {
 					controlador.open(controlador.abrirArchivo());
-				}
+				}*/
 				
 				controlador.play();
 					

@@ -3,6 +3,8 @@
  */
 package is2011.reproductor.controlador;
 
+import is2011.reproductor.modelo.CancionMP3;
+import is2011.reproductor.modelo.ListaReproduccion;
 import is2011.reproductor.modelo.Reproductor;
 
 
@@ -21,13 +23,16 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
 public class Controlador {
 
 	private Reproductor reproductor;
+	private ListaReproduccion listaReproduccion;
+	private int contadorSaturado;
 	
 	public Controlador() {
-		
+		contadorSaturado = 0;
 	}
 	
 	public void setReproductor(Reproductor rep) {
 		this.reproductor = rep;
+		listaReproduccion = new ListaReproduccion();
 	}
 	
 	
@@ -45,7 +50,11 @@ public class Controlador {
 	
 	public void play() {
 		try {
-			this.reproductor.play();
+			if(!listaReproduccion.isVacia()) {
+				this.reproductor.open(new File(listaReproduccion.getCancionAt(contadorSaturado++).getPath()));
+				this.reproductor.play();
+				contadorSaturado %= listaReproduccion.getNumeroCanciones();
+			}
 		} catch (BasicPlayerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -113,6 +122,13 @@ public class Controlador {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+	}
+
+	public void aniadir(String absolutePath) {
+		
+		listaReproduccion.addCancion(new CancionMP3(absolutePath));
+		listaReproduccion.listarTodas();
 		
 	}
 

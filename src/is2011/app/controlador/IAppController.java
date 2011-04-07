@@ -52,6 +52,8 @@ public interface IAppController {
 	 */
 	void pause();
 
+	void aniadir(File abrirArchivo);
+
 	/**
 	 * 
 	 */

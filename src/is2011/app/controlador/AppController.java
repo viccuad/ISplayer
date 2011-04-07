@@ -42,6 +42,7 @@ public class AppController implements IAppController {
 
 	        //Añadimos un filtro para permitir solo apertura de tipo plg
 	        FileNameExtensionFilter filter = new FileNameExtensionFilter("mp3", "mp3");
+	        //FileNameExtensionFilter filter = new FileNameExtensionFilter("ogg", "ogg");
 	        fileChooser.setFileFilter(filter);
 
 
@@ -113,6 +114,12 @@ public class AppController implements IAppController {
 	public void pause() {
 		reproductor.pausar();
 		
+	}
+
+	@Override
+	public void aniadir(File abrirArchivo) {
+		
+		reproductor.aniadir(abrirArchivo.getAbsolutePath());
 	}
 
 }
