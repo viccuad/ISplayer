@@ -46,6 +46,10 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	/** KBps*/
 	private int framerate;
 	
+	private float framesPorSegundo;
+	
+	private int framesTotales;
+	
 	/** Muestra el estado de la reproduccion*/
 	private JLabel labelEstado;
 	
@@ -133,13 +137,15 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	 */
 	@Override
 	public void progress(int bytesread, long arg1, byte[] arg2, Map properties) {
+		//mp3.position.microseconds, mp3.equalizer, mp3.frame.size.bytes, 
+		//mp3.frame, mp3.frame.bitrate, mp3.position.byte
 		
 		int audioFramesize = (Integer)properties.get("mp3.frame.size.bytes");
 		framerate = (Integer)properties.get("mp3.frame.bitrate");
 		long mp3Frame = (Long)properties.get("mp3.frame");
 		long mp3PositionByte = (Long)properties.get("mp3.position.byte");
 		
-		int nuevaPosicion = (int)(((double)mp3PositionByte / (double) bytesTotales)*1000.0f); 
+		int nuevaPosicion = Math.round(((float)mp3Frame / framesTotales)*1000f);
 		if(nuevaPosicion != posicion) {
 			posicion = nuevaPosicion;
 			synchronized (this.progreso) {
@@ -150,15 +156,16 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		}
 		
 		
-		int tiempo = (int)( mp3PositionByte/ (framerate/8));
-		//int tiempo = (int) this.getActualTimeEstimated((long)bytesread, properties);
+		//int tiempo = (int)( mp3PositionByte/ (framerate/8));
+		int tiempo = Math.round((mp3Frame / framesPorSegundo));
 		if(tiempo != tiempoActual) {
-			/*System.out.println("BytesRead" + bytesread);
-			System.out.println("audioFramerate " + audioFramerate);
+			System.out.println("BytesRead" + bytesread);
+			System.out.println("bytesTotales" + bytesTotales);
+			System.out.println("audioFramerate " + framerate);
 			System.out.println("audioFramesize " + audioFramesize);
 			System.out.println("mp3Frame " + mp3Frame);
 			System.out.println("mp3PositionByte " + mp3PositionByte);
-			System.out.println("************************************\n");*/
+			System.out.println("************************************\n");
 			tiempoActual = tiempo;
 			escribirInfo();
 		}
@@ -193,6 +200,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	
 	@Override
 	public void stateUpdated(BasicPlayerEvent event) {
+		
 		//estado = event.getDescription().toString();
 		//this.labelEstado.setText(estado + " " + tiempoTotal + "/" + bitPerSample + " kpbs");
 	}
@@ -209,29 +217,54 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	//basicplayer.sourcedataline, bitrate, mp3.mode, comment, mp3.vbr, 
 	//audio.samplerate.hz, mp3.original
 	{
+		System.out.println(properties.toString().replace(",", "\n"));
         long milliseconds = -1;
         int byteslength = -1;
         int seconds = -1;
         if (properties != null)
-        {System.out.println(properties.keySet());
+        {	//System.out.println(properties.keySet());
             if (properties.containsKey("audio.length.bytes"))
             {
                 byteslength = ((Integer) properties.get("audio.length.bytes")).intValue();
                // bytesTotales = byteslength;
             }
             
-            if (properties.containsKey("mp3.length.bytes"))
+            if (properties.containsKey("mp3.length.frames"))
             {
-                byteslength = ((Integer) properties.get("mp3.length.bytes")).intValue();
+                byteslength = ((Integer) properties.get("mp3.length.frames")).intValue();
                 bytesTotales = byteslength;
             }
             
+           
+            
+            if (properties.containsKey("mp3.length.frames"))
+            {
+            	framesTotales = (((Integer) properties.get("mp3.length.frames")).intValue());
+                System.out.println(((Integer) properties.get("mp3.length.frames")).intValue());
+                System.out.println(((Integer) properties.get("audio.length.frames")).intValue());
+                System.out.println("\n\n\n\n");
+            }
+            
+            if (properties.containsKey("mp3.framerate.fps"))
+            {
+            	framesPorSegundo = (Float)properties.get("mp3.framerate.fps");
+            	
+                System.out.println((properties.get("mp3.framerate.fps")));
+                System.out.println((properties.get("audio.framerate.fps")));
+                System.out.println("\n\n");
+            }
+            
+            return  (int)(((float)framesTotales / framesPorSegundo)*1000);
+            
+            /*
             if (properties.containsKey("bitrate"))
             {
                 int bitrate = ((Integer) properties.get("bitrate")).intValue();
                 seconds = (int)( byteslength/ (bitrate/8));
                 return seconds*1000;
             }
+            */
+            /*
             if (properties.containsKey("duration"))
             {
                 milliseconds = (int) (((Long) properties.get("duration")).longValue()) / 1000;
@@ -279,7 +312,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
                 	//bytesPorSegundo =  (int) (samplerate * framesize);
                     milliseconds = (int) (1000.0f * byteslength / (samplerate * framesize));
                 }
-            }
+            }*/
         }
         return milliseconds;
     }
