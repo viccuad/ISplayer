@@ -5,6 +5,9 @@ package is2011.app.controlador;
 
 import java.io.File;
 
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
@@ -23,17 +26,44 @@ public class AppController implements IAppController {
 
 	private Controlador reproductor;
 	
-	public AppController() {
-		//TODO poner esto donde debe estar.
-		this.reproductor = new Controlador();
-		
-		BasicPlayerListener bpl = new VistaReproduccion();
-		
-		this.reproductor.getReproductor().addBasicPlayerListener(bpl);
-		
+	public AppController(Controlador rep) {
+		reproductor = rep;
 	}
 	
-	
+	@Override
+	 public File abrirArchivo()
+	    {
+	        JFileChooser fileChooser = new JFileChooser();
+
+	        //Lo configuramos para que solo permita la apertura de ficheros
+	        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+	        fileChooser.setMultiSelectionEnabled(false);
+	        fileChooser.setAcceptAllFileFilterUsed(false);
+
+	        //Añadimos un filtro para permitir solo apertura de tipo plg
+	        FileNameExtensionFilter filter = new FileNameExtensionFilter("mp3", "mp3");
+	        fileChooser.setFileFilter(filter);
+
+
+	        //Abrimos el fichero
+	        int seleccion;
+
+	        seleccion =fileChooser.showOpenDialog(null);
+
+	        if (seleccion == JFileChooser.APPROVE_OPTION)
+	        {
+	            File f = fileChooser.getSelectedFile();
+	            if (filter.accept(f))
+	                return f;
+	            else
+	            	return null;
+	        }
+	        else
+	        {
+	            return null;
+	        }
+	    }
+	 
 	@Override
 	public void fastForward() {
 		reproductor.fastForward();
@@ -44,7 +74,6 @@ public class AppController implements IAppController {
 	@Override
 	public void play() {
 		reproductor.play();
-		
 	}
 
 	@Override
@@ -74,6 +103,15 @@ public class AppController implements IAppController {
 	@Override
 	public void irA(float i) {
 		reproductor.irA(i);
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see is2011.app.controlador.IAppController#pause()
+	 */
+	@Override
+	public void pause() {
+		reproductor.pausar();
 		
 	}
 

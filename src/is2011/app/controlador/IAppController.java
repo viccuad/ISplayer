@@ -43,6 +43,16 @@ public interface IAppController {
 	void irA(float i);
 
 	/**
+	 * @return
+	 */
+	File abrirArchivo();
+
+	/**
+	 * 
+	 */
+	void pause();
+
+	/**
 	 * 
 	 */
 	

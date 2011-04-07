@@ -4,13 +4,12 @@
 package is2011.reproductor.controlador;
 
 import is2011.reproductor.modelo.Reproductor;
-import is2011.reproductor.modelo.ReproductorIS;
-import is2011.reproductor.vista.VistaReproduccion;
+
 
 import java.io.File;
 
 import javazoom.jlgui.basicplayer.BasicPlayerException;
-import javazoom.jlgui.basicplayer.BasicPlayerListener;
+
 
 /**
  * Clase con una instancia del reproductor y otra del playList. Se encarga de
@@ -101,6 +100,20 @@ public class Controlador {
 
 	public Reproductor getReproductor() {
 		return reproductor;
+	}
+
+	/**
+	 * 
+	 */
+	public void pausar() {
+		
+		try {
+			reproductor.pause();
+		} catch (BasicPlayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }

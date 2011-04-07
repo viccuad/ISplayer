@@ -3,7 +3,7 @@
  */
 package is2011.principal;
 
-import java.awt.event.MouseEvent;
+
 
 import is2011.app.controlador.AppController;
 import is2011.app.controlador.IAppController;
@@ -26,7 +26,7 @@ public class Principal {
 		VistaPrincipal vista = new VistaPrincipal();
 		VistaReproduccion vr = new VistaReproduccion();
 		
-		//IAppController controlador = new AppController();
+		
 		
 		Controlador controlador = new Controlador();
 		ReproductorIS rep = new ReproductorIS();
@@ -35,6 +35,9 @@ public class Principal {
 		
 		vista.setVistaReproductor(vr);
 		vista.setVisible(true);
+		
+		IAppController appController = new AppController(controlador);
+		vista.setControlador(appController);
 	}
 
 }
