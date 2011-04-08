@@ -33,7 +33,6 @@ public class Controlador {
 	
 	public void setReproductor(Reproductor rep) {
 		this.reproductor = rep;
-		listaReproduccion = new ListaReproduccion();
 	}
 	
 	
@@ -48,7 +47,9 @@ public class Controlador {
 	}
 
 	
-	
+	/**
+	 * Reproduce la cancion actual de la lista de reproduccion.
+	 */
 	public void play() {
 		try {
 			if(!listaReproduccion.isVacia()) {
@@ -132,7 +133,15 @@ public class Controlador {
 	public void aniadir(String absolutePath) {
 		
 		listaReproduccion.addCancion(new CancionMP3(absolutePath));
-		listaReproduccion.listarTodas();
+		System.out.println(listaReproduccion);
+		
+	}
+
+	/**
+	 * @param lr
+	 */
+	public void setListaReproduccion(ListaReproduccion lr) {
+		this.listaReproduccion = lr;
 		
 	}
 

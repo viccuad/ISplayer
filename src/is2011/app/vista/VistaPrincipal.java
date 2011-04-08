@@ -3,10 +3,13 @@ package is2011.app.vista;
 
 import is2011.app.controlador.AppController;
 import is2011.app.controlador.IAppController;
+import is2011.reproductor.vista.VistaListaReproduccion;
 import is2011.reproductor.vista.VistaReproduccion;
 
 import java.awt.Dimension;
 import java.awt.FileDialog;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,12 +42,15 @@ public class VistaPrincipal extends JFrame
 	private JButton atrasar;
 	private JButton aniadir;
 	
+	GridBagConstraints grid;
 	private VistaReproduccion vistaReproduccion;
+
+	private VistaListaReproduccion vistaListaReproduccion;
 	
 
 	public VistaPrincipal(){
 		super();
-		
+		grid = new GridBagConstraints();
 		initialize();
 		pos = 0;
 		
@@ -138,7 +144,16 @@ public class VistaPrincipal extends JFrame
 
 	public void setVistaReproductor( VistaReproduccion vistaRep) {
 		vistaReproduccion = vistaRep;
-		this.add(vistaRep);
+		
+		grid.gridx       = 0;
+        grid.gridy       = 1;
+        grid.gridheight  = 1;
+        grid.gridwidth   = 1;
+        grid.weightx     = 1;
+        grid.weighty     = 0.15;
+        grid.fill        = GridBagConstraints.BOTH;
+		
+		this.add(vistaRep,grid);
 		vistaReproduccion.addListenerProgreso (new MouseAdapter() {
 			
 		public void mouseReleased(MouseEvent arg0) {
@@ -149,14 +164,45 @@ public class VistaPrincipal extends JFrame
 		);
 		
 	}
+	
+	/**
+	 * @param vlr
+	 */
+	public void setVistaListaReproduccion(VistaListaReproduccion vlr) {
+		vistaListaReproduccion = vlr;
+		grid.gridx       = 0;
+        grid.gridy       = 2;
+        grid.gridheight  = 1;
+        grid.gridwidth   = 1;
+        grid.weightx     = 1;
+        grid.weighty     = 1;
+        grid.fill        = GridBagConstraints.BOTH;
+        
+        this.add(vlr,grid);
+		
+		
+	}
 	public void initialize()
 	{
 		this.setTitle("ISPlayer v0.1");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setLayout(new GridLayout(2,1));
-		this.add(getContenido());
-		this.setVisible(true);
-		this.setSize(800,200);
+		this.setLayout(new GridBagLayout());
+
+		
+		grid.gridx       = 0;
+        grid.gridy       = 0;
+        grid.gridheight  = 1;
+        grid.gridwidth   = 1;
+        grid.weightx     = 0.15;
+        grid.weighty     = 1;
+        grid.fill        = GridBagConstraints.BOTH;
+        
+        this.add(getContenido(),grid);
+		
+        this.setVisible(true);
+		this.setSize(800,800);
+		
+		
 
 	}
 
@@ -168,4 +214,6 @@ public class VistaPrincipal extends JFrame
 		this.controlador = appController;
 		
 	}
+
+	
 }
