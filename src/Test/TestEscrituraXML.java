@@ -31,11 +31,7 @@ public class TestEscrituraXML {
 		bib.addDir(new Directorio("ruta", listaCanciones));
 		
 		try {
-			stream.toXML(bib, new FileOutputStream("/Users/david/Documents/workspace/ISGrupo12/src/Recursos/testXML1.xml"));
-			//==> si estas en windoes debes comentar la linea anterior y descomentar la siguiente,
-			//==> sustituyendo la ruta hasta el workspace
-			//stream.toXML(bib, new FileOutputStream("c:/ "tu ruta al workspace" /workspace/ISGrupo12/src/Recursos/testXML1.xml"));
-			
+			stream.toXML(bib, new FileOutputStream("src/Recursos/testXML1.xml"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

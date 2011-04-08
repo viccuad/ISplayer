@@ -26,10 +26,6 @@ public class TestLecturaXML {
 		try {
 			//Leemos del fihero XML y lo cargamos en la estructura de biblioteca
 			bib = (BibliotecaContainer) stream.fromXML(new FileInputStream("/Users/david/Documents/workspace/ISGrupo12/src/Recursos/testXML1.xml"));
-			//==> si estas en windoes debes comentar la linea anterior y descomentar la siguiente,
-			//==> sustituyendo la ruta hasta el workspace
-			//bib = (BibliotecaContainer) stream.fromXML(new FileInputStream("c:// "tu ruta al workspace" /workspace/ISGrupo12/src/Recursos/testXML1.xml"));
-			
 			
 			//Mostramos por patalla el objeto biblioteca reconvertido a XML
 			System.out.println(stream.toXML(bib));
