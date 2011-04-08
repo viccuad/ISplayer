@@ -1,18 +1,15 @@
 package Test;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import is2011.biblioteca.contenedores.BibliotecaContainer;
+import is2011.biblioteca.contenedores.Cancion;
+import is2011.biblioteca.contenedores.Directorio;
+
 import java.util.HashMap;
 
 import com.thoughtworks.xstream.XStream;
 
-import is2011.biblioteca.contenedores.*;
+public class TestLecturaXML {
 
-public class TestEscrituraXML {
-
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		XStream stream = new XStream();
 		stream.alias("biblioteca", BibliotecaContainer.class);
@@ -29,14 +26,8 @@ public class TestEscrituraXML {
 		new Directorio("ruta", listaCanciones);
 		bib.addDir(new Directorio("ruta", listaCanciones));
 		
-		try {
-			stream.toXML(bib, new FileOutputStream("/Users/david/Documents/workspace/ISGrupo12/src/Recursos/testXML1.xml"));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		System.out.println(stream.toXML(bib));
 		
 		
 	}
-
 }
