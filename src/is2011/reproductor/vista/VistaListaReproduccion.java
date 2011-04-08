@@ -11,12 +11,20 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * Vista que implementa al listener de la lista de reproduccion y que se 
+ * encargara de mostrarla por pantalla.
+ * 
  * @author Administrator
  *
  */
+@SuppressWarnings("serial")
 public class VistaListaReproduccion extends JScrollPane implements
 		ListaReproduccionListener {
 
+	// ********************************************************************** //
+	// *************           ATRIBUTOS Y CONSTANTES           ************* //
+	// ********************************************************************** //
+	
 	/** Atributo que contendra las canciones*/
 	private JTable  tabla;
 	

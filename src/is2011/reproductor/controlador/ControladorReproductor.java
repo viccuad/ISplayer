@@ -21,13 +21,13 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
  * @author Administrator
  *
  */
-public class Controlador {
+public class ControladorReproductor {
 
 	private Reproductor reproductor;
 	private ListaReproduccion listaReproduccion;
 	private int contadorSaturado;
 	
-	public Controlador() {
+	public ControladorReproductor() {
 		contadorSaturado = 0;
 	}
 	
@@ -148,6 +148,22 @@ public class Controlador {
 	 */
 	public void reiniciaListaReproduccion() {
 		this.listaReproduccion.reiniciar(false);
+		
+	}
+
+	/**
+	 * 
+	 */
+	public void siguiente() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * 
+	 */
+	public void anterior() {
+		// TODO Auto-generated method stub
 		
 	}
 

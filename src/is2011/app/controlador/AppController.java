@@ -1,6 +1,3 @@
-/**
- * 
- */
 package is2011.app.controlador;
 
 import java.io.File;
@@ -8,49 +5,56 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import javazoom.jlgui.basicplayer.BasicPlayerException;
-import javazoom.jlgui.basicplayer.BasicPlayerListener;
+import is2011.reproductor.controlador.ControladorReproductor;
 
-import is2011.reproductor.controlador.Controlador;
-import is2011.reproductor.modelo.*;
-import is2011.reproductor.vista.VistaReproduccion;
 
-/**
- * 
- * Controlador que recoje las ordenes de la vista
- * 
- * @author Administrator
- *
- */
+
 public class AppController implements IAppController {
-
-	private Controlador reproductor;
 	
-	public AppController(Controlador rep) {
+	// ********************************************************************** //
+	// *************           ATRIBUTOS Y CONSTANTES           ************* //
+	// ********************************************************************** //
+	
+	/**Reproductor de la aplicacion*/
+	private ControladorReproductor reproductor;
+	
+	// ********************************************************************** //
+	// *************                CONSTRUCTOR                 ************* //
+	// ********************************************************************** //
+	/**
+	 * Constructor por defecto.
+	 */
+	public AppController(ControladorReproductor rep) {
 		reproductor = rep;
 	}
 	
-	public void abrirArchivos() {
-		reproductor.reiniciaListaReproduccion();
-		aniadir();
-	}
+	// ********************************************************************** //
+	// *************              METODOS PRIVADOS              ************* //
+	// ********************************************************************** //
 	
-	 public File[] abrirArchivo()
+	/**
+	 * Muestra un dialogo para abrir archivos mp3 y ogg.
+	 * @return Devuelve un array con todos los archivos seleccionados. Si algun
+	 * archivo no esta soportado, lo devuelve como null.
+	 */
+	private File[] abrirArchivo()
 	    {
 	        JFileChooser fileChooser = new JFileChooser();
 
+	        //Lo configuramos para permitir apertura multiple
 	        fileChooser.setMultiSelectionEnabled(true);
 
 	        //Lo configuramos para que solo permita la apertura de ficheros
 	        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-	        fileChooser.setAcceptAllFileFilterUsed(false);
-
+	        fileChooser.setAcceptAllFileFilterUsed(true);
+	        
 	        //Añadimos un filtro para permitir solo apertura de tipo plg
-	        FileNameExtensionFilter filter = new FileNameExtensionFilter("mp3 & ogg", "mp3", "ogg");
+	        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+	        		"mp3 & ogg", "mp3", "ogg");
 	        //FileNameExtensionFilter filter = new FileNameExtensionFilter("ogg", "ogg");
 	        fileChooser.setFileFilter(filter);
 
-
+	        
 	        //Abrimos el fichero
 	        int seleccion;
 
@@ -58,40 +62,36 @@ public class AppController implements IAppController {
 
 	        if (seleccion == JFileChooser.APPROVE_OPTION)
 	        {
-	            File[] f = fileChooser.getSelectedFiles();
+	            File[] files = fileChooser.getSelectedFiles();
 	            
-	            boolean aceptado = true;
-	            for(File file : f) {
-	            	if (!(filter.accept(file)))
-		                aceptado = false;
+	            //Si algun fichero no esta soportado, lo quitamos de la 
+	            //seleccion.
+	            for (int i = 0 ; i < files.length ; i++) {
+	            	if(!(filter.accept(files[i]))){
+	            		files[i] = null;
+	            	}
 	            }
-	            
-	            if (aceptado)
-	                return f;
-	            else
-	            	return null;
+	            return files;
 	        }
 	        else
 	        {
 	            return null;
 	        }
 	    }
-	 
+	
+	// ********************************************************************** //
+	// *************              METODOS PUBLICOS             ************* //
+	// ********************************************************************** //
 	@Override
-	public void fastForward() {
-		reproductor.fastForward();
-		
+	public boolean play() {
+		reproductor.play();
+		return true;
 	}
-
 	
 	@Override
-	public void play() {
-		reproductor.play();
-	}
-
-	@Override
-	public void rewind() {
-		reproductor.rewind();
+	public void pause() {
+		reproductor.pausar();
+		
 	}
 	
 	@Override
@@ -99,60 +99,72 @@ public class AppController implements IAppController {
 		reproductor.stop();
 		
 	}
-
-	/* (non-Javadoc)
-	 * @see is2011.app.controlador.iAppController#open(java.io.File)
-	 */
+	
 	@Override
-	public void open(File file) {
-		reproductor.open(file);
+	public void fastForward() {
+		reproductor.fastForward();
 		
 	}
 
+	@Override
+	public void rewind() {
+		reproductor.rewind();
+	}
+	
 
-	/* (non-Javadoc)
-	 * @see is2011.app.controlador.iAppController#irA(int)
-	 */
 	@Override
 	public void irA(float i) {
 		reproductor.irA(i);
 		
 	}
-
-	/* (non-Javadoc)
-	 * @see is2011.app.controlador.IAppController#pause()
-	 */
+	
 	@Override
-	public void pause() {
-		reproductor.pausar();
-		
+	public void cancionAnterior() {
+		this.reproductor.siguiente();
 	}
 
 	@Override
-	public void aniadir() {
+	public void siguienteCancion() {
+		this.reproductor.anterior();
+	}
+
+	@Override
+	public void añadir() {
 		File[] files = abrirArchivo();
 		if(files != null) {
 			for (File f : files) {
-				reproductor.aniadir(f.getAbsolutePath());
+				if (f != null) {
+					reproductor.aniadir(f.getAbsolutePath());
+				}
 			}
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see is2011.app.controlador.IAppController#cancionAnterior()
-	 */
 	@Override
-	public void cancionAnterior() {
-		// TODO Auto-generated method stub
+	public void abrirArchivos() {
+		File[] files = abrirArchivo();
+		if(files != null) {
+			reproductor.stop();
+			reproductor.reiniciaListaReproduccion();
+			for (File f : files) {
+				if (f != null) {
+					reproductor.aniadir(f.getAbsolutePath());
+				}
+			}
+		}
+		reproductor.play();
+	}
+	
+
+	@Override
+	public void borrarCanciones() {
+		// TODO Implementar
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see is2011.app.controlador.IAppController#siguienteCancion()
-	 */
 	@Override
-	public void siguienteCancion() {
-		// TODO Auto-generated method stub
+	public void reproducirSeleccionada() {
+		// TODO Implementar
 		
 	}
 

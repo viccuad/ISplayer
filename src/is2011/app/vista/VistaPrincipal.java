@@ -98,7 +98,7 @@ public class VistaPrincipal extends JFrame
 		aniadir.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controlador.aniadir();
+				controlador.añadir();
 				
 			}}
 			
@@ -231,7 +231,7 @@ public class VistaPrincipal extends JFrame
 		this.menuItemAñadir.addActionListener(new ActionListener(){
 			
 			public void actionPerformed(ActionEvent e) {
-				controlador.aniadir();
+				controlador.añadir();
 			}
 			
 		});
