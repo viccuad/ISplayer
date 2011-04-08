@@ -162,7 +162,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		}
 		
 		int tiempo =  Math.round(( (float)bytesread - byteInicioMusica) / (bitrate/8));
-		//if(tiempo != tiempoActual) {
+		if(tiempo != tiempoActual) {
 			System.out.println("TamañoArchivo " + this.bytesArchivo);
 			System.out.println("Tamaño Musica " + this.bytesMusica);
 			System.out.println("Bytes leidos del archivo" + bytesread);
@@ -175,7 +175,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 			System.out.println("************************************\n");
 			tiempoActual = tiempo;
 			escribirInfo();
-		//}
+		}
 
 	}
 	

@@ -1,11 +1,10 @@
 package is2011.reproductor.modelo;
 
 
-import java.awt.FileDialog;
+
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.JFrame;
 
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
@@ -50,7 +49,7 @@ public class CancionMP3 implements Cancion{
 			e.printStackTrace();
 		}
 			
-
+		System.out.println(getInfo());
 	}
 
 	@Override
@@ -147,6 +146,14 @@ public class CancionMP3 implements Cancion{
 				"Nº Frames: "+getFrames()+"\n"+
 				"Bit Rate: "+getBitRate()+"\n"+
 				"Path: "+getPath();
+	}
+
+	/* (non-Javadoc)
+	 * @see is2011.reproductor.modelo.Cancion#getBytesMusica()
+	 */
+	@Override
+	public int getBytesMusica() {
+		return (int)( (new File(path)).length() - headermp3.getMp3StartByte());
 	}
 
 }

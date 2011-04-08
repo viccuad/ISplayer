@@ -71,4 +71,9 @@ public interface Reproductor {
 	 * @param bpl El oyente que queremos añadir
 	 */
 	public void addBasicPlayerListener(BasicPlayerListener bpl);
+
+	/**
+	 * @param bytes
+	 */
+	void setBytesMusica(int bytes);
 }

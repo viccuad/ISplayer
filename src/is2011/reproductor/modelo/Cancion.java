@@ -1,6 +1,7 @@
 package is2011.reproductor.modelo;
 
 public interface Cancion {
+	
 	public String getPath();
 	public String getName();
 	public String getAlbum();
@@ -18,5 +19,6 @@ public interface Cancion {
 	public long getBitRate();
 	public long getFrames();
 	public int getTrackLength();
+	public int getBytesMusica();
 
 }

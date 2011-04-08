@@ -3,6 +3,7 @@
  */
 package is2011.reproductor.controlador;
 
+import is2011.reproductor.modelo.Cancion;
 import is2011.reproductor.modelo.CancionMP3;
 import is2011.reproductor.modelo.ListaReproduccion;
 import is2011.reproductor.modelo.Reproductor;
@@ -51,7 +52,9 @@ public class Controlador {
 	public void play() {
 		try {
 			if(!listaReproduccion.isVacia()) {
-				this.reproductor.open(new File(listaReproduccion.getCancionAt(contadorSaturado++).getPath()));
+				Cancion cancion = listaReproduccion.getCancionAt(contadorSaturado++);
+				this.reproductor.open(new File(cancion.getPath()));
+				this.reproductor.setBytesMusica(cancion.getBytesMusica());
 				this.reproductor.play();
 				contadorSaturado %= listaReproduccion.getNumeroCanciones();
 			}
