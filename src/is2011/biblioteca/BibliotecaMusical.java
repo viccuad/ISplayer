@@ -9,7 +9,7 @@ import java.util.Comparator;
 import com.thoughtworks.xstream.XStream;
 
 import is2011.biblioteca.contenedores.BibliotecaContainer;
-import is2011.biblioteca.contenedores.Cancion;
+import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.biblioteca.contenedores.Directorio;
 
 public class BibliotecaMusical {
@@ -27,7 +27,7 @@ public class BibliotecaMusical {
 		canciones = new BibliotecaContainer();
 		stream = new XStream();
 		stream.alias("biblioteca", BibliotecaContainer.class);
-		stream.alias("cancion", Cancion.class);
+		stream.alias("cancion", CancionContainer.class);
 		stream.alias("dir", Directorio.class);
 		//no introducimos el atributo modificado en la estructura del fichero XML
 		stream.omitField(BibliotecaContainer.class, "modificado");
@@ -57,7 +57,7 @@ public class BibliotecaMusical {
 			stream.toXML(canciones, new FileOutputStream(pathYfichero));
 	}
 	
-	
+	//TODO
 	public void ordenar(Comparator criterioOrden){
 		
 	}

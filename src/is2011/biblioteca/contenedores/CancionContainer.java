@@ -1,6 +1,6 @@
 package is2011.biblioteca.contenedores;
 
-public class Cancion {
+public class CancionContainer {
 	
 	private String trackPath;
 	private String titulo;
@@ -10,7 +10,7 @@ public class Cancion {
 	private int duracion;   //en segundos
 	
 	
-	public Cancion(String trackP, String tit, String alb, String gene, String art,  int dur){
+	public CancionContainer(String trackP, String tit, String alb, String gene, String art,  int dur){
 		trackPath = trackP;
 		titulo = tit;
 		album = alb;

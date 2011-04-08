@@ -5,14 +5,14 @@ import java.util.HashMap;
 public class Directorio {
 	
 	private String path;
-	private HashMap<String,Cancion> listaCanciones;
+	private HashMap<String,CancionContainer> listaCanciones;
 	
-	public Directorio(String path, HashMap<String, Cancion> listaCanciones) {
+	public Directorio(String path, HashMap<String, CancionContainer> listaCanciones) {
 		this.path = path;
 		this.listaCanciones = listaCanciones;
 	}
 
-	public void addCancion(Cancion cancion){
+	public void addCancion(CancionContainer cancion){
 		// no pueden existir dos canciones con el mismo trackPath (nombre de fichero .mp3)
 		// se sobreescribe de todas formas
 		this.listaCanciones.put(cancion.getTrackPath(), cancion);
@@ -26,11 +26,11 @@ public class Directorio {
 		this.path = path;
 	}
 
-	public HashMap<String, Cancion> getListaCanciones() {
+	public HashMap<String, CancionContainer> getListaCanciones() {
 		return listaCanciones;
 	}
 
-	public void setListaCanciones(HashMap<String, Cancion> listaCanciones) {
+	public void setListaCanciones(HashMap<String, CancionContainer> listaCanciones) {
 		this.listaCanciones = listaCanciones;
 	}
 	

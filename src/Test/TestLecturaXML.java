@@ -1,7 +1,7 @@
 package Test;
 
 import is2011.biblioteca.contenedores.BibliotecaContainer;
-import is2011.biblioteca.contenedores.Cancion;
+import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.biblioteca.contenedores.Directorio;
 
 import java.io.FileInputStream;
@@ -16,7 +16,7 @@ public class TestLecturaXML {
 		
 		XStream stream = new XStream();
 		stream.alias("biblioteca", BibliotecaContainer.class);
-		stream.alias("cancion", Cancion.class);
+		stream.alias("cancion", CancionContainer.class);
 		stream.alias("dir", Directorio.class);
 		
 		// IMPORTANTE para que no aparezca en el fichero XML
