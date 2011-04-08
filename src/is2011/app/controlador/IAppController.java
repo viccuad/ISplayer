@@ -15,48 +15,52 @@ public interface IAppController {
 	/**
 	 * 
 	 */
-	void play();
+	public void play();
 
 	/**
 	 * 
 	 */
-	void stop();
+	public void stop();
 
 	/**
 	 * 
 	 */
-	void fastForward();
+	public void fastForward();
 
 	/**
 	 * 
 	 */
-	void rewind();
+	public void rewind();
 
 	/**
 	 * @param file
 	 */
-	void open(File file);
+	public void open(File file);
 
 	/**
 	 * @param i
 	 */
-	void irA(float i);
+	public void irA(float i);
 
 	/**
 	 * @return
 	 */
-	File abrirArchivo();
+	public void abrirArchivos();
 
 	/**
 	 * 
 	 */
-	void pause();
+	public void pause();
 
-	void aniadir(File abrirArchivo);
+	public void aniadir();
 
 	/**
 	 * 
 	 */
+	public void siguienteCancion();
+	
+	
+	public void cancionAnterior();
 	
 
 }

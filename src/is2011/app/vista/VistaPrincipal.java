@@ -23,6 +23,9 @@ import java.io.FileNotFoundException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import javax.swing.JFrame;
@@ -41,6 +44,11 @@ public class VistaPrincipal extends JFrame
 	private JButton avanzar;
 	private JButton atrasar;
 	private JButton aniadir;
+	
+	private JMenuBar menu;
+	private JMenu menuArchivo;
+	private JMenuItem menuItemAbrir;
+	private JMenuItem menuItemAñadir;
 	
 	GridBagConstraints grid;
 	private VistaReproduccion vistaReproduccion;
@@ -90,10 +98,9 @@ public class VistaPrincipal extends JFrame
 		aniadir.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (nombre == null) {
-					controlador.aniadir(controlador.abrirArchivo());
-				}
-				}}
+				controlador.aniadir();
+				
+			}}
 			
 		);
 		
@@ -202,8 +209,33 @@ public class VistaPrincipal extends JFrame
         this.setVisible(true);
 		this.setSize(800,800);
 		
+		this.menu = new JMenuBar();
 		
-
+		this.menuArchivo = new JMenu("Archivo");
+		this.menuItemAbrir = new JMenuItem ("Abrir");
+		this.menuItemAñadir = new JMenuItem ("Añadir");
+		
+		this.menuArchivo.add(menuItemAbrir);
+		this.menuArchivo.add(menuItemAñadir);
+		
+		this.menu.add(menuArchivo);
+		
+		this.menuItemAbrir.addActionListener(new ActionListener(){
+			
+			public void actionPerformed(ActionEvent e) {
+				controlador.abrirArchivos();
+			}
+			
+		});
+		
+		this.menuItemAñadir.addActionListener(new ActionListener(){
+			
+			public void actionPerformed(ActionEvent e) {
+				controlador.aniadir();
+			}
+			
+		});
+		this.setJMenuBar(menu);
 	}
 
 	 

@@ -30,18 +30,23 @@ public class AppController implements IAppController {
 		reproductor = rep;
 	}
 	
-	@Override
-	 public File abrirArchivo()
+	public void abrirArchivos() {
+		reproductor.reiniciaListaReproduccion();
+		aniadir();
+	}
+	
+	 public File[] abrirArchivo()
 	    {
 	        JFileChooser fileChooser = new JFileChooser();
 
+	        fileChooser.setMultiSelectionEnabled(true);
+
 	        //Lo configuramos para que solo permita la apertura de ficheros
 	        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-	        fileChooser.setMultiSelectionEnabled(false);
 	        fileChooser.setAcceptAllFileFilterUsed(false);
 
 	        //Añadimos un filtro para permitir solo apertura de tipo plg
-	        FileNameExtensionFilter filter = new FileNameExtensionFilter("mp3", "mp3");
+	        FileNameExtensionFilter filter = new FileNameExtensionFilter("mp3 & ogg", "mp3", "ogg");
 	        //FileNameExtensionFilter filter = new FileNameExtensionFilter("ogg", "ogg");
 	        fileChooser.setFileFilter(filter);
 
@@ -53,8 +58,15 @@ public class AppController implements IAppController {
 
 	        if (seleccion == JFileChooser.APPROVE_OPTION)
 	        {
-	            File f = fileChooser.getSelectedFile();
-	            if (filter.accept(f))
+	            File[] f = fileChooser.getSelectedFiles();
+	            
+	            boolean aceptado = true;
+	            for(File file : f) {
+	            	if (!(filter.accept(file)))
+		                aceptado = false;
+	            }
+	            
+	            if (aceptado)
 	                return f;
 	            else
 	            	return null;
@@ -117,9 +129,31 @@ public class AppController implements IAppController {
 	}
 
 	@Override
-	public void aniadir(File abrirArchivo) {
+	public void aniadir() {
+		File[] files = abrirArchivo();
+		if(files != null) {
+			for (File f : files) {
+				reproductor.aniadir(f.getAbsolutePath());
+			}
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see is2011.app.controlador.IAppController#cancionAnterior()
+	 */
+	@Override
+	public void cancionAnterior() {
+		// TODO Auto-generated method stub
 		
-		reproductor.aniadir(abrirArchivo.getAbsolutePath());
+	}
+
+	/* (non-Javadoc)
+	 * @see is2011.app.controlador.IAppController#siguienteCancion()
+	 */
+	@Override
+	public void siguienteCancion() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

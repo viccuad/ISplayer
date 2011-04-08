@@ -53,6 +53,7 @@ public class Controlador {
 	public void play() {
 		try {
 			if(!listaReproduccion.isVacia()) {
+				listaReproduccion.setActual(contadorSaturado +1);
 				Cancion cancion = listaReproduccion.getCancionAt(contadorSaturado++);
 				this.reproductor.open(new File(cancion.getPath()));
 				this.reproductor.setBytesMusica(cancion.getBytesMusica());
@@ -131,10 +132,7 @@ public class Controlador {
 	}
 
 	public void aniadir(String absolutePath) {
-		
 		listaReproduccion.addCancion(new CancionMP3(absolutePath));
-		System.out.println(listaReproduccion);
-		
 	}
 
 	/**
@@ -142,6 +140,14 @@ public class Controlador {
 	 */
 	public void setListaReproduccion(ListaReproduccion lr) {
 		this.listaReproduccion = lr;
+		
+	}
+
+	/**
+	 * 
+	 */
+	public void reiniciaListaReproduccion() {
+		this.listaReproduccion.reiniciar(false);
 		
 	}
 

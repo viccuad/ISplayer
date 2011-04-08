@@ -5,7 +5,6 @@ import is2011.reproductor.modelo.listeners.BorrarCancionEvent;
 import is2011.reproductor.modelo.listeners.ListaReproduccionListener;
 import is2011.reproductor.modelo.listeners.NuevaCancionEvent;
 
-import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
@@ -113,13 +112,13 @@ public class VistaListaReproduccion extends JScrollPane implements
 	}
 
 	@Override
-	public void setActual(int actualViejo, int actualNuevo) {
-		if(modelo.getRowCount() >= (actualViejo -1)) {
+	public void setActual(int actualNuevo, int actualViejo) {
+		if(modelo.getRowCount() >= (actualViejo) && actualViejo > 0 ) {
 			modelo.setValueAt("", actualViejo-1, NUM_COLUMNA_REPRODUCIENDO);
 		}
 		
-		if(modelo.getRowCount() >= (actualNuevo -1)) {
-			modelo.setValueAt("**", actualNuevo-1, NUM_COLUMNA_REPRODUCIENDO);
+		if(modelo.getRowCount() >= (actualNuevo) && actualNuevo >0) {
+			modelo.setValueAt("  ********   ", actualNuevo-1, NUM_COLUMNA_REPRODUCIENDO);
 		}
 	}
 
