@@ -6,8 +6,6 @@ import is2011.biblioteca.contenedores.Directorio;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.util.HashMap;
 
 import com.thoughtworks.xstream.XStream;
 
