@@ -20,19 +20,20 @@ public class TestEscrituraXML {
 		stream.alias("dir", Directorio.class);
 		
 		BibliotecaContainer bib = new BibliotecaContainer();
-		
 		new Cancion("AAAA","AAAA","AAAA","AAAA","AAAA",0);
 		HashMap<String,Cancion> listaCanciones = new HashMap<String,Cancion>();
 		for(int i = 0; i< 10; i++)
 			listaCanciones.put(""+i, new Cancion("AAAA","AAAA","AAAA","AAAA","AAAA",0));
 		
-		new Directorio("ruta", listaCanciones);
 		bib.addDir(new Directorio("ruta", listaCanciones));
 		
 		try {
 			stream.toXML(bib, new FileOutputStream("/Users/david/Documents/workspace/ISGrupo12/src/Recursos/testXML1.xml"));
+			//==> si estas en windoes debes comentar la linea anterior y descomentar la siguiente,
+			//==> sustituyendo la ruta hasta el workspace
+			//stream.toXML(bib, new FileOutputStream("c:/ "tu ruta al workspace" /workspace/ISGrupo12/src/Recursos/testXML1.xml"));
+			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
