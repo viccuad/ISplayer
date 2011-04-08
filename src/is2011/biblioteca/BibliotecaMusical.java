@@ -10,7 +10,7 @@ import com.thoughtworks.xstream.XStream;
 
 import is2011.biblioteca.contenedores.BibliotecaContainer;
 import is2011.biblioteca.contenedores.CancionContainer;
-import is2011.biblioteca.contenedores.Directorio;
+import is2011.biblioteca.contenedores.DirectorioContainer;
 
 public class BibliotecaMusical {
 
@@ -28,7 +28,7 @@ public class BibliotecaMusical {
 		stream = new XStream();
 		stream.alias("biblioteca", BibliotecaContainer.class);
 		stream.alias("cancion", CancionContainer.class);
-		stream.alias("dir", Directorio.class);
+		stream.alias("dir", DirectorioContainer.class);
 		//no introducimos el atributo modificado en la estructura del fichero XML
 		stream.omitField(BibliotecaContainer.class, "modificado");
 	}

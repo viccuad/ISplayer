@@ -12,16 +12,16 @@ public class BibliotecaContainer {
 	@XStreamOmitField
 	private boolean modificado;
 	
-	private HashMap<String, Directorio> directorios;
+	private HashMap<String, DirectorioContainer> directorios;
 	
 	
 	public BibliotecaContainer(){
 		this.modificado = false;
-		this.directorios = new HashMap<String, Directorio>();
+		this.directorios = new HashMap<String, DirectorioContainer>();
 	}
 	
 	
-	public void addDir(Directorio dir){
+	public void addDir(DirectorioContainer dir){
 		// si el directorio existia, se reemplaza
 		this.directorios.put(dir.getPath(), dir);
 		this.modificado = true;

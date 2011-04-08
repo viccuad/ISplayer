@@ -2,12 +2,12 @@ package is2011.biblioteca.contenedores;
 
 import java.util.HashMap;
 
-public class Directorio {
+public class DirectorioContainer {
 	
 	private String path;
 	private HashMap<String,CancionContainer> listaCanciones;
 	
-	public Directorio(String path, HashMap<String, CancionContainer> listaCanciones) {
+	public DirectorioContainer(String path, HashMap<String, CancionContainer> listaCanciones) {
 		this.path = path;
 		this.listaCanciones = listaCanciones;
 	}

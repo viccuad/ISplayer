@@ -17,7 +17,7 @@ public class TestEscrituraXML {
 		XStream stream = new XStream();
 		stream.alias("biblioteca", BibliotecaContainer.class);
 		stream.alias("cancion", CancionContainer.class);
-		stream.alias("dir", Directorio.class);
+		stream.alias("dir", DirectorioContainer.class);
 		
 		// IMPORTANTE para que no aparezca en el fichero XML
 		stream.omitField(BibliotecaContainer.class, "modificado");
@@ -28,7 +28,7 @@ public class TestEscrituraXML {
 		for(int i = 0; i< 10; i++)
 			listaCanciones.put(""+i, new CancionContainer("AAAA","AAAA","AAAA","AAAA","AAAA",0));
 		
-		bib.addDir(new Directorio("ruta", listaCanciones));
+		bib.addDir(new DirectorioContainer("ruta", listaCanciones));
 		
 		try {
 			stream.toXML(bib, new FileOutputStream("src/Recursos/testXML1.xml"));

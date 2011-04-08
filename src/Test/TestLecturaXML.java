@@ -2,7 +2,7 @@ package Test;
 
 import is2011.biblioteca.contenedores.BibliotecaContainer;
 import is2011.biblioteca.contenedores.CancionContainer;
-import is2011.biblioteca.contenedores.Directorio;
+import is2011.biblioteca.contenedores.DirectorioContainer;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,7 +17,7 @@ public class TestLecturaXML {
 		XStream stream = new XStream();
 		stream.alias("biblioteca", BibliotecaContainer.class);
 		stream.alias("cancion", CancionContainer.class);
-		stream.alias("dir", Directorio.class);
+		stream.alias("dir", DirectorioContainer.class);
 		
 		// IMPORTANTE para que no aparezca en el fichero XML
 		stream.omitField(BibliotecaContainer.class, "modificado");
