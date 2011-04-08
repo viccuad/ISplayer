@@ -12,14 +12,17 @@ import com.thoughtworks.xstream.XStream;
 public class TestLecturaXML {
 
 	public static void main(String[] args) {
+		BibliotecaContainer bib;
+		
 		XStream stream = new XStream();
 		stream.alias("biblioteca", BibliotecaContainer.class);
 		stream.alias("cancion", Cancion.class);
 		stream.alias("dir", Directorio.class);
 		
-		BibliotecaContainer bib;
+		// IMPORTANTE para que no aparezca en el fichero XML
+		stream.omitField(BibliotecaContainer.class, "modificado");
 		
-
+		
 		try {
 			//Leemos del fihero XML y lo cargamos en la estructura de biblioteca
 			bib = (BibliotecaContainer) stream.fromXML(new FileInputStream("/Users/david/Documents/workspace/ISGrupo12/src/Recursos/testXML1.xml"));

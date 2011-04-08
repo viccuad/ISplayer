@@ -17,6 +17,7 @@ public class BibliotecaMusical {
 	/** Única instancia de la biblioteca musical. Sigue el patrón Singleton */
 	private static BibliotecaMusical singleBibliotecaMusical = null;
 	
+	/** */
 	private XStream stream;
 	
 	
@@ -26,6 +27,8 @@ public class BibliotecaMusical {
 		stream.alias("biblioteca", BibliotecaContainer.class);
 		stream.alias("cancion", Cancion.class);
 		stream.alias("dir", Directorio.class);
+		//no introducimos el atributo modificado en la estructura del fichero XML
+		stream.omitField(BibliotecaContainer.class, "modificado");
 	}
 	
 	/**

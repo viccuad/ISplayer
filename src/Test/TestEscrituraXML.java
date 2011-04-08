@@ -19,6 +19,9 @@ public class TestEscrituraXML {
 		stream.alias("cancion", Cancion.class);
 		stream.alias("dir", Directorio.class);
 		
+		// IMPORTANTE para que no aparezca en el fichero XML
+		stream.omitField(BibliotecaContainer.class, "modificado");
+		
 		BibliotecaContainer bib = new BibliotecaContainer();
 		new Cancion("AAAA","AAAA","AAAA","AAAA","AAAA",0);
 		HashMap<String,Cancion> listaCanciones = new HashMap<String,Cancion>();

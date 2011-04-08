@@ -2,12 +2,16 @@ package is2011.biblioteca.contenedores;
 
 import java.util.HashMap;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 
 
 
 public class BibliotecaContainer {
-
+	
+	@XStreamOmitField
 	private boolean modificado;
+	
 	private HashMap<String, Directorio> directorios;
 	
 	
@@ -24,9 +28,11 @@ public class BibliotecaContainer {
 		
 	}
 
+	
 	public boolean isModificado() {
 		return modificado;
 	}
+	
 	
 	
 	
