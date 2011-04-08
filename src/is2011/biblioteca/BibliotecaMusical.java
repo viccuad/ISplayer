@@ -3,6 +3,8 @@ package is2011.biblioteca;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.Collections;
+import java.util.Comparator;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -55,6 +57,10 @@ public class BibliotecaMusical {
 			stream.toXML(canciones, new FileOutputStream(pathYfichero));
 	}
 	
+	
+	public void ordenar(Comparator criterioOrden){
+		
+	}
 	
 	
 	
