@@ -77,8 +77,8 @@ public class VistaPrincipal extends JFrame
 		atrasar.setIcon(new ImageIcon(getClass().getResource("/Recursos/rew.png")));
 		panelPpal.add(atrasar);		
 		
-		aniadir= new JButton("mas");
-		
+		aniadir= new JButton();
+		aniadir.setIcon(new ImageIcon(getClass().getResource("/Recursos/sub_blue_add-48.png")));
 		panelPpal.add(aniadir);	
 		
 		aniadir.addActionListener(new ActionListener(){
@@ -145,7 +145,8 @@ public class VistaPrincipal extends JFrame
 					pos = vistaReproduccion.getPos();
 					controlador.irA((float)pos/1000);
 				}
-		});
+		}
+		);
 		
 	}
 	public void initialize()
@@ -156,17 +157,9 @@ public class VistaPrincipal extends JFrame
 		this.add(getContenido());
 		this.setVisible(true);
 		this.setSize(800,200);
-		
-		
-	
-		
-		
-		
-
 
 	}
 
-	
 	 
 	/**
 	 * @param appController
