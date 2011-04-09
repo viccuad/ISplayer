@@ -1,7 +1,5 @@
 package is2011.reproductor.modelo;
 
-import java.io.File;
-
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
@@ -61,10 +59,10 @@ public interface Reproductor {
 	
 	/**
 	 * Abre el fichero que le pasamos como parametro para su reproduccion
-	 * @param f El fichero que queremos abrir
+	 * @param c La cancion que queremos abrir
 	 * @throws BasicPlayerException
 	 */
-	public void open(File f) throws BasicPlayerException;
+	public void open(Cancion c) throws BasicPlayerException;
 	
 	/**
 	 * Añade un oyente al reproductor
@@ -73,7 +71,14 @@ public interface Reproductor {
 	public void addBasicPlayerListener(BasicPlayerListener bpl);
 
 	/**
-	 * @param bytes
+	 * @param borrarOyentes 
+	 * 
 	 */
-	void setBytesMusica(int bytes);
+	public void reiniciar(boolean borrarOyentes);
+
+	/**
+	 * Devuelve si la cancion actual esta pausada o no.
+	 * @return Si esta pausada
+	 */
+	public boolean isPaused();
 }

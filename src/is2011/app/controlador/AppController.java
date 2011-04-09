@@ -8,7 +8,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import is2011.reproductor.controlador.ControladorReproductor;
 
 
-
+/**
+ * @see IAppController
+ */
 public class AppController implements IAppController {
 	
 	// ********************************************************************** //
@@ -115,17 +117,16 @@ public class AppController implements IAppController {
 	@Override
 	public void irA(float i) {
 		reproductor.irA(i);
-		
 	}
 	
 	@Override
 	public void cancionAnterior() {
-		this.reproductor.siguiente();
+		this.reproductor.anterior();
 	}
 
 	@Override
 	public void siguienteCancion() {
-		this.reproductor.anterior();
+		this.reproductor.siguiente();
 	}
 
 	@Override
@@ -134,7 +135,7 @@ public class AppController implements IAppController {
 		if(files != null) {
 			for (File f : files) {
 				if (f != null) {
-					reproductor.aniadir(f.getAbsolutePath());
+					reproductor.añadirCancion(f.getAbsolutePath());
 				}
 			}
 		}
@@ -145,14 +146,15 @@ public class AppController implements IAppController {
 		File[] files = abrirArchivo();
 		if(files != null) {
 			reproductor.stop();
-			reproductor.reiniciaListaReproduccion();
+			reproductor.reiniciaListaReproduccion(false);
 			for (File f : files) {
 				if (f != null) {
-					reproductor.aniadir(f.getAbsolutePath());
+					reproductor.añadirCancion(f.getAbsolutePath());
 				}
 			}
+			reproductor.play();
 		}
-		reproductor.play();
+		
 	}
 	
 

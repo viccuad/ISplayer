@@ -2,10 +2,10 @@ package is2011.reproductor.modelo;
 
 
 
+import java.io.File;
+
 import javazoom.jlgui.basicplayer.BasicPlayer;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
-import javazoom.spi.PropertiesContainer;
-
 
 /**
  * Clase que hereda de basic player y añade la funcionalidad necesaria para
@@ -66,13 +66,29 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 		if (porcentaje >= 0 && porcentaje <= 1) {
 			//System.out.println(m_audioFileFormat.properties().toString().replace(",", "\n"));
 			super.seek((long)(bytesMusica*porcentaje));
-			
-			//TODO esto dara excepcion
 		}
 	}
 	
+	
+
 	@Override
-	public void setBytesMusica(int bytes) {
-		this.bytesMusica = bytes;
+	public void reiniciar(boolean borrarOyentes) {
+		super.reset();
+	}
+
+	
+	@Override
+	public void open(Cancion c) throws BasicPlayerException {
+		this.bytesMusica = c.getBytesMusica();
+		super.open(new File(c.getPath()));
+	}
+
+	
+	@Override
+	public boolean isPaused() {
+		if(m_status == PAUSED) {
+			return true;
+		}
+		return false;
 	}	
 }

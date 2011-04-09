@@ -136,6 +136,13 @@ public class ListaReproduccion {
 	 */
 	public void removeCancion(int pos){
 		this.borrarCancion(pos);
+		
+		//Si la cancion que borramos esta por debajo de actual
+		//O actual apuntaba a la ultima cancion
+		if (pos < (actual-1) || actual > this.listaReproduccion.size()) {
+			setActual(actual -1);
+		}
+		
 	}
 	
 	/**
@@ -188,7 +195,7 @@ public class ListaReproduccion {
 
 	/**
 	 * El numero de cancion actual.
-	 * @param La cancion actual.
+	 * @param La cancion actual. 1 es la primera cancion.
 	 */
 	public void setActual(int actual) {
 		int viejo = this.actual;

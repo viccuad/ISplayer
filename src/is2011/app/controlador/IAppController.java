@@ -1,7 +1,5 @@
 package is2011.app.controlador;
 
-import java.io.File;
-
 /**
  * Controlador de la aplicacion , que recoje las ordenes de la vista principal
  * y ordena al reproductor lo que debe hacer.
@@ -24,7 +22,7 @@ import java.io.File;
 public interface IAppController {
 
 	/**
-	 * Indica al reproductor que haga sonar la siguiente cancion.
+	 * Indica al reproductor que haga sonar la cancion actual.
 	 * @return false si no hay canciones o se ha llegado al final de la lista
 	 * de reproduccion.
 	 */

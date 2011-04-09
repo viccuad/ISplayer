@@ -1,25 +1,21 @@
 package is2011.app.vista;
 
 
-import is2011.app.controlador.AppController;
+
 import is2011.app.controlador.IAppController;
 import is2011.reproductor.vista.VistaListaReproduccion;
 import is2011.reproductor.vista.VistaReproduccion;
 
-import java.awt.Dimension;
-import java.awt.FileDialog;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.FileNotFoundException;
+
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -35,15 +31,16 @@ public class VistaPrincipal extends JFrame
 {
 	private IAppController controlador;
 	
-	private String nombre;
-	private int pos;
-	
+
 	private JButton play;
 	private JButton pause;
 	private JButton stop;
 	private JButton avanzar;
 	private JButton atrasar;
 	private JButton aniadir;
+	
+	private JButton siguiente;
+	private JButton anterior;
 	
 	private JMenuBar menu;
 	private JMenu menuArchivo;
@@ -60,7 +57,7 @@ public class VistaPrincipal extends JFrame
 		super();
 		grid = new GridBagConstraints();
 		initialize();
-		pos = 0;
+		
 		
 	}
 
@@ -68,7 +65,7 @@ public class VistaPrincipal extends JFrame
 
 
 		JPanel panelPpal = new JPanel();
-		panelPpal.setLayout(new GridLayout(1,6));
+		panelPpal.setLayout(new GridLayout(1,8));
 		
 		play = new JButton();
 		play.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
@@ -94,6 +91,31 @@ public class VistaPrincipal extends JFrame
 		aniadir= new JButton();
 		aniadir.setIcon(new ImageIcon(getClass().getResource("/Recursos/sub_blue_add-48.png")));
 		panelPpal.add(aniadir);	
+		
+		siguiente  = new JButton("Siguiente");
+		panelPpal.add(siguiente);
+		
+		
+		anterior  = new JButton("Anterior");
+		panelPpal.add(anterior);
+		
+		siguiente.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controlador.siguienteCancion();
+				
+			}}
+			
+		);
+		
+		anterior.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controlador.cancionAnterior();
+				
+			}}
+			
+		);
 		
 		aniadir.addActionListener(new ActionListener(){
 			@Override
@@ -164,7 +186,7 @@ public class VistaPrincipal extends JFrame
 		vistaReproduccion.addListenerProgreso (new MouseAdapter() {
 			
 		public void mouseReleased(MouseEvent arg0) {
-					pos = vistaReproduccion.getPos();
+					int pos = vistaReproduccion.getPos();
 					controlador.irA((float)pos/1000);
 				}
 		}

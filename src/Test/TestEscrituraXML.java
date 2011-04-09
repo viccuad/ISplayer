@@ -29,7 +29,7 @@ public class TestEscrituraXML {
 		for(int i = 0; i< 10; i++)
 			listaCanciones.put(""+i, new CancionContainer("AAAA","AAAA","AAAA","AAAA","AAAA",0));
 		
-		bib.addDir(new DirectorioContainer("ruta", listaCanciones));
+		//TODO bib.addDir(new DirectorioContainer("ruta", listaCanciones));
 		
 		try {
 			stream.toXML(bib, new FileOutputStream("src/Recursos/testXML1.xml"));
