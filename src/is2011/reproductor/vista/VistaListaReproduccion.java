@@ -11,7 +11,6 @@ import is2011.reproductor.modelo.listeners.NuevaCancionEvent;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
