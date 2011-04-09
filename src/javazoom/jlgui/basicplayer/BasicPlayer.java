@@ -722,7 +722,7 @@ public class BasicPlayer implements BasicController, Runnable
                         }
                     }
                 }
-                notifyEvent(BasicPlayerEvent.SEEKED, getEncodedStreamPosition(), -1, null);
+                notifyEvent(BasicPlayerEvent.SEEKED, getEncodedStreamPosition(), -1, null);  
                 m_status = OPENED;
                 if (previousStatus == PLAYING) startPlayback();
                 else if (previousStatus == PAUSED)

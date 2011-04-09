@@ -24,6 +24,7 @@ import javazoom.jlgui.basicplayer.BasicPlayerListener;
  * @author Administrator
  *
  */
+@SuppressWarnings("serial")
 public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 
 	// ********************************************************************** //
@@ -33,53 +34,65 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	/** Referencia al controlador de la aplicacion*/
 	private IAppController controlador;
 	
-	/**Tiempo total de reproduccion de esta cancion*/
-	private long tiempoTotal;
-	
-	/** Tiempo actual de reproduccion de esta cancion*/
-	private int tiempoActual;
-	
-	/** Estado actual del reproductor*/
-	private String estado;
-	
 	/** Progreso*/
 	private JScrollBar progreso;
-	
-	/** KBps*/
-	private int framerate;
 	
 	/** Muestra el estado de la reproduccion*/
 	private JLabel labelEstado;
 	
-	//TODO debug
-	private JLabel ultimoClick;
+	/** 
+	 * Variable que indica que estamos buscando una posicion en la barra de 
+	 * progreso
+	 */
+	private boolean buscando;
 	
 	/** Posicion del scroll bar*/
 	private int posicion;
 	
-	private int posicionDeseada;
+	//--------------------------------------------------------------------------
+	//Atributos para conocer el tiempo de reproduccion.
 	
+	/**Los bytes totales de musica.*/
 	private int bytesMusica;
 	
-	private boolean buscando;
-
-	private int bytesArchivo;
-
+	/** Posicion donde se inicia la musica*/
 	private int byteInicioMusica;
 
+	/** El bit rate medio kpbs*/
 	private int bitrate;
+	
+	//--------------------------------------------------------------------------
+	//Informacion de la cancion.
+	
+	/** String que contiene el formato... MP3, ogg...*/
+	private String formato;
+	
+	/** El bitrate instantaneo*/
+	private int framerate;
+	
+	/** La frecuencia con la que se ha sampleado la cancion*/
+	private int sampleRate;
+	
+	/** Contiene el modo de audio... Estereo, mono...*/
+	private String modoAudio;
+	
+	/**Tiempo total de reproduccion de esta cancion*/
+	private String tiempoTotal;
+	
+	/** Tiempo actual de reproduccion de esta cancion*/
+	private int tiempoActual;
 
 	// ********************************************************************** //
 	// *************              CONSTRUCTOR                   ************* //
 	// ********************************************************************** //
 	
+	/** 
+	 * Constructor por defecto.
+	 */
 	public VistaReproduccion() {
 		super();
 		
-		this.tiempoTotal = 0;
-		this.tiempoActual = 0;
-		this.estado = "";
-		this.framerate = 0;
+		reset();
 		
 		this.progreso = new JScrollBar(JScrollBar.HORIZONTAL, 0, 10, 0, 1000);
 	
@@ -89,20 +102,15 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		this.labelEstado = new JLabel("");
 		this.add(this.labelEstado);
 		
-		this.ultimoClick = new JLabel();
-		this.add(this.ultimoClick);
-		
 		this.progreso.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				buscando = true;
-				ultimoClick.setText("Buscando...");
 			}
 			
 			public void mouseReleased(MouseEvent arg0) {
 				synchronized (progreso) {
-					posicionDeseada = progreso.getValue();
-					ultimoClick.setText("Posicion deseada -> " + posicionDeseada + "/1000");
+					int posicionDeseada = progreso.getValue();
 					buscando = false;
 					controlador.irA((float)posicionDeseada/1000);
 				}
@@ -111,17 +119,32 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		
 	}
 	
+	/**
+	 * Pone todos los valores a 0
+	 */
 	public void reset() {
-		this.tiempoTotal = 0;
-		this.tiempoActual = 0;
-		this.estado = "";
+		this.buscando = false;
+		this.posicion = 0;
+		this.bytesMusica = 0;
+		this.byteInicioMusica = 0;
+		this.bitrate = 0;
+		this.formato = "";
 		this.framerate = 0;
+		this.sampleRate = 0;
+		this.modoAudio = "";
+		this.tiempoTotal = "";
+		this.tiempoActual = 0;
 	}
 	
 	// ********************************************************************** //
 	// *************              MÉTODOS PRIVADOS              ************* //
 	// ********************************************************************** //
 	
+	/**
+	 * Recibe un numero de segundos y lo transforma a un string de HH:MM:SS
+	 * @param segundos el numero de segundos.
+	 * @return El estring con formato HH:MM:SS
+	 */
 	private String toHora(int segundos) {
 		int horas;
 		int minutos;
@@ -137,72 +160,116 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 			+minutos)+ ":" + ((segundos > 9)? segundos : "0"+segundos);
 	}
 	
+	/**
+	 * Recoge toda la informacion de la cancion que estamos reproduciendo.
+	 * @param properties
+	 */
+	@SuppressWarnings("unchecked")
+	private void getInfo(Map properties)
+    {
+		//System.out.println(properties.toString().replace(",", "\n"));
+		if (properties != null)
+        {	
+			//Vemos en que formato esta el fichero.
+			this.formato = 	(String) properties.get("audio.type");
+			
+			//Numero de bits por segundo.
+            this.bitrate = ((Integer) properties.get("bitrate")).intValue();
+			
+            //La frecuencia de sampleado.
+            this.sampleRate = ((Float)properties.get("audio.samplerate.hz")).intValue();
+			
+            // El modo de audio.
+            int canales = ((Integer) properties.get("audio.channels")).intValue();
+            this.modoAudio = canales == 2 ? "estereo" : "mono";
+            
+            //Calculamos el tamaño del fichero
+        	int bytesArchivo = ((Integer) properties.get("mp3.length.bytes")).intValue();
+            
+        	//Calculamos en que byte se inicia la musica
+        	this.byteInicioMusica    = ((Integer) properties.get("mp3.header.pos")).intValue();
+            
+        	//Calculamos el numero de bytes dedicados a la musica
+        	this.bytesMusica = bytesArchivo - byteInicioMusica;
+            
+        	//El tiempo que dura la cancion
+        	this.tiempoTotal = toHora(Math.round(( (float)bytesMusica / (bitrate/8))));
+        }
+    }
+	
+	/**
+	 * Escribe la informacion de reproduccion.
+	 */
+	private void escribirInfo() {
+		String info = "";
+		
+		info += this.formato +" ";
+		info += this.framerate + " bps ";
+		info += this.sampleRate + " hz ";
+		
+		info += this.modoAudio + " ♣♣ ";
+		info += this.toHora(this.tiempoActual) + "/" + tiempoTotal;
+		
+		this.labelEstado.setText(info);
+	}
+	
 	// ********************************************************************** //
 	// *************              MÉTODOS PÚBLICOS              ************* //
 	// ********************************************************************** //
+	
 	/**
-	 * Archivo abierto. Mostramos el tiempo total de la cancion, asi como el bitrate.
+	 * Archivo abierto. 
+	 * Recogemos toda la informacion del archivo y la mostramos.
 	 */
+	@SuppressWarnings("unchecked")
 	public void opened(Object arg0, Map properties) {
-		tiempoTotal = this.getTimeLengthEstimation(properties);
-		posicion = 0;
-		this.progreso.setValue(posicion);
-		if (properties.containsKey("audio.samplesize.bits"))
-        {
-			framerate = ((Integer) properties.get("audio.samplesize.bits")).intValue();
-			
-        }
-		this.labelEstado.setText(tiempoTotal + "/" + framerate + " kpbs");
+		//Ponemos toda la informacion a la de por defecto.
+		this.reset();
+		
+		//Recojemos la informacion que nos proporcionan las propiedades.
+		this.getInfo(properties);
+		
 	}
 	
 	
-
-	/* (non-Javadoc)
-	 * @see javazoom.jlgui.basicplayer.BasicPlayerListener#progress(int, long, byte[], java.util.Map)
+	/**
+	 * Se encarga de actualizar el tiempo.
+	 * Para ello utiliza los bytes que se han leido y el bitrate.
+	 * Para actualizar la barra de progreso, utiliza los bits totales y los que
+	 * se han leido hasta el momento. 
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void progress(int bytesread, long arg1, byte[] arg2, Map properties) {
 		//mp3.position.microseconds, mp3.equalizer, mp3.frame.size.bytes, 
 		//mp3.frame, mp3.frame.bitrate, mp3.position.byte
 		
-		int audioFramesize = (Integer)properties.get("mp3.frame.size.bytes");
-		framerate = (Integer)properties.get("mp3.frame.bitrate");
-		long mp3Frame = (Long)properties.get("mp3.frame");
-		long mp3PositionByte = (Long)properties.get("mp3.position.byte");
-		
-		int nuevaPosicion = Math.round((((float)bytesread - byteInicioMusica) / bytesMusica)*1000f);
+		//Calculamos la nueva posicion de la barra de desplazamiento
+		int nuevaPosicion = Math.round((((float)bytesread - byteInicioMusica) / 
+				bytesMusica)*1000f);
+		//Si la nueva posicion es diferente a la anterior.
 		if(nuevaPosicion != posicion) {
 			posicion = nuevaPosicion;
 			synchronized (this.progreso) {
+				//Actualizamos la barra de progreso si no estamos buscando una
+				//posicion donde desplazar la cancion.
 				if(!buscando) {
 					this.progreso.setValue(posicion);
 				}
 			}
 		}
 		
+		//Calculamos el tiempo actual.
 		int tiempo =  Math.round(( (float)bytesread - byteInicioMusica) / (bitrate/8));
+		
+		//Si el tiempo actual es diferente, actualizamos la vista.
 		if(tiempo != tiempoActual) {
-			/*System.out.println("TamañoArchivo " + this.bytesArchivo);
-			System.out.println("Tamaño Musica " + this.bytesMusica);
-			System.out.println("Bytes leidos del archivo" + bytesread);
-			System.out.println("Bytes leidos de musica" + (bytesread-byteInicioMusica));
-			
-			System.out.println("audioFramerate " + framerate);
-			System.out.println("audioFramesize " + audioFramesize);
-			System.out.println("mp3Frame " + mp3Frame);
-			System.out.println("mp3PositionByte " + mp3PositionByte);
-			System.out.println("************************************\n");*/
 			tiempoActual = tiempo;
+			framerate = (Integer)properties.get("mp3.frame.bitrate");
 			escribirInfo();
 		}
 
 	}
-	
-	private void escribirInfo() {
-		//System.out.println("Progreso... " + tiempoActual + "/" + (tiempoTotal/1000)); 
-		this.labelEstado.setText(toHora(tiempoActual) + "/" + toHora((int)tiempoTotal) + "   " + framerate + " kpbs");
-	}
-
 	
 	@Override
 	public void setController(BasicController arg0) {
@@ -214,58 +281,25 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	@Override
 	public void stateUpdated(BasicPlayerEvent event) {
 		
-		//Si es el final de la cancion, pasamos a la siguiente.
-		if(event.getCode() == BasicPlayerEvent.EOM) {
+		//Si es el final de la cancion, Reseteamos los datos y los escribimos
+		//por pantalla.
+		//pasamos a la siguiente.
+		if(event.getCode() == BasicPlayerEvent.EOM ) {
+			this.reset();
+			this.progreso.setValue(this.posicion);
+			this.labelEstado.setText("");
 			controlador.siguienteCancion();
+		}else if ( event.getCode() == BasicPlayerEvent.STOP ) {
+			this.reset();
+			this.progreso.setValue(this.posicion);
+			this.labelEstado.setText("");
 		}
 		
 		//estado = event.getDescription().toString();
 		//this.labelEstado.setText(estado + " " + tiempoTotal + "/" + bitPerSample + " kpbs");
 	}
 	
-	@SuppressWarnings("unchecked")
-	private long getTimeLengthEstimation(Map properties)
-    // keys del map.
-	//[mp3.id3tag.track, mp3.crc, mp3.copyright, album, audio.length.frames, 
-	//mp3.channels, mp3.version.mpeg, date, mp3.id3tag.genre, 
-	//mp3.framesize.bytes, author, title, mp3.version.layer, mp3.length.frames,
-	//mp3.vbr.scale, mp3.bitrate.nominal.bps, mp3.version.encoding, audio.type, 
-	//audio.length.bytes, vbr, mp3.padding, audio.framerate.fps, mp3.length.bytes, 
-	//audio.channels, mp3.framerate.fps, duration, mp3.header.pos, mp3.frequency.hz,
-	//basicplayer.sourcedataline, bitrate, mp3.mode, comment, mp3.vbr, 
-	//audio.samplerate.hz, mp3.original
-	{
-		int tiempo = -1;
-		//System.out.println(properties.toString().replace(",", "\n"));
-        if (properties != null)
-        {	
-            //Calculamos el tamaño del fichero
-        	bytesArchivo = ((Integer) properties.get("mp3.length.bytes")).intValue();
-            
-        	//Calculamos en que byte se inicia la musica
-        	byteInicioMusica    = ((Integer) properties.get("mp3.header.pos")).intValue();
-            
-        	//Calculamos el numero de bytes dedicados a la musica
-        	bytesMusica = bytesArchivo - byteInicioMusica;
-            
-        	//Numero de bits por segundo.
-            bitrate = ((Integer) properties.get("mp3.bitrate.nominal.bps")).intValue();
-            
-            tiempo = Math.round(( (float)bytesMusica / (bitrate/8)));
-        }
-        
-        if (tiempo == -1) {
-        	//System.out.println("");
-        }
-        return tiempo;
-    }
 	
-	
-	public void addListenerProgreso(MouseAdapter listener) {
-		this.progreso.addMouseListener(listener);
-	}
-
-
 	/**
 	 * Establece el controlador.
 	 * @param contorlador El controlador

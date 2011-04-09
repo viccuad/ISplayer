@@ -5,6 +5,7 @@ package is2011.reproductor.modelo;
 import java.io.File;
 
 import javazoom.jlgui.basicplayer.BasicPlayer;
+import javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 
 /**
@@ -21,8 +22,9 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 	// *************           ATRIBUTOS Y CONSTANTES           ************* //
 	// ********************************************************************** //
 	/** Los bits que se adelantaran o atrasaran en los metodos ff y rewind*/
-	private final int BYTES_ADELANTAR = 16000;
+	private final int BYTES_ADELANTAR = 64000;
 	
+	/** Bytes de musica */
 	private int bytesMusica = 0;
 	
 	// ********************************************************************** //
@@ -37,8 +39,12 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 		if (velocidad > 0) {
 			 velocidad  = (velocidad > 4) ? 4 : velocidad ;
 			 int bytesAdelantar = velocidad * BYTES_ADELANTAR;
-			 if ((actualBytes + bytesAdelantar)< bytesMusica)
+			 if ((actualBytes + bytesAdelantar)< bytesMusica) {
 				 super.seek(actualBytes + bytesAdelantar);
+			 }else {
+				 notifyEvent(BasicPlayerEvent.EOM, getEncodedStreamPosition(), 
+						 -1, null);
+			 }
 		}
 	}
 	
@@ -48,12 +54,13 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 		
 		if (velocidad > 0) {
 			 velocidad  = (velocidad > 4) ? 4 : velocidad ;
-			 int bytesAtrasar = velocidad * BYTES_ADELANTAR;
+			 int bytesAtrasar = velocidad *BYTES_ADELANTAR;
 			 int posFinal = actualBytes - bytesAtrasar;
 			 
 			 if(posFinal > 0) {
-				 
 				 super.seek(actualBytes - bytesAtrasar);
+			}else {
+				super.seek(0);
 			}
 			 
 		}
@@ -83,6 +90,15 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 		super.open(new File(c.getPath()));
 	}
 
+	@Override 
+	public void stop() {
+		notifyEvent(BasicPlayerEvent.STOP, getEncodedStreamPosition(), -1, null);
+		try {
+			super.stop();
+		} catch (BasicPlayerException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@Override
 	public boolean isPaused() {
