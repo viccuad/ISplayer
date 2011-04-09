@@ -1,5 +1,6 @@
 package is2011.utilidades;
 import is2011.utilidades.estrategias.EstrategiaFichero;
+import is2011.utilidades.estrategias.MuestraNombres;
 
 import java.io.File;
 
