@@ -129,11 +129,11 @@ public class VistaPrincipal extends JFrame
 		play.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/*if (nombre == null) {
-					controlador.open(controlador.abrirArchivo());
-				}*/
+				int cancionSeleccionada = vistaListaReproduccion.getCancionSeleccionada();
 				
-				controlador.play();
+				
+					controlador.play(cancionSeleccionada);
+				
 					
 				}
 			}

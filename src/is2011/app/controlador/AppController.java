@@ -85,8 +85,8 @@ public class AppController implements IAppController {
 	// *************              METODOS PUBLICOS             ************* //
 	// ********************************************************************** //
 	@Override
-	public boolean play() {
-		reproductor.play();
+	public boolean play(int cancionSeleccionada) {
+		reproductor.play(cancionSeleccionada);
 		return true;
 	}
 	
@@ -152,7 +152,7 @@ public class AppController implements IAppController {
 					reproductor.añadirCancion(f.getAbsolutePath());
 				}
 			}
-			reproductor.play();
+			reproductor.play(-1);
 		}
 		
 	}

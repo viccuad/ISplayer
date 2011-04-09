@@ -23,10 +23,12 @@ public interface IAppController {
 
 	/**
 	 * Indica al reproductor que haga sonar la cancion actual.
+	 * @param cancionSeleccionada El numero de cancion que queremos reproducir.
+	 * (desde el 0).
 	 * @return false si no hay canciones o se ha llegado al final de la lista
 	 * de reproduccion.
 	 */
-	public boolean play();
+	public boolean play(int cancionSeleccionada);
 
 	/**
 	 * Para la cancion que esta sonando actualmente.

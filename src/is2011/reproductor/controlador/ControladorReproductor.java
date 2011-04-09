@@ -52,12 +52,13 @@ public class ControladorReproductor {
 	}
 	
 	// ********************************************************************** //
-	// *************              METODOS PUBLICOS              ************* //
+	// *************              METODOS 	PRIVADOS            ************* //
 	// ********************************************************************** //
+	
 	/**
 	 * Reproduce la cancion actual de la lista de reproduccion.
 	 */
-	public void play() {
+	private void play() {
 		int cancionActual = listaReproduccion.getActual();
 		
 		//Si es la priemra cancion y hay canciones...
@@ -77,6 +78,18 @@ public class ControladorReproductor {
 			
 		}
 	}
+	
+	// ********************************************************************** //
+	// *************              METODOS PUBLICOS              ************* //
+	// ********************************************************************** //
+	public void play(int cancionSeleccionada) {
+		if(cancionSeleccionada >= 0 && cancionSeleccionada < this.listaReproduccion.getNumeroCanciones()){
+			listaReproduccion.setActual(cancionSeleccionada + 1);
+		}
+		this.play();
+	}
+	
+	
 	
 	/**
 	 * Adelanta la cancion mas rapido.

@@ -1,6 +1,9 @@
 package is2011.reproductor.vista;
 
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import is2011.app.controlador.IAppController;
 import is2011.reproductor.modelo.listeners.BorrarCancionEvent;
 import is2011.reproductor.modelo.listeners.ListaReproduccionListener;
@@ -8,8 +11,10 @@ import is2011.reproductor.modelo.listeners.NuevaCancionEvent;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  * Vista que implementa al listener de la lista de reproduccion y que se 
@@ -69,12 +74,17 @@ public class VistaListaReproduccion extends JScrollPane implements
 	 * Prepara a la vista de reproduccion para mostrar las canciones.
 	 */
 	public VistaListaReproduccion() {
-		modelo = new DefaultTableModel();
-		
+		modelo = new DefaultTableModel()
+		{@Override     
+			public boolean isCellEditable (int fila, int columna) {
+				return false; 
+			}
+		}; 
+
 		//Añadimos las columnas del modelo
-		modelo.addColumn("Reproduciendo");
+		modelo.addColumn("Act.");
 		modelo.addColumn("Artista");
-		modelo.addColumn("Numero de pista");
+		modelo.addColumn("Pista");
 		modelo.addColumn("Titulo");
 		modelo.addColumn("Duracion");
 		
@@ -82,19 +92,62 @@ public class VistaListaReproduccion extends JScrollPane implements
 		tabla  = new JTable(modelo);
 		tabla.setShowHorizontalLines(true);	
 		
+		//Configuramos el tamaño
+		TableColumnModel cm = tabla.getColumnModel();
+        cm.getColumn(NUM_COLUMNA_REPRODUCIENDO).setPreferredWidth(35);
+		cm.getColumn(NUM_COLUMNA_ALBUM).setPreferredWidth(300);
+		cm.getColumn(NUM_COLUMNA_TRACKNO).setPreferredWidth(35);
+		cm.getColumn(NUM_COLUMNA_TITULO).setPreferredWidth(300);
+		cm.getColumn(NUM_COLUMNA_DURACION).setPreferredWidth(50);
+		
+		
 		//Le añadimos el scroll
 		setViewportView(tabla);
 		
 		setVisible(true);
 		tabla.setVisible(true);
-		
-		tabla.setEnabled(false);
+		//Solo permite seleccionar una columna.
+		tabla.setSelectionMode(0);
 		
 		this.setBorder(new TitledBorder("Lista de reproduccion"));
 		
-		setFocusable(false);
-    }
+		//Añadimos el oyente del raton
+		tabla.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount() == 2) {
+					int cancionDeseada = e.getY()/tabla.getRowHeight();
+					controlador.play(cancionDeseada);
+				}
+			}
+		});
+		
+	}
 	
+
+	// ********************************************************************** //
+	// *************                METODOS PRIVADOS            ************* //
+	// ********************************************************************** //
+	
+	/**
+	 * Recibe un numero de segundos y lo transforma a un string de HH:MM:SS
+	 * @param segundos el numero de segundos.
+	 * @return El estring con formato HH:MM:SS
+	 */
+	private String toHora(int segundos) {
+		int horas;
+		int minutos;
+		
+		horas = segundos/ 3600;
+		segundos -= horas*3600;
+		
+		minutos = segundos / 60;
+		segundos -= minutos*60;
+		
+		
+		return "" + ((horas > 0)? horas+":" : "") + ((minutos>9)? minutos : "0"
+			+minutos)+ ":" + ((segundos > 9)? segundos : "0"+segundos);
+	}
 	
 	// ********************************************************************** //
 	// *************                METODOS PUBLICOS            ************* //
@@ -114,7 +167,7 @@ public class VistaListaReproduccion extends JScrollPane implements
 		rowData[NUM_COLUMNA_ALBUM] = e.getAlbum();
 		rowData[NUM_COLUMNA_TRACKNO] = e.getPista();
 		rowData[NUM_COLUMNA_TITULO] = e.getTitulo();
-		rowData[NUM_COLUMNA_DURACION] = e.getDuracion();
+		rowData[NUM_COLUMNA_DURACION] = toHora(e.getDuracion());
 			
 		modelo.insertRow(pos, rowData);
 	}
@@ -134,7 +187,7 @@ public class VistaListaReproduccion extends JScrollPane implements
 		}
 		
 		if(modelo.getRowCount() >= (actualNuevo) && actualNuevo >0) {
-			modelo.setValueAt("  ********   ", actualNuevo-1, NUM_COLUMNA_REPRODUCIENDO);
+			modelo.setValueAt("  ► ", actualNuevo-1, NUM_COLUMNA_REPRODUCIENDO);
 		}
 	}
 
@@ -154,5 +207,14 @@ public class VistaListaReproduccion extends JScrollPane implements
 	 */
 	public void setControlador(IAppController controlador) {
 		this.controlador = controlador;
+	}
+	
+	/**
+	 * Devuelve la cancion seleccionada, empezando desde el 0.
+	 * -1 si no hay nada seleccionado.
+	 * @return
+	 */
+	public int getCancionSeleccionada() {
+		return tabla.getSelectedRow();
 	}
 }

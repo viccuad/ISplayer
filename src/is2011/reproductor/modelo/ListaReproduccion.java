@@ -1,10 +1,7 @@
 package is2011.reproductor.modelo;
 
 
-import is2011.reproductor.modelo.listeners.BorrarCancionEvent;
-import is2011.reproductor.modelo.listeners.ListaReproduccionListener;
-import is2011.reproductor.modelo.listeners.NuevaCancionEvent;
-
+import is2011.reproductor.modelo.listeners.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
