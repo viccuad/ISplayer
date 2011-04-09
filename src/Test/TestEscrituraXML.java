@@ -21,6 +21,7 @@ public class TestEscrituraXML {
 		
 		// IMPORTANTE para que no aparezca en el fichero XML
 		stream.omitField(BibliotecaContainer.class, "modificado");
+		stream.omitField(CancionContainer.class, "totalPath");
 		
 		BibliotecaContainer bib = new BibliotecaContainer();
 		new CancionContainer("AAAA","AAAA","AAAA","AAAA","AAAA",0);

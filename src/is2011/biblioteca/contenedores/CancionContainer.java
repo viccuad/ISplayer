@@ -1,7 +1,18 @@
 package is2011.biblioteca.contenedores;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 public class CancionContainer {
 	
+	/** Ruta completa de la cancion en el disco duro */
+	@XStreamOmitField
+	private String totalPath;
+	
+	// TODO ELEGIR ENTRE RUTA AL DIRECTORIO (C:\\MUSICA) Y NOMBREDE CANCION (WAKA_WAKA.MP3) O 
+	// RUTA ABSOLUTA (C:\\MUSICA\WAKA_WAKA.MP3)
+	
+	
+	/** Nombre de la cancion en el disco duro */
 	private String trackPath;
 	private String titulo;
 	private String album;
@@ -67,6 +78,13 @@ public class CancionContainer {
 		this.duracion = duracion;
 	}
 	
+	public void setTotalPath(String path){
+		this.totalPath = path;
+	}
+	
+	public String getTotalPath(){
+		return this.totalPath;
+	}
 	
 	
 }

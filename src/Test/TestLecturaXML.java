@@ -21,6 +21,7 @@ public class TestLecturaXML {
 		
 		// IMPORTANTE para que no aparezca en el fichero XML
 		stream.omitField(BibliotecaContainer.class, "modificado");
+		stream.omitField(CancionContainer.class, "totalPath");
 		
 		
 		try {

@@ -1,5 +1,6 @@
 package is2011.biblioteca.contenedores;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DirectorioContainer {
@@ -34,6 +35,13 @@ public class DirectorioContainer {
 		this.listaCanciones = listaCanciones;
 	}
 	
+	/**
+	 * Devuelve un ArrayList de canciones
+	 * @return
+	 */
+	public ArrayList<CancionContainer> getArrayListCanciones(){
+		return new ArrayList<CancionContainer>(this.listaCanciones.values());
+	}
 	
 	
 }
