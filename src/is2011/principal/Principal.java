@@ -58,6 +58,8 @@ public class Principal {
 		
 		IAppController appController = new AppController(controlador);
 		vista.setControlador(appController);
+		vr.setControlador(appController);
+		vlr.setControlador(appController);
     	}
 	}
 

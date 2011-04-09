@@ -1,7 +1,6 @@
-/**
- * 
- */
 package is2011.reproductor.vista;
+
+import is2011.app.controlador.IAppController;
 
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -11,10 +10,7 @@ import java.util.Map;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import javax.swing.JScrollBar;
-
-
 
 
 import javazoom.jlgui.basicplayer.BasicController;
@@ -22,6 +18,9 @@ import javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
 /**
+ * Vista que muestra los datos de reproduccion.
+ * El avance, el tiempo, el bitrate...
+ * Por ahora solo funciona para MP3.
  * @author Administrator
  *
  */
@@ -30,6 +29,9 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	// ********************************************************************** //
 	// *************           ATRIBUTOS Y CONSTANTES           ************* //
 	// ********************************************************************** //
+	
+	/** Referencia al controlador de la aplicacion*/
+	private IAppController controlador;
 	
 	/**Tiempo total de reproduccion de esta cancion*/
 	private long tiempoTotal;
@@ -45,10 +47,6 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	
 	/** KBps*/
 	private int framerate;
-	
-	private float framesPorSegundo;
-	
-	private int framesTotales;
 	
 	/** Muestra el estado de la reproduccion*/
 	private JLabel labelEstado;
@@ -74,6 +72,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	// ********************************************************************** //
 	// *************              CONSTRUCTOR                   ************* //
 	// ********************************************************************** //
+	
 	public VistaReproduccion() {
 		super();
 		
@@ -94,8 +93,6 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		this.add(this.ultimoClick);
 		
 		this.progreso.addMouseListener(new MouseAdapter() {
-			
-			
 			@Override
 			public void mousePressed(MouseEvent e) {
 				buscando = true;
@@ -107,12 +104,38 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 					posicionDeseada = progreso.getValue();
 					ultimoClick.setText("Posicion deseada -> " + posicionDeseada + "/1000");
 					buscando = false;
+					controlador.irA((float)posicionDeseada/1000);
 				}
 			}
 		});
 		
 	}
 	
+	public void reset() {
+		this.tiempoTotal = 0;
+		this.tiempoActual = 0;
+		this.estado = "";
+		this.framerate = 0;
+	}
+	
+	// ********************************************************************** //
+	// *************              MÉTODOS PRIVADOS              ************* //
+	// ********************************************************************** //
+	
+	private String toHora(int segundos) {
+		int horas;
+		int minutos;
+		
+		horas = segundos/ 3600;
+		segundos -= horas*3600;
+		
+		minutos = segundos / 60;
+		segundos -= minutos*60;
+		
+		
+		return "" + ((horas > 0)? horas+":" : "") + ((minutos>9)? minutos : "0"
+			+minutos)+ ":" + ((segundos > 9)? segundos : "0"+segundos);
+	}
 	
 	// ********************************************************************** //
 	// *************              MÉTODOS PÚBLICOS              ************* //
@@ -121,10 +144,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	 * Archivo abierto. Mostramos el tiempo total de la cancion, asi como el bitrate.
 	 */
 	public void opened(Object arg0, Map properties) {
-		System.out.println("Archivo abierto");
 		tiempoTotal = this.getTimeLengthEstimation(properties);
-		System.out.println("Tiempo total estimado: " + tiempoTotal);
-		
 		posicion = 0;
 		this.progreso.setValue(posicion);
 		if (properties.containsKey("audio.samplesize.bits"))
@@ -133,10 +153,9 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 			
         }
 		this.labelEstado.setText(tiempoTotal + "/" + framerate + " kpbs");
-		
-		
-		
 	}
+	
+	
 
 	/* (non-Javadoc)
 	 * @see javazoom.jlgui.basicplayer.BasicPlayerListener#progress(int, long, byte[], java.util.Map)
@@ -163,7 +182,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		
 		int tiempo =  Math.round(( (float)bytesread - byteInicioMusica) / (bitrate/8));
 		if(tiempo != tiempoActual) {
-			System.out.println("TamañoArchivo " + this.bytesArchivo);
+			/*System.out.println("TamañoArchivo " + this.bytesArchivo);
 			System.out.println("Tamaño Musica " + this.bytesMusica);
 			System.out.println("Bytes leidos del archivo" + bytesread);
 			System.out.println("Bytes leidos de musica" + (bytesread-byteInicioMusica));
@@ -172,7 +191,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 			System.out.println("audioFramesize " + audioFramesize);
 			System.out.println("mp3Frame " + mp3Frame);
 			System.out.println("mp3PositionByte " + mp3PositionByte);
-			System.out.println("************************************\n");
+			System.out.println("************************************\n");*/
 			tiempoActual = tiempo;
 			escribirInfo();
 		}
@@ -184,20 +203,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		this.labelEstado.setText(toHora(tiempoActual) + "/" + toHora((int)tiempoTotal) + "   " + framerate + " kpbs");
 	}
 
-	private String toHora(int segundos) {
-		int horas;
-		int minutos;
-		
-		horas = segundos/ 3600;
-		segundos -= horas*3600;
-		
-		minutos = segundos / 60;
-		segundos -= minutos*60;
-		
-		
-		return "" + ((horas > 0)? horas+":" : "") + ((minutos>9)? minutos : "0"
-			+minutos)+ ":" + ((segundos > 9)? segundos : "0"+segundos);
-	}
+	
 	@Override
 	public void setController(BasicController arg0) {
 	
@@ -207,6 +213,11 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	
 	@Override
 	public void stateUpdated(BasicPlayerEvent event) {
+		
+		//Si es el final de la cancion, pasamos a la siguiente.
+		if(event.getCode() == BasicPlayerEvent.EOM) {
+			controlador.siguienteCancion();
+		}
 		
 		//estado = event.getDescription().toString();
 		//this.labelEstado.setText(estado + " " + tiempoTotal + "/" + bitPerSample + " kpbs");
@@ -225,7 +236,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	//audio.samplerate.hz, mp3.original
 	{
 		int tiempo = -1;
-		System.out.println(properties.toString().replace(",", "\n"));
+		//System.out.println(properties.toString().replace(",", "\n"));
         if (properties != null)
         {	
             //Calculamos el tamaño del fichero
@@ -255,13 +266,11 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	}
 
 
-	
 	/**
-	 * 
-	 * @return La posicion donde debemos colocar el reproductor.
+	 * Establece el controlador.
+	 * @param contorlador El controlador
 	 */
-	public int getPos() {
-		return posicionDeseada;
+	public void setControlador(IAppController controlador) {
+		this.controlador = controlador;
 	}
-
 }

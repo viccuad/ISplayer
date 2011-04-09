@@ -1,6 +1,7 @@
 package is2011.reproductor.vista;
 
 
+import is2011.app.controlador.IAppController;
 import is2011.reproductor.modelo.listeners.BorrarCancionEvent;
 import is2011.reproductor.modelo.listeners.ListaReproduccionListener;
 import is2011.reproductor.modelo.listeners.NuevaCancionEvent;
@@ -24,6 +25,8 @@ public class VistaListaReproduccion extends JScrollPane implements
 	// ********************************************************************** //
 	// *************           ATRIBUTOS Y CONSTANTES           ************* //
 	// ********************************************************************** //
+	/** Referencia al controlador de la aplicacion*/
+	private IAppController controlador;
 	
 	/** Atributo que contendra las canciones*/
 	private JTable  tabla;
@@ -92,6 +95,11 @@ public class VistaListaReproduccion extends JScrollPane implements
 		setFocusable(false);
     }
 	
+	
+	// ********************************************************************** //
+	// *************                METODOS PUBLICOS            ************* //
+	// ********************************************************************** //
+	
 	@Override
 	public void borrarCancion(BorrarCancionEvent e) {
 		modelo.removeRow(e.getPosicion());
@@ -130,9 +138,21 @@ public class VistaListaReproduccion extends JScrollPane implements
 		}
 	}
 
+	
 	@Override
 	public void setAleatorio(boolean aleatorio) {
 		
 	}
 
+	// ********************************************************************** //
+	// *************               GETTERS / SETTERS            ************* //
+	// ********************************************************************** //
+
+	/**
+	 * Establece el controlador.
+	 * @param contorlador El controlador
+	 */
+	public void setControlador(IAppController controlador) {
+		this.controlador = controlador;
+	}
 }

@@ -48,8 +48,6 @@ public class CancionMP3 implements Cancion{
 		} catch (CannotReadException e) {
 			e.printStackTrace();
 		}
-			
-		System.out.println(getInfo());
 	}
 
 	@Override
@@ -148,9 +146,6 @@ public class CancionMP3 implements Cancion{
 				"Path: "+getPath();
 	}
 
-	/* (non-Javadoc)
-	 * @see is2011.reproductor.modelo.Cancion#getBytesMusica()
-	 */
 	@Override
 	public int getBytesMusica() {
 		return (int)( (new File(path)).length() - headermp3.getMp3StartByte());

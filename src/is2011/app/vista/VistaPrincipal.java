@@ -183,15 +183,6 @@ public class VistaPrincipal extends JFrame
         grid.fill        = GridBagConstraints.BOTH;
 		
 		this.add(vistaRep,grid);
-		vistaReproduccion.addListenerProgreso (new MouseAdapter() {
-			
-		public void mouseReleased(MouseEvent arg0) {
-					int pos = vistaReproduccion.getPos();
-					controlador.irA((float)pos/1000);
-				}
-		}
-		);
-		
 	}
 	
 	/**
