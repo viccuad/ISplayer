@@ -1,14 +1,15 @@
 package is2011.reproductor.vista;
 
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import is2011.app.controlador.IAppController;
+import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 import is2011.reproductor.modelo.listeners.BorrarCancionEvent;
 import is2011.reproductor.modelo.listeners.ListaReproduccionListener;
 import is2011.reproductor.modelo.listeners.NuevaCancionEvent;
 
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
@@ -38,11 +39,8 @@ public class VistaListaReproduccion extends JScrollPane implements
 	/** Modelo de la tabla de la TS*/
 	private DefaultTableModel modelo;
 	
-	/** Label de aleatorio*/
-	//private JLabel aleatorio;
-	
 	/**Label que contiene el valor de aleatorio*/
-	//private JLabel aleatorioContenido;
+	private JLabel modoReproduccion;
 	
 	/** Columna en la que muestra si se esta reproduciendo la cancion*/
 	private static final int NUM_COLUMNA_REPRODUCIENDO = 0;
@@ -102,6 +100,8 @@ public class VistaListaReproduccion extends JScrollPane implements
 		
 		//Le añadimos el scroll
 		setViewportView(tabla);
+		
+		this.modoReproduccion = new JLabel("Modo de reproduccion NORMAL");
 		
 		setVisible(true);
 		tabla.setVisible(true);
@@ -192,10 +192,13 @@ public class VistaListaReproduccion extends JScrollPane implements
 
 	
 	@Override
-	public void setAleatorio(boolean aleatorio) {
-		
+	public void cambioTipoReproduccion(ModoReproduccionEnum modo) {
+		this.modoReproduccion.setText("Modo de reproduccion " + modo);
 	}
 
+	public JLabel getInfoReproduccion() {
+		return this.modoReproduccion;
+	}
 	// ********************************************************************** //
 	// *************               GETTERS / SETTERS            ************* //
 	// ********************************************************************** //
@@ -216,4 +219,7 @@ public class VistaListaReproduccion extends JScrollPane implements
 	public int getCancionSeleccionada() {
 		return tabla.getSelectedRow();
 	}
+
+
+	
 }

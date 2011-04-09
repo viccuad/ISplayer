@@ -3,10 +3,13 @@
  */
 package is2011.reproductor.controlador;
 
+import java.util.Random;
+
 import is2011.reproductor.modelo.Cancion;
 import is2011.reproductor.modelo.CancionMP3;
 import is2011.reproductor.modelo.ListaReproduccion;
 import is2011.reproductor.modelo.Reproductor;
+import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 
 
 import javazoom.jlgui.basicplayer.BasicPlayerException;
@@ -30,6 +33,9 @@ public class ControladorReproductor {
 	/** Instancia de la lista de reproduccion*/
 	private ListaReproduccion listaReproduccion;
 	
+	/** Objeto utilizado para generar números aleatorios. */
+	private transient Random rnd;
+	
 	// ********************************************************************** //
 	// *************                CONSTRUCTOR                 ************* //
 	// ********************************************************************** //
@@ -38,7 +44,7 @@ public class ControladorReproductor {
 	 * Constructor por defecto.
 	 */
 	public ControladorReproductor() {
-		
+		this.rnd = new Random();
 	}
 	
 	/**
@@ -78,6 +84,7 @@ public class ControladorReproductor {
 			
 		}
 	}
+	
 	
 	// ********************************************************************** //
 	// *************              METODOS PUBLICOS              ************* //
@@ -179,12 +186,29 @@ public class ControladorReproductor {
 	 * sera diferente.
 	 */
 	public void siguiente() {
-		int actual = this.listaReproduccion.getActual();
+		int actual = 0;
+		ModoReproduccionEnum modo = this.listaReproduccion.getModoReproduccion();
 		
-		if (actual == this.listaReproduccion.getNumeroCanciones()) {
+		
+		//Si repetimos 1
+		if(modo == ModoReproduccionEnum.REPETIR_UNO) {
+			actual = this.listaReproduccion.getActual();
+			
+		}else if(modo == ModoReproduccionEnum.REPETIR_TODOS) {
+			actual = (this.listaReproduccion.getActual() % this.listaReproduccion.getNumeroCanciones()) +1;
+			
+		}else if (modo == ModoReproduccionEnum.ALEATORIO){
+			actual = rnd.nextInt(this.listaReproduccion.getNumeroCanciones()) +1;
+		
+		}else if(modo == ModoReproduccionEnum.NORMAL) {
+			actual = this.listaReproduccion.getActual() + 1;
+		}
+		
+		if (modo == ModoReproduccionEnum.NORMAL  && 
+				actual-1 == this.listaReproduccion.getNumeroCanciones()) {
+			actual = this.listaReproduccion.getNumeroCanciones() ;
 			this.stop();
 		} else {
-			actual = actual + 1;
 			this.listaReproduccion.setActual(actual);
 			this.play();
 		}
@@ -197,14 +221,33 @@ public class ControladorReproductor {
 	 * Si la posicion es la primera cancion, no hacemos nada.
 	 */
 	public void anterior() {
-		int actual = this.listaReproduccion.getActual();
+		int actual = 0;
+		ModoReproduccionEnum modo = this.listaReproduccion.getModoReproduccion();
 		
-		if ( actual == 1) {
+		
+		//Si repetimos 1
+		if(modo == ModoReproduccionEnum.REPETIR_UNO) {
+			actual = this.listaReproduccion.getActual();
+			
+		}else if(modo == ModoReproduccionEnum.REPETIR_TODOS) {
+			actual = this.listaReproduccion.getActual()- 1;
+			if(actual == 0) {
+				actual = this.listaReproduccion.getNumeroCanciones();
+			}
+			
+		}else if (modo == ModoReproduccionEnum.ALEATORIO){
+			actual = rnd.nextInt(this.listaReproduccion.getNumeroCanciones()) +1;
+		
+		}else if(modo == ModoReproduccionEnum.NORMAL ) {
+			actual = this.listaReproduccion.getActual()-1;
+		}
+		
+		if ( modo == ModoReproduccionEnum.NORMAL && (actual + 1) == 1) {
+			actual = 1;
 			this.stop();
 			//Estamos en la ultima cancion.
 			//No hacemos nada
 		} else {
-			actual = actual - 1;
 			this.listaReproduccion.setActual(actual);
 			this.play();
 		}
@@ -233,6 +276,14 @@ public class ControladorReproductor {
 	 */
 	public Reproductor getReproductor() {
 		return reproductor;
+	}
+
+	/**
+	 * @param modo
+	 */
+	public void setModoRepdroduccion(ModoReproduccionEnum modo) {
+		this.listaReproduccion.setModoReproduccion(modo);
+		
 	}
 
 }

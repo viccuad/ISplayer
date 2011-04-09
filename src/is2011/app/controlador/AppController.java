@@ -6,6 +6,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import is2011.reproductor.controlador.ControladorReproductor;
+import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 
 
 /**
@@ -157,7 +158,12 @@ public class AppController implements IAppController {
 		
 	}
 	
-
+	
+	@Override
+	public void setModoReproduccion(ModoReproduccionEnum modo) {
+		this.reproductor.setModoRepdroduccion(modo);
+	}
+	
 	@Override
 	public void borrarCanciones() {
 		// TODO Implementar
@@ -169,5 +175,7 @@ public class AppController implements IAppController {
 		// TODO Implementar
 		
 	}
+	
+
 
 }

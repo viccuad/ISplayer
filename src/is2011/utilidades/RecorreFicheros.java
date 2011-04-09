@@ -1,6 +1,6 @@
 package is2011.utilidades;
 import is2011.utilidades.estrategias.EstrategiaFichero;
-import is2011.utilidades.estrategias.MuestraNombres;
+
 
 import java.io.File;
 
@@ -11,6 +11,14 @@ import java.io.File;
  * Clase a la que se le pasa en el constructor un directorio, y recorre todos
  * sus directorios hijos u archivos recursivamente para llegar a todos los 
  * hijos (archivos).
+ * 
+ * Ejemplo de uso.
+ * public static void main(String args[]) {
+			RecorreFicheros recorre = new RecorreFicheros("c:\\");
+			recorre.setEstrategia(new MuestraNombres());
+			recorre.recorre();
+		}
+	Mostraria el nombre de todos los archivos del ordenador.
  * @author jmartin
  *
  */
@@ -172,4 +180,5 @@ public class RecorreFicheros {
 		}
 
 
+		
 }

@@ -3,6 +3,7 @@ package is2011.app.vista;
 
 
 import is2011.app.controlador.IAppController;
+import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 import is2011.reproductor.vista.VistaListaReproduccion;
 import is2011.reproductor.vista.VistaReproduccion;
 
@@ -46,6 +47,13 @@ public class VistaPrincipal extends JFrame
 	private JMenu menuArchivo;
 	private JMenuItem menuItemAbrir;
 	private JMenuItem menuItemAñadir;
+	
+	private JMenu modoReproduccion;
+	private JMenuItem aleatorio;
+	private JMenuItem repetiruno;
+	private JMenuItem repetirTodos;
+	private JMenuItem normal;
+	
 	
 	GridBagConstraints grid;
 	private VistaReproduccion vistaReproduccion;
@@ -199,6 +207,16 @@ public class VistaPrincipal extends JFrame
         grid.fill        = GridBagConstraints.BOTH;
         
         this.add(vlr,grid);
+        
+        grid.gridx       = 0;
+        grid.gridy       = 3;
+        grid.gridheight  = 1;
+        grid.gridwidth   = 1;
+        grid.weightx     = 1;
+        grid.weighty     = 0.05;
+        grid.fill        = GridBagConstraints.BOTH;
+        
+        this.add(vlr.getInfoReproduccion(),grid);
 		
 		
 	}
@@ -232,6 +250,49 @@ public class VistaPrincipal extends JFrame
 		this.menuArchivo.add(menuItemAñadir);
 		
 		this.menu.add(menuArchivo);
+		
+		this.modoReproduccion = new JMenu("Modo reproduccion");
+		this.aleatorio = new JMenuItem ("Aleatorio");
+		this.repetiruno = new JMenuItem ("Repetir uno");
+		this.repetirTodos = new JMenuItem ("Repetir todas");
+		this.normal = new JMenuItem ("Normal");
+				
+		this.modoReproduccion.add(aleatorio);
+		this.modoReproduccion.add(repetiruno);
+		this.modoReproduccion.add(repetirTodos);
+		this.modoReproduccion.add(normal);
+		
+		this.menu.add(modoReproduccion);
+		
+		this.aleatorio.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				controlador.setModoReproduccion(ModoReproduccionEnum.ALEATORIO);
+			}
+
+		});
+
+		this.repetiruno.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				controlador.setModoReproduccion(ModoReproduccionEnum.REPETIR_UNO);
+			}
+
+		});
+		this.repetirTodos.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				controlador.setModoReproduccion(ModoReproduccionEnum.REPETIR_TODOS);
+			}
+
+		});
+		this.normal.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				controlador.setModoReproduccion(ModoReproduccionEnum.NORMAL);
+			}
+
+		});
 		
 		this.menuItemAbrir.addActionListener(new ActionListener(){
 			

@@ -18,6 +18,14 @@ public class ListaReproduccion {
 	// *************           ATRIBUTOS Y CONSTANTES           ************* //
 	// ********************************************************************** //
 	
+	/** Tipo de reproduccion */
+	public static enum ModoReproduccionEnum {
+		NORMAL,
+		ALEATORIO,
+		REPETIR_UNO,
+		REPETIR_TODOS
+	}
+	
 	/** Lista de canciones */
 	private ArrayList<Cancion> listaReproduccion;
 	
@@ -25,7 +33,7 @@ public class ListaReproduccion {
 	private int actual;
 	
 	/** Indica si la reproduccion es en modo aleatorio*/
-	private boolean aleatorio;
+	private ModoReproduccionEnum modoReproduccion;
 
 	/** Lista de listeners del reproductor */
 	private ArrayList<ListaReproduccionListener> listeners;
@@ -41,7 +49,7 @@ public class ListaReproduccion {
 	public ListaReproduccion(){
 		listaReproduccion = new ArrayList<Cancion>();
 		actual = 0;
-		aleatorio = false;
+		modoReproduccion = ModoReproduccionEnum.NORMAL;
 		listeners = new ArrayList<ListaReproduccionListener>();
 	}
 	
@@ -55,7 +63,7 @@ public class ListaReproduccion {
 	public void reiniciar(boolean borrarOyentes) {
 		listaReproduccion = new ArrayList<Cancion>();
 		actual = 0;
-		aleatorio = false;
+		modoReproduccion = ModoReproduccionEnum.NORMAL;
 		if(borrarOyentes) {
 			listeners = new ArrayList<ListaReproduccionListener>();
 		}
@@ -202,22 +210,22 @@ public class ListaReproduccion {
 	
 
 	/**
-	 * Devuelve si la reproduccion es en modo aleatorio.
-	 * @return Si es aleatoria.
+	 * Devuelve el modo de reproduccion actual.
+	 * @return el modo de reproduccion actual
 	 */
-	public boolean isAleatorio() {
-		return aleatorio;
+	public ModoReproduccionEnum getModoReproduccion() {
+		return modoReproduccion;
 	}
 
 	/**
-	 * Establece si la reproduccion es aleatoria.
-	 * @param aleatorio the aleatorio to set
+	 * Establece el modo de reproduccion actual y notifica a los oyentes.
+	 * @param modoReproduccion the modoReproduccion to set
 	 */
-	public void setAleatorio(boolean aleatorio) {
-		this.aleatorio = aleatorio;
-		notificaCambioAleatorio(aleatorio);
+	public void setModoReproduccion(ModoReproduccionEnum modoReproduccion) {
+		this.modoReproduccion = modoReproduccion;
+		notificaCambioTipoReproduccion(modoReproduccion);
 	}
-	
+
 	// ********************************************************************** //
 	// *************              GESTION LISTENERS             ************* //
 	// ********************************************************************** //
@@ -277,9 +285,9 @@ public class ListaReproduccion {
 	 * Indica que se encuentra en reproduccion aleatoria.
 	 * @param aleatorio. Indica si aleatorio es true o false.
 	 */
-	private void notificaCambioAleatorio(boolean aleatorio) {
+	private void notificaCambioTipoReproduccion(ModoReproduccionEnum modo) {
 		for (ListaReproduccionListener l : listeners) {
-			l.setAleatorio(aleatorio);
+			l.cambioTipoReproduccion(modo);
 		}
 	}
 	

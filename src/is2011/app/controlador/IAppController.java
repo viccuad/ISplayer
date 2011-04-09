@@ -1,5 +1,7 @@
 package is2011.app.controlador;
 
+import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
+
 /**
  * Controlador de la aplicacion , que recoje las ordenes de la vista principal
  * y ordena al reproductor lo que debe hacer.
@@ -80,8 +82,16 @@ public interface IAppController {
 	 */
 	public void cancionAnterior();
 	
+	/**
+	 * Establece el modo de reproduccion
+	 * @param modo El modo de reproduccion.
+	 */
+	public void setModoReproduccion(ModoReproduccionEnum modo);
+	
 
 	public void borrarCanciones();
 	
 	public void reproducirSeleccionada();
+
+	
 }

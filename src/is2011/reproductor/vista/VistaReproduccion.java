@@ -82,6 +82,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	/** Tiempo actual de reproduccion de esta cancion*/
 	private int tiempoActual;
 
+	private boolean actualizar;
 	// ********************************************************************** //
 	// *************              CONSTRUCTOR                   ************* //
 	// ********************************************************************** //
@@ -124,6 +125,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	 */
 	public void reset() {
 		this.buscando = false;
+		this.actualizar = false;
 		this.posicion = 0;
 		this.bytesMusica = 0;
 		this.byteInicioMusica = 0;
@@ -229,6 +231,8 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		//Recojemos la informacion que nos proporcionan las propiedades.
 		this.getInfo(properties);
 		
+		this.actualizar = true;
+		
 	}
 	
 	
@@ -241,34 +245,35 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void progress(int bytesread, long arg1, byte[] arg2, Map properties) {
-		//mp3.position.microseconds, mp3.equalizer, mp3.frame.size.bytes, 
-		//mp3.frame, mp3.frame.bitrate, mp3.position.byte
-		
-		//Calculamos la nueva posicion de la barra de desplazamiento
-		int nuevaPosicion = Math.round((((float)bytesread - byteInicioMusica) / 
-				bytesMusica)*1000f);
-		//Si la nueva posicion es diferente a la anterior.
-		if(nuevaPosicion != posicion) {
-			posicion = nuevaPosicion;
-			synchronized (this.progreso) {
-				//Actualizamos la barra de progreso si no estamos buscando una
-				//posicion donde desplazar la cancion.
-				if(!buscando) {
-					this.progreso.setValue(posicion);
+		if(this.actualizar) {
+			//mp3.position.microseconds, mp3.equalizer, mp3.frame.size.bytes, 
+			//mp3.frame, mp3.frame.bitrate, mp3.position.byte
+
+			//Calculamos la nueva posicion de la barra de desplazamiento
+			int nuevaPosicion = Math.round((((float)bytesread - byteInicioMusica) / 
+					bytesMusica)*1000f);
+			//Si la nueva posicion es diferente a la anterior.
+			if(nuevaPosicion != posicion) {
+				posicion = nuevaPosicion;
+				synchronized (this.progreso) {
+					//Actualizamos la barra de progreso si no estamos buscando una
+					//posicion donde desplazar la cancion.
+					if(!buscando) {
+						this.progreso.setValue(posicion);
+					}
 				}
 			}
-		}
-		
-		//Calculamos el tiempo actual.
-		int tiempo =  Math.round(( (float)bytesread - byteInicioMusica) / (bitrate/8));
-		
-		//Si el tiempo actual es diferente, actualizamos la vista.
-		if(tiempo != tiempoActual) {
-			tiempoActual = tiempo;
-			framerate = (Integer)properties.get("mp3.frame.bitrate");
-			escribirInfo();
-		}
 
+			//Calculamos el tiempo actual.
+			int tiempo =  Math.round(( (float)bytesread - byteInicioMusica) / (bitrate/8));
+
+			//Si el tiempo actual es diferente, actualizamos la vista.
+			if(tiempo != tiempoActual) {
+				tiempoActual = tiempo;
+				framerate = (Integer)properties.get("mp3.frame.bitrate");
+				escribirInfo();
+			}
+		}
 	}
 	
 	@Override
