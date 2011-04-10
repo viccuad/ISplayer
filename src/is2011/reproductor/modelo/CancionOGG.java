@@ -8,7 +8,6 @@ import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.audio.mp3.MP3AudioHeader;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
@@ -24,6 +23,8 @@ public class CancionOGG implements Cancion {
 		try {
 			fileogg = AudioFileIO.read(new File(path));
 			tag = fileogg.getTag();
+			System.out.println(tag);
+			System.out.println(fileogg);
 		} catch (CannotReadException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -110,14 +111,12 @@ public class CancionOGG implements Cancion {
 
 	@Override
 	public int getTrackLength() {
-		// TODO Auto-generated method stub
-		return 0;
+		return fileogg.getAudioHeader().getTrackLength();
 	}
 
 	@Override
 	public int getBytesMusica() {
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(new File(path)).length();
 	}
 	
 	@Override

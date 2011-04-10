@@ -186,10 +186,18 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
             this.modoAudio = canales == 2 ? "estereo" : "mono";
             
             //Calculamos el tamaño del fichero
-            int bytesArchivo = ((Integer) properties.get("mp3.length.bytes")).intValue();
+        	int bytesArchivo = ((Integer) properties.get("audio.length.bytes")).intValue();
             
-        	//Calculamos en que byte se inicia la musica
-        	this.byteInicioMusica    = ((Integer) properties.get("mp3.header.pos")).intValue();
+            if(this.formato.equalsIgnoreCase("mp3")) {
+            	//Calculamos en que byte se inicia la musica
+            	this.byteInicioMusica    = ((Integer) properties.get("mp3.header.pos")).intValue();
+            } else if( this.formato.equalsIgnoreCase("ogg")) {
+            	//Calculamos en que byte se inicia la musica
+            	//TODO esto no va asi.
+            	this.byteInicioMusica  = 1;	
+            	this.framerate = this.bitrate;
+            }
+            
             
         	//Calculamos el numero de bytes dedicados a la musica
         	this.bytesMusica = bytesArchivo - byteInicioMusica;
@@ -249,6 +257,8 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 			//mp3.position.microseconds, mp3.equalizer, mp3.frame.size.bytes, 
 			//mp3.frame, mp3.frame.bitrate, mp3.position.byte
 
+			//System.out.println(properties.toString().replace(",", "\n"));
+			
 			//Calculamos la nueva posicion de la barra de desplazamiento
 			int nuevaPosicion = Math.round((((float)bytesread - byteInicioMusica) / 
 					bytesMusica)*1000f);
@@ -270,7 +280,11 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 			//Si el tiempo actual es diferente, actualizamos la vista.
 			if(tiempo != tiempoActual) {
 				tiempoActual = tiempo;
-				framerate = (Integer)properties.get("mp3.frame.bitrate");
+				if(this.formato.equalsIgnoreCase("mp3")) {
+					framerate = (Integer)properties.get("mp3.frame.bitrate");
+				}else if (this.formato.equalsIgnoreCase("ogg")){
+					
+				}
 				escribirInfo();
 			}
 		}
