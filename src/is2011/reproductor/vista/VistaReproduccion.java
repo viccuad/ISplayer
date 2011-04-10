@@ -186,7 +186,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
             this.modoAudio = canales == 2 ? "estereo" : "mono";
             
             //Calculamos el tamaño del fichero
-        	int bytesArchivo = ((Integer) properties.get("mp3.length.bytes")).intValue();
+            int bytesArchivo = ((Integer) properties.get("mp3.length.bytes")).intValue();
             
         	//Calculamos en que byte se inicia la musica
         	this.byteInicioMusica    = ((Integer) properties.get("mp3.header.pos")).intValue();

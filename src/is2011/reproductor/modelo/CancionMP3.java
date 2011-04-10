@@ -107,27 +107,30 @@ public class CancionMP3 implements Cancion{
 
 	@Override
 	public String getName() {
-		return tag.getFirst(FieldKey.TITLE);
+		if (tag.getFirst(FieldKey.TITLE) == "") return "Desconocido";
+		else return tag.getFirst(FieldKey.TITLE);
 		
 	}
 
 	@Override
 	public String getAlbum() {
-		return tag.getFirst(FieldKey.ALBUM);
-
+		if (tag.getFirst(FieldKey.ALBUM) == "") return "Desconocido";
+		else return tag.getFirst(FieldKey.ALBUM);
 	}
 
 	@Override
 	public String getCompositor() {
 
-		return tag.getFirst(FieldKey.COMPOSER);
+		if (tag.getFirst(FieldKey.COMPOSER) == "") return "Desconocido";
+		else return tag.getFirst(FieldKey.COMPOSER);
 
 	}
 
 	@Override
 	public String getPista() {
 
-		return tag.getFirst(FieldKey.TRACK);
+		if (tag.getFirst(FieldKey.TRACK) == "") return "Desconocido";
+		else return tag.getFirst(FieldKey.TRACK);
 
 	}
 

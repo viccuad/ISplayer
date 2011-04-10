@@ -7,6 +7,7 @@ import java.util.Random;
 
 import is2011.reproductor.modelo.Cancion;
 import is2011.reproductor.modelo.CancionMP3;
+import is2011.reproductor.modelo.CancionOGG;
 import is2011.reproductor.modelo.ListaReproduccion;
 import is2011.reproductor.modelo.Reproductor;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
@@ -167,6 +168,8 @@ public class ControladorReproductor {
 	public void añadirCancion(String absolutePath) {
 		if(absolutePath.endsWith(".mp3")) {
 			listaReproduccion.addCancion(new CancionMP3(absolutePath));
+		} else if(absolutePath.endsWith(".ogg")) {
+			listaReproduccion.addCancion(new CancionOGG(absolutePath));
 		}
 	}
 
