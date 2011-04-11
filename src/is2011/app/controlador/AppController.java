@@ -133,12 +133,12 @@ public class AppController implements IAppController {
 	}
 
 	@Override
-	public void aÃ±adir() {
+	public void añadir() {
 		File[] files = abrirArchivo();
 		if(files != null) {
 			for (File f : files) {
 				if (f != null) {
-					reproductor.aÃ±adirCancion(f.getAbsolutePath());
+					reproductor.añadirCancion(f.getAbsolutePath());
 				}
 			}
 		}
@@ -152,7 +152,7 @@ public class AppController implements IAppController {
 			reproductor.reiniciaListaReproduccion(false);
 			for (File f : files) {
 				if (f != null) {
-					reproductor.aÃ±adirCancion(f.getAbsolutePath());
+					reproductor.añadirCancion(f.getAbsolutePath());
 				}
 			}
 			reproductor.play(-1);
