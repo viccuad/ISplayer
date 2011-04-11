@@ -34,7 +34,12 @@ public class CancionMP3 implements Cancion{
 				filemp3 = AudioFileIO.read(new File(path));
 				tag = filemp3.getTag();
 				headermp3 = (MP3AudioHeader) filemp3.getAudioHeader();
-
+				
+				//if (tag == null) System.out.println ("Tag vacio");
+				//else System.out.println("Tag no vacio");
+				//System.out.println(tag.getFirst(FieldKey.TRACK));
+				//if (tag.hasField(FieldKey.TRACK.toString())) System.out.println("si");
+				//else System.out.println("no");
 										
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -60,32 +65,27 @@ public class CancionMP3 implements Cancion{
 		return headermp3.getTrackLength();
 	}
 
-	@Override
+	
 	public String getMpegVersion() {
 		return headermp3.getMpegVersion();
 	}
 
-	@Override
 	public String getMpegLayer() {
 		return headermp3.getMpegLayer();
 	}
 
-	@Override
 	public boolean isOriginal() {
 		return headermp3.isOriginal();
 	}
 
-	@Override
 	public boolean isCopyrighted() {
 		return headermp3.isCopyrighted();
 	}
 
-	@Override
 	public boolean isPrivate() {
 		return headermp3.isPrivate();
 	}
 
-	@Override
 	public boolean isProtected() {
 		return headermp3.isProtected();	
 	}
@@ -107,21 +107,21 @@ public class CancionMP3 implements Cancion{
 
 	@Override
 	public String getName() {
-		if (tag.getFirst(FieldKey.TITLE) == "") return "Desconocido";
+		if (tag.getFirstField(FieldKey.TITLE) == null) return "Desconocido";
 		else return tag.getFirst(FieldKey.TITLE);
 		
 	}
 
 	@Override
 	public String getAlbum() {
-		if (tag.getFirst(FieldKey.ALBUM) == "") return "Desconocido";
+		if (tag.getFirstField(FieldKey.ALBUM) == null) return "Desconocido";
 		else return tag.getFirst(FieldKey.ALBUM);
 	}
 
 	@Override
 	public String getCompositor() {
 
-		if (tag.getFirst(FieldKey.COMPOSER) == "") return "Desconocido";
+		if (tag.getFirstField(FieldKey.COMPOSER) == null) return "Desconocido";
 		else return tag.getFirst(FieldKey.COMPOSER);
 
 	}
@@ -129,7 +129,7 @@ public class CancionMP3 implements Cancion{
 	@Override
 	public String getPista() {
 
-		if (tag.getFirst(FieldKey.TRACK) == "") return "Desconocido";
+		if (tag.getFirstField(FieldKey.TRACK) == null) return "0";
 		else return tag.getFirst(FieldKey.TRACK);
 
 	}

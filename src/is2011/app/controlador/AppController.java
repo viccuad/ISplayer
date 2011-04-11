@@ -1,8 +1,10 @@
 package is2011.app.controlador;
 
+import java.awt.FileDialog;
 import java.io.File;
 
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import is2011.reproductor.controlador.ControladorReproductor;
@@ -43,10 +45,10 @@ public class AppController implements IAppController {
 	private File[] abrirArchivo()
 	    {
 	        JFileChooser fileChooser = new JFileChooser();
-
+	        //FileDialog fileChooser = new FileDialog(new JFrame(), "Cargar", FileDialog.LOAD);
 	        //Lo configuramos para permitir apertura multiple
 	        fileChooser.setMultiSelectionEnabled(true);
-
+	        
 	        //Lo configuramos para que solo permita la apertura de ficheros
 	        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 	        fileChooser.setAcceptAllFileFilterUsed(true);

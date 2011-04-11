@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
@@ -16,6 +17,7 @@ public class CancionOGG implements Cancion {
 
 	private AudioFile fileogg=null;
 	private String path;
+	private AudioHeader headerogg=null;
 	private Tag tag=null;
 	
 	public CancionOGG(String p){
@@ -23,8 +25,8 @@ public class CancionOGG implements Cancion {
 		try {
 			fileogg = AudioFileIO.read(new File(path));
 			tag = fileogg.getTag();
-			System.out.println(tag);
-			System.out.println(fileogg);
+			headerogg = fileogg.getAudioHeader();
+			
 		} catch (CannotReadException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -39,79 +41,28 @@ public class CancionOGG implements Cancion {
 		
 	}
 	@Override
-	public String getPath() {
-		return path;
-	}
-
-	@Override
-	public String getEncodingType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getInfo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getMpegVersion() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getMpegLayer() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isOriginal() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isCopyrighted() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isPrivate() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isProtected() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean isVariableBitRate() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public long getBitRate() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public long getFrames() {
-		// TODO Auto-generated method stub
-		return 0;
+		return headerogg.isVariableBitRate();
 	}
 
 	@Override
 	public int getTrackLength() {
-		return fileogg.getAudioHeader().getTrackLength();
+		return headerogg.getTrackLength();
+	}
+
+	@Override
+	public long getBitRate() {
+		return headerogg.getBitRateAsNumber();
+	}
+
+	@Override
+	public String getEncodingType() {
+		return headerogg.getEncodingType();	
+	}
+
+	@Override
+	public String getPath() {
+		return path;
 	}
 
 	@Override
@@ -121,21 +72,21 @@ public class CancionOGG implements Cancion {
 	
 	@Override
 	public String getName() {
-		if (tag.getFirst(FieldKey.TITLE) == "") return "Desconocido";
+		if (tag.getFirstField(FieldKey.TITLE) == null) return "Desconocido";
 		else return tag.getFirst(FieldKey.TITLE);
 		
 	}
 
 	@Override
 	public String getAlbum() {
-		if (tag.getFirst(FieldKey.ALBUM) == "") return "Desconocido";
+		if (tag.getFirstField(FieldKey.ALBUM) == null) return "Desconocido";
 		else return tag.getFirst(FieldKey.ALBUM);
 	}
 
 	@Override
 	public String getCompositor() {
 
-		if (tag.getFirst(FieldKey.COMPOSER) == "") return "Desconocido";
+		if (tag.getFirstField(FieldKey.COMPOSER) == null) return "Desconocido";
 		else return tag.getFirst(FieldKey.COMPOSER);
 
 	}
@@ -143,9 +94,23 @@ public class CancionOGG implements Cancion {
 	@Override
 	public String getPista() {
 
-		if (tag.getFirst(FieldKey.TRACK) == "") return "Desconocido";
+		if (tag.getFirstField(FieldKey.TRACK) == null) return "0";
 		else return tag.getFirst(FieldKey.TRACK);
 
+	}
+	@Override
+	public String getInfo() {
+		System.out.println(headerogg.toString());
+		return 	"Titulo: "+getName()+"\n"+
+				"Album: "+getAlbum()+"\n"+
+				"Duracion (s): "+getTrackLength()+"\n"+
+				"Nº Frames: "+getFrames()+"\n"+
+				"Bit Rate: "+getBitRate()+"\n"+
+				"Path: "+getPath();
+	}
+	@Override
+	public long getFrames() {
+		return 0;
 	}
 
 
