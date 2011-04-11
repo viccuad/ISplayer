@@ -7,7 +7,6 @@ package is2011.principal;
 
 import javax.swing.UIManager;
 
-
 import is2011.app.controlador.AppController;
 import is2011.app.controlador.IAppController;
 import is2011.app.vista.VistaPrincipal;
