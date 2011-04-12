@@ -18,6 +18,7 @@ public class ActualizarBiblioteca extends EstrategiaActualizacionBiblioteca {
 		File fichero = new File(filePath);
 		//Si es directorio
 		if(fichero.isDirectory()){
+			
 			String[] s = fichero.list();
 			for( String nombre : s)
 				actualiza(nombre);

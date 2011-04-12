@@ -79,40 +79,24 @@ public class BibliotecaMusical {
 	}
 	
 	
-	public void ordenar(Comparator<CancionContainer> criterioOrden){
-		this.canciones.ordenar(criterioOrden);
-	}
 	
-	
-	public ArrayList<CancionContainer> getCanciones(){
-		return this.canciones.getCanciones();
-	}
-	
-	/**
-	 * Accede al path o ruta de una canción mediante el orden que ocupa en la lista de canciones
-	 * @param posicionEnLaLista
-	 * @return ruta de la canción que ocupa el lugar 'posicionEnLaLista-ésimo' en la lista de canciones
-	 */
-	public String getPathCancion(int posicionEnLaLista){
-		return this.canciones.getPathCancion(posicionEnLaLista);
-	}
-	
-	/**
-	 * Accede a una canción mediante el orden que ocupa en la lista de canciones
-	 * @param posicionEnLaLista
-	 * @return canción que ocupa el lugar 'posicionEnLaLista-ésimo' en la lista de canciones
-	 */
-	public CancionContainer getCancion(int posicionEnLaLista){
-		return this.canciones.getCancion(posicionEnLaLista);
-	}
 
+	
+	
+	
+	
+	
 	public void setBusquedaRecursiva(boolean busquedaRecursiva) {
 		this.busquedaRecursiva = busquedaRecursiva;
 	}
 	
 	
 	
-	// vale tanto para añadir como para actualizar directorios
+	public ArrayList<CancionContainer> getCanciones(){
+		return this.canciones.getArrayListCanciones();
+	}
+	
+	// vale tanto para añadir como para actualizar directorios completos y sus subdirectorios
 	public void actualizarDirectorio(ArrayList<String> ficheros){
 		RecorreFicheros recorre = new RecorreFicheros(ficheros);
 		recorre.setEstrategia(new ActualizarBiblioteca(this.canciones));
@@ -120,11 +104,56 @@ public class BibliotecaMusical {
 	}
 	
 	
+	// añade canciones sueltas
 	public void aniadirCanciones(ArrayList<String> canciones){
 		RecorreFicheros recorre = new RecorreFicheros(canciones);
 		recorre.setEstrategia(new AniadirCanciones(this.canciones));
 		recorre.recorre();
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	 * public void ordenar(Comparator<CancionContainer> criterioOrden){
+		this.canciones.ordenar(criterioOrden);
+	}
+	
+	
+	public ArrayList<CancionContainer> getCanciones(){
+		return this.canciones.getCanciones();
+	}
+	*/
+	
+	/**
+	 * Accede al path o ruta de una canción mediante el orden que ocupa en la lista de canciones
+	 * @param posicionEnLaLista
+	 * @return ruta de la canción que ocupa el lugar 'posicionEnLaLista-ésimo' en la lista de canciones
+	 */
+	/*
+	public String getPathCancion(int posicionEnLaLista){
+		return this.canciones.getPathCancion(posicionEnLaLista);
+	}
+	*/
+	
+	/**
+	 * Accede a una canción mediante el orden que ocupa en la lista de canciones
+	 * @param posicionEnLaLista
+	 * @return canción que ocupa el lugar 'posicionEnLaLista-ésimo' en la lista de canciones
+	 */
+	/*
+	public CancionContainer getCancion(int posicionEnLaLista){
+		return this.canciones.getCancion(posicionEnLaLista);
+	}
+	 */
+	
+	
 	
 	
 }

@@ -2,13 +2,16 @@ package is2011.biblioteca.contenedores;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class DirectorioContainer {
 	
 	private String path;
-	private HashMap<String,CancionContainer> listaCanciones;
+	//private HashMap<String,CancionContainer> listaCanciones;
+	private ArrayList<CancionContainer> listaCanciones;
 	
-	public DirectorioContainer(String path, HashMap<String, CancionContainer> listaCanciones) {
+	
+	public DirectorioContainer(String path, ArrayList<CancionContainer> listaCanciones) {
 		this.path = path;
 		this.listaCanciones = listaCanciones;
 	}
@@ -16,7 +19,7 @@ public class DirectorioContainer {
 	public void addCancion(CancionContainer cancion){
 		// no pueden existir dos canciones con el mismo trackPath (nombre de fichero .mp3)
 		// se sobreescribe de todas formas
-		this.listaCanciones.put(cancion.getTrackPath(), cancion);
+		this.listaCanciones.add(cancion);
 	}
 	
 	public String getPath() {
@@ -27,21 +30,26 @@ public class DirectorioContainer {
 		this.path = path;
 	}
 
-	public HashMap<String, CancionContainer> getListaCanciones() {
+	public ArrayList<CancionContainer> getListaCanciones() {
 		return listaCanciones;
 	}
 
-	public void setListaCanciones(HashMap<String, CancionContainer> listaCanciones) {
+	public void setListaCanciones(ArrayList<CancionContainer> listaCanciones) {
 		this.listaCanciones = listaCanciones;
 	}
 	
 	/**
-	 * Devuelve un ArrayList de canciones
-	 * @return
+	 * Actualiza el path completo de las canciones: 
+	 * /home/luis/miMusica + waKawaKa.mp3
 	 */
-	public ArrayList<CancionContainer> getArrayListCanciones(){
-		return new ArrayList<CancionContainer>(this.listaCanciones.values());
+	public void actualizarPathCanciones(){
+		Iterator<CancionContainer> it = this.listaCanciones.iterator();
+		while(it.hasNext()){
+			CancionContainer aux = it.next();
+			aux.setTotalPath(this.path + aux.getTrackPath());
+		}
 	}
+
 	
 	
 }
