@@ -110,11 +110,14 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 			}
 			
 			public void mouseReleased(MouseEvent arg0) {
+				int posicionDeseada;
+				
 				synchronized (progreso) {
-					int posicionDeseada = progreso.getValue();
+					posicionDeseada = progreso.getValue();
+				}
 					buscando = false;
 					controlador.irA((float)posicionDeseada/1000);
-				}
+				
 			}
 		});
 		
