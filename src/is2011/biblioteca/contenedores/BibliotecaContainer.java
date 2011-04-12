@@ -12,13 +12,17 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 public class BibliotecaContainer {
 	
+	/** Indica si la biblioteca ha sido modificada */
 	@XStreamOmitField
 	private boolean modificado;
 	
+	/**  */
 	private HashMap<String, DirectorioContainer> directorios;
-	//private ArrayList<CancionContainer> tracks;
 	
 	
+	/**
+	 * 
+	 */
 	public BibliotecaContainer(){
 		this.modificado = false;
 		this.directorios = new HashMap<String, DirectorioContainer>();
@@ -32,6 +36,17 @@ public class BibliotecaContainer {
 		this.modificado = true;
 		this.directorios.get(song.getTotalPath().substring(0, song.getTotalPath().indexOf(song.getTrackPath())-1)).addCancion(song);
 	}
+	
+	
+	/**
+	 * Añade una canción a un directorio ya existente a partir del directorio del padre
+	 * @param song
+	 */
+	public void addCancion(CancionContainer song, String parentPath){
+		this.modificado = true;
+		this.directorios.get(parentPath).addCancion(song);
+	}
+	
 
 	/**
 	 * Indica si se ha habido alguna modificado en la estrucura de contenedores
@@ -60,6 +75,16 @@ public class BibliotecaContainer {
 		this.directorios.put(path, new DirectorioContainer(path));
 		this.modificado = true;
 	}
+	
+	
+	/**
+	 * Comprueba que exista creado un directorio correpondiente con el path absoluto que recibe como parámetro
+	 * @param path ruta absoluta del directorio que se quiere comprobar
+	 * @return true si el directorio existe en el container, false en otro caso
+	 */
+	public boolean existeDirectorio(String path){
+		return this.directorios.containsKey(path);
+	}
 
 	
 	/** 
@@ -76,56 +101,15 @@ public class BibliotecaContainer {
 		return canciones;
 	}
 	
+	
+	/**
+	 * Genera las rutas absolutas de las canciones. Se debe hacer siempre que se lea la biblioteca musical
+	 * desde el fichero XML
+	 */
 	public void generarRutasAbsolutas(){
 		Iterator<Entry<String, DirectorioContainer>> it =  this.directorios.entrySet().iterator();
 		while(it.hasNext())
 			it.next().getValue().actualizarPathCanciones();
 	}
-	
-	
-	/*
-	  
-	 public BibliotecaContainer(){
-		this.modificado = false;
-		this.tracks = new ArrayList<CancionContainer>();
-	}
-	
-	
-	public void addCancion(CancionContainer song){
-		// si el directorio existia, se reemplaza
-		this.tracks.add(song);
-		this.modificado = true;
-	}
-
-
-	public boolean isModificado() {
-		return modificado;
-	}
-	
-	public void ordenar(Comparator<CancionContainer> criterio){
-		Collections.sort(this.tracks, criterio);
-		this.modificado = true;
-	}
-	
-	public ArrayList<CancionContainer> getCanciones(){
-		return this.tracks;
-	}
-	
-	public String getPathCancion(int posicionEnLaLista){
-		//TODO mirar si es getTotalPath() o getTackPath()
-		return this.tracks.get(posicionEnLaLista).getTotalPath();
-	}
-
-
-	public CancionContainer getCancion(int posicionEnLaLista) {
-		return this.tracks.get(posicionEnLaLista);
-	} 
-	 
-	 */
-	
-	
-
-	
-	
 	
 }

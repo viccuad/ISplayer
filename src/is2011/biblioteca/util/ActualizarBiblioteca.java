@@ -13,7 +13,10 @@ import org.jaudiotagger.tag.Tag;
 
 public class ActualizarBiblioteca extends EstrategiaActualizacionBiblioteca {
 	
-	
+	/**
+	 * 
+	 * @param bib
+	 */
 	public ActualizarBiblioteca(BibliotecaContainer bib){
 		super(bib);
 	}
@@ -39,7 +42,12 @@ public class ActualizarBiblioteca extends EstrategiaActualizacionBiblioteca {
 				CancionContainer nuevaCancion = new CancionContainer(fichero.getName(), super.getName(tag) , super.getAlbum(tag),
 												super.getGenero(tag), super.getCompositor(tag),  filemp3.getAudioHeader().getTrackLength());
 				nuevaCancion.setTotalPath(fichero.getAbsolutePath());
-				super.biblioteca.addCancion(nuevaCancion);
+				
+				//TODO quitar esta linea si funciona el otro addCancion
+				//super.biblioteca.addCancion(nuevaCancion);
+				
+				super.biblioteca.addCancion(nuevaCancion, fichero.getParent());
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 

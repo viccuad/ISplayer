@@ -6,21 +6,36 @@ public class CancionContainer {
 	
 	/** Ruta completa de la cancion en el disco duro */
 	@XStreamOmitField
-	private String totalPath;
-	
-	// TODO ELEGIR ENTRE RUTA AL DIRECTORIO (C:\\MUSICA) Y NOMBREDE CANCION (WAKA_WAKA.MP3) O 
-	// RUTA ABSOLUTA (C:\\MUSICA\WAKA_WAKA.MP3)
-	
+	private String totalPath;	
 	
 	/** Nombre de la cancion en el disco duro */
 	private String trackPath;
+	
+	/**  */
 	private String titulo;
+	
+	/**  */
 	private String album;
+	
+	/**  */
 	private String genero;
+	
+	/**  */
 	private String artista;
+	
+	/**  */
 	private int duracion;   //en segundos
 	
 	
+	/**
+	 * 
+	 * @param trackP
+	 * @param tit
+	 * @param alb
+	 * @param gene
+	 * @param art
+	 * @param dur
+	 */
 	public CancionContainer(String trackP, String tit, String alb, String gene, String art,  int dur){
 		trackPath = trackP;
 		titulo = tit;
@@ -29,15 +44,30 @@ public class CancionContainer {
 		artista = art;
 		duracion = dur;
 	}
-
+	
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getTrackPath() {
 		return trackPath;
 	}
 
+	
+	/**
+	 * 
+	 * @param trackPath
+	 */
 	public void setTrackPath(String trackPath) {
 		this.trackPath = trackPath;
 	}
 
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getTitulo() {
 		return titulo;
 	}

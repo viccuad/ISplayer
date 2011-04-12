@@ -96,7 +96,9 @@ public class BibliotecaMusical {
 	}
 	
 	
-	// vale tanto para añadir como para actualizar directorios completos y sus subdirectorios
+	/**
+	 * Añade y actualiza directorios completos con sus canciones y subdirectorios correspondientes
+	 */
 	public void actualizarDirectorios(ArrayList<String> ficheros){
 		RecorreFicheros recorre = new RecorreFicheros(ficheros);
 		recorre.setEstrategia(new ActualizarBiblioteca(this.canciones));
