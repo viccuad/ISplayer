@@ -12,6 +12,8 @@ import com.thoughtworks.xstream.XStream;
 import is2011.biblioteca.contenedores.BibliotecaContainer;
 import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.biblioteca.contenedores.DirectorioContainer;
+import is2011.utilidades.RecorreFicheros;
+import is2011.utilidades.estrategias.ActualizarBiblioteca;
 
 public class BibliotecaMusical {
 
@@ -104,6 +106,15 @@ public class BibliotecaMusical {
 
 	public void setBusquedaRecursiva(boolean busquedaRecursiva) {
 		this.busquedaRecursiva = busquedaRecursiva;
+	}
+	
+	
+	
+	
+	public void buscarCanciones(String path){
+		RecorreFicheros recorre = new RecorreFicheros(path);
+		recorre.setEstrategia(new ActualizarBiblioteca());
+		recorre.recorre();
 	}
 	
 	

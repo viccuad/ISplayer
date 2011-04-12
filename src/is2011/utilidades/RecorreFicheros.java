@@ -32,7 +32,7 @@ public class RecorreFicheros {
 		private String[] noAbrirFicheros = null;
 		private String[] noAbrirDirectorios = null;
 		
-		private String[] tratarSoloFicheros = {"mp3", "ogg"};
+		private String[] tratarSoloFicheros = {"mp3", "ogg", "pdf"};
 		private String[] tratarSoloDirectorios = null ;
 		
 	
@@ -88,10 +88,11 @@ public class RecorreFicheros {
 		    	//Vemos si cumple las restricciones.
 				
 				if(cumpleRestriccionesDirectorios(fichero) || fichero.getAbsolutePath().equals(directorioBase)) {
-					estrategiaFichero.trataDirectorio(fichero);
+					//TODO quitar!
+					//estrategiaFichero.trataDirectorio(fichero);
 					String[] s = fichero.list();
 					for( String nombre : s) {
-						recorre(subcarpeta+"\\"+nombre);
+						recorre(subcarpeta+"//"+nombre);
 					}
 				}
 				

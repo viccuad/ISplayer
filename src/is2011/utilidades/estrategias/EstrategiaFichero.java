@@ -6,5 +6,8 @@ public interface EstrategiaFichero {
 
 	public void trataFichero(File fichero);
 	
+	/*
 	public void trataDirectorio(File directorio);
+	
+	*/
 }
