@@ -34,7 +34,7 @@ import javax.swing.border.Border;
 
 public class VistaPrincipal extends JFrame 	
 {
-	/*
+	
 	private IAppController controlador;
 	
 
@@ -360,7 +360,9 @@ public class VistaPrincipal extends JFrame
 		this.controlador = appController;
 		
 	}
-	*/
+	
+	
+	/*
 	private IAppController controlador;
 	
 	private boolean reproduciendo=false;
@@ -420,30 +422,7 @@ public class VistaPrincipal extends JFrame
         spring.putConstraint(SpringLayout.NORTH, play, 5, SpringLayout.NORTH, panelPpal);
 		panelPpal.add(play);
 
-		/*
-		pause = new JButton();
-		pause.setBorder(BorderFactory.createEmptyBorder());
-		pause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pause.png")));
-		panelPpal.add(pause);
-		*/
-		/*
-		stop = new JButton();
-		stop.setBorder(BorderFactory.createEmptyBorder());
-		stop.setIcon(new ImageIcon(getClass().getResource("/Recursos/stop.png")));
-		panelPpal.add(stop);
-		*/
-		/*
-		avanzar= new JButton();
-		avanzar.setBorder(BorderFactory.createEmptyBorder());
-		avanzar.setIcon(new ImageIcon(getClass().getResource("/Recursos/ff.png")));
-		panelPpal.add(avanzar);
-		*/
-		/*
-		atrasar= new JButton();
-		atrasar.setBorder(BorderFactory.createEmptyBorder());
-		atrasar.setIcon(new ImageIcon(getClass().getResource("/Recursos/rew.png")));
-		panelPpal.add(atrasar);		
-		*/
+	
 		
 		aniadir= new JButton();
 		aniadir.setBorder(BorderFactory.createEmptyBorder());
@@ -524,35 +503,6 @@ public class VistaPrincipal extends JFrame
 			}
 		);
 
-		/*
-		pause.addActionListener( new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				controlador.pause();
-			}
-		});
-		stop.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				controlador.stop();
-			}
-		});
-
-		avanzar.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				controlador.fastForward();
-			}
-		});
-
-		atrasar.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-			controlador.rewind();	
-			}}
-		);
-		 */
 		return panelPpal;
 
 	}
@@ -571,9 +521,7 @@ public class VistaPrincipal extends JFrame
 		this.add(vistaRep,grid);
 	}
 	
-	/**
-	 * @param vlr
-	 */
+
 	public void setVistaListaReproduccion(VistaListaReproduccion vlr) {
 		vistaListaReproduccion = vlr;
 		grid.gridx       = 0;
@@ -717,11 +665,10 @@ public class VistaPrincipal extends JFrame
 	}
 
 	 
-	/**
-	 * @param appController
-	 */
+	
 	public void setControlador(IAppController appController) {
 		this.controlador = appController;
 		
 	}
+	*/
 }
