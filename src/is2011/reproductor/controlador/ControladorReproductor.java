@@ -165,7 +165,7 @@ public class ControladorReproductor {
 		
 	}
 
-	public void añadirCancion(String absolutePath) {
+	public void aniadirCancion(String absolutePath) {
 		if(absolutePath.endsWith(".mp3")) {
 			listaReproduccion.addCancion(new CancionMP3(absolutePath));
 		} else if(absolutePath.endsWith(".ogg")) {

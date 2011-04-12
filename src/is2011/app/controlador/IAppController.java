@@ -69,7 +69,7 @@ public interface IAppController {
 	 * AÃ±ade al final de la lista de reproduccion actual los archivos que 
 	 * seleccionamos
 	 */
-	public void añadir();
+	public void aniadir();
 
 	/**
 	 * Reproduce la siguienete cancion.

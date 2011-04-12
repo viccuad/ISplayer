@@ -46,7 +46,7 @@ public class VistaPrincipal extends JFrame
 	private JMenuBar menu;
 	private JMenu menuArchivo;
 	private JMenuItem menuItemAbrir;
-	private JMenuItem menuItemAñadir;
+	private JMenuItem menuItemAniadir;
 	
 	private JMenu modoReproduccion;
 	private JMenuItem aleatorio;
@@ -128,7 +128,7 @@ public class VistaPrincipal extends JFrame
 		aniadir.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controlador.añadir();
+				controlador.aniadir();
 				
 			}}
 			
@@ -244,10 +244,10 @@ public class VistaPrincipal extends JFrame
 		
 		this.menuArchivo = new JMenu("Archivo");
 		this.menuItemAbrir = new JMenuItem ("Abrir");
-		this.menuItemAñadir = new JMenuItem ("AÃ±adir");
+		this.menuItemAniadir = new JMenuItem ("AÃ±adir");
 		
 		this.menuArchivo.add(menuItemAbrir);
-		this.menuArchivo.add(menuItemAñadir);
+		this.menuArchivo.add(menuItemAniadir);
 		
 		this.menu.add(menuArchivo);
 		
@@ -302,10 +302,10 @@ public class VistaPrincipal extends JFrame
 			
 		});
 		
-		this.menuItemAñadir.addActionListener(new ActionListener(){
+		this.menuItemAniadir.addActionListener(new ActionListener(){
 			
 			public void actionPerformed(ActionEvent e) {
-				controlador.añadir();
+				controlador.aniadir();
 			}
 			
 		});

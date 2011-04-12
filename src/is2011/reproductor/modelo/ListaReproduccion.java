@@ -83,7 +83,7 @@ public class ListaReproduccion {
 	 */
 	private void addCancion(Cancion cancion, int pos) {
 		listaReproduccion.add(pos, cancion);
-		notificaNuevaCancionAÒadida(cancion, pos);
+		notificaNuevaCancionAniadida(cancion, pos);
 	}
 	
 	/**
@@ -263,7 +263,7 @@ public class ListaReproduccion {
 	 * @param c La cancion que se a√±ade.
 	 * @param pos La posicion donde se a√±ade. 0 es la primera posicion.
 	 */
-	private void notificaNuevaCancionAÒadida(Cancion c, int pos) {
+	private void notificaNuevaCancionAniadida(Cancion c, int pos) {
 		for (ListaReproduccionListener l : listeners) {
 			l.nuevaCancion(new NuevaCancionEvent(c.getName(),c.getAlbum(),
 					c.getPista(),c.getCompositor(),c.getTrackLength(),pos));
