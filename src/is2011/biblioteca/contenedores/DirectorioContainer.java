@@ -51,7 +51,7 @@ public class DirectorioContainer {
 		Iterator<CancionContainer> it = this.listaCanciones.iterator();
 		while(it.hasNext()){
 			CancionContainer aux = it.next();
-			aux.setTotalPath(this.dirPath + aux.getTrackPath());
+			aux.setTotalPath(this.dirPath + "//" + aux.getTrackPath());
 		}
 	}
 

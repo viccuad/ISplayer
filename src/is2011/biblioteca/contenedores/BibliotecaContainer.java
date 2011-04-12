@@ -79,7 +79,11 @@ public class BibliotecaContainer {
 		return canciones;
 	}
 	
-	
+	public void generarRutasAbsolutas(){
+		Iterator<Entry<String, DirectorioContainer>> it =  this.directorios.entrySet().iterator();
+		while(it.hasNext())
+			it.next().getValue().actualizarPathCanciones();
+	}
 	
 	
 	/*
