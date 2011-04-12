@@ -97,14 +97,16 @@ public class VistaPrincipal extends JFrame
 		panelPpal.add(atrasar);		
 		
 		aniadir= new JButton();
-		aniadir.setIcon(new ImageIcon(getClass().getResource("/Recursos/sub_blue_add-48.png")));
+		aniadir.setIcon(new ImageIcon(getClass().getResource("/Recursos/add2.png")));
 		panelPpal.add(aniadir);	
 		
-		siguiente  = new JButton("Siguiente");
+		siguiente  = new JButton();
+		siguiente.setIcon(new ImageIcon(getClass().getResource("/Recursos/next_song.png")));
 		panelPpal.add(siguiente);
 		
 		
-		anterior  = new JButton("Anterior");
+		anterior  = new JButton();
+		anterior.setIcon(new ImageIcon(getClass().getResource("/Recursos/previous_song.png")));
 		panelPpal.add(anterior);
 		
 		siguiente.addActionListener(new ActionListener(){
