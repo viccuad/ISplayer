@@ -106,5 +106,6 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 			return true;
 		}
 		return false;
-	}	
+	}
+	
 }

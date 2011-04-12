@@ -81,4 +81,10 @@ public interface Reproductor {
 	 * @return Si esta pausada
 	 */
 	public boolean isPaused();
+	/**
+	 * Devuelve si la lista de reproduccion esta vacia.
+	 * @return Si esta vacia
+	 */
+
+	
 }

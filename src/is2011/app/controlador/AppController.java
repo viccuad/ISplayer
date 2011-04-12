@@ -177,6 +177,11 @@ public class AppController implements IAppController {
 		// TODO Implementar
 		
 	}
+
+	@Override
+	public boolean listaReproduccionVacia() {
+		return reproductor.listaReproduccionVacia();
+	}
 	
 
 

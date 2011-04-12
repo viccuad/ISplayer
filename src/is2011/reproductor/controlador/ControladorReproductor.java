@@ -243,6 +243,7 @@ public class ControladorReproductor {
 		
 		}else if(modo == ModoReproduccionEnum.NORMAL ) {
 			actual = this.listaReproduccion.getActual()-1;
+			
 		}
 		
 		if ( modo == ModoReproduccionEnum.NORMAL && (actual + 1) == 1) {
@@ -287,6 +288,10 @@ public class ControladorReproductor {
 	public void setModoRepdroduccion(ModoReproduccionEnum modo) {
 		this.listaReproduccion.setModoReproduccion(modo);
 		
+	}
+	
+	public boolean listaReproduccionVacia(){
+		return listaReproduccion.isVacia();
 	}
 
 }

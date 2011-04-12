@@ -47,6 +47,7 @@ public interface IAppController {
 	 */
 	public void rewind();
 
+
 	/**
 	 * Pausa la cancion actual 
 	 */
@@ -92,6 +93,8 @@ public interface IAppController {
 	public void borrarCanciones();
 	
 	public void reproducirSeleccionada();
+	
+	public boolean listaReproduccionVacia();
 
 	
 }
