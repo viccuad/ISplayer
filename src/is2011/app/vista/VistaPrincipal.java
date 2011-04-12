@@ -18,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JMenu;
@@ -26,6 +27,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import javax.swing.JFrame;
+import javax.swing.border.Border;
 
 
 public class VistaPrincipal extends JFrame 	
@@ -54,6 +56,9 @@ public class VistaPrincipal extends JFrame
 	private JMenuItem repetirTodos;
 	private JMenuItem normal;
 	
+	private JMenu modoVista;
+	private JMenuItem verListaReporduccion;
+	private JMenuItem ocultaListaReporduccion;
 	
 	GridBagConstraints grid;
 	private VistaReproduccion vistaReproduccion;
@@ -76,36 +81,44 @@ public class VistaPrincipal extends JFrame
 		panelPpal.setLayout(new GridLayout(1,8));
 		
 		play = new JButton();
+		play.setBorder(BorderFactory.createEmptyBorder());
 		play.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
 		panelPpal.add(play);
 
 		
 		pause = new JButton();
+		pause.setBorder(BorderFactory.createEmptyBorder());
 		pause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pause.png")));
 		panelPpal.add(pause);
 		
 		stop = new JButton();
+		stop.setBorder(BorderFactory.createEmptyBorder());
 		stop.setIcon(new ImageIcon(getClass().getResource("/Recursos/stop.png")));
 		panelPpal.add(stop);
 		
 		avanzar= new JButton();
+		avanzar.setBorder(BorderFactory.createEmptyBorder());
 		avanzar.setIcon(new ImageIcon(getClass().getResource("/Recursos/ff.png")));
 		panelPpal.add(avanzar);
 		
 		atrasar= new JButton();
+		atrasar.setBorder(BorderFactory.createEmptyBorder());
 		atrasar.setIcon(new ImageIcon(getClass().getResource("/Recursos/rew.png")));
 		panelPpal.add(atrasar);		
 		
 		aniadir= new JButton();
+		aniadir.setBorder(BorderFactory.createEmptyBorder());
 		aniadir.setIcon(new ImageIcon(getClass().getResource("/Recursos/add2.png")));
 		panelPpal.add(aniadir);	
 		
 		siguiente  = new JButton();
+		siguiente.setBorder(BorderFactory.createEmptyBorder());
 		siguiente.setIcon(new ImageIcon(getClass().getResource("/Recursos/next_song.png")));
 		panelPpal.add(siguiente);
 		
 		
 		anterior  = new JButton();
+		anterior.setBorder(BorderFactory.createEmptyBorder());
 		anterior.setIcon(new ImageIcon(getClass().getResource("/Recursos/previous_song.png")));
 		panelPpal.add(anterior);
 		
@@ -240,14 +253,14 @@ public class VistaPrincipal extends JFrame
         this.add(getContenido(),grid);
 		
         this.setVisible(true);
-		this.setSize(800,800);
+		this.setSize(800,650);
 		
 		this.menu = new JMenuBar();
 		
 		this.menuArchivo = new JMenu("Archivo");
 		this.menuItemAbrir = new JMenuItem ("Abrir");
 		this.menuItemAniadir = new JMenuItem ("Añadir");
-		
+		this.modoVista = new JMenu("Vista");
 		this.menuArchivo.add(menuItemAbrir);
 		this.menuArchivo.add(menuItemAniadir);
 		
@@ -265,6 +278,32 @@ public class VistaPrincipal extends JFrame
 		this.modoReproduccion.add(normal);
 		
 		this.menu.add(modoReproduccion);
+		
+		this.modoVista = new JMenu("Vista");
+		this.verListaReporduccion = new JMenuItem("Ver Lista de Reproduccion");
+		this.ocultaListaReporduccion = new JMenuItem("Ocultar Lista de Reproduccion");
+		
+		this.modoVista.add(verListaReporduccion);
+		this.modoVista.add(ocultaListaReporduccion);
+		
+		this.menu.add(modoVista);
+		
+		this.verListaReporduccion.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				vistaListaReproduccion.setVisible(true);
+				setSize(800,650);
+			}
+
+		});
+		this.ocultaListaReporduccion.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				vistaListaReproduccion.setVisible(false);
+				setSize(800,181);
+			}
+
+		});
 		
 		this.aleatorio.addActionListener(new ActionListener(){
 
