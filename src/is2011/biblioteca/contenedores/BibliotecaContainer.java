@@ -33,7 +33,7 @@ public class BibliotecaContainer {
 	 */
 	public void addCancion(CancionContainer song){
 		this.modificado = true;
-		this.directorios.get(song.getTotalPath().substring(0, song.getTotalPath().indexOf(song.getTrackPath()))).addCancion(song);
+		this.directorios.get(song.getTotalPath().substring(0, song.getTotalPath().indexOf(song.getTrackPath())-1)).addCancion(song);
 	}
 
 	/**
@@ -52,6 +52,15 @@ public class BibliotecaContainer {
 	public void addDir(DirectorioContainer dir){
 		// si el directorio existia, se reemplaza
 		this.directorios.put(dir.getPath(), dir);
+		this.modificado = true;
+	}
+	
+	/**
+	 * Añade un nuevo directorio vario a partir de su ruta
+	 * @param path
+	 */
+	public void addDir(String path){
+		this.directorios.put(path, new DirectorioContainer(path));
 		this.modificado = true;
 	}
 

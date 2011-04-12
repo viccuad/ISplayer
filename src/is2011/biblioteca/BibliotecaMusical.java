@@ -41,6 +41,7 @@ public class BibliotecaMusical {
 		canciones = new BibliotecaContainer();
 		stream = new XStream();
 		stream.alias("biblioteca", BibliotecaContainer.class);
+		stream.alias("dir", DirectorioContainer.class);
 		stream.alias("track", CancionContainer.class);
 		//TODO quitar esta linea o descomentar si se sigue usando DirectorioContainer.java
 		//stream.alias("dir", DirectorioContainer.class);
@@ -97,7 +98,7 @@ public class BibliotecaMusical {
 	}
 	
 	// vale tanto para añadir como para actualizar directorios completos y sus subdirectorios
-	public void actualizarDirectorio(ArrayList<String> ficheros){
+	public void actualizarDirectorios(ArrayList<String> ficheros){
 		RecorreFicheros recorre = new RecorreFicheros(ficheros);
 		recorre.setEstrategia(new ActualizarBiblioteca(this.canciones));
 		recorre.recorre();

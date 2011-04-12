@@ -6,14 +6,19 @@ import java.util.Iterator;
 
 public class DirectorioContainer {
 	
-	private String path;
+	private String dirPath;
 	//private HashMap<String,CancionContainer> listaCanciones;
 	private ArrayList<CancionContainer> listaCanciones;
 	
 	
 	public DirectorioContainer(String path, ArrayList<CancionContainer> listaCanciones) {
-		this.path = path;
+		this.dirPath = path;
 		this.listaCanciones = listaCanciones;
+	}
+	
+	public DirectorioContainer(String path) {
+		this.dirPath = path;
+		this.listaCanciones = new ArrayList<CancionContainer>();
 	}
 
 	public void addCancion(CancionContainer cancion){
@@ -23,11 +28,11 @@ public class DirectorioContainer {
 	}
 	
 	public String getPath() {
-		return path;
+		return dirPath;
 	}
 
 	public void setPath(String path) {
-		this.path = path;
+		this.dirPath = path;
 	}
 
 	public ArrayList<CancionContainer> getListaCanciones() {
@@ -46,7 +51,7 @@ public class DirectorioContainer {
 		Iterator<CancionContainer> it = this.listaCanciones.iterator();
 		while(it.hasNext()){
 			CancionContainer aux = it.next();
-			aux.setTotalPath(this.path + aux.getTrackPath());
+			aux.setTotalPath(this.dirPath + aux.getTrackPath());
 		}
 	}
 
