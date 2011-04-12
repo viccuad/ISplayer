@@ -4,8 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -44,8 +42,6 @@ public class BibliotecaMusical {
 		stream.alias("biblioteca", BibliotecaContainer.class);
 		stream.alias("dir", DirectorioContainer.class);
 		stream.alias("track", CancionContainer.class);
-		//TODO quitar esta linea o descomentar si se sigue usando DirectorioContainer.java
-		//stream.alias("dir", DirectorioContainer.class);
 		
 		//atributos que no se incluyen en el formato XML de la biblioteca
 		stream.omitField(BibliotecaContainer.class, "modificado");
@@ -91,10 +87,14 @@ public class BibliotecaMusical {
 	}
 	
 	
-	
+	/**
+	 * Devuelve una lista con todas las canciones de la biblioteca musical
+	 * @return
+	 */
 	public ArrayList<CancionContainer> getCanciones(){
 		return this.canciones.getArrayListCanciones();
 	}
+	
 	
 	// vale tanto para añadir como para actualizar directorios completos y sus subdirectorios
 	public void actualizarDirectorios(ArrayList<String> ficheros){
