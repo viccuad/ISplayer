@@ -12,8 +12,10 @@ import com.thoughtworks.xstream.XStream;
 import is2011.biblioteca.contenedores.BibliotecaContainer;
 import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.biblioteca.contenedores.DirectorioContainer;
-import is2011.utilidades.RecorreFicheros;
-import is2011.utilidades.estrategias.ActualizarBiblioteca;
+import is2011.biblioteca.util.ActualizarBiblioteca;
+import is2011.biblioteca.util.AniadirCanciones;
+import is2011.biblioteca.util.RecorreFicheros;
+
 
 public class BibliotecaMusical {
 
@@ -110,10 +112,17 @@ public class BibliotecaMusical {
 	
 	
 	
+	// vale tanto para añadir como para actualizar directorios
+	public void actualizarDirectorio(ArrayList<String> ficheros){
+		RecorreFicheros recorre = new RecorreFicheros(ficheros);
+		recorre.setEstrategia(new ActualizarBiblioteca(this.canciones));
+		recorre.recorre();
+	}
 	
-	public void buscarCanciones(String path){
-		RecorreFicheros recorre = new RecorreFicheros(path);
-		recorre.setEstrategia(new ActualizarBiblioteca());
+	
+	public void aniadirCanciones(ArrayList<String> canciones){
+		RecorreFicheros recorre = new RecorreFicheros(canciones);
+		recorre.setEstrategia(new AniadirCanciones(this.canciones));
 		recorre.recorre();
 	}
 	
