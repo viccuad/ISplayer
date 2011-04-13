@@ -11,7 +11,7 @@ import is2011.biblioteca.contenedores.BibliotecaContainer;
 public abstract class EstrategiaActualizacionBiblioteca {
 
 	/** extensiones de ficheros permitidos en el reproductor */
-	protected final String[] tratarSoloFicheros = {"mp3", "ogg"};
+	protected final String[] tratarSoloFicheros = {".mp3", ".ogg"};
 	
 	/** Referencia al contenedor de biblioteca para insertar canciones y directorios */
 	protected BibliotecaContainer biblioteca;
@@ -41,7 +41,7 @@ public abstract class EstrategiaActualizacionBiblioteca {
 	protected boolean esFicheroValido(File fichero) {
 		if(tratarSoloFicheros != null) 
 			for( String formatoFichero : tratarSoloFicheros) 
-				if(fichero.getName().endsWith(formatoFichero))
+				if(fichero.getName().toLowerCase().endsWith(formatoFichero))
 					return true;
 	
 		return false;
