@@ -217,10 +217,10 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		String info = "";
 		
 		info += this.formato +" ";
-		info += this.framerate + " bps ";
-		info += this.sampleRate + " hz ";
+		info += this.framerate + "bps ";
+		info += this.sampleRate + "hz ";
 		
-		info += this.modoAudio + " ♣♣ ";
+		info += " sonido " + this.modoAudio + " ";
 		info += this.toHora(this.tiempoActual) + "/" + tiempoTotal;
 		
 		this.labelEstado.setText(info);

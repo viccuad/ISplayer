@@ -121,8 +121,8 @@ public class CancionMP3 implements Cancion{
 	@Override
 	public String getCompositor() {
 
-		if (tag.getFirstField(FieldKey.COMPOSER) == null) return "Desconocido";
-		else return tag.getFirst(FieldKey.COMPOSER);
+		if (tag.getFirstField(FieldKey.ARTIST) == null) return "Desconocido";
+		else return tag.getFirst(FieldKey.ARTIST);
 		
 	}
 

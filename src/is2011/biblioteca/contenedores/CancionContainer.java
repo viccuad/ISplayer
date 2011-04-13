@@ -108,8 +108,8 @@ public class CancionContainer {
 		this.duracion = duracion;
 	}
 	
-	public void setTotalPath(String path){
-		this.totalPath = path;
+	public void setTotalPath(String totpath){
+		this.totalPath = totpath;
 	}
 	
 	public String getTotalPath(){
