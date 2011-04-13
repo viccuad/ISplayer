@@ -92,6 +92,15 @@ public class CancionOGG implements Cancion {
 	}
 
 	@Override
+	public String getGenero() {
+
+		if (tag.getFirstField(FieldKey.GENRE) == null) return "Desconocido";
+		else return tag.getFirst(FieldKey.GENRE);
+
+	}
+
+	
+	@Override
 	public String getPista() {
 
 		if (tag.getFirstField(FieldKey.TRACK) == null) return "0";

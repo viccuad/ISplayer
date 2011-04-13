@@ -266,7 +266,7 @@ public class ListaReproduccion {
 	private void notificaNuevaCancionAniadida(Cancion c, int pos) {
 		for (ListaReproduccionListener l : listeners) {
 			l.nuevaCancion(new NuevaCancionEvent(c.getName(),c.getAlbum(),
-					c.getPista(),c.getCompositor(),c.getTrackLength(),pos));
+					c.getPista(),c.getCompositor(), c.getGenero(),c.getTrackLength(),pos));
 		}
 		
 	}
