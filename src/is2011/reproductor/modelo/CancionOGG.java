@@ -72,30 +72,44 @@ public class CancionOGG implements Cancion {
 	
 	@Override
 	public String getName() {
-		if (tag.getFirstField(FieldKey.TITLE) == null) return "Desconocido";
-		else return tag.getFirst(FieldKey.TITLE);
+		if (tag != null){
+			if (tag.getFirstField(FieldKey.TITLE) == null) return "Desconocido";
+			else return tag.getFirst(FieldKey.TITLE);
+		}else{
+			return "Desconocido";
+		}
 		
 	}
 
 	@Override
 	public String getAlbum() {
-		if (tag.getFirstField(FieldKey.ALBUM) == null) return "Desconocido";
-		else return tag.getFirst(FieldKey.ALBUM);
+		if (tag != null){
+			if (tag.getFirstField(FieldKey.ALBUM) == null) return "Desconocido";
+			else return tag.getFirst(FieldKey.ALBUM);
+		}else{
+			return "Desconocido";
+		}
 	}
 
 	@Override
 	public String getCompositor() {
-
-		if (tag.getFirstField(FieldKey.COMPOSER) == null) return "Desconocido";
-		else return tag.getFirst(FieldKey.COMPOSER);
+		if (tag != null){
+			if (tag.getFirstField(FieldKey.COMPOSER) == null) return "Desconocido";
+			else return tag.getFirst(FieldKey.COMPOSER);
+		}else{
+			return "Desconocido";
+		}
 
 	}
 
 	@Override
 	public String getGenero() {
-
-		if (tag.getFirstField(FieldKey.GENRE) == null) return "Desconocido";
-		else return tag.getFirst(FieldKey.GENRE);
+		if (tag != null){
+			if (tag.getFirstField(FieldKey.GENRE) == null) return "Desconocido";
+			else return tag.getFirst(FieldKey.GENRE);
+		}else{
+			return "Desconocido";
+		}
 
 	}
 
@@ -103,8 +117,12 @@ public class CancionOGG implements Cancion {
 	@Override
 	public String getPista() {
 
-		if (tag.getFirstField(FieldKey.TRACK) == null) return "0";
-		else return tag.getFirst(FieldKey.TRACK);
+		if (tag != null){
+			if (tag.getFirstField(FieldKey.TRACK) == null) return "Desconocido";
+			else return tag.getFirst(FieldKey.TRACK);
+		}else{
+			return "Desconocido";
+		}
 
 	}
 	@Override
