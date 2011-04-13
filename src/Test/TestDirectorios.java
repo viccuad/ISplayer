@@ -7,7 +7,7 @@ public class TestDirectorios {
 
 	
 	public static void main(String args[]) {
-		RecorreFicheros recorre = new RecorreFicheros("/Users/david/UCM/SUPERIOR/PP");
+		RecorreFicheros recorre = new RecorreFicheros("J://WOXTER//MUSICA");
 		recorre.setEstrategia(new MuestraNombres());
 		recorre.recorre();
 	}
