@@ -174,7 +174,7 @@ public class VistaListaReproduccion extends JScrollPane implements
 		Object [] rowData = new Object[NUM_CAMPOS];
 		rowData[NUM_COLUMNA_REPRODUCIENDO] = "";
 		rowData[NUM_COLUMNA_TITULO] = e.getTitulo();
-		rowData[NUM_COLUMNA_GENERO] = e.getAlbum();
+		rowData[NUM_COLUMNA_GENERO] = e.getGenero();
 		rowData[NUM_COLUMNA_ARTISTA] = e.getArtista();
 		rowData[NUM_COLUMNA_ALBUM] = e.getAlbum();
 		rowData[NUM_COLUMNA_TRACKNO] = e.getPista();
