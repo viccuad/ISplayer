@@ -40,12 +40,10 @@ public class AniadirCanciones extends EstrategiaActualizacionBiblioteca {
 				if(!super.biblioteca.existeDirectorio(fichero.getParent()))
 					super.biblioteca.addDir(fichero.getParent());
 				
-				// por ultimo añadimos la canción
+				// si la canción no existe previamente la insertamos en la biblioteca
+				if(!super.biblioteca.existeCancion(fichero.getParent(), fichero.getName()))
+					super.biblioteca.addCancion(nuevaCancion, fichero.getParent());
 				
-				//TODO quitar esta linea si funciona el otro addCancion
-				//super.biblioteca.addCancion(nuevaCancion);
-				
-				super.biblioteca.addCancion(nuevaCancion, fichero.getParent());
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 

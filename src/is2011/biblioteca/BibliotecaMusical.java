@@ -97,7 +97,19 @@ public class BibliotecaMusical {
 	
 	
 	/**
-	 * Añade y actualiza directorios completos con sus canciones y subdirectorios correspondientes
+	 * Dice si la biblioteca musical ha sido modificada en algún momento
+	 * @return true si la biblioteca ha sido modificada, false en otro caso
+	 */
+	public boolean isModificado(){
+		return this.canciones.isModificado();
+	}
+	
+	
+	/**
+	 * Añade y actualiza (en caso de que ya exista) directorios y canciones. Si los directorios
+	 * ya existían los borra y añade su información de nuevo. Las canciones sólo se añaden
+	 * si no existen previamente.
+	 * @param ficheros lista de ficheros y canciones para actualizar la biblioteca
 	 */
 	public void actualizarDirectorios(ArrayList<String> ficheros){
 		RecorreFicheros recorre = new RecorreFicheros(ficheros);
@@ -105,17 +117,16 @@ public class BibliotecaMusical {
 		recorre.recorre();
 	}
 	
-	//TODO esta por implementar
-	// añade canciones sueltas
+	
+	/**
+	 * Añade canciones a la biblioteca en caso de que no existan previamente, de ser así no hace nada al
+	 * igual que si recibiese algún directorio en vez de canciones.
+	 * @param canciones lista de canciones a insertar
+	 */
 	public void aniadirCanciones(ArrayList<String> canciones){
 		RecorreFicheros recorre = new RecorreFicheros(canciones);
 		recorre.setEstrategia(new AniadirCanciones(this.canciones));
 		recorre.recorre();
 	}
-	
-
-	
-	
-	
 	
 }

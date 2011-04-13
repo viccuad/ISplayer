@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class DirectorioContainer {
+	
 	/** Ruta absoluta del directorio */
 	private String dirPath;
-	
-	//private HashMap<String,CancionContainer> listaCanciones;
 	
 	/** Lista de canciones que contiene el directorio */
 	private ArrayList<CancionContainer> listaCanciones;
 	
 	
+	
 	/**
-	 * 
-	 * @param path
-	 * @param listaCanciones
+	 * Crea un objeto a partir de un path correspondiente a un directorio una lista de canciones
+	 * @param path ruta de un directorio
+	 * @param listaCanciones lista de canciones que se encuentrar en el directorio 'path'
 	 */
 	public DirectorioContainer(String path, ArrayList<CancionContainer> listaCanciones) {
 		this.dirPath = path;
@@ -26,8 +26,8 @@ public class DirectorioContainer {
 	
 	
 	/**
-	 * 
-	 * @param path
+	 * Crea un objeto directorio vacio (sin canciones) a partir de un path de directorio
+	 * @param path ruta de un directorio
 	 */
 	public DirectorioContainer(String path) {
 		this.dirPath = path;
@@ -36,11 +36,11 @@ public class DirectorioContainer {
 
 	
 	/**
-	 * 
+	 * Añade una canción al directorio. No comprueba que la canción exista previamente
 	 * @param cancion
 	 */
 	public void addCancion(CancionContainer cancion){
-		// no pueden existir dos canciones con el mismo trackPath (nombre de fichero .mp3)
+		// no pueden existir dos canciones con el mismo trackPath (nombre_de_fichero.mp3)
 		// se sobreescribe de todas formas
 		this.listaCanciones.add(cancion);
 	}
@@ -90,9 +90,27 @@ public class DirectorioContainer {
 		Iterator<CancionContainer> it = this.listaCanciones.iterator();
 		while(it.hasNext()){
 			CancionContainer aux = it.next();
-			//TODO: quitar esta linea si funciona la de abajo, que usa File.separator 
-			//aux.setTotalPath(this.dirPath + "//" + aux.getTrackPath());
 			aux.setTotalPath(this.dirPath + File.separator + aux.getTrackPath());
 		}
 	}
+	
+	
+	/**
+	 * Comprueba si existe alguna canción en el directorio que se corresponda con un nombre de canción
+	 * o trackPath pasado como parámetro en forma de string.
+	 * @param nombreCancion nombre del fichero de la canción que se quiere comprobar
+	 * @return true si existe una canción con un nombre o trackPath igual al que recibe la funcion como
+	 * parámetro, false en otro caso
+	 */
+	public boolean existeCancion(String nombreCancion){
+		Iterator<CancionContainer> it = this.listaCanciones.iterator();
+		
+		while(it.hasNext())
+			if(it.next().getTrackPath().equalsIgnoreCase(nombreCancion))
+				return true;
+				
+		return false;
+	}
+	
+	
 }

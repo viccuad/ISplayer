@@ -29,11 +29,13 @@ public class ActualizarBiblioteca extends EstrategiaActualizacionBiblioteca {
 	public void actualiza(String filePath) {
 		File fichero = new File(filePath);
 		if(fichero.isDirectory()){
-			//creamos el directorio en la biblioteca. Si ya existia se sobreescribe
-			super.biblioteca.addDir(fichero.getAbsolutePath());
-			String[] subFicheros = fichero.list();
+			//borramos el directorio de la biblioteca. En caso de que no exista no pasa nada
+			super.biblioteca.removeDir(fichero.getAbsolutePath());
+			
+			String[] subFicheros = fichero.list(); 
 			for( String nombre : subFicheros)
-				actualiza(fichero.getAbsolutePath()+"//"+nombre);
+				actualiza(fichero.getAbsolutePath()+ File.separator +nombre);
+			
 	    } else if(super.esFicheroValido(fichero)){ 
 			//añadimos la cancion a la biblioteca	    	
 			try {
@@ -43,10 +45,13 @@ public class ActualizarBiblioteca extends EstrategiaActualizacionBiblioteca {
 												super.getGenero(tag), super.getCompositor(tag),  filemp3.getAudioHeader().getTrackLength());
 				nuevaCancion.setTotalPath(fichero.getAbsolutePath());
 				
-				//TODO quitar esta linea si funciona el otro addCancion
-				//super.biblioteca.addCancion(nuevaCancion);
+				// si el directorio no existe lo creamos
+				if(!super.biblioteca.existeDirectorio(fichero.getParent()))
+					super.biblioteca.addDir(fichero.getParent());
 				
-				super.biblioteca.addCancion(nuevaCancion, fichero.getParent());
+				// si la canción no existe previamente la insertamos en la biblioteca
+				if(!super.biblioteca.existeCancion(fichero.getParent(), fichero.getName()))
+					super.biblioteca.addCancion(nuevaCancion, fichero.getParent());
 				
 			} catch (Exception e) {
 				e.printStackTrace();

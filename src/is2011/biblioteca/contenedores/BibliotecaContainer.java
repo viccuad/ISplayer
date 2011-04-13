@@ -34,8 +34,8 @@ public class BibliotecaContainer {
 	 * @param song
 	 */
 	public void addCancion(CancionContainer song){
-		this.modificado = true;
 		this.directorios.get(song.getTotalPath().substring(0, song.getTotalPath().indexOf(song.getTrackPath())-1)).addCancion(song);
+		this.modificado = true;
 	}
 	
 	
@@ -44,20 +44,11 @@ public class BibliotecaContainer {
 	 * @param song
 	 */
 	public void addCancion(CancionContainer song, String parentPath){
-		this.modificado = true;
 		this.directorios.get(parentPath).addCancion(song);
+		this.modificado = true;
 	}
 	
-
-	/**
-	 * Indica si se ha habido alguna modificado en la estrucura de contenedores
-	 * @return
-	 */
-	public boolean isModificado() {
-		return modificado;
-	}
 	
-
 	/**
 	 * Añade un directorio a la biblioteca. Si este ya existia lo reemplaza
 	 * @param dir
@@ -79,12 +70,47 @@ public class BibliotecaContainer {
 	
 	
 	/**
+	 * Elimina un directorio de la biblioteca. Si el directorio no existe entonces no ocurre nada.
+	 * @param path
+	 */
+	public void removeDir(String path){
+		this.directorios.remove(path);
+		this.modificado = true;
+	}
+
+	
+	/**
 	 * Comprueba que exista creado un directorio correpondiente con el path absoluto que recibe como parámetro
 	 * @param path ruta absoluta del directorio que se quiere comprobar
 	 * @return true si el directorio existe en el container, false en otro caso
 	 */
 	public boolean existeDirectorio(String path){
 		return this.directorios.containsKey(path);
+	}
+
+	
+	/**
+	 * Indica si se ha habido alguna modificado en la estrucura de contenedores
+	 * @return
+	 */
+	public boolean isModificado() {
+		return modificado;
+	}
+	
+	
+	/**
+	 * 
+	 * @param parentPath
+	 * @param trackName
+	 * @return
+	 */
+	public boolean existeCancion(String parentPath, String trackName){
+		boolean existe = false;
+		
+		if(this.directorios.containsKey(parentPath))
+			existe = this.directorios.get(parentPath).existeCancion(trackName);
+		
+		return existe;
 	}
 
 	

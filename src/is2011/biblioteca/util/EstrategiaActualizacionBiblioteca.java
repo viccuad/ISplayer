@@ -41,7 +41,7 @@ public abstract class EstrategiaActualizacionBiblioteca {
 	protected boolean esFicheroValido(File fichero) {
 		if(tratarSoloFicheros != null) 
 			for( String formatoFichero : tratarSoloFicheros) 
-				if(fichero.getName().contains(formatoFichero))
+				if(fichero.getName().endsWith(formatoFichero))
 					return true;
 	
 		return false;
