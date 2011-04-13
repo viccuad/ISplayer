@@ -5,6 +5,7 @@ public interface Cancion {
 	public String getPath();
 	public String getName();
 	public String getAlbum();
+	public String getGenero();
 	public String getCompositor();
 	public String getPista();
 	public String getEncodingType();
@@ -15,5 +16,6 @@ public interface Cancion {
 	public long getFrames();
 	public int getTrackLength();
 	public int getBytesMusica();
+	
 
 }

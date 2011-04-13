@@ -123,7 +123,7 @@ public class CancionMP3 implements Cancion{
 
 		if (tag.getFirstField(FieldKey.COMPOSER) == null) return "Desconocido";
 		else return tag.getFirst(FieldKey.COMPOSER);
-
+		
 	}
 
 	@Override
@@ -133,6 +133,15 @@ public class CancionMP3 implements Cancion{
 		else return tag.getFirst(FieldKey.TRACK);
 
 	}
+	
+	@Override
+	public String getGenero() {
+
+		if (tag.getFirstField(FieldKey.GENRE) == null) return "0";
+		else return tag.getFirst(FieldKey.GENRE);
+
+	}
+	
 
 	@Override
 	public long getFrames() {
@@ -146,7 +155,8 @@ public class CancionMP3 implements Cancion{
 				"Duracion (s): "+getTrackLength()+"\n"+
 				"Nº Frames: "+getFrames()+"\n"+
 				"Bit Rate: "+getBitRate()+"\n"+
-				"Path: "+getPath();
+				"Path: "+getPath()+
+				"Genero"+getGenero();
 	}
 
 	@Override

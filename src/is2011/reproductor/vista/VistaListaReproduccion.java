@@ -45,20 +45,26 @@ public class VistaListaReproduccion extends JScrollPane implements
 	/** Columna en la que muestra si se esta reproduciendo la cancion*/
 	private static final int NUM_COLUMNA_REPRODUCIENDO = 0;
 	
+	/** Columna en la que se almacena titulo*/
+	private static final int NUM_COLUMNA_TITULO =1; 
+	
+	/** Columna en la que se almacena genero*/
+	private static final int NUM_COLUMNA_GENERO = 2;
+	
 	/** Columna en la que se almacena artista*/
-	private static final int NUM_COLUMNA_ALBUM = 1;
+	private static final int NUM_COLUMNA_ARTISTA = 3;
+	
+	/** Columna en la que se almacena album*/
+	private static final int NUM_COLUMNA_ALBUM = 4;
 	
 	/** Columna en la que se almacena Trak NÂº*/
-	private static final int NUM_COLUMNA_TRACKNO = 2;
-	
-	/** Columna en la que se almacena titulo*/
-	private static final int NUM_COLUMNA_TITULO =3; 
+	private static final int NUM_COLUMNA_TRACKNO = 5;
 	
 	/** Columna en la que se almacena duracion*/
-	private static final int NUM_COLUMNA_DURACION = 4;
+	private static final int NUM_COLUMNA_DURACION = 6;
 
 	/** Numero de campos*/
-	private static final int NUM_CAMPOS = 5;
+	private static final int NUM_CAMPOS = 7;
 	
 	
 	
@@ -79,26 +85,30 @@ public class VistaListaReproduccion extends JScrollPane implements
 		}; 
 
 		//AÃ±adimos las columnas del modelo
-		modelo.addColumn("Act.");
+		modelo.addColumn("Actual");
+		modelo.addColumn("Título");
+		modelo.addColumn("Género");
 		modelo.addColumn("Artista");
+		modelo.addColumn("Álbum");
 		modelo.addColumn("Pista");
-		modelo.addColumn("Titulo");
-		modelo.addColumn("Duracion");
+		modelo.addColumn("Duración");
 		
 		//Creamos la tabla
 		tabla  = new JTable(modelo);
 		tabla.setShowHorizontalLines(true);	
 		
-		//Configuramos el tamaÃ±o
+		//Configuramos el tamaño
 		TableColumnModel cm = tabla.getColumnModel();
         cm.getColumn(NUM_COLUMNA_REPRODUCIENDO).setPreferredWidth(35);
-		cm.getColumn(NUM_COLUMNA_ALBUM).setPreferredWidth(300);
+        cm.getColumn(NUM_COLUMNA_TITULO).setPreferredWidth(250);
+        cm.getColumn(NUM_COLUMNA_GENERO).setPreferredWidth(50);
+        cm.getColumn(NUM_COLUMNA_ARTISTA).setPreferredWidth(150);
+        cm.getColumn(NUM_COLUMNA_ALBUM).setPreferredWidth(150);
 		cm.getColumn(NUM_COLUMNA_TRACKNO).setPreferredWidth(35);
-		cm.getColumn(NUM_COLUMNA_TITULO).setPreferredWidth(300);
 		cm.getColumn(NUM_COLUMNA_DURACION).setPreferredWidth(50);
 		
 		
-		//Le aÃ±adimos el scroll
+		//Le añadimos el scroll
 		setViewportView(tabla);
 		
 		this.modoReproduccion = new JLabel("Modo de reproduccion NORMAL");
@@ -163,10 +173,13 @@ public class VistaListaReproduccion extends JScrollPane implements
 		
 		Object [] rowData = new Object[NUM_CAMPOS];
 		rowData[NUM_COLUMNA_REPRODUCIENDO] = "";
+		rowData[NUM_COLUMNA_TITULO] = e.getTitulo();
+		rowData[NUM_COLUMNA_GENERO] = e.getAlbum()
+		rowData[NUM_COLUMNA_ARTISTA] = e.getArtista();
 		rowData[NUM_COLUMNA_ALBUM] = e.getAlbum();
 		rowData[NUM_COLUMNA_TRACKNO] = e.getPista();
-		rowData[NUM_COLUMNA_TITULO] = e.getTitulo();
 		rowData[NUM_COLUMNA_DURACION] = toHora(e.getDuracion());
+		
 			
 		modelo.insertRow(pos, rowData);
 	}
@@ -186,7 +199,7 @@ public class VistaListaReproduccion extends JScrollPane implements
 		}
 		
 		if(modelo.getRowCount() >= (actualNuevo) && actualNuevo >0) {
-			modelo.setValueAt("  â–º ", actualNuevo-1, NUM_COLUMNA_REPRODUCIENDO);
+			modelo.setValueAt("º", actualNuevo-1, NUM_COLUMNA_REPRODUCIENDO);
 		}
 	}
 

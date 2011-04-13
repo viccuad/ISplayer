@@ -14,7 +14,7 @@ public class TestBibliotecaMusical {
 	 */
 	public static void main(String[] args) {
 		ArrayList<String> dir = new ArrayList<String>();
-		dir.add("/Users/david/Desktop/pruebaIS");
+		dir.add("src/recursos");
 		
 		BibliotecaMusical bib = BibliotecaMusical.getInstacia();
 		
@@ -22,10 +22,10 @@ public class TestBibliotecaMusical {
 		
 		try {
 			//genera el fichero XML
-			bib.guardarXML("/Users/david/Desktop/pruebaIS/lista.xml");
+			bib.guardarXML("src/Recursos/testXML2.xml");
 			
 			// carga el fichero XML a memoria
-			bib.cargarXML("/Users/david/Desktop/pruebaIS/lista.xml");
+			bib.cargarXML("src/Recursos/testXML2.xml");
 			
 			//recuperamos las canciones y las mostramos por consola
 			Iterator<CancionContainer> it = bib.getCanciones().iterator();
