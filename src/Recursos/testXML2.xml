@@ -1,66 +1,35 @@
 <biblioteca>
   <directorios>
     <entry>
-      <string>/Users/david/Documents/workspace/ISGrupo12/src/recursos/.svn</string>
+      <string>C:\hlocal\workspace-3.4.2\IS-2011\src\Recursos</string>
       <dir>
-        <dirPath>/Users/david/Documents/workspace/ISGrupo12/src/recursos/.svn</dirPath>
-        <listaCanciones/>
+        <dirPath>C:\hlocal\workspace-3.4.2\IS-2011\src\Recursos</dirPath>
+        <listaCanciones>
+          <track>
+            <trackPath>01 Maldita Nerea &amp; Los Delincuentes -  el secreto de las tortugas.mp3</trackPath>
+            <titulo>01 el secreto de las tortugas</titulo>
+            <album>Desconocido</album>
+            <genero>Desconocido</genero>
+            <artista>Desconocido</artista>
+            <duracion>247</duracion>
+          </track>
+        </listaCanciones>
       </dir>
     </entry>
     <entry>
-      <string>/Users/david/Documents/workspace/ISGrupo12/src/recursos/.svn/tmp/props</string>
+      <string>C:\hlocal\workspace-3.4.2\IS-2011\src\Recursos\canciones</string>
       <dir>
-        <dirPath>/Users/david/Documents/workspace/ISGrupo12/src/recursos/.svn/tmp/props</dirPath>
-        <listaCanciones/>
-      </dir>
-    </entry>
-    <entry>
-      <string>/Users/david/Documents/workspace/ISGrupo12/src/recursos/.svn/tmp</string>
-      <dir>
-        <dirPath>/Users/david/Documents/workspace/ISGrupo12/src/recursos/.svn/tmp</dirPath>
-        <listaCanciones/>
-      </dir>
-    </entry>
-    <entry>
-      <string>/Users/david/Documents/workspace/ISGrupo12/src/recursos/.svn/tmp/text-base</string>
-      <dir>
-        <dirPath>/Users/david/Documents/workspace/ISGrupo12/src/recursos/.svn/tmp/text-base</dirPath>
-        <listaCanciones/>
-      </dir>
-    </entry>
-    <entry>
-      <string>/Users/david/Documents/workspace/ISGrupo12/src/recursos/.svn/prop-base</string>
-      <dir>
-        <dirPath>/Users/david/Documents/workspace/ISGrupo12/src/recursos/.svn/prop-base</dirPath>
-        <listaCanciones/>
-      </dir>
-    </entry>
-    <entry>
-      <string>/Users/david/Documents/workspace/ISGrupo12/src/recursos/.svn/tmp/prop-base</string>
-      <dir>
-        <dirPath>/Users/david/Documents/workspace/ISGrupo12/src/recursos/.svn/tmp/prop-base</dirPath>
-        <listaCanciones/>
-      </dir>
-    </entry>
-    <entry>
-      <string>/Users/david/Documents/workspace/ISGrupo12/src/recursos/.svn/props</string>
-      <dir>
-        <dirPath>/Users/david/Documents/workspace/ISGrupo12/src/recursos/.svn/props</dirPath>
-        <listaCanciones/>
-      </dir>
-    </entry>
-    <entry>
-      <string>/Users/david/Documents/workspace/ISGrupo12/src/recursos/.svn/text-base</string>
-      <dir>
-        <dirPath>/Users/david/Documents/workspace/ISGrupo12/src/recursos/.svn/text-base</dirPath>
-        <listaCanciones/>
-      </dir>
-    </entry>
-    <entry>
-      <string>/Users/david/Documents/workspace/ISGrupo12/src/recursos</string>
-      <dir>
-        <dirPath>/Users/david/Documents/workspace/ISGrupo12/src/recursos</dirPath>
-        <listaCanciones/>
+        <dirPath>C:\hlocal\workspace-3.4.2\IS-2011\src\Recursos\canciones</dirPath>
+        <listaCanciones>
+          <track>
+            <trackPath>20.desakato-OctubresRotos.mp3</trackPath>
+            <titulo>Octubres rotos</titulo>
+            <album>Con el viento de cara</album>
+            <genero>Punk-Rock_Fussion</genero>
+            <artista>Desconocido</artista>
+            <duracion>201</duracion>
+          </track>
+        </listaCanciones>
       </dir>
     </entry>
   </directorios>
