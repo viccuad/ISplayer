@@ -86,18 +86,18 @@ public class VistaListaReproduccion extends JScrollPane implements
 
 		//AÃ±adimos las columnas del modelo
 		modelo.addColumn("Actual");
-		modelo.addColumn("Título");
-		modelo.addColumn("Género");
+		modelo.addColumn("Titulo");
+		modelo.addColumn("Genero");
 		modelo.addColumn("Artista");
-		modelo.addColumn("Álbum");
+		modelo.addColumn("Album");
 		modelo.addColumn("Pista");
-		modelo.addColumn("Duración");
+		modelo.addColumn("Duracion");
 		
 		//Creamos la tabla
 		tabla  = new JTable(modelo);
 		tabla.setShowHorizontalLines(true);	
 		
-		//Configuramos el tamaño
+		//Configuramos el tamaï¿½o
 		TableColumnModel cm = tabla.getColumnModel();
         cm.getColumn(NUM_COLUMNA_REPRODUCIENDO).setPreferredWidth(35);
         cm.getColumn(NUM_COLUMNA_TITULO).setPreferredWidth(250);
@@ -108,7 +108,7 @@ public class VistaListaReproduccion extends JScrollPane implements
 		cm.getColumn(NUM_COLUMNA_DURACION).setPreferredWidth(50);
 		
 		
-		//Le añadimos el scroll
+		//Le aï¿½adimos el scroll
 		setViewportView(tabla);
 		
 		this.modoReproduccion = new JLabel("Modo de reproduccion NORMAL");
@@ -199,7 +199,7 @@ public class VistaListaReproduccion extends JScrollPane implements
 		}
 		
 		if(modelo.getRowCount() >= (actualNuevo) && actualNuevo >0) {
-			modelo.setValueAt("º", actualNuevo-1, NUM_COLUMNA_REPRODUCIENDO);
+			modelo.setValueAt("ï¿½", actualNuevo-1, NUM_COLUMNA_REPRODUCIENDO);
 		}
 	}
 
