@@ -6,11 +6,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import is2011.biblioteca.BibliotecaMusical;
 import is2011.biblioteca.contenedores.CancionContainer;
-import is2011.reproductor.controlador.ControladorReproductor;
 
 public class TestBibliotecaMusical {
 
@@ -19,7 +17,8 @@ public class TestBibliotecaMusical {
 	 */
 	public static void main(String[] args) {
 		
-		ControladorReproductor reproductor = null;
+		
+		String ruta = "";
 		
 		ArrayList<String> dir = new ArrayList<String>();
 		//dir.add("src/Recursos");
@@ -31,11 +30,11 @@ public class TestBibliotecaMusical {
 		
 		int seleccion;
 		seleccion =fileChooser.showOpenDialog(null);
-		if (seleccion == JFileChooser.APPROVE_OPTION){
-			//System.out.println("Funciona");
+		if (seleccion == JFileChooser.APPROVE_OPTION){			
 			File[] files = fileChooser.getSelectedFiles();
-			for (File f : files) {				
-				dir.add(f.getAbsolutePath());
+			for (File f : files) {		
+				ruta = f.getAbsolutePath();
+				dir.add(ruta);
 				System.out.println(f.getAbsolutePath());
 			}			
 		}
@@ -49,6 +48,7 @@ public class TestBibliotecaMusical {
 		try {
 			//genera el fichero XML
 			bib.guardarXML("src/Recursos/testXML2.xml");
+			//bib.guardarXML( "src/Recursos/testXML2.xml");
 			//bib.guardarXML("/Users/david/Desktop/pruebaIS/lista.xml");
 			
 			// carga el fichero XML a memoria

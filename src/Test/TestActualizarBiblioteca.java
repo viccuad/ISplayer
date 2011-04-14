@@ -15,26 +15,27 @@ public class TestActualizarBiblioteca {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ArrayList<String> dir = new ArrayList<String>();
+		ArrayList<String> dir = new ArrayList<String>();		
+		String ruta = "";
+		
 		//creamos un directorio a indexar
 		//dir.add("/Users/david/Desktop/pruebaIS/nivel2");
-		dir.add("src/Recursos");
+		//dir.add("src/Recursos");
 		
-		/*JFileChooser fileChooser = new JFileChooser();
+		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setMultiSelectionEnabled(true);
-		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		
 		int seleccion;
 		seleccion =fileChooser.showOpenDialog(null);
-		if (seleccion == JFileChooser.APPROVE_OPTION){
-			//System.out.println("Funciona");
+		if (seleccion == JFileChooser.APPROVE_OPTION){			
 			File[] files = fileChooser.getSelectedFiles();
-			for (File f : files) {				
-				
-			}
-			dir.add("src/Recursos");
-			
-		}*/
+			for (File f : files) {		
+				ruta = f.getAbsolutePath();
+				dir.add(ruta);
+				System.out.println(f.getAbsolutePath());
+			}			
+		}
 		
 		
 		
@@ -52,7 +53,19 @@ public class TestActualizarBiblioteca {
 			bib.cargarXML("src/Recursos/testXML2.xml");
 			
 			//dir.add("/Users/david/Desktop/pruebaIS");
-			dir.add("src/Recursos/canciones");			
+			//dir.add("src/Recursos/canciones");	
+			int seleccion2;
+			seleccion2 =fileChooser.showOpenDialog(null);
+			if (seleccion2 == JFileChooser.APPROVE_OPTION){			
+				File[] files = fileChooser.getSelectedFiles();
+				for (File f : files) {		
+					ruta = f.getAbsolutePath();
+					dir.add(ruta);
+					System.out.println(f.getAbsolutePath());
+				}			
+			}
+			
+			
 			
 			bib.actualizarDirectorios(dir);
 			
