@@ -1,0 +1,51 @@
+Pruebas XML: 
+	ejecutar y verificar la salida de consola de los test:
+	TestActualizarBiblioteca.java
+	TestBibliotecaMusical.java
+	TestEscrituraXML.java
+	TestLecturaXML.java
+
+pruebas Tags:
+	ejecutar y verificar la salida de consola de los test:
+	TestCancionOGG.java
+	TestCancionMP3.java
+
+
+
+Pruebas Reproductor
+	Cargar una cancion y comprobar las funciones basicas:
+		1. cargar la canción mediante el botón cargar.
+		2. Play
+		3. Pause
+		4. reanudar reproducción: play
+		5. parar reproducción: stop
+		6. cerciorarse de que la reproducción empieza desde el principio al darle al Play
+		
+	Cargar una cancion y comprobar las funciones de barra:
+		1. cargar la canción mediante el botón cargar.
+		2. Play
+		3. mover la barra
+		4. cerciorarse de que sigue la reproducción por el punto indicado.
+		5. Pausar la cancion con pause
+		6. mover la barra 
+		7. cerciorarse de que sigue la reproducción por el punto indicado.
+		
+	Cargar una cancion y comprobar las funciones de movimiento:
+		1. cargar la canción mediante el botón cargar.
+		2. Play
+		3. pulsar avanzar
+		4. cerciorarse de que sigue la reproducción por el punto indicado.
+		5. Pausar la cancion con pause
+		6. pulsar retroceder 
+		7. cerciorarse de que sigue la reproducción por el punto indicado.	
+		
+	Cargar varias canciones y comprobar que funciona la lista de reproduccion
+		1. cargar las canciones mediante el botón cargar
+		2. comprobar que se inicia la reproducción haciendo doble clic en una cancion.
+		3. comprobar que se inicia la reproducción haciendo clic en una canción distinta.
+		
+	Cargar varias canciones y comprobar que funciona la lista de reproduccion con los distintos modos(hacer para todos)
+		1. cargar las canciones mediante el botón cargar
+		2. comprobar que se inicia la reproducción haciendo doble clic en una cancion.
+		3. seleccionar un modo
+		3. comprobar que sigue la reproducción con el patrón determinado haciendo clic en siguiente canción.

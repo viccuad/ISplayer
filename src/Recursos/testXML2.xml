@@ -1,26 +1,42 @@
 <biblioteca>
   <directorios>
     <entry>
-      <string>C:\hlocal\workspace-3.4.2\IS-2011\src\Recursos</string>
+      <string>/Users/carlos/Desktop/cancionesmp3</string>
       <dir>
-        <dirPath>C:\hlocal\workspace-3.4.2\IS-2011\src\Recursos</dirPath>
+        <dirPath>/Users/carlos/Desktop/cancionesmp3</dirPath>
         <listaCanciones>
           <track>
-            <trackPath>01 Maldita Nerea &amp; Los Delincuentes -  el secreto de las tortugas.mp3</trackPath>
+            <trackPath>01 Maldita Nerea &amp; Los Delinqüentes -  el secreto de las tortugas.mp3</trackPath>
             <titulo>01 el secreto de las tortugas</titulo>
-            <album>Desconocido</album>
-            <genero>Desconocido</genero>
+            <album>El secreto de las tortugas</album>
+            <genero>Pop </genero>
             <artista>Desconocido</artista>
             <duracion>247</duracion>
           </track>
-        </listaCanciones>
-      </dir>
-    </entry>
-    <entry>
-      <string>C:\hlocal\workspace-3.4.2\IS-2011\src\Recursos\canciones</string>
-      <dir>
-        <dirPath>C:\hlocal\workspace-3.4.2\IS-2011\src\Recursos\canciones</dirPath>
-        <listaCanciones>
+          <track>
+            <trackPath>01 Purple Haze.mp3</trackPath>
+            <titulo>Purple Haze</titulo>
+            <album>Experience Hendrix</album>
+            <genero>Rock </genero>
+            <artista>Desconocido</artista>
+            <duracion>171</duracion>
+          </track>
+          <track>
+            <trackPath>02 - No Woman No Cry (Live).mp3</trackPath>
+            <titulo>No Woman No Cry (Live)</titulo>
+            <album>Legend</album>
+            <genero>Reggae </genero>
+            <artista>Desconocido</artista>
+            <duracion>244</duracion>
+          </track>
+          <track>
+            <trackPath>04.The Offspring - Pretty fly (for a white guy).mp3</trackPath>
+            <titulo>Pretty fly(for a white guy)</titulo>
+            <album>Americana</album>
+            <genero>Rock Punk </genero>
+            <artista>Desconocido</artista>
+            <duracion>188</duracion>
+          </track>
           <track>
             <trackPath>20.desakato-OctubresRotos.mp3</trackPath>
             <titulo>Octubres rotos</titulo>
@@ -28,6 +44,30 @@
             <genero>Punk-Rock_Fussion</genero>
             <artista>Desconocido</artista>
             <duracion>201</duracion>
+          </track>
+          <track>
+            <trackPath>How You Remind Me.mp3</trackPath>
+            <titulo>How you remind me</titulo>
+            <album>Silver side up</album>
+            <genero>Rock </genero>
+            <artista>Desconocido</artista>
+            <duracion>223</duracion>
+          </track>
+          <track>
+            <trackPath>Its A Hit.mp3</trackPath>
+            <titulo>Its a hit</titulo>
+            <album>With love and squalor</album>
+            <genero>Rock alternativo</genero>
+            <artista>Desconocido</artista>
+            <duracion>206</duracion>
+          </track>
+          <track>
+            <trackPath>Madness - 02 - It Must Be Love.mp3</trackPath>
+            <titulo>It Must Be Love</titulo>
+            <album>The Business #2</album>
+            <genero>Ska</genero>
+            <artista>Desconocido</artista>
+            <duracion>197</duracion>
           </track>
         </listaCanciones>
       </dir>
