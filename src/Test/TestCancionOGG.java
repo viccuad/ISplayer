@@ -10,7 +10,7 @@ import is2011.reproductor.modelo.Cancion;
 import is2011.reproductor.modelo.CancionMP3;
 import is2011.reproductor.modelo.CancionOGG;
 
-public class TestCancionOGG {
+public class testCancionOGG {
 
 	public static void main(String[] args){
 		

@@ -11,7 +11,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 
-public class TestLecturaXML {
+public class testLecturaXML {
 
 	public static void main(String[] args) {
 		BibliotecaContainer bib;

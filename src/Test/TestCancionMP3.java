@@ -10,7 +10,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class TestCancionMP3 {
+public class testCancionMP3 {
 
 	public static void main(String[] args){
 		
