@@ -97,10 +97,15 @@ public class BasicPlayer implements BasicController, Runnable
         reset();
     }
 
-    protected void reset()
+    protected void reset(){
+    	reset(false);
+    }
+    protected void reset(boolean seeking)
     {
-        m_status = UNKNOWN;
-        if (m_audioInputStream != null)
+    	if(!seeking) {
+    		m_status = UNKNOWN;
+    	}
+    	if (m_audioInputStream != null)
         {
             synchronized (m_audioInputStream)
             {
@@ -213,6 +218,9 @@ public class BasicPlayer implements BasicController, Runnable
      */
     public void open(File file) throws BasicPlayerException
     {
+    	if(m_thread != null) {
+    		m_thread.stop();
+    	}
         //log.info("open(" + file + ")");
         if (file != null)
         {
@@ -247,16 +255,24 @@ public class BasicPlayer implements BasicController, Runnable
         }
     }
 
+    protected void initAudioInputStream() throws BasicPlayerException {
+    	initAudioInputStream(false);
+    }
+    
     /**
      * Inits AudioInputStream and AudioFileFormat from the data source.
      * @throws BasicPlayerException
      */
-    protected void initAudioInputStream() throws BasicPlayerException
+    protected void initAudioInputStream(boolean resetBusqueda) throws BasicPlayerException
     {
         try
         {
-            reset();
-            notifyEvent(BasicPlayerEvent.OPENING, getEncodedStreamPosition(), -1, m_dataSource);
+            if(resetBusqueda) {
+            	reset(true);
+            } else {
+            	reset();
+            }
+        	notifyEvent(BasicPlayerEvent.OPENING, getEncodedStreamPosition(), -1, m_dataSource);
             if (m_dataSource instanceof URL)
             {
                 initAudioInputStream((URL) m_dataSource);
@@ -270,43 +286,50 @@ public class BasicPlayer implements BasicController, Runnable
                 initAudioInputStream((InputStream) m_dataSource);
             }
             createLine();
-            // Notify listeners with AudioFileFormat properties.
-            Map properties = null;
-            if (m_audioFileFormat instanceof TAudioFileFormat)
-            {
-                // Tritonus SPI compliant audio file format.
-                properties = ((TAudioFileFormat) m_audioFileFormat).properties();
-                // Clone the Map because it is not mutable.
-                properties = deepCopy(properties);
-            }
-            else properties = new HashMap();
-            // Add JavaSound properties.
-            if (m_audioFileFormat.getByteLength() > 0) properties.put("audio.length.bytes", new Integer(m_audioFileFormat.getByteLength()));
-            if (m_audioFileFormat.getFrameLength() > 0) properties.put("audio.length.frames", new Integer(m_audioFileFormat.getFrameLength()));
-            if (m_audioFileFormat.getType() != null) properties.put("audio.type", (m_audioFileFormat.getType().toString()));
-            // Audio format.
-            AudioFormat audioFormat = m_audioFileFormat.getFormat();
-            if (audioFormat.getFrameRate() > 0) properties.put("audio.framerate.fps", new Float(audioFormat.getFrameRate()));
-            if (audioFormat.getFrameSize() > 0) properties.put("audio.framesize.bytes", new Integer(audioFormat.getFrameSize()));
-            if (audioFormat.getSampleRate() > 0) properties.put("audio.samplerate.hz", new Float(audioFormat.getSampleRate()));
-            if (audioFormat.getSampleSizeInBits() > 0) properties.put("audio.samplesize.bits", new Integer(audioFormat.getSampleSizeInBits()));
-            if (audioFormat.getChannels() > 0) properties.put("audio.channels", new Integer(audioFormat.getChannels()));
-            if (audioFormat instanceof TAudioFormat)
-            {
-                // Tritonus SPI compliant audio format.
-                Map addproperties = ((TAudioFormat) audioFormat).properties();
-                properties.putAll(addproperties);
-            }
-            // Add SourceDataLine
-            properties.put("basicplayer.sourcedataline", m_line);
-            Iterator it = m_listeners.iterator();
-            while (it.hasNext())
-            {
-                BasicPlayerListener bpl = (BasicPlayerListener) it.next();
-                bpl.opened(m_dataSource, properties);
+            
+            if(!resetBusqueda) {
+            	// Notify listeners with AudioFileFormat properties.
+            	Map properties = null;
+            	if (m_audioFileFormat instanceof TAudioFileFormat)
+            	{
+            		// Tritonus SPI compliant audio file format.
+            		properties = ((TAudioFileFormat) m_audioFileFormat).properties();
+            		// Clone the Map because it is not mutable.
+            		properties = deepCopy(properties);
+            	}
+            	else properties = new HashMap();
+            	// Add JavaSound properties.
+            	if (m_audioFileFormat.getByteLength() > 0) properties.put("audio.length.bytes", new Integer(m_audioFileFormat.getByteLength()));
+            	if (m_audioFileFormat.getFrameLength() > 0) properties.put("audio.length.frames", new Integer(m_audioFileFormat.getFrameLength()));
+            	if (m_audioFileFormat.getType() != null) properties.put("audio.type", (m_audioFileFormat.getType().toString()));
+            	// Audio format.
+            	AudioFormat audioFormat = m_audioFileFormat.getFormat();
+            	if (audioFormat.getFrameRate() > 0) properties.put("audio.framerate.fps", new Float(audioFormat.getFrameRate()));
+            	if (audioFormat.getFrameSize() > 0) properties.put("audio.framesize.bytes", new Integer(audioFormat.getFrameSize()));
+            	if (audioFormat.getSampleRate() > 0) properties.put("audio.samplerate.hz", new Float(audioFormat.getSampleRate()));
+            	if (audioFormat.getSampleSizeInBits() > 0) properties.put("audio.samplesize.bits", new Integer(audioFormat.getSampleSizeInBits()));
+            	if (audioFormat.getChannels() > 0) properties.put("audio.channels", new Integer(audioFormat.getChannels()));
+            	if (audioFormat instanceof TAudioFormat)
+            	{
+            		// Tritonus SPI compliant audio format.
+            		Map addproperties = ((TAudioFormat) audioFormat).properties();
+            		properties.putAll(addproperties);
+            	}
+            	// Add SourceDataLine
+            	properties.put("basicplayer.sourcedataline", m_line);
+            	Iterator it = m_listeners.iterator();
+            	while (it.hasNext())
+            	{
+            		BasicPlayerListener bpl = (BasicPlayerListener) it.next();
+            		bpl.opened(m_dataSource, properties);
+            	}
+
+
+            	m_status = OPENED;
+            	notifyEvent(BasicPlayerEvent.OPENED, getEncodedStreamPosition(), -1, null);
             }
             m_status = OPENED;
-            notifyEvent(BasicPlayerEvent.OPENED, getEncodedStreamPosition(), -1, null);
+            
         }
         catch (LineUnavailableException e)
         {
@@ -411,7 +434,7 @@ public class BasicPlayer implements BasicController, Runnable
             }
             catch (IOException e)
             {
-                //log.error("Cannot get m_encodedaudioInputStream.available()", e);
+                log.error("Cannot get m_encodedaudioInputStream.available()", e);
             }
             // Create decoded stream.
             m_audioInputStream = AudioSystem.getAudioInputStream(targetFormat, m_audioInputStream);
@@ -448,11 +471,11 @@ public class BasicPlayer implements BasicController, Runnable
             m_line.open(audioFormat, buffersize);
             //log.info("Open Line : BufferSize=" + buffersize);
             /*-- Display supported controls --*/
-            Control[] c = m_line.getControls();
+         /*   Control[] c = m_line.getControls();
             for (int p = 0; p < c.length; p++)
             {
                 //log.debug("Controls : " + c[p].toString());
-            }
+            }*/
             /*-- Is Gain Control supported ? --*/
             if (m_line.isControlSupported(FloatControl.Type.MASTER_GAIN))
             {
@@ -537,16 +560,23 @@ public class BasicPlayer implements BasicController, Runnable
      */
     protected void startPlayback() throws BasicPlayerException
     {
-        if (m_status == STOPPED) initAudioInputStream();
+    	if(m_thread != null) {
+    		m_thread.stop();
+    	}
+    	
+    	if (m_status == STOPPED) initAudioInputStream();
+        
         if (m_status == OPENED)
         {
-            //log.info("startPlayback called");
-            if (!(m_thread == null || !m_thread.isAlive()))
+        	
+        	//log.info("startPlayback called");
+            if ((m_thread != null && m_thread.isAlive()))
             {
-                //log.info("WARNING: old thread still running!!");
+            	//log.info("WARNING: old thread still running!!");
                 int cnt = 0;
                 while (m_status != OPENED)
                 {
+                	
                     try
                     {
                         if (m_thread != null)
@@ -586,6 +616,23 @@ public class BasicPlayer implements BasicController, Runnable
             }
         }
     }
+    
+    private void freeAudioResources(int nBytesRead) {
+		// Free audio resources.
+        if (m_line != null) {
+            m_line.drain();
+            m_line.stop();
+            m_line.close();
+            m_line = null;
+        }
+        // Notification of "End Of Media"
+        if (nBytesRead == -1)
+        {
+            notifyEvent(BasicPlayerEvent.EOM, getEncodedStreamPosition(), -1, null);
+        }
+        // Close stream.
+        closeStream();
+	}
 
     /**
      * Main loop.
@@ -596,97 +643,86 @@ public class BasicPlayer implements BasicController, Runnable
      */
     public void run()
     {
-        //log.info("Thread Running");
-        int nBytesRead = 1;
-        byte[] abData = new byte[EXTERNAL_BUFFER_SIZE];
-        // Lock stream while playing.
-        synchronized (m_audioInputStream)
-        {
-            // Main play/pause loop.
-            while ((nBytesRead != -1) && (m_status != STOPPED) && (m_status != SEEKING) && (m_status != UNKNOWN))
-            {
-                if (m_status == PLAYING)
-                {
-                    // Play.
-                    try
-                    {
-                        nBytesRead = m_audioInputStream.read(abData, 0, abData.length);
-                        if (nBytesRead >= 0)
-                        {
-                            byte[] pcm = new byte[nBytesRead];
-                            System.arraycopy(abData, 0, pcm, 0, nBytesRead);
-                            //if (m_line.available() >= m_line.getBufferSize()) log.debug("Underrun : "+m_line.available()+"/"+m_line.getBufferSize());
-                            int nBytesWritten = m_line.write(abData, 0, nBytesRead);
-                            // Compute position in bytes in encoded stream.
-                            int nEncodedBytes = getEncodedStreamPosition();
-                            // Notify listeners
-                            Iterator it = m_listeners.iterator();
-                            while (it.hasNext())
-                            {
-                                BasicPlayerListener bpl = (BasicPlayerListener) it.next();
-                                if (m_audioInputStream instanceof PropertiesContainer)
-                                {
-                                    // Pass audio parameters such as instant bitrate, ...
-                                    Map properties = ((PropertiesContainer) m_audioInputStream).properties();
-                                    bpl.progress(nEncodedBytes, m_line.getMicrosecondPosition(), pcm, properties);
-                                }
-                                else bpl.progress(nEncodedBytes, m_line.getMicrosecondPosition(), pcm, empty_map);
-                            }
-                        }
-                    }
-                    catch (IOException e)
-                    {
-                        //log.error("Thread cannot run()", e);
-                        m_status = STOPPED;
-                        notifyEvent(BasicPlayerEvent.STOPPED, getEncodedStreamPosition(), -1, null);
-                    }
-                    // Nice CPU usage.
-                    if (threadSleep > 0)
-                    {
-                        try
-                        {
-                            Thread.sleep(threadSleep);
-                        }
-                        catch (InterruptedException e)
-                        {
-                            //log.error("Thread cannot sleep(" + threadSleep + ")", e);
-                        }
-                    }
-                }
-                else
-                {
-                    // Pause
-                    try
-                    {
-                        Thread.sleep(1000);
-                    }
-                    catch (InterruptedException e)
-                    {
-                        //log.error("Thread cannot sleep(1000)", e);
-                    }
-                }
-            }
-            // Free audio resources.
-            if (m_line != null)
-            {
-                m_line.drain();
-                m_line.stop();
-                m_line.close();
-                m_line = null;
-            }
-            // Notification of "End Of Media"
-            if (nBytesRead == -1)
-            {
-                notifyEvent(BasicPlayerEvent.EOM, getEncodedStreamPosition(), -1, null);
-            }
-            // Close stream.
-            closeStream();
-        }
+    	int nBytesRead = 1;
+    	byte[] abData = new byte[EXTERNAL_BUFFER_SIZE];
+    	// Main play/pause loop.
+    	while ((nBytesRead != -1) && (m_status != STOPPED) && (m_status != UNKNOWN)) {
+    		if (m_status == PLAYING) {
+    			// Play.
+    			try {
+    				synchronized (m_audioInputStream) {
+    					if( m_audioInputStream != null) {
+    						nBytesRead = m_audioInputStream.read(abData, 0, abData.length);
+    					}
+    				}
+    				
+    				if (nBytesRead >= 0) {
+    					int nBytesWritten = m_line.write(abData, 0, nBytesRead);
+    					int nEncodedBytes = getEncodedStreamPosition();
+    					Iterator it = m_listeners.iterator();
+    					Map properties;
+    					
+    					if( m_status != SEEKING && m_audioInputStream != null) {
+    						synchronized (m_audioInputStream) {
+    							if (m_audioInputStream instanceof PropertiesContainer )
+    							{
+    								properties = ((PropertiesContainer) m_audioInputStream).properties();
+    							}else {
+    								properties = empty_map;
+    							}
+    						}
+    						while (it.hasNext())
+        					{
+    							long tiempo = 0;
+    							if(m_line != null)  {
+    								tiempo = m_line.getMicrosecondPosition();
+    							}
+        						BasicPlayerListener bpl = (BasicPlayerListener) it.next();
+        						bpl.progress(nEncodedBytes, tiempo, null, properties);
+        					}
+    					}
+    					
+    				}
+    			}
+    			catch (IOException e) {
+    				//log.error("Thread cannot run()", e);
+    				m_status = STOPPED;
+    				notifyEvent(BasicPlayerEvent.STOPPED, getEncodedStreamPosition(), -1, null);
+    			}
+    			// Nice CPU usage.
+    			if (threadSleep > 0) {
+    				try {
+    					Thread.sleep(threadSleep);
+    				} catch (InterruptedException e) {
+    					//log.error("Thread cannot sleep(" + threadSleep + ")", e);
+    				}
+    			}
+    		} else if (m_status == PAUSED){  // Pause
+    			try {
+    				Thread.sleep(100);
+    			} catch (InterruptedException e) {
+    				//log.error("Thread cannot sleep(1000)", e);
+    			}
+    		}  else if( m_status == SEEKING) {
+    			try {
+    				while(m_status == SEEKING) {
+    					Thread.sleep(1000);
+    				}
+    			} catch (InterruptedException e) {
+    				//log.error("Thread cannot sleep(1000)", e);
+    			}
+    		}
+    	} 
+    	freeAudioResources(nBytesRead);
+         
         m_status = STOPPED;
         notifyEvent(BasicPlayerEvent.STOPPED, getEncodedStreamPosition(), -1, null);
         //log.info("Thread completed");
     }
 
+	
+	
+	
     /**
      * Skip bytes in the File inputstream.
      * It will skip N frames matching to bytes, so it will never skip given bytes length exactly.
@@ -707,8 +743,8 @@ public class BasicPlayer implements BasicController, Runnable
             {
                 synchronized (m_audioInputStream)
                 {
-                    notifyEvent(BasicPlayerEvent.SEEKING, getEncodedStreamPosition(), -1, null);
-                    initAudioInputStream();
+                	notifyEvent(BasicPlayerEvent.SEEKING, getEncodedStreamPosition(), -1, null);
+                    initAudioInputStream(true); 
                     if (m_audioInputStream != null)
                     {
                         // Loop until bytes are really skipped.
@@ -723,13 +759,32 @@ public class BasicPlayer implements BasicController, Runnable
                     }
                 }
                 notifyEvent(BasicPlayerEvent.SEEKED, getEncodedStreamPosition(), -1, null);  
-                m_status = OPENED;
+               // m_status = OPENED;
+               
+                
+                try
+                {
+                    initLine();
+                }
+                catch (LineUnavailableException e)
+                {
+                    throw new BasicPlayerException(BasicPlayerException.CANNOTINITLINE, e);
+                }
+                
+                if (m_line != null)
+                {
+                    m_line.start();
+                }
+               
+                m_status = previousStatus;
+               /*
                 if (previousStatus == PLAYING) startPlayback();
                 else if (previousStatus == PAUSED)
                 {
                     startPlayback();
                     pausePlayback();
-                }
+                }*/
+               m_thread.interrupt();
             }
             catch (IOException e)
             {
