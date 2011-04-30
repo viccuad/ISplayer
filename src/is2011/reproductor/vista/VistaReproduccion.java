@@ -95,8 +95,9 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		
 		reset();
 		
-		this.progreso = new JScrollBar(JScrollBar.HORIZONTAL, 0, 10, 0, 1000);
-	
+		this.progreso = new JScrollBar(JScrollBar.HORIZONTAL, 0, 0, 0, 1000);
+		this.progreso.setEnabled(false);
+		
 		this.setLayout(new GridLayout(3,1));
 		this.add(this.progreso);
 		
@@ -107,6 +108,15 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				buscando = true;
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int anchoReal = progreso.getWidth() -1 - progreso.getHeight();
+				int xReal = e.getX() - progreso.getHeight();
+				float porcentaje = ((float)xReal)/anchoReal;
+				
+				controlador.irA(porcentaje);
 			}
 			
 			public void mouseReleased(MouseEvent arg0) {
@@ -244,6 +254,8 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		
 		this.actualizar = true;
 		
+		this.progreso.setEnabled(true);
+		
 	}
 	
 	
@@ -308,13 +320,17 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		//pasamos a la siguiente.
 		if(event.getCode() == BasicPlayerEvent.EOM ) {
 			this.reset();
+			this.progreso.setEnabled(false);
 			this.progreso.setValue(this.posicion);
 			this.labelEstado.setText("");
 			controlador.siguienteCancion();
 		}else if ( event.getCode() == BasicPlayerEvent.STOP ) {
 			this.reset();
+			this.progreso.setEnabled(false);
 			this.progreso.setValue(this.posicion);
 			this.labelEstado.setText("");
+		}else if(event.getCode() == BasicPlayerEvent.SEEKED) {
+			this.progreso.setValue((int)(((float)event.getPosition()/bytesMusica)*1000));
 		}
 		
 		//estado = event.getDescription().toString();
