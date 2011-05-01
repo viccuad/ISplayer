@@ -44,7 +44,7 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 			 }else {
 				 notifyEvent(BasicPlayerEvent.EOM, getEncodedStreamPosition(), 
 						 -1, null);
-			 }
+			}
 		}
 	}
 	

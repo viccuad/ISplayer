@@ -56,7 +56,7 @@ import org.tritonus.share.sampled.file.TAudioFileFormat;
  */
 public class BasicPlayer implements BasicController, Runnable
 {
-    public static int EXTERNAL_BUFFER_SIZE = 4000 * 4;
+	public static int EXTERNAL_BUFFER_SIZE = 4000 * 4;
     public static int SKIP_INACCURACY_SIZE = 1200;
     protected Thread m_thread = null;
     protected Object m_dataSource;
@@ -116,11 +116,13 @@ public class BasicPlayer implements BasicController, Runnable
         m_audioFileFormat = null;
         m_encodedaudioInputStream = null;
         encodedLength = -1;
-        if (m_line != null)
-        {
-            m_line.stop();
-            m_line.close();
-            m_line = null;
+
+        if (m_line != null) { 
+        	synchronized (m_line) {
+        	m_line.stop();
+        	m_line.close();
+        	m_line = null;
+        	}
         }
         m_gainControl = null;
         m_panControl = null;
@@ -234,6 +236,9 @@ public class BasicPlayer implements BasicController, Runnable
      */
     public void open(URL url) throws BasicPlayerException
     {
+    	if(m_thread != null) {
+    		m_thread.stop();
+    	}
         //log.info("open(" + url + ")");
         if (url != null)
         {
@@ -247,6 +252,9 @@ public class BasicPlayer implements BasicController, Runnable
      */
     public void open(InputStream inputStream) throws BasicPlayerException
     {
+    	if(m_thread != null) {
+    		m_thread.stop();
+    	}
         //log.info("open(" + inputStream + ")");
         if (inputStream != null)
         {
@@ -547,8 +555,12 @@ public class BasicPlayer implements BasicController, Runnable
         {
             if (m_status == PAUSED)
             {
+            	m_line.flush();
                 m_line.start();
                 m_status = PLAYING;
+                if(m_thread != null) {
+                	m_thread.interrupt();
+                }
                 //log.info("resumePlayback() completed");
                 notifyEvent(BasicPlayerEvent.RESUMED, getEncodedStreamPosition(), -1, null);
             }
@@ -619,12 +631,14 @@ public class BasicPlayer implements BasicController, Runnable
     
     private void freeAudioResources(int nBytesRead) {
 		// Free audio resources.
-        if (m_line != null) {
-            m_line.drain();
-            m_line.stop();
-            m_line.close();
-            m_line = null;
-        }
+        synchronized (m_line) {
+        	if (m_line != null) {
+                m_line.drain();
+                m_line.stop();
+                m_line.close();
+                m_line = null;
+            }
+		}
         // Notification of "End Of Media"
         if (nBytesRead == -1)
         {
@@ -653,6 +667,7 @@ public class BasicPlayer implements BasicController, Runnable
     				synchronized (m_audioInputStream) {
     					if( m_audioInputStream != null) {
     						nBytesRead = m_audioInputStream.read(abData, 0, abData.length);
+    						
     					}
     				}
     				
@@ -694,12 +709,14 @@ public class BasicPlayer implements BasicController, Runnable
     				try {
     					Thread.sleep(threadSleep);
     				} catch (InterruptedException e) {
+    					
+    					
     					//log.error("Thread cannot sleep(" + threadSleep + ")", e);
     				}
     			}
     		} else if (m_status == PAUSED){  // Pause
     			try {
-    				Thread.sleep(100);
+    				Thread.sleep(1000);
     			} catch (InterruptedException e) {
     				//log.error("Thread cannot sleep(1000)", e);
     			}
@@ -732,26 +749,31 @@ public class BasicPlayer implements BasicController, Runnable
      */
     protected long skipBytes(long bytes) throws BasicPlayerException
     {
-        long totalSkipped = 0;
+    	long totalSkipped = 0;
         if (m_dataSource instanceof File)
         {
             //log.info("Bytes to skip : " + bytes);
             int previousStatus = m_status;
+            
             m_status = SEEKING;
             long skipped = 0;
             try
             {
-                synchronized (m_audioInputStream)
+            	//synchronized (m_audioInputStream)
                 {
                 	notifyEvent(BasicPlayerEvent.SEEKING, getEncodedStreamPosition(), -1, null);
-                    initAudioInputStream(true); 
-                    if (m_audioInputStream != null)
+                    initAudioInputStream(true);
+                	if (m_audioInputStream != null)
                     {
-                        // Loop until bytes are really skipped.
+                		 
+                		// Loop until bytes are really skipped.
                         while (totalSkipped < (bytes - SKIP_INACCURACY_SIZE))
                         {
+                        	
                             skipped = m_audioInputStream.skip(bytes - totalSkipped);
-                            if (skipped == 0) break;
+                            if (skipped == 0) {
+                            	break;
+                            }
                             totalSkipped = totalSkipped + skipped;
                             //log.info("Skipped : " + totalSkipped + "/" + bytes);
                             if (totalSkipped == -1) throw new BasicPlayerException(BasicPlayerException.SKIPNOTSUPPORTED);
@@ -759,9 +781,9 @@ public class BasicPlayer implements BasicController, Runnable
                     }
                 }
                 notifyEvent(BasicPlayerEvent.SEEKED, getEncodedStreamPosition(), -1, null);  
-               // m_status = OPENED;
+                // m_status = OPENED;
                
-                
+                    
                 try
                 {
                     initLine();
@@ -770,6 +792,8 @@ public class BasicPlayer implements BasicController, Runnable
                 {
                     throw new BasicPlayerException(BasicPlayerException.CANNOTINITLINE, e);
                 }
+                
+                
                 
                 if (m_line != null)
                 {
@@ -784,12 +808,15 @@ public class BasicPlayer implements BasicController, Runnable
                     startPlayback();
                     pausePlayback();
                 }*/
+               
                m_thread.interrupt();
+               
             }
             catch (IOException e)
             {
                 throw new BasicPlayerException(e);
             }
+           
         }
         return totalSkipped;
     }
