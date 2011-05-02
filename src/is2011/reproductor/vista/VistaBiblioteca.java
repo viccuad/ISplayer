@@ -128,7 +128,7 @@ public class VistaBiblioteca extends JScrollPane implements
 			public void mouseClicked(MouseEvent e) {
 				if(e.getClickCount() == 2) {
 					int cancionDeseada = e.getY()/tabla.getRowHeight();
-					controlador.play(cancionDeseada);
+					controlador.fromBibliotecaToListaReproduccion();
 				}
 			}
 		});

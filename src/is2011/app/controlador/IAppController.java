@@ -3,6 +3,7 @@ package is2011.app.controlador;
 import java.util.ArrayList;
 
 import is2011.biblioteca.contenedores.CancionContainer;
+import is2011.reproductor.modelo.Cancion;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 
 /**
@@ -135,6 +136,10 @@ public interface IAppController {
 	 * 
 	 */
 	public void setVolumen(float porcentaje);
-
+	
+	/**
+	 * Cargar una cancion en laLista de Reproduccion desde la biblioteca
+	 */
+	public void fromBibliotecaToListaReproduccion(String path);
 	
 }

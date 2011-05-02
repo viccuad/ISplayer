@@ -11,6 +11,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import is2011.biblioteca.BibliotecaMusical;
 import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.reproductor.controlador.ControladorReproductor;
+import is2011.reproductor.modelo.Cancion;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 
 
@@ -284,7 +285,9 @@ public class AppController implements IAppController {
 		this.reproductor.setVolumen(porcentaje);
 	}
 
-	
+	public void fromBibliotecaToListaReproduccion(String path){
+		reproductor.aniadirCancion(path);
+	}
 
 
 }
