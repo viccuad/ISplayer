@@ -2,6 +2,8 @@ package is2011.reproductor.modelo;
 
 
 
+import is2011.app.preferencias.Preferencias;
+
 import java.io.File;
 
 import javazoom.jlgui.basicplayer.BasicPlayer;
@@ -40,7 +42,7 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 			 velocidad  = (velocidad > 4) ? 4 : velocidad ;
 			 int bytesAdelantar = velocidad * BYTES_ADELANTAR;
 			 if ((actualBytes + bytesAdelantar)< bytesMusica) {
-				 super.seek(actualBytes + bytesAdelantar);
+				 this.buscar(actualBytes + bytesAdelantar);
 			 }else {
 				 notifyEvent(BasicPlayerEvent.EOM, getEncodedStreamPosition(), 
 						 -1, null);
@@ -58,10 +60,11 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 			 int posFinal = actualBytes - bytesAtrasar;
 			 
 			 if(posFinal > 0) {
-				 super.seek(actualBytes - bytesAtrasar);
+				 this.buscar(actualBytes - bytesAtrasar);
 			}else {
-				super.seek(0);
+				this.buscar(0);
 			}
+			this.setVolumen(Preferencias.getInstancia().getVolumen());
 			 
 		}
 		
@@ -72,7 +75,7 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 	public void irA(float porcentaje) throws BasicPlayerException {
 		if (porcentaje >= 0 && porcentaje <= 1) {
 			//System.out.println(m_audioFileFormat.properties().toString().replace(",", "\n"));
-			super.seek((long)(bytesMusica*porcentaje));
+			this.buscar((long)(bytesMusica*porcentaje));
 		}
 	}
 	
@@ -118,6 +121,15 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	private void buscar(long b) {
+		try {
+			super.seek(b);
+		} catch (BasicPlayerException e) {
+			e.printStackTrace();
+		}
+		this.setVolumen(Preferencias.getInstancia().getVolumen());
 	}
 	
 }
