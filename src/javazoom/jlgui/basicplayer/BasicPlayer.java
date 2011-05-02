@@ -764,14 +764,16 @@ public class BasicPlayer implements BasicController, Runnable
             	System.out.println("2");
             	{
                 	notifyEvent(BasicPlayerEvent.SEEKING, getEncodedStreamPosition(), -1, null);
-                    initAudioInputStream(true);
+                	System.out.println("2.1");
+                	initAudioInputStream(true);
+                	System.out.println("2.2");
                 	if (m_audioInputStream != null)
                     {
                 		 
                 		// Loop until bytes are really skipped.
                         while (totalSkipped < (bytes - SKIP_INACCURACY_SIZE))
                         {
-                        	
+                        	System.out.println("2.3");
                             skipped = m_audioInputStream.skip(bytes - totalSkipped);
                             if (skipped == 0) {
                             	break;
