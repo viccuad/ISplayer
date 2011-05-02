@@ -102,21 +102,25 @@ public class BasicPlayer implements BasicController, Runnable
     }
     protected void reset(boolean seeking)
     {
+    	System.out.println("3.1");
     	if(!seeking) {
     		m_status = UNKNOWN;
     	}
     	if (m_audioInputStream != null)
         {
-            synchronized (m_audioInputStream)
+    		System.out.println("3.2");
+    		synchronized (m_audioInputStream)
             {
                 closeStream();
             }
         }
+    	System.out.println("3.3");
         m_audioInputStream = null;
         m_audioFileFormat = null;
         m_encodedaudioInputStream = null;
         encodedLength = -1;
 
+        System.out.println("3.4");
         if (m_line != null) { 
         	synchronized (m_line) {
         	m_line.stop();
@@ -124,6 +128,7 @@ public class BasicPlayer implements BasicController, Runnable
         	m_line = null;
         	}
         }
+        System.out.println("3.5");
         m_gainControl = null;
         m_panControl = null;
     }
@@ -280,7 +285,9 @@ public class BasicPlayer implements BasicController, Runnable
             } else {
             	reset();
             }
+            System.out.println("4.1");
         	notifyEvent(BasicPlayerEvent.OPENING, getEncodedStreamPosition(), -1, m_dataSource);
+        	System.out.println("4.2");
             if (m_dataSource instanceof URL)
             {
                 initAudioInputStream((URL) m_dataSource);
@@ -293,7 +300,9 @@ public class BasicPlayer implements BasicController, Runnable
             {
                 initAudioInputStream((InputStream) m_dataSource);
             }
+            System.out.println("4.3");
             createLine();
+            System.out.println("4.4");
             
             if(!resetBusqueda) {
             	// Notify listeners with AudioFileFormat properties.
