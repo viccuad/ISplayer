@@ -31,8 +31,12 @@ public class BibliotecaMusical {
 	
 	/** Indica si se añaden canciones de los subdirectorios */
 	private boolean busquedaRecursiva;
+	
 	/** Lista de listeners de la biblioteca */
 	private ArrayList<BibliotecaListener> listeners;
+	
+	
+	
 	
 	/**
 	 * Constructor privado para implementar en patrón Singleton
@@ -50,6 +54,7 @@ public class BibliotecaMusical {
 		stream.omitField(CancionContainer.class, "totalPath");
 		listeners = new ArrayList<BibliotecaListener>();
 	}
+	
 	
 	/**
 	 * Sigue el patrón Singleton y devuelve la instancia única de la biblioteca musical.
@@ -74,6 +79,7 @@ public class BibliotecaMusical {
 		notificaCancionesModificadas();
 	}
 	
+	
 	/**
 	 * Solo guarda el XML si ha habido cambios en la biblioteca
 	 * @param pathYfichero
@@ -85,7 +91,10 @@ public class BibliotecaMusical {
 	}
 	
 	
-	
+	/**
+	 * Fija si se quiere hacer búsqueda en los subdirectorios
+	 * @param busquedaRecursiva
+	 */
 	public void setBusquedaRecursiva(boolean busquedaRecursiva) {
 		this.busquedaRecursiva = busquedaRecursiva;
 	}
@@ -134,17 +143,23 @@ public class BibliotecaMusical {
 		recorre.recorre();
 	}
 	
+	
 	/**
 	 * Lista canciones modificada
 	 * @param .
 	 */
-	
 	private void notificaCancionesModificadas() {
 		for (BibliotecaListener l : listeners) {
 			l.mostrarTodas();
 		}
 		
 	}
+	
+	
+	/**
+	 * Añade oyentes a la biblioteca
+	 * @param listener
+	 */
 	public void addBibliotecaListeners(BibliotecaListener listener)
 	{
 		listeners.add(listener);
