@@ -345,13 +345,13 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 			//Si la nueva posicion es diferente a la anterior.
 			if(nuevaPosicion != posicion) {
 				posicion = nuevaPosicion;
-				synchronized (this.progreso) {
+				//synchronized (this.progreso) {
 					//Actualizamos la barra de progreso si no estamos buscando 
 					//una posicion donde desplazar la cancion.
 					if(!buscando) {
 						this.progreso.setValue(posicion);
 					}
-				}
+				//}
 			}
 
 			//Calculamos el tiempo actual.
