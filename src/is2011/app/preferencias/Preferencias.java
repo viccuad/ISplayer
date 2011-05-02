@@ -3,10 +3,6 @@
  */
 package is2011.app.preferencias;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-
 
 /**
  * @author Administrator
