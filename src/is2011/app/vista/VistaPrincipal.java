@@ -210,7 +210,7 @@ public class VistaPrincipal extends JFrame
 		grid.gridx       = 0;
         grid.gridy       = 1;
         grid.gridheight  = 1;
-        grid.gridwidth   = 1;
+        grid.gridwidth   = 2;
         grid.weightx     = 1;
         grid.weighty     = 0.15;
         grid.fill        = GridBagConstraints.BOTH;
@@ -218,7 +218,7 @@ public class VistaPrincipal extends JFrame
         this.add(vistaRep,grid);
 
         JScrollBar volumen =  this.vistaReproduccion.getVolumen();
-        grid.gridx       = 1;
+        grid.gridx       = 2;
         grid.gridy       = 0;
         grid.gridheight  = 2;
         grid.gridwidth   = 1;
@@ -268,13 +268,7 @@ public class VistaPrincipal extends JFrame
         
         this.add(vb,grid);
         
-        grid.gridx       = 0;
-        grid.gridy       = 3;
-        grid.gridheight  = 1;
-        grid.gridwidth   = 1;
-        grid.weightx     = 1;
-        grid.weighty     = 0.05;
-        grid.fill        = GridBagConstraints.BOTH;
+       
         				
 	}
 	
@@ -288,7 +282,7 @@ public class VistaPrincipal extends JFrame
 		grid.gridx       = 0;
         grid.gridy       = 0;
         grid.gridheight  = 1;
-        grid.gridwidth   = 1;
+        grid.gridwidth   = 2;
         grid.weightx     = 0.15;
         grid.weighty     = 1;
         grid.fill        = GridBagConstraints.BOTH;
@@ -342,7 +336,9 @@ public class VistaPrincipal extends JFrame
 
 			public void actionPerformed(ActionEvent e) {
 				vistaListaReproduccion.setVisible(true);
-				setSize(800,650);
+				//vistaBiblioteca.updateUI();
+				//vistaListaReproduccion.updateUI();
+				//setSize(800,650);
 			}
 
 		});
@@ -350,7 +346,10 @@ public class VistaPrincipal extends JFrame
 
 			public void actionPerformed(ActionEvent e) {
 				vistaListaReproduccion.setVisible(false);
-				setSize(800,181);
+				update(getGraphics());
+				vistaBiblioteca.setVisible(false);
+				vistaBiblioteca.setVisible(true);
+				//setSize(800,181);
 			}
 
 		});

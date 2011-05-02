@@ -127,8 +127,10 @@ public class VistaBiblioteca extends JScrollPane implements
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(e.getClickCount() == 2) {
-					int row = e.getY()/tabla.getRowHeight()-1;
-					String path = (String) modelo.getValueAt(row, 2);
+					int row = e.getY()/tabla.getRowHeight();
+					System.out.println(row);
+					String path = controlador.getCanciones().get(row).getTotalPath();
+					System.out.println(path);
 					controlador.fromBibliotecaToListaReproduccion(path);
 				}
 			}
@@ -229,11 +231,13 @@ public class VistaBiblioteca extends JScrollPane implements
 		Iterator<CancionContainer> itr = cancionesBib.iterator();
 		
 		CancionContainer aux=null;
+		int pos = 0;
 		while (itr.hasNext()){
 			aux = itr.next();
 
 			nuevaCancion(new NuevaCancionEvent(aux.getTitulo(), aux.getAlbum(), aux.getTrackPath(), 
-					aux.getArtista(), aux.getGenero(), aux.getDuracion(), 0));
+					aux.getArtista(), aux.getGenero(), aux.getDuracion(), pos++));
+			System.out.println(aux.getTitulo());
 		}
 	}
 
