@@ -122,13 +122,14 @@ public class VistaBiblioteca extends JScrollPane implements
 		
 		this.setBorder(new TitledBorder("Biblioteca"));
 		
-		//Añadimos el oyente del raton
+		
 		tabla.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(e.getClickCount() == 2) {
-					int cancionDeseada = e.getY()/tabla.getRowHeight();
-					controlador.fromBibliotecaToListaReproduccion();
+					int row = e.getY()/tabla.getRowHeight()-1;
+					String path = (String) modelo.getValueAt(row, 2);
+					controlador.fromBibliotecaToListaReproduccion(path);
 				}
 			}
 		});
