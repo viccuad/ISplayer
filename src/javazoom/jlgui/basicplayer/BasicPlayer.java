@@ -123,8 +123,11 @@ public class BasicPlayer implements BasicController, Runnable
         System.out.println("3.4");
         if (m_line != null) { 
         	synchronized (m_line) {
+        		System.out.println("cacafuti");
         	m_line.stop();
+        	System.out.println("cacafuti");
         	m_line.close();
+        	System.out.println("cacafuti");
         	m_line = null;
         	}
         }
