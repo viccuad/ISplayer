@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 
 
-public class testActualizarBiblioteca {
+public class TestActualizarBiblioteca {
 
 	/**
 	 * @param args

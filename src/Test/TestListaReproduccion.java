@@ -9,7 +9,7 @@ import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class testListaReproduccion {
+public class TestListaReproduccion {
 
 	public static void main(String[] argv){
 		

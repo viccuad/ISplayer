@@ -3,7 +3,7 @@ package Test;
 import is2011.utilidades.RecorreFicheros;
 import is2011.utilidades.estrategias.MuestraNombres;
 
-public class testDirectorios {
+public class TestDirectorios {
 
 	
 	public static void main(String args[]) {

@@ -5,7 +5,7 @@ import java.io.FileOutputStream;
 import com.thoughtworks.xstream.XStream;
 import is2011.biblioteca.contenedores.*;
 
-public class testEscrituraXML {
+public class TestEscrituraXML {
 
 	/**
 	 * @param args

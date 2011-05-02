@@ -10,7 +10,7 @@ import javax.swing.JFileChooser;
 import is2011.biblioteca.BibliotecaMusical;
 import is2011.biblioteca.contenedores.CancionContainer;
 
-public class testBibliotecaMusical {
+public class TestBibliotecaMusical {
 
 	/**
 	 * @param args
