@@ -4,6 +4,7 @@ package is2011.app.vista;
 
 import is2011.app.controlador.IAppController;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
+import is2011.reproductor.vista.VistaBiblioteca;
 import is2011.reproductor.vista.VistaListaReproduccion;
 import is2011.reproductor.vista.VistaReproduccion;
 
@@ -64,10 +65,16 @@ public class VistaPrincipal extends JFrame
 	private JMenuItem verListaReporduccion;
 	private JMenuItem ocultaListaReporduccion;
 	
+	private JMenu menuBiblioteca;
+	private JMenuItem actualizarBiblioteca;
+	private JMenuItem cargarBiblioteca;
+	private JMenuItem guardarBiblioteca;
+	private JMenuItem aniadirCancionBiblioteca;
+	
 	GridBagConstraints grid;
 	private VistaReproduccion vistaReproduccion;
-
 	private VistaListaReproduccion vistaListaReproduccion;
+	private VistaBiblioteca vistaBiblioteca;
 	
 
 	public VistaPrincipal(){
@@ -247,7 +254,30 @@ public class VistaPrincipal extends JFrame
 		
        
 		
+	} 
+	
+	public void setVistaBiblioteca(VistaBiblioteca vb) {
+		vistaBiblioteca = vb;
+		grid.gridx       = 1;
+        grid.gridy       = 2;
+        grid.gridheight  = 1;
+        grid.gridwidth   = 1;
+        grid.weightx     = 1;
+        grid.weighty     = 1;
+        grid.fill        = GridBagConstraints.BOTH;
+        
+        this.add(vb,grid);
+        
+        grid.gridx       = 0;
+        grid.gridy       = 3;
+        grid.gridheight  = 1;
+        grid.gridwidth   = 1;
+        grid.weightx     = 1;
+        grid.weighty     = 0.05;
+        grid.fill        = GridBagConstraints.BOTH;
+        				
 	}
+	
 	public void initialize()
 	{
 		this.setTitle("ISPlayer v0.1");
@@ -267,7 +297,7 @@ public class VistaPrincipal extends JFrame
 		
         
         this.setVisible(true);
-		this.setSize(800,650);
+		this.setSize(1000,650);
 		
 		this.menu = new JMenuBar();
 		
@@ -324,6 +354,52 @@ public class VistaPrincipal extends JFrame
 			}
 
 		});
+		
+		this.menuBiblioteca = new JMenu("Bibliotea");
+		this.actualizarBiblioteca = new JMenuItem("Actualizar biblioteca");
+		this.cargarBiblioteca = new JMenuItem("Cargar Biblioteca Existente");
+		this.guardarBiblioteca = new JMenuItem("Guardar Biblioteca Actual");
+		this.aniadirCancionBiblioteca = new JMenuItem("Añadir Cancion Biblioteca");
+		
+		this.menuBiblioteca.add(actualizarBiblioteca);
+		this.menuBiblioteca.add(cargarBiblioteca);
+		this.menuBiblioteca.add(guardarBiblioteca);
+		this.menuBiblioteca.add(aniadirCancionBiblioteca);
+		
+		this.menu.add(menuBiblioteca);
+		
+		this.actualizarBiblioteca.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				controlador.actualizarBiblioteca();
+			}
+
+		});
+		
+		this.cargarBiblioteca.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				controlador.cargarBiblioteca();
+			}
+
+		});
+		
+		this.guardarBiblioteca.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				controlador.guardarBiblioteca();
+			}
+
+		});
+		
+		this.aniadirCancionBiblioteca.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				controlador.aniadirCancionesBiblioteca();
+			}
+
+		});
+		
 		
 		this.aleatorio.addActionListener(new ActionListener(){
 

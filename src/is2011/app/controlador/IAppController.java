@@ -1,5 +1,8 @@
 package is2011.app.controlador;
 
+import java.util.ArrayList;
+
+import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 
 /**
@@ -73,6 +76,36 @@ public interface IAppController {
 	public void aniadir();
 
 	/**
+	 * Actualiza la biblioteca musical desde una serie de ficheros que
+	 * recibe como parametro 
+	 * @param dir
+	 */
+	public void actualizarBiblioteca();
+	
+	/**
+	 * Carga la biblioteca mediante un archivo XML
+	 * * @param path
+	 */
+	public void cargarBiblioteca();
+	
+	/**
+	 * Guarda la biblioteca en un archivo XML
+	 * @param path
+	 */
+	public void guardarBiblioteca();
+	
+	/**
+	 * Permite añadir canciones a la biblioteca.
+	 * @param dir
+	 */
+	public void aniadirCancionesBiblioteca();
+	
+	/**
+	 * Devuelve las canciones de la lista de reproduccion
+	 * @return
+	 */
+	public ArrayList<CancionContainer> getCanciones();
+	/**
 	 * Reproduce la siguienete cancion.
 	 */
 	public void siguienteCancion();
@@ -82,6 +115,7 @@ public interface IAppController {
 	 * Reproduce la cancion anterior.
 	 */
 	public void cancionAnterior();
+	
 	
 	/**
 	 * Establece el modo de reproduccion

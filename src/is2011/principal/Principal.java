@@ -10,9 +10,11 @@ import javax.swing.UIManager;
 import is2011.app.controlador.AppController;
 import is2011.app.controlador.IAppController;
 import is2011.app.vista.VistaPrincipal;
+import is2011.biblioteca.BibliotecaMusical;
 import is2011.reproductor.controlador.ControladorReproductor;
 import is2011.reproductor.modelo.ListaReproduccion;
 import is2011.reproductor.modelo.ReproductorIS;
+import is2011.reproductor.vista.VistaBiblioteca;
 import is2011.reproductor.vista.VistaListaReproduccion;
 import is2011.reproductor.vista.VistaReproduccion;
 
@@ -38,6 +40,7 @@ public class Principal {
     	finally {
 		VistaPrincipal vista = new VistaPrincipal();
 		VistaReproduccion vr = new VistaReproduccion();
+		VistaBiblioteca vb = new VistaBiblioteca();
 		VistaListaReproduccion vlr = new VistaListaReproduccion();
 		
 		
@@ -50,15 +53,19 @@ public class Principal {
 		lr.addListaReproduccionListener(vlr);
 		controlador.setListaReproduccion(lr);
 		
+		BibliotecaMusical bib = BibliotecaMusical.getInstacia();
+		bib.addBibliotecaListeners(vb);
 		
 		vista.setVistaReproductor(vr);
 		vista.setVistaListaReproduccion(vlr);
+		vista.setVistaBiblioteca(vb);
 		vista.setVisible(true);
 		
-		IAppController appController = new AppController(controlador);
+		IAppController appController = new AppController(controlador, bib);
 		vista.setControlador(appController);
 		vr.setControlador(appController);
 		vlr.setControlador(appController);
+		vb.setControlador(appController);
     	}
 	}
 

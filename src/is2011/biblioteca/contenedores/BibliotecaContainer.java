@@ -16,10 +16,10 @@ public class BibliotecaContainer {
 	@XStreamOmitField
 	private boolean modificado;
 	
-	/**  */
-
+	/**  Contenedor de las canciones*/
 	private HashMap<String, DirectorioContainer> directorios;
 	
+
 	
 	/**
 	 * 
@@ -36,6 +36,7 @@ public class BibliotecaContainer {
 	public void addCancion(CancionContainer song){
 		this.directorios.get(song.getTotalPath().substring(0, song.getTotalPath().indexOf(song.getTrackPath())-1)).addCancion(song);
 		this.modificado = true;
+		
 	}
 	
 	

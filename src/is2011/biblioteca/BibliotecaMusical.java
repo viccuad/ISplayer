@@ -14,6 +14,12 @@ import is2011.biblioteca.contenedores.DirectorioContainer;
 import is2011.biblioteca.util.ActualizarBiblioteca;
 import is2011.biblioteca.util.AniadirCanciones;
 import is2011.biblioteca.util.RecorreFicheros;
+import is2011.reproductor.modelo.Cancion;
+import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
+import is2011.reproductor.modelo.listeners.BibliotecaListener;
+import is2011.reproductor.modelo.listeners.BorrarCancionEvent;
+import is2011.reproductor.modelo.listeners.ListaReproduccionListener;
+import is2011.reproductor.modelo.listeners.NuevaCancionEvent;
 
 
 public class BibliotecaMusical {
@@ -29,8 +35,8 @@ public class BibliotecaMusical {
 	
 	/** Indica si se añaden canciones de los subdirectorios */
 	private boolean busquedaRecursiva;
-	
-	
+	/** Lista de listeners de la biblioteca */
+	private ArrayList<BibliotecaListener> listeners;
 	
 	/**
 	 * Constructor privado para implementar en patrón Singleton
@@ -46,6 +52,7 @@ public class BibliotecaMusical {
 		//atributos que no se incluyen en el formato XML de la biblioteca
 		stream.omitField(BibliotecaContainer.class, "modificado");
 		stream.omitField(CancionContainer.class, "totalPath");
+		listeners = new ArrayList<BibliotecaListener>();
 	}
 	
 	/**
@@ -68,6 +75,7 @@ public class BibliotecaMusical {
 	public void cargarXML(String pathYfichero) throws FileNotFoundException{
 		canciones = (BibliotecaContainer) stream.fromXML(new FileInputStream(pathYfichero));
 		this.canciones.generarRutasAbsolutas();
+		notificaCancionesModificadas();
 	}
 	
 	/**
@@ -115,6 +123,7 @@ public class BibliotecaMusical {
 		RecorreFicheros recorre = new RecorreFicheros(ficheros);
 		recorre.setEstrategia(new ActualizarBiblioteca(this.canciones));
 		recorre.recorre();
+		notificaCancionesModificadas();
 	}
 	
 	
@@ -127,6 +136,22 @@ public class BibliotecaMusical {
 		RecorreFicheros recorre = new RecorreFicheros(canciones);
 		recorre.setEstrategia(new AniadirCanciones(this.canciones));
 		recorre.recorre();
+	}
+	
+	/**
+	 * Lista canciones modificada
+	 * @param .
+	 */
+	
+	private void notificaCancionesModificadas() {
+		for (BibliotecaListener l : listeners) {
+			l.mostrarTodas();
+		}
+		
+	}
+	public void addBibliotecaListeners(BibliotecaListener listener)
+	{
+		listeners.add(listener);
 	}
 	
 }

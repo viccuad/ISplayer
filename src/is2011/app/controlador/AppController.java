@@ -2,10 +2,14 @@ package is2011.app.controlador;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import is2011.biblioteca.BibliotecaMusical;
+import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.reproductor.controlador.ControladorReproductor;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 
@@ -21,6 +25,8 @@ public class AppController implements IAppController {
 	
 	/**Reproductor de la aplicacion*/
 	private ControladorReproductor reproductor;
+	/** Biblioteca de la aplicacion */
+	private BibliotecaMusical biblioteca;
 	
 	// ********************************************************************** //
 	// *************                CONSTRUCTOR                 ************* //
@@ -28,8 +34,10 @@ public class AppController implements IAppController {
 	/**
 	 * Constructor por defecto.
 	 */
-	public AppController(ControladorReproductor rep) {
+	public AppController(ControladorReproductor rep, BibliotecaMusical bib) {
 		reproductor = rep;
+		biblioteca = bib;
+
 	}
 	
 	// ********************************************************************** //
@@ -182,14 +190,100 @@ public class AppController implements IAppController {
 		return reproductor.listaReproduccionVacia();
 	}
 
-	/* (non-Javadoc)
-	 * @see is2011.app.controlador.IAppController#setVolumen(float)
-	 */
+	@Override
+	public void actualizarBiblioteca() {
+		
+		String ruta = "";
+		ArrayList<String> dir = new ArrayList<String>();
+		
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setMultiSelectionEnabled(true);
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		
+		int seleccion;
+		seleccion =fileChooser.showOpenDialog(null);
+		if (seleccion == JFileChooser.APPROVE_OPTION){			
+			File[] files = fileChooser.getSelectedFiles();
+			for (File f : files) {		
+				ruta = f.getAbsolutePath();
+				dir.add(ruta);
+				System.out.println(f.getAbsolutePath());
+			}			
+		}
+		biblioteca.actualizarDirectorios(dir);
+	}
+
+	@Override
+	public void cargarBiblioteca() {
+
+		String ruta = "";
+		
+		ArrayList<String> dir = new ArrayList<String>();
+
+		
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		
+		int seleccion;
+		seleccion =fileChooser.showOpenDialog(null);
+		if (seleccion == JFileChooser.APPROVE_OPTION){					
+			ruta = fileChooser.getSelectedFile().getAbsolutePath();					
+		}
+		try {
+			biblioteca.cargarXML(ruta);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}		
+	}
+
+	@Override
+	public void guardarBiblioteca() {
+		String ruta = "";
+		
+		ArrayList<String> dir = new ArrayList<String>();
+
+		
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		
+		int seleccion;
+		seleccion =fileChooser.showOpenDialog(null);
+		if (seleccion == JFileChooser.APPROVE_OPTION){					
+			ruta = fileChooser.getSelectedFile().getAbsolutePath();					
+		}
+		try {
+			biblioteca.guardarXML(ruta);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void aniadirCancionesBiblioteca() {
+		
+		ArrayList<String> dir = new ArrayList<String>();
+		File[] files = abrirArchivo();
+		if(files != null) {
+			for (File f : files) {
+				if (f != null) {
+					dir.add(f.getAbsolutePath());
+				}
+			}
+		}
+		biblioteca.aniadirCanciones(dir);		
+	}
+
+	@Override
+	public ArrayList<CancionContainer> getCanciones() {
+		return biblioteca.getCanciones();
+	}
+
+
 	@Override
 	public void setVolumen(float porcentaje) {
 		this.reproductor.setVolumen(porcentaje);
-		
 	}
+
 	
 
 
