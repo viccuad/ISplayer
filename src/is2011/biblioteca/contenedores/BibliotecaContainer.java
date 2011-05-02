@@ -22,12 +22,13 @@ public class BibliotecaContainer {
 
 	
 	/**
-	 * 
+	 * Crea un objeto vacío preparado para añadir canciones
 	 */
 	public BibliotecaContainer(){
 		this.modificado = false;
 		this.directorios = new HashMap<String, DirectorioContainer>();
 	}
+	
 	
 	/**
 	 * Añade una canción a un directorio ya existente
@@ -59,6 +60,7 @@ public class BibliotecaContainer {
 		this.directorios.put(dir.getPath(), dir);
 		this.modificado = true;
 	}
+	
 	
 	/**
 	 * Añade un nuevo directorio vario a partir de su ruta
