@@ -96,5 +96,11 @@ public interface IAppController {
 	
 	public boolean listaReproduccionVacia();
 
+	/**
+	 * @param el volumen
+	 * 
+	 */
+	public void setVolumen(float porcentaje);
+
 	
 }

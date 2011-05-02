@@ -5,6 +5,7 @@ package is2011.reproductor.controlador;
 
 import java.util.Random;
 
+import is2011.app.preferencias.Preferencias;
 import is2011.reproductor.modelo.Cancion;
 import is2011.reproductor.modelo.CancionMP3;
 import is2011.reproductor.modelo.CancionOGG;
@@ -66,6 +67,7 @@ public class ControladorReproductor {
 	 * Reproduce la cancion actual de la lista de reproduccion.
 	 */
 	private void play() {
+		
 		int cancionActual = listaReproduccion.getActual();
 		
 		//Si es la priemra cancion y hay canciones...
@@ -79,6 +81,7 @@ public class ControladorReproductor {
 			try {
 				this.reproductor.open(cancion);
 				this.reproductor.play();
+				this.reproductor.setVolumen(Preferencias.getInstancia().getVolumen());
 			} catch (BasicPlayerException e) {
 				e.printStackTrace();
 			}
@@ -292,6 +295,14 @@ public class ControladorReproductor {
 	
 	public boolean listaReproduccionVacia(){
 		return listaReproduccion.isVacia();
+	}
+
+	/**
+	 * @param porcentaje
+	 */
+	public void setVolumen(float porcentaje) {
+		this.reproductor.setVolumen(porcentaje);
+		
 	}
 
 }

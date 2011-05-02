@@ -28,13 +28,15 @@ import java.util.Iterator;
 /**
  * This class implements a threaded events launcher.
  */
+@SuppressWarnings("unchecked")
 public class BasicPlayerEventLauncher extends Thread
 {
     private int code = -1;
     private int position = -1;
     private double value = 0.0;
     private Object description = null;
-    private Collection listeners = null;
+    
+	private Collection listeners = null;
     private Object source = null;
 
     /**

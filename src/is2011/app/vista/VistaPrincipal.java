@@ -3,7 +3,6 @@ package is2011.app.vista;
 
 
 import is2011.app.controlador.IAppController;
-import is2011.reproductor.modelo.ListaReproduccion;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 import is2011.reproductor.vista.VistaListaReproduccion;
 import is2011.reproductor.vista.VistaReproduccion;
@@ -15,8 +14,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 
 import javax.swing.BorderFactory;
@@ -26,12 +23,14 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.SpringLayout;
+import javax.swing.JScrollBar;
+
 
 import javax.swing.JFrame;
-import javax.swing.border.Border;
 
 
+
+@SuppressWarnings("serial")
 public class VistaPrincipal extends JFrame 	
 {
 	
@@ -80,8 +79,7 @@ public class VistaPrincipal extends JFrame
 	}
 
 	public JPanel getContenido(){
-
-
+		
 		JPanel panelPpal = new JPanel();
 		panelPpal.setLayout(new GridLayout(1,8));
 		
@@ -210,7 +208,18 @@ public class VistaPrincipal extends JFrame
         grid.weighty     = 0.15;
         grid.fill        = GridBagConstraints.BOTH;
 		
-		this.add(vistaRep,grid);
+        this.add(vistaRep,grid);
+
+        JScrollBar volumen =  this.vistaReproduccion.getVolumen();
+        grid.gridx       = 1;
+        grid.gridy       = 0;
+        grid.gridheight  = 2;
+        grid.gridwidth   = 1;
+        grid.weightx     = 0.0;
+        grid.weighty     = 1;
+        grid.fill        = GridBagConstraints.BOTH;
+
+        this.add(volumen, grid);
 	}
 	
 	
@@ -229,13 +238,14 @@ public class VistaPrincipal extends JFrame
         grid.gridx       = 0;
         grid.gridy       = 3;
         grid.gridheight  = 1;
-        grid.gridwidth   = 1;
+        grid.gridwidth   = 2;
         grid.weightx     = 1;
         grid.weighty     = 0.05;
         grid.fill        = GridBagConstraints.BOTH;
         
         this.add(vlr.getInfoReproduccion(),grid);
 		
+       
 		
 	}
 	public void initialize()
@@ -255,6 +265,7 @@ public class VistaPrincipal extends JFrame
         
         this.add(getContenido(),grid);
 		
+        
         this.setVisible(true);
 		this.setSize(800,650);
 		
@@ -294,6 +305,8 @@ public class VistaPrincipal extends JFrame
 		this.modoVista.add(ocultaListaReporduccion);
 		
 		this.menu.add(modoVista);
+		
+		
 		
 		this.verListaReporduccion.addActionListener(new ActionListener(){
 

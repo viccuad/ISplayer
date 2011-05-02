@@ -1,10 +1,9 @@
 package is2011.app.controlador;
 
-import java.awt.FileDialog;
+
 import java.io.File;
 
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import is2011.reproductor.controlador.ControladorReproductor;
@@ -181,6 +180,15 @@ public class AppController implements IAppController {
 	@Override
 	public boolean listaReproduccionVacia() {
 		return reproductor.listaReproduccionVacia();
+	}
+
+	/* (non-Javadoc)
+	 * @see is2011.app.controlador.IAppController#setVolumen(float)
+	 */
+	@Override
+	public void setVolumen(float porcentaje) {
+		this.reproductor.setVolumen(porcentaje);
+		
 	}
 	
 

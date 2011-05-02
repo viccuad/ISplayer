@@ -86,5 +86,11 @@ public interface Reproductor {
 	 * @return Si esta vacia
 	 */
 
+	/**
+	 * Establece el volumen
+	 * @param porcentaje
+	 */
+	public void setVolumen(float porcentaje);
+
 	
 }

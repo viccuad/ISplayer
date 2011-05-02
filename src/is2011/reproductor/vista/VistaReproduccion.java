@@ -1,6 +1,7 @@
 package is2011.reproductor.vista;
 
 import is2011.app.controlador.IAppController;
+import is2011.app.preferencias.Preferencias;
 
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -48,6 +49,8 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	
 	/** Posicion del scroll bar*/
 	private int posicion;
+	
+	private JScrollBar volumen;
 	
 	//--------------------------------------------------------------------------
 	//Atributos para conocer el tiempo de reproduccion.
@@ -103,6 +106,35 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		
 		this.labelEstado = new JLabel("");
 		this.add(this.labelEstado);
+		
+		this.volumen = new JScrollBar(JScrollBar.VERTICAL, 0, 0, 0, 100);
+		this.volumen.addMouseListener(new MouseAdapter(){
+			
+			public void mouseReleased(MouseEvent e) {
+				if(volumen.isEnabled()) {
+					
+					int altoReal = volumen.getHeight() - volumen.getWidth()*2;
+					int yReal = e.getY() - volumen.getWidth();
+
+					float porcentaje;
+					if(yReal <= altoReal && yReal > 0) {
+						porcentaje = ((float)yReal)/altoReal;
+					}else {
+						porcentaje = ((float)volumen.getValue())/100;
+					}
+					
+					volumen.setValue((int)(100*porcentaje));
+					/*
+					System.out.println("putno" + e.getPoint());
+					System.out.println("yReal" + yReal);
+					System.out.println("altura" + altoReal);
+					
+					System.out.println(porcentaje);*/
+					
+					controlador.setVolumen((1-porcentaje));
+				}
+			}
+		});	
 		
 		this.progreso.addMouseListener(new MouseAdapter() {
 			@Override
@@ -257,7 +289,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		info += this.formato +" ";
 		info += this.framerate + "bps ";
 		info += this.sampleRate + "hz ";
-		
+		info += " ♣♣ ";
 		info += " sonido " + this.modoAudio + " ";
 		info += this.toHora(this.tiempoActual) + "/" + tiempoTotal;
 		
@@ -366,6 +398,10 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		}else if(event.getCode() == BasicPlayerEvent.SEEKED) {
 			this.progreso.setValue((int)(((float)event.getPosition()
 					/bytesMusica)*1000));
+		}else if (event.getCode() == BasicPlayerEvent.GAIN) {
+			this.volumen.setValue( (int) ((1- Math.sqrt(event.getValue()))*100));
+			Preferencias.getInstancia().setVolumen(Math.sqrt(event.getValue()));
+		
 		}
 		
 		//estado = event.getDescription().toString();
@@ -380,5 +416,13 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	 */
 	public void setControlador(IAppController controlador) {
 		this.controlador = controlador;
+	}
+
+	/**
+	 * Devuelve el volumen
+	 * @return El volumen
+	 */
+	public JScrollBar getVolumen() {
+		return this.volumen;
 	}
 }

@@ -107,5 +107,17 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 		}
 		return false;
 	}
+
+	
+	@Override
+	public void setVolumen(float porcentaje) {
+		try {
+			setGain(porcentaje*porcentaje);
+		} catch (BasicPlayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 }
