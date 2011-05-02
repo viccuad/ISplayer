@@ -749,6 +749,7 @@ public class BasicPlayer implements BasicController, Runnable
      */
     protected long skipBytes(long bytes) throws BasicPlayerException
     {
+    	System.out.println("1");
     	long totalSkipped = 0;
         if (m_dataSource instanceof File)
         {
@@ -760,7 +761,8 @@ public class BasicPlayer implements BasicController, Runnable
             try
             {
             	//synchronized (m_audioInputStream)
-                {
+            	System.out.println("2");
+            	{
                 	notifyEvent(BasicPlayerEvent.SEEKING, getEncodedStreamPosition(), -1, null);
                     initAudioInputStream(true);
                 	if (m_audioInputStream != null)
@@ -780,10 +782,11 @@ public class BasicPlayer implements BasicController, Runnable
                         }
                     }
                 }
+            	System.out.println("3");
                 notifyEvent(BasicPlayerEvent.SEEKED, getEncodedStreamPosition(), -1, null);  
                 // m_status = OPENED;
                
-                    
+                System.out.println("4");    
                 try
                 {
                     initLine();
@@ -793,7 +796,7 @@ public class BasicPlayer implements BasicController, Runnable
                     throw new BasicPlayerException(BasicPlayerException.CANNOTINITLINE, e);
                 }
                 
-                
+                System.out.println("5");
                 
                 if (m_line != null)
                 {
@@ -809,7 +812,9 @@ public class BasicPlayer implements BasicController, Runnable
                     pausePlayback();
                 }*/
                
+                System.out.println("6");
                m_thread.interrupt();
+               System.out.println("7");
                
             }
             catch (IOException e)
