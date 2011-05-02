@@ -78,4 +78,16 @@ Pruebas biblioteca en interfaz:
 		1. Llamar a la biblioteca al iniciarse la aplicacion
 		2. Mostrar en una lista las canciones que hay almacenadas en la biblioteca
 		3. Poder llevarse canciones de la biblioteca a la lista de reproduccion.
+		
+		
+Pruebas Lista de reproducción:
+	1. Guardar una lista de reproducción activa a XML.
+	2. Añadir una canción a la lista desde la biblioteca musical.
+	3. Cargar la lista de reproducción del paso 1 y comprobar que es correcto.
+	4. Añadir varias cancones a la lista.
+	5. Probar a borrar una de ellas
+	6. Guardar la lista de reproducción a un XML
+	7. Probar a cargar la lista del paso 6 y verificar que se corresponde con lo que se quería guardar.
+	
+	Realizar todo esto mientras se reproducen canciones.
 	
