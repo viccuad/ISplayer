@@ -35,14 +35,25 @@ public class VistaPreferencias extends JFrame{
 	private Choice selectorModoReproduccion;
 	private JButton aceptar;
 	
+	/**
+	 * Constructor de la clase VistaPrincipal
+	 */
 	public VistaPreferencias(){
 		super();	
 		initialize();
 	}
 	
+	/**
+	 * Permite vincular un controlador con la vista
+	 * @param c
+	 */
 	public void setControlador(IAppController c){
 		controlador = c;
 	}
+	
+	/**
+	 * Metodo que inicializa la interfaz. Crea variables y les asigna una posicion en el panel
+	 */
 	public void initialize(){
 		this.setTitle("Preferencias del Sistema");
 		this.setMinimumSize(new Dimension(550, 150));
@@ -117,6 +128,30 @@ public class VistaPreferencias extends JFrame{
         spring.putConstraint(SpringLayout.NORTH, aceptar, 95, SpringLayout.NORTH, panel);
 		panel.add(aceptar);
 		this.setContentPane(panel);
+	}
+	
+	public void actualizarValores(){
+		
+		textPathBiblioteca.setText(controlador.getPreferencias().getPathBiblioteca());
+		textPathListaReproduccion.setText(controlador.getPreferencias().getPathListaReproduccion());
+		
+		int modo=0;
+		switch (controlador.getPreferencias().getModoReproduccion()){
+		case NORMAL:{
+			modo = 0;
+			break;
+		}
+		case ALEATORIO:{
+			modo = 1;
+			break;
+		}
+		case REPETIR_UNO:{
+			modo = 2;
+			break;
+		}
+		case REPETIR_TODOS: modo = 3;
+		}
+		selectorModoReproduccion.select(modo);
 	}
 	
 

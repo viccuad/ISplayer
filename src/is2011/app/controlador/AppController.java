@@ -335,5 +335,10 @@ public class AppController implements IAppController {
 		}
 	}
 
+	@Override
+	public PreferenciasSistema getPreferencias() {
+		return preferencias;
+	}
+
 
 }

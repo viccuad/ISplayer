@@ -10,7 +10,7 @@ import javazoom.jlgui.basicplayer.BasicPlayerListener;
  * @author Administrator
  *
  */
-public interface Reproductor {
+public interface BackUpReproductor {
 
 	/**
 	 * Empieza a reproducir la cancion en caso de estar esta cargada con open

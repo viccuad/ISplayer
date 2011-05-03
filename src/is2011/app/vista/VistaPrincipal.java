@@ -472,6 +472,7 @@ public class VistaPrincipal extends JFrame
 		this.menuPreferencias.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
+				vistaPreferencias.actualizarValores();
 				vistaPreferencias.setVisible(true);
 			}
 
