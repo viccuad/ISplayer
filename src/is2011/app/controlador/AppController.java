@@ -1,11 +1,13 @@
 package is2011.app.controlador;
 
 
+import java.awt.FileDialog;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import is2011.app.preferencias.PreferenciasSistema;
@@ -42,17 +44,20 @@ public class AppController implements IAppController {
 		reproductor = rep;
 		try{
 			
-			File pref = new File("src/Recursos/testConf.xml");
+			String home = System.getProperty("user.home");
+			home = home+File.separator;
+			File pref = new File(home+"ISPlayerPreferences.xml");
 			
 			if (pref.canRead()){
-				
+				// Si ya tienes fichero de preferencias
 				preferencias = new PreferenciasSistema();
-				preferencias.cargarXML("src/Recursos/testConf.xml");
-				
+				preferencias.cargarXML(home+"ISPlayerPreferences.xml");
+				System.out.println("Cargado archivo de preferencias");
 			}else{
-				preferencias = new PreferenciasSistema("sin_definir", "sin_definir",ModoReproduccionEnum.NORMAL);
-				preferencias.guardarXML("src/Recursos/testConf.xml");
-		
+				// Si todavia no tienes fichero de preferencias
+				preferencias = new PreferenciasSistema(home+"ISPlayerBiblioteca.xml", home+"ISPlayerListaReproduccion.xml", ModoReproduccionEnum.NORMAL);
+				preferencias.guardarXML(home+"ISPlayerPreferences.xml");
+				System.out.println("Creado archivo de preferencias");
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -262,13 +267,11 @@ public class AppController implements IAppController {
 		String ruta = "";
 		
 		ArrayList<String> dir = new ArrayList<String>();
-
 		
 		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		
 		int seleccion;
-		seleccion =fileChooser.showOpenDialog(null);
+		seleccion =fileChooser.showSaveDialog(null);
 		if (seleccion == JFileChooser.APPROVE_OPTION){					
 			ruta = fileChooser.getSelectedFile().getAbsolutePath();					
 		}
@@ -315,8 +318,10 @@ public class AppController implements IAppController {
 		preferencias.setPathListaReproduccion(listaRep);
 		preferencias.setModoReproduccion(modo);
 		
+		System.out.println("Modificado archivo de preferencias");
+		
 		try {
-			preferencias.guardarXML("src/Recursos/testConf.xml");
+			preferencias.guardarXML(preferencias.getPathPreferenciasSistema());
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

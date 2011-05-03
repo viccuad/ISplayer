@@ -361,7 +361,7 @@ public class VistaPrincipal extends JFrame
 
 		});
 		
-		this.menuBiblioteca = new JMenu("Bibliotea");
+		this.menuBiblioteca = new JMenu("Biblioteca");
 		this.actualizarBiblioteca = new JMenuItem("Actualizar biblioteca");
 		this.cargarBiblioteca = new JMenuItem("Cargar Biblioteca Existente");
 		this.guardarBiblioteca = new JMenuItem("Guardar Biblioteca Actual");

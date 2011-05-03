@@ -1,5 +1,6 @@
 package is2011.biblioteca;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -74,9 +75,13 @@ public class BibliotecaMusical {
 	 * @throws FileNotFoundException
 	 */
 	public void cargarXML(String pathYfichero) throws FileNotFoundException{
-		canciones = (BibliotecaContainer) stream.fromXML(new FileInputStream(pathYfichero));
-		this.canciones.generarRutasAbsolutas();
-		notificaCancionesModificadas();
+		
+		File aux = new File(pathYfichero);
+		if (aux.canRead()){
+			canciones = (BibliotecaContainer) stream.fromXML(new FileInputStream(pathYfichero));
+			this.canciones.generarRutasAbsolutas();
+			notificaCancionesModificadas();
+		}else System.out.println("El fichero no existe");
 	}
 	
 	
@@ -86,8 +91,10 @@ public class BibliotecaMusical {
 	 * @throws FileNotFoundException
 	 */
 	public void guardarXML(String pathYfichero) throws FileNotFoundException{
-		if(canciones.isModificado())
-			stream.toXML(canciones, new FileOutputStream(pathYfichero));
+		
+			if(canciones.isModificado())
+				stream.toXML(canciones, new FileOutputStream(pathYfichero));
+		
 	}
 	
 	
@@ -141,6 +148,8 @@ public class BibliotecaMusical {
 		RecorreFicheros recorre = new RecorreFicheros(canciones);
 		recorre.setEstrategia(new AniadirCanciones(this.canciones));
 		recorre.recorre();
+		notificaCancionesModificadas();
+
 	}
 	
 	

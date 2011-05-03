@@ -1,5 +1,6 @@
 package is2011.app.preferencias;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,6 +13,7 @@ import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 
 public class PreferenciasSistema {
 	
+	public String pathPreferenciasSistema;
 	public String pathBiblioteca;
 	public String pathListaReproduccion;
 	public ModoReproduccionEnum modoReproduccion;
@@ -21,6 +23,11 @@ public class PreferenciasSistema {
 	private XStream stream;
 	
 	public PreferenciasSistema(){
+		
+		String home = System.getProperty("user.home");
+		home = home+File.separator;
+		
+		pathPreferenciasSistema = home+"ISPlayerPreferences.xml";
 		pathBiblioteca = null;
 		pathListaReproduccion = null;
 		modoReproduccion = null;
@@ -52,6 +59,9 @@ public class PreferenciasSistema {
 		stream.toXML(new PreferenciasSistema(getPathBiblioteca(), getPathListaReproduccion(), getModoReproduccion()), new FileOutputStream(pathYfichero));
 	}
 	
+	public String getPathPreferenciasSistema(){
+		return pathPreferenciasSistema;
+	}
 	public String getPathBiblioteca(){
 		return pathBiblioteca;
 	}
@@ -64,6 +74,9 @@ public class PreferenciasSistema {
 		return modoReproduccion;
 	}
 	
+	public void setPathPreferenciasSistema(String input){
+		pathPreferenciasSistema = input;
+	}
 	public void setPathBiblioteca(String input){
 		pathBiblioteca = input;
 	}

@@ -231,6 +231,10 @@ public class VistaBiblioteca extends JScrollPane implements
 		Iterator<CancionContainer> itr = cancionesBib.iterator();
 		
 		CancionContainer aux=null;
+		
+		// Eliminamos lo que contiene la tabla para no mostrar lo anterior y lo nuevo
+		for (int i = tabla.getRowCount()-1;i>=0;i--) modelo.removeRow(i);
+
 		int pos = 0;
 		while (itr.hasNext()){
 			aux = itr.next();

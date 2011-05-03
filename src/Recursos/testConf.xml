@@ -1,5 +1,5 @@
 <Preferencias>
-  <pathBiblioteca>src/Recursos/testXML2.xml</pathBiblioteca>
-  <pathListaReproduccion>sin_definir</pathListaReproduccion>
-  <modoReproduccion>REPETIR_UNO</modoReproduccion>
+  <pathBiblioteca>/Users/carlos/mibiblioteca.xml</pathBiblioteca>
+  <pathListaReproduccion>/Users/carlos/ISPlayerListaReproduccion.xml</pathListaReproduccion>
+  <modoReproduccion>NORMAL</modoReproduccion>
 </Preferencias>
