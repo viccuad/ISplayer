@@ -121,6 +121,16 @@ public class BasicPlayer implements BasicController, Runnable
         encodedLength = -1;
 
         System.out.println("3.4");
+        
+        if(seeking) {
+        	synchronized (m_line) {
+        		System.out.println("reset->seeking");
+        		System.out.println("cacafuti");
+        		m_line.stop();
+        		System.out.println("cacafuti");
+        		m_line = null;
+        	}
+        }
         if (m_line != null) { 
         	synchronized (m_line) {
         		System.out.println("cacafuti");
@@ -684,7 +694,12 @@ public class BasicPlayer implements BasicController, Runnable
     				}
     				
     				if (nBytesRead >= 0) {
-    					int nBytesWritten = m_line.write(abData, 0, nBytesRead);
+    					synchronized (m_line) {
+    						if(m_line!= null) {
+    							int nBytesWritten = m_line.write(abData, 0, nBytesRead);
+    						}
+    					}
+    					//int nBytesWritten = m_line.write(abData, 0, nBytesRead);
     					int nEncodedBytes = getEncodedStreamPosition();
     					Iterator it = m_listeners.iterator();
     					Map properties;
