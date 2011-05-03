@@ -88,8 +88,6 @@ public class RecorreFicheros {
 		    	//Vemos si cumple las restricciones.
 				
 				if(cumpleRestriccionesDirectorios(fichero) || fichero.getAbsolutePath().equals(directorioBase)) {
-					//TODO quitar!
-					//estrategiaFichero.trataDirectorio(fichero);
 					String[] s = fichero.list();
 					for( String nombre : s) {
 						recorre(subcarpeta+"//"+nombre);

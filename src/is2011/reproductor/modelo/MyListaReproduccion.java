@@ -2,18 +2,10 @@ package is2011.reproductor.modelo;
 
 
 import is2011.biblioteca.contenedores.CancionContainer;
+import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 import is2011.reproductor.modelo.listeners.*;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 
 
 /**
@@ -22,21 +14,21 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
  * @author Administrator
  *
  */
-public class ListaReproduccion {
+public class MyListaReproduccion {
 	
 	// ********************************************************************** //
 	// *************           ATRIBUTOS Y CONSTANTES           ************* //
 	// ********************************************************************** //
 	
 	/** Tipo de reproduccion */
-	
+	/*
 	public static enum ModoReproduccionEnum {
 		NORMAL,
 		ALEATORIO,
 		REPETIR_UNO,
 		REPETIR_TODOS
 	}
-	
+	*/
 	/** Lista de canciones */
 	private ArrayList<CancionContainer> listaReproduccion;
 	
@@ -49,18 +41,6 @@ public class ListaReproduccion {
 	/** Lista de listeners del reproductor */
 	private ArrayList<ListaReproduccionListener> listeners;
 	
-	
-	
-	
-	
-	/** Flujo de lectura/escritura para ficheros XML */
-	private XStream stream;
-	
-	/** Indica si la lista de reproducción sufrió algún cambio */
-	private boolean modificado;
-	
-	
-	
 	// ********************************************************************** //
 	// *************                CONSTRUCTOR                 ************* //
 	// ********************************************************************** //
@@ -69,15 +49,11 @@ public class ListaReproduccion {
 	 * Constructor por defecto.
 	 * Crea lista de reproduccion y oyentes.
 	 */
-	public ListaReproduccion(){
+	public MyListaReproduccion(){
 		listaReproduccion = new ArrayList<CancionContainer>();
 		actual = 0;
 		modoReproduccion = ModoReproduccionEnum.NORMAL;
 		listeners = new ArrayList<ListaReproduccionListener>();
-		
-		this.modificado = false;
-		stream = new XStream(new DomDriver());
-		stream.alias("track", CancionContainer.class);
 	}
 	
 	/**
@@ -91,8 +67,6 @@ public class ListaReproduccion {
 		listaReproduccion = new ArrayList<CancionContainer>();
 		actual = 0;
 		modoReproduccion = ModoReproduccionEnum.NORMAL;
-		//TODO comprobar
-		modificado = true;
 		if(borrarOyentes) {
 			listeners = new ArrayList<ListaReproduccionListener>();
 		}
@@ -112,8 +86,6 @@ public class ListaReproduccion {
 	 */
 	private void addCancion(CancionContainer cancion, int pos) {
 		listaReproduccion.add(pos, cancion);
-		//TODO comprobar
-		modificado = true;
 		notificaNuevaCancionAniadida(cancion, pos);
 	}
 	
@@ -123,8 +95,6 @@ public class ListaReproduccion {
 	 */
 	private void addCancionAlFinal(CancionContainer cancion) {
 		addCancion(cancion,listaReproduccion.size());
-		//TODO comprobar
-		modificado = true;
 	}
 	
 	/**
@@ -136,8 +106,6 @@ public class ListaReproduccion {
 		if(pos < listaReproduccion.size() && pos >= 0) {
 			listaReproduccion.remove(pos);
 			notificaCancionBorrada(pos);
-			//TODO comprobar
-			modificado = true;
 		} else {
 			throw new IndexOutOfBoundsException();
 		}
@@ -152,10 +120,7 @@ public class ListaReproduccion {
 	 */
 	public void addCancion(CancionContainer c){
 		this.addCancionAlFinal(c);
-		//TODO comprobar
-		modificado = true;
 	}
-	
 	
 	/**
 	 * Indica si la lista esta vacia.
@@ -165,7 +130,6 @@ public class ListaReproduccion {
 		return listaReproduccion.isEmpty();
 	}
 	
-	
 	/**
 	 * Devuelve el numero de canciones.
 	 * @return
@@ -173,7 +137,6 @@ public class ListaReproduccion {
 	public int getNumeroCanciones(){
 		return listaReproduccion.size();
 	}
-	
 	
 	/**
 	 * 
@@ -188,8 +151,6 @@ public class ListaReproduccion {
 			setActual(actual -1);
 		}
 		
-		//TODO comprobar
-		modificado = true;
 	}
 	
 	/**
@@ -227,41 +188,6 @@ public class ListaReproduccion {
 		}
 		return s;
 	}
-	
-	
-	/**
-	 * Carga la lista de reproducción XML recibiendo la ruta en la que se ubica.
-	 * @param pathYfichero ruta absoluta al fichero XML de la lista de reproducción
-	 * @throws FileNotFoundException
-	 */
-	@SuppressWarnings("unchecked")
-	public void cargarXML(String pathYfichero) throws FileNotFoundException{
-		this.listaReproduccion = (ArrayList<CancionContainer>) stream.fromXML(new FileInputStream(pathYfichero));
-		modificado = true;
-	}
-	
-	
-	/**
-	 * Solo guarda el XML si ha habido cambios en la lista de reproducción
-	 * @param pathYfichero
-	 * @throws FileNotFoundException
-	 */
-	public void guardarXML(String pathYfichero) throws FileNotFoundException{
-		if(modificado)
-			stream.toXML(listaReproduccion, new FileOutputStream(pathYfichero));
-	}
-	
-	
-	/**
-	 * Ordena la lista de reproducción siguiendo un criterio de ordenación
-	 * que recibe como parámetro
-	 * @param orden: es el criterio por el cuál se desea ordenar la lista de reproducción
-	 */
-	public void ordenar(Comparator<CancionContainer> orden){
-		Collections.sort(this.listaReproduccion, orden);
-		modificado = true;
-	}
-	
 	
 	// ********************************************************************** //
 	// *************           GETTERS Y SETTERS                ************* //

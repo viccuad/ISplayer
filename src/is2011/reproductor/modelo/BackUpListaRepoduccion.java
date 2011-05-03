@@ -1,19 +1,9 @@
 package is2011.reproductor.modelo;
 
 
-import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.reproductor.modelo.listeners.*;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 
 
 /**
@@ -22,14 +12,15 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
  * @author Administrator
  *
  */
-public class ListaReproduccion {
+
+
+public class BackUpListaRepoduccion {
 	
 	// ********************************************************************** //
 	// *************           ATRIBUTOS Y CONSTANTES           ************* //
 	// ********************************************************************** //
 	
 	/** Tipo de reproduccion */
-	
 	public static enum ModoReproduccionEnum {
 		NORMAL,
 		ALEATORIO,
@@ -38,7 +29,7 @@ public class ListaReproduccion {
 	}
 	
 	/** Lista de canciones */
-	private ArrayList<CancionContainer> listaReproduccion;
+	private ArrayList<Cancion> listaReproduccion;
 	
 	/** Cancion actual. va de 0 a numero de canciones*/
 	private int actual;
@@ -49,18 +40,6 @@ public class ListaReproduccion {
 	/** Lista de listeners del reproductor */
 	private ArrayList<ListaReproduccionListener> listeners;
 	
-	
-	
-	
-	
-	/** Flujo de lectura/escritura para ficheros XML */
-	private XStream stream;
-	
-	/** Indica si la lista de reproducción sufrió algún cambio */
-	private boolean modificado;
-	
-	
-	
 	// ********************************************************************** //
 	// *************                CONSTRUCTOR                 ************* //
 	// ********************************************************************** //
@@ -69,15 +48,11 @@ public class ListaReproduccion {
 	 * Constructor por defecto.
 	 * Crea lista de reproduccion y oyentes.
 	 */
-	public ListaReproduccion(){
-		listaReproduccion = new ArrayList<CancionContainer>();
+	public BackUpListaRepoduccion(){
+		listaReproduccion = new ArrayList<Cancion>();
 		actual = 0;
 		modoReproduccion = ModoReproduccionEnum.NORMAL;
 		listeners = new ArrayList<ListaReproduccionListener>();
-		
-		this.modificado = false;
-		stream = new XStream(new DomDriver());
-		stream.alias("track", CancionContainer.class);
 	}
 	
 	/**
@@ -88,11 +63,9 @@ public class ListaReproduccion {
 	 * oyentes de la lista de reproduccion.
 	 */
 	public void reiniciar(boolean borrarOyentes) {
-		listaReproduccion = new ArrayList<CancionContainer>();
+		listaReproduccion = new ArrayList<Cancion>();
 		actual = 0;
 		modoReproduccion = ModoReproduccionEnum.NORMAL;
-		//TODO comprobar
-		modificado = true;
 		if(borrarOyentes) {
 			listeners = new ArrayList<ListaReproduccionListener>();
 		}
@@ -110,10 +83,8 @@ public class ListaReproduccion {
 	 * @param cancion La cancion a añadir.
 	 * @param pos La posicion donde añadimos la cancion.0 es la primera posicion
 	 */
-	private void addCancion(CancionContainer cancion, int pos) {
+	private void addCancion(Cancion cancion, int pos) {
 		listaReproduccion.add(pos, cancion);
-		//TODO comprobar
-		modificado = true;
 		notificaNuevaCancionAniadida(cancion, pos);
 	}
 	
@@ -121,10 +92,8 @@ public class ListaReproduccion {
 	 * Añade una cancion al final.
 	 * @param cancion La cancion que queremos añadir.
 	 */
-	private void addCancionAlFinal(CancionContainer cancion) {
+	private void addCancionAlFinal(Cancion cancion) {
 		addCancion(cancion,listaReproduccion.size());
-		//TODO comprobar
-		modificado = true;
 	}
 	
 	/**
@@ -136,8 +105,6 @@ public class ListaReproduccion {
 		if(pos < listaReproduccion.size() && pos >= 0) {
 			listaReproduccion.remove(pos);
 			notificaCancionBorrada(pos);
-			//TODO comprobar
-			modificado = true;
 		} else {
 			throw new IndexOutOfBoundsException();
 		}
@@ -150,12 +117,9 @@ public class ListaReproduccion {
 	/**
 	 * Añade una cancion al final y notifica a los oyentes.
 	 */
-	public void addCancion(CancionContainer c){
+	public void addCancion(Cancion c){
 		this.addCancionAlFinal(c);
-		//TODO comprobar
-		modificado = true;
 	}
-	
 	
 	/**
 	 * Indica si la lista esta vacia.
@@ -165,7 +129,6 @@ public class ListaReproduccion {
 		return listaReproduccion.isEmpty();
 	}
 	
-	
 	/**
 	 * Devuelve el numero de canciones.
 	 * @return
@@ -173,7 +136,6 @@ public class ListaReproduccion {
 	public int getNumeroCanciones(){
 		return listaReproduccion.size();
 	}
-	
 	
 	/**
 	 * 
@@ -188,8 +150,6 @@ public class ListaReproduccion {
 			setActual(actual -1);
 		}
 		
-		//TODO comprobar
-		modificado = true;
 	}
 	
 	/**
@@ -197,7 +157,7 @@ public class ListaReproduccion {
 	 * @param pos La primera posicion es la 0
 	 * @return
 	 */
-	public CancionContainer getCancionAt(int pos){
+	public Cancion getCancionAt(int pos){
 		return listaReproduccion.get(pos);
 		
 	}
@@ -214,7 +174,7 @@ public class ListaReproduccion {
 	@Override
 	public String toString(){
 		
-		Iterator<CancionContainer> itr = listaReproduccion.iterator();
+		Iterator<Cancion> itr = listaReproduccion.iterator();
 		String s = "";
 		s = "LISTA DE REPRODUCCION";
 		int i =0;
@@ -227,41 +187,6 @@ public class ListaReproduccion {
 		}
 		return s;
 	}
-	
-	
-	/**
-	 * Carga la lista de reproducción XML recibiendo la ruta en la que se ubica.
-	 * @param pathYfichero ruta absoluta al fichero XML de la lista de reproducción
-	 * @throws FileNotFoundException
-	 */
-	@SuppressWarnings("unchecked")
-	public void cargarXML(String pathYfichero) throws FileNotFoundException{
-		this.listaReproduccion = (ArrayList<CancionContainer>) stream.fromXML(new FileInputStream(pathYfichero));
-		modificado = true;
-	}
-	
-	
-	/**
-	 * Solo guarda el XML si ha habido cambios en la lista de reproducción
-	 * @param pathYfichero
-	 * @throws FileNotFoundException
-	 */
-	public void guardarXML(String pathYfichero) throws FileNotFoundException{
-		if(modificado)
-			stream.toXML(listaReproduccion, new FileOutputStream(pathYfichero));
-	}
-	
-	
-	/**
-	 * Ordena la lista de reproducción siguiendo un criterio de ordenación
-	 * que recibe como parámetro
-	 * @param orden: es el criterio por el cuál se desea ordenar la lista de reproducción
-	 */
-	public void ordenar(Comparator<CancionContainer> orden){
-		Collections.sort(this.listaReproduccion, orden);
-		modificado = true;
-	}
-	
 	
 	// ********************************************************************** //
 	// *************           GETTERS Y SETTERS                ************* //
@@ -340,10 +265,10 @@ public class ListaReproduccion {
 	 * @param c La cancion que se añade.
 	 * @param pos La posicion donde se añade. 0 es la primera posicion.
 	 */
-	private void notificaNuevaCancionAniadida(CancionContainer c, int pos) {
+	private void notificaNuevaCancionAniadida(Cancion c, int pos) {
 		for (ListaReproduccionListener l : listeners) {
-			l.nuevaCancion(new NuevaCancionEvent(c.getTitulo(),c.getAlbum(),
-					c.getPista(),c.getArtista(), c.getGenero(),c.getDuracion(),pos));
+			l.nuevaCancion(new NuevaCancionEvent(c.getName(),c.getAlbum(),
+					c.getPista(),c.getCompositor(), c.getGenero(),c.getTrackLength(),pos));
 		}
 		
 	}

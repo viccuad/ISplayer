@@ -6,6 +6,7 @@ package is2011.reproductor.controlador;
 import java.util.Random;
 
 import is2011.app.preferencias.Preferencias;
+import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.reproductor.modelo.Cancion;
 import is2011.reproductor.modelo.CancionMP3;
 import is2011.reproductor.modelo.CancionOGG;
@@ -77,7 +78,7 @@ public class ControladorReproductor {
 		
 		if(listaReproduccion.getNumeroCanciones() >= cancionActual 
 				&& cancionActual > 0) {
-			Cancion cancion = this.listaReproduccion.getCancionAt(cancionActual -1 );
+			CancionContainer cancion = this.listaReproduccion.getCancionAt(cancionActual -1 );
 			try {
 				this.reproductor.open(cancion);
 				this.reproductor.play();
@@ -168,14 +169,27 @@ public class ControladorReproductor {
 		
 	}
 
+	
 	public void aniadirCancion(String absolutePath) {
-		if(absolutePath.endsWith(".mp3")) {
-			listaReproduccion.addCancion(new CancionMP3(absolutePath));
-		} else if(absolutePath.endsWith(".ogg")) {
+		if(absolutePath.toLowerCase().endsWith(".mp3")) {
+			listaReproduccion.addCancion(new CancionContainer(absolutePath));
+		} 
+		//TODO quitar esto si al final no se hace ogg!
+		/*
+		else if(absolutePath.toLowerCase().endsWith(".ogg")) {
 			listaReproduccion.addCancion(new CancionOGG(absolutePath));
 		}
+		*/
 	}
 
+	/**
+	 * Añade una canción a la lista de reproducción
+	 * @param cancion
+	 */
+	public void aniadirCancion(CancionContainer cancion){
+		listaReproduccion.addCancion(cancion);
+	}
+	
 
 	/**
 	 * Reinicia la lista de reproduccion.

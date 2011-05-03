@@ -1,5 +1,6 @@
 package is2011.reproductor.modelo;
 
+import is2011.biblioteca.contenedores.CancionContainer;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
@@ -62,7 +63,7 @@ public interface Reproductor {
 	 * @param c La cancion que queremos abrir
 	 * @throws BasicPlayerException
 	 */
-	public void open(Cancion c) throws BasicPlayerException;
+	public void open(CancionContainer c) throws BasicPlayerException;
 	
 	/**
 	 * Añade un oyente al reproductor

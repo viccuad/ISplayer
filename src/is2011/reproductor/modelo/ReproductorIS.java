@@ -3,6 +3,7 @@ package is2011.reproductor.modelo;
 
 
 import is2011.app.preferencias.Preferencias;
+import is2011.biblioteca.contenedores.CancionContainer;
 
 import java.io.File;
 
@@ -88,9 +89,9 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 
 	
 	@Override
-	public void open(Cancion c) throws BasicPlayerException {
+	public void open(CancionContainer c) throws BasicPlayerException {
 		this.bytesMusica = c.getBytesMusica();
-		super.open(new File(c.getPath()));
+		super.open(new File(c.getTotalPath()));
 	}
 
 	@Override 
