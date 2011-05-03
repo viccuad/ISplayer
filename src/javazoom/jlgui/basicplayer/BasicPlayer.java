@@ -694,11 +694,11 @@ public class BasicPlayer implements BasicController, Runnable
     				}
     				
     				if (nBytesRead >= 0) {
-    					synchronized (m_line) {
+    					//synchronized (m_line) {
     						if(m_line!= null) {
     							int nBytesWritten = m_line.write(abData, 0, nBytesRead);
     						}
-    					}
+    					//}
     					//int nBytesWritten = m_line.write(abData, 0, nBytesRead);
     					int nEncodedBytes = getEncodedStreamPosition();
     					Iterator it = m_listeners.iterator();
