@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import is2011.app.preferencias.PreferenciasSistema;
 import is2011.biblioteca.BibliotecaMusical;
 import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.reproductor.controlador.ControladorReproductor;
@@ -28,6 +29,8 @@ public class AppController implements IAppController {
 	private ControladorReproductor reproductor;
 	/** Biblioteca de la aplicacion */
 	private BibliotecaMusical biblioteca;
+	/** Archivo de preferencias del sistema */
+	private PreferenciasSistema preferencias;
 	
 	// ********************************************************************** //
 	// *************                CONSTRUCTOR                 ************* //
@@ -37,8 +40,25 @@ public class AppController implements IAppController {
 	 */
 	public AppController(ControladorReproductor rep, BibliotecaMusical bib) {
 		reproductor = rep;
-		biblioteca = bib;
+		try{
+			
+			File pref = new File("src/Recursos/testConf.xml");
+			
+			if (pref.canRead()){
+				
+				preferencias = new PreferenciasSistema();
+				preferencias.cargarXML("src/Recursos/testConf.xml");
+				
+			}else{
+				preferencias = new PreferenciasSistema("", "",ModoReproduccionEnum.NORMAL);
+				preferencias.guardarXML("src/Recursos/testConf.xml");
+		
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 
+		biblioteca = bib;
 	}
 	
 	// ********************************************************************** //
@@ -287,6 +307,32 @@ public class AppController implements IAppController {
 
 	public void fromBibliotecaToListaReproduccion(String path){
 		reproductor.aniadirCancion(path);
+	}
+	
+	public void actualizaPreferencias(String bib, String listaRep, ModoReproduccionEnum modo){
+		
+		preferencias.setPathBiblioteca(bib);
+		preferencias.setPathListaReproduccion(listaRep);
+		preferencias.setModoReproduccion(modo);
+		
+		try {
+			preferencias.guardarXML("src/Recursos/testConf.xml");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void cargarBibliotecaPreferencias(){
+		
+		File bibXML = new File(preferencias.getPathBiblioteca());
+		if (bibXML.canRead()) {
+			try {
+				biblioteca.cargarXML(preferencias.getPathBiblioteca());
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 

@@ -91,3 +91,9 @@ Pruebas Lista de reproducción:
 	
 	Realizar todo esto mientras se reproducen canciones.
 	
+Pruebas Preferencias del Sistema
+	1. Crear una clase preferencias del sistema con los parámetros deseados
+	2. Guardar en un XML
+	3. Recuperar del XML
+	4. Comprobar que no se pierde informacion y que todos los pasos son coherentes.
+	

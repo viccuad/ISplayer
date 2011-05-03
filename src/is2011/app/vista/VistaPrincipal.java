@@ -54,6 +54,7 @@ public class VistaPrincipal extends JFrame
 	private JMenuItem menuItemAniadir;
 	private JMenuItem menuItemGuardarXML;
 	private JMenuItem menuItemAbrirXML;
+	private JMenuItem menuPreferencias;
 	
 	private JMenu modoReproduccion;
 	private JMenuItem aleatorio;
@@ -75,6 +76,8 @@ public class VistaPrincipal extends JFrame
 	private VistaReproduccion vistaReproduccion;
 	private VistaListaReproduccion vistaListaReproduccion;
 	private VistaBiblioteca vistaBiblioteca;
+	private VistaPreferencias vistaPreferencias;
+
 	
 
 	public VistaPrincipal(){
@@ -267,9 +270,11 @@ public class VistaPrincipal extends JFrame
         grid.fill        = GridBagConstraints.BOTH;
         
         this.add(vb,grid);
-        
-       
-        				
+            				
+	}
+	
+	public void setVistaPreferencias(VistaPreferencias vp) {
+       vistaPreferencias = vp;             				
 	}
 	
 	public void initialize()
@@ -300,11 +305,13 @@ public class VistaPrincipal extends JFrame
 		this.menuItemAniadir = new JMenuItem ("Añadir");
 		this.menuItemGuardarXML = new JMenuItem("Guardar Lista Reproduccion");
 		this.menuItemAbrirXML = new JMenuItem("Abrir Lista Reproduccion");
+		this.menuPreferencias = new JMenuItem("Preferencias");
 		this.modoVista = new JMenu("Vista");
 		this.menuArchivo.add(menuItemAbrir);
 		this.menuArchivo.add(menuItemAniadir);
 		this.menuArchivo.add(menuItemGuardarXML);
 		this.menuArchivo.add(menuItemAbrirXML);
+		this.menuArchivo.add(menuPreferencias);
 		
 		this.menu.add(menuArchivo);
 		
@@ -460,6 +467,14 @@ public class VistaPrincipal extends JFrame
 				
 			}
 			
+		});
+		
+		this.menuPreferencias.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				vistaPreferencias.setVisible(true);
+			}
+
 		});
 		this.setJMenuBar(menu);
 	}

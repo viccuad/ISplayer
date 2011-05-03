@@ -142,4 +142,17 @@ public interface IAppController {
 	 */
 	public void fromBibliotecaToListaReproduccion(String path);
 	
+	/**
+	 * Actualiza las preferencias del sistema con los parametros recogidos a traves de la interfaz
+	 * @param pathBib
+	 * @param pathListaRep
+	 * @param modo
+	 */
+	public void actualizaPreferencias(String pathBib, String pathListaRep, ModoReproduccionEnum modo);
+	
+	/**
+	 * Intentar cargar la libreria que se deberia de encontrar en la ruta que muestra
+	 * las preferencias del sistema
+	 */
+	public void cargarBibliotecaPreferencias();
 }

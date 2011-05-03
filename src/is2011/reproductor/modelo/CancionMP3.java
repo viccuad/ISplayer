@@ -57,47 +57,57 @@ public class CancionMP3 implements Cancion{
 
 	@Override
 	public boolean isVariableBitRate() {
-		return headermp3.isVariableBitRate();
+		//return headermp3.isVariableBitRate();
+		return false;
 	}
 
 	@Override
 	public int getTrackLength() {
-		return headermp3.getTrackLength();
+		//return headermp3.getTrackLength();
+		return 0;
 	}
 
 	
 	public String getMpegVersion() {
-		return headermp3.getMpegVersion();
+		//return headermp3.getMpegVersion();
+		return null;
 	}
 
 	public String getMpegLayer() {
-		return headermp3.getMpegLayer();
+		//return headermp3.getMpegLayer();
+		return null;
 	}
 
 	public boolean isOriginal() {
-		return headermp3.isOriginal();
+		//return headermp3.isOriginal();
+		return false;
 	}
 
 	public boolean isCopyrighted() {
-		return headermp3.isCopyrighted();
+		//return headermp3.isCopyrighted();
+		return false;
 	}
 
 	public boolean isPrivate() {
-		return headermp3.isPrivate();
+		//return headermp3.isPrivate();
+		return false;
 	}
 
 	public boolean isProtected() {
-		return headermp3.isProtected();	
+		//return headermp3.isProtected();	
+		return false;
 	}
 
 	@Override
 	public long getBitRate() {
-		return headermp3.getBitRateAsNumber();
+		//return headermp3.getBitRateAsNumber();
+		return 0;
 	}
 
 	@Override
 	public String getEncodingType() {
-		return headermp3.getEncodingType();	
+		//return headermp3.getEncodingType();
+		return null;
 	}
 
 	@Override
@@ -164,7 +174,8 @@ public class CancionMP3 implements Cancion{
 
 	@Override
 	public long getFrames() {
-		return headermp3.getNumberOfFrames();
+		//return headermp3.getNumberOfFrames();
+		return 0;
 	}
 
 	@Override
