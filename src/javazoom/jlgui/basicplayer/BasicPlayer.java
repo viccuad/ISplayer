@@ -136,7 +136,7 @@ public class BasicPlayer implements BasicController, Runnable
         		System.out.println("cacafuti");
         	m_line.stop();
         	System.out.println("cacafuti");
-        	m_line.close();
+        	//m_line.close();
         	System.out.println("cacafuti");
         	m_line = null;
         	}
@@ -657,7 +657,7 @@ public class BasicPlayer implements BasicController, Runnable
         	if (m_line != null) {
                 m_line.drain();
                 m_line.stop();
-                m_line.close();
+                //m_line.close();
                 m_line = null;
             }
 		}
