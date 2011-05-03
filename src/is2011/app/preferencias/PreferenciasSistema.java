@@ -49,7 +49,7 @@ public class PreferenciasSistema {
 	
 	public void guardarXML(String pathYfichero) throws FileNotFoundException{
 
-		stream.toXML(this, new FileOutputStream(pathYfichero));
+		stream.toXML(new PreferenciasSistema(getPathBiblioteca(), getPathListaReproduccion(), getModoReproduccion()), new FileOutputStream(pathYfichero));
 	}
 	
 	public String getPathBiblioteca(){
@@ -57,7 +57,7 @@ public class PreferenciasSistema {
 	}
 	
 	public String getPathListaReproduccion(){
-		return pathBiblioteca;
+		return pathListaReproduccion;
 	}
 	
 	public ModoReproduccionEnum getModoReproduccion(){
@@ -69,7 +69,7 @@ public class PreferenciasSistema {
 	}
 	
 	public void setPathListaReproduccion(String input){
-		pathBiblioteca = input;
+		pathListaReproduccion = input;
 	}
 	
 	public void setModoReproduccion(ModoReproduccionEnum input){

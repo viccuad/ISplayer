@@ -50,7 +50,7 @@ public class AppController implements IAppController {
 				preferencias.cargarXML("src/Recursos/testConf.xml");
 				
 			}else{
-				preferencias = new PreferenciasSistema("", "",ModoReproduccionEnum.NORMAL);
+				preferencias = new PreferenciasSistema("sin_definir", "sin_definir",ModoReproduccionEnum.NORMAL);
 				preferencias.guardarXML("src/Recursos/testConf.xml");
 		
 			}
