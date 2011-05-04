@@ -85,7 +85,7 @@ public class CancionContainer {
 					genero  = "Desconocido";
 					artista = "Desconocido";
 					artista = "Desconocido";
-					pista = 0;
+					pista   = 0;
 		    	}
 		    	else{
 			    	if (tag.getFirstField(FieldKey.TITLE) == null) titulo = "Desconocido";
@@ -111,12 +111,12 @@ public class CancionContainer {
 				
 			} catch (Exception e) {
 				this.trackPath = "Desconocido";
-				this.titulo = "Desconocido";
-				this.album =  "Desconocido";
-				this.genero = "Desconocido";
-				this.artista = "Desconocido";
-				this.duracion = 0;
-				this.pista = 0;
+				this.titulo    = "Desconocido";
+				this.album     =  "Desconocido";
+				this.genero    = "Desconocido";
+				this.artista   = "Desconocido";
+				this.duracion  = 0;
+				this.pista     = 0;
 				
 				e.printStackTrace();
 			} 
@@ -264,7 +264,8 @@ public class CancionContainer {
 	
 	
 	/**
-	 * 
+	 * Devuelve los bytes de la canción. Esto es necesario para poder reproducir
+	 * canciones desde la clase contenedora
 	 * @return
 	 */
 	public int getBytesMusica() {
@@ -272,7 +273,6 @@ public class CancionContainer {
 		MP3AudioHeader headermp3;
 		
 		try {
-			
 			filemp3 = AudioFileIO.read(new File(this.totalPath));
 			headermp3 = (MP3AudioHeader) filemp3.getAudioHeader();
 			

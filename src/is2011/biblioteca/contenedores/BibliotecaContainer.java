@@ -122,7 +122,7 @@ public class BibliotecaContainer {
 	
 	
 	/**
-	 * 
+	 * A partir del nombre de una cancion y el directorio indica si existe en la biblioteca
 	 * @param parentPath
 	 * @param trackName
 	 * @return
@@ -177,6 +177,7 @@ public class BibliotecaContainer {
 	
 	/**
 	 * Genera una nueva lista con las canciones existentes en la biblioteca
+	 * y fija ese valor al atributo listaCanciones
 	 */
 	private void generarArrayListCanciones(){
 		ArrayList<CancionContainer> canciones = new ArrayList<CancionContainer>();
@@ -187,8 +188,7 @@ public class BibliotecaContainer {
 		
 		listaCanciones = canciones;
 	}
-
-
+	
 
 	/**
 	 * Cuando se escribe la biblioteca a un XML se fija su flag de escritura.
