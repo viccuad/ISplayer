@@ -3,6 +3,9 @@
  */
 package is2011.reproductor.modelo.listeners;
 
+import java.util.ArrayList;
+
+import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 
 /**
@@ -20,4 +23,6 @@ public interface ListaReproduccionListener {
 	public void setActual(int actualNuevo, int actualViejo);
 	
 	public void reinicia();
+
+	public void nuevaListaReproduccion(ArrayList<CancionContainer> c);
 }

@@ -236,6 +236,7 @@ public class ListaReproduccion {
 	public void ordenar(Comparator<CancionContainer> orden){
 		Collections.sort(this.listaReproduccion, orden);
 		modificado = true;
+		this.notificaNuevaListaReproduccion(this.listaReproduccion);
 	}
 	
 	
@@ -353,5 +354,20 @@ public class ListaReproduccion {
 		}
 		
 	}
+	
+	/**
+	 * Le dice a la vista que borre todas las canciones cargadas
+	 * y que cargue la nueva.
+	 * @param 
+	 */
+	private void notificaNuevaListaReproduccion(ArrayList<CancionContainer> c) {
+		for (ListaReproduccionListener l : listeners) {
+			l.reinicia();
+			l.nuevaListaReproduccion(c);
+		}
+		
+	}
+	
+	
 }
 

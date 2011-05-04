@@ -2,8 +2,10 @@ package is2011.reproductor.vista;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import is2011.app.controlador.IAppController;
+import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 import is2011.reproductor.modelo.listeners.BorrarCancionEvent;
 import is2011.reproductor.modelo.listeners.ListaReproduccionListener;
@@ -39,7 +41,7 @@ public class VistaListaReproduccion extends JScrollPane implements
 	/** Atributo que contendra las canciones*/
 	private JTable  tabla;
 	
-	/** Modelo de la tabla de la TS*/
+	/** Modelo de la tabla*/
 	private DefaultTableModel modelo;
 	
 	/**Label que contiene el valor de aleatorio*/
@@ -254,6 +256,29 @@ public class VistaListaReproduccion extends JScrollPane implements
 	 */
 	public int getCancionSeleccionada() {
 		return tabla.getSelectedRow();
+	}
+
+
+	@Override
+	public void nuevaListaReproduccion(ArrayList<CancionContainer> listaCanciones) {
+		
+		int pos = 0;
+		
+		for(CancionContainer cancion : listaCanciones) {
+
+			Object [] rowData = new Object[NUM_CAMPOS];
+			rowData[NUM_COLUMNA_REPRODUCIENDO] = "";
+			rowData[NUM_COLUMNA_TITULO] = cancion.getTitulo();
+			rowData[NUM_COLUMNA_GENERO] = cancion.getGenero();
+			rowData[NUM_COLUMNA_ARTISTA] = cancion.getArtista();
+			rowData[NUM_COLUMNA_ALBUM] = cancion.getAlbum();
+			rowData[NUM_COLUMNA_TRACKNO] = cancion.getPista();
+			rowData[NUM_COLUMNA_DURACION] = toHora(cancion.getDuracion());
+			
+				
+			modelo.insertRow(pos, rowData);
+			pos++;
+		}
 	}
 
 
