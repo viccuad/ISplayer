@@ -14,12 +14,12 @@ public class NuevaCancionEvent {
 	private String artista;
 	private int duracion;
 	private int posicion;
-	private String pista;
+	private int pista;
 	private String genero;
 	
 
 
-	public NuevaCancionEvent(String titulo, String album, String pista,
+	public NuevaCancionEvent(String titulo, String album, int pista,
 			String artista,String genero,int duracion, int posicion) {
 		this.titulo = titulo;
 		this.album = album;
@@ -39,7 +39,7 @@ public class NuevaCancionEvent {
 		return titulo;
 	}
 	
-	public String getPista() {
+	public int getPista() {
 		return pista;
 	}
 	/**

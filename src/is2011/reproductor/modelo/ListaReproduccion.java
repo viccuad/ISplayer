@@ -10,7 +10,6 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -320,7 +319,7 @@ public class ListaReproduccion {
 	private void notificaNuevaCancionAniadida(CancionContainer c, int pos) {
 		for (ListaReproduccionListener l : listeners) {
 			l.nuevaCancion(new NuevaCancionEvent(c.getTitulo(),c.getAlbum(),
-					c.getPista(),c.getArtista(), c.getGenero(),c.getDuracion(),pos));
+					c.getPista(),c.getArtista(), c.getGenero(),c.getDuracion(), pos));
 		}
 		
 	}

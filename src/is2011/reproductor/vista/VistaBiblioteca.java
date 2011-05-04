@@ -276,8 +276,8 @@ public class VistaBiblioteca extends JScrollPane implements
 		while (itr.hasNext()){
 			aux = itr.next();
 
-			nuevaCancion(new NuevaCancionEvent(aux.getTitulo(), aux.getAlbum(), aux.getTrackPath(), 
-					aux.getArtista(), aux.getGenero(), aux.getDuracion(), pos++));
+			nuevaCancion(new NuevaCancionEvent(aux.getTitulo(), aux.getAlbum(), aux.getPista(), 
+					     aux.getArtista(), aux.getGenero(), aux.getDuracion(), pos++));
 			System.out.println(aux.getTitulo());
 		}
 	}
