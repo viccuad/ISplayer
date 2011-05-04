@@ -102,48 +102,48 @@ public class BasicPlayer implements BasicController, Runnable
     }
     protected void reset(boolean seeking)
     {
-    	System.out.println("3.1");
+    	//System.out.println("3.1");
     	if(!seeking) {
     		m_status = UNKNOWN;
     	}
     	if (m_audioInputStream != null)
         {
-    		System.out.println("3.2");
+    		//System.out.println("3.2");
     		synchronized (m_audioInputStream)
             {
                 closeStream();
             }
         }
-    	System.out.println("3.3");
+    	//System.out.println("3.3");
         m_audioInputStream = null;
         m_audioFileFormat = null;
         m_encodedaudioInputStream = null;
         encodedLength = -1;
 
-        System.out.println("3.4");
+        //System.out.println("3.4");
         
         if(seeking) {
         	synchronized (m_line) {
         		if(m_line != null){
-        			System.out.println("reset->seeking");
-        			System.out.println("cacafuti");
+        			//System.out.println("reset->seeking");
+        			//System.out.println("cacafuti");
         			m_line.stop();
-        			System.out.println("cacafuti");
+        			//System.out.println("cacafuti");
         			m_line = null;
         		}
         	}
         }
         if (m_line != null) { 
         	synchronized (m_line) {
-        		System.out.println("cacafuti");
+        		//System.out.println("cacafuti");
         	m_line.stop();
-        	System.out.println("cacafuti");
+        	//System.out.println("cacafuti");
         	//m_line.close();
-        	System.out.println("cacafuti");
+        	//System.out.println("cacafuti");
         	m_line = null;
         	}
         }
-        System.out.println("3.5");
+        //System.out.println("3.5");
         m_gainControl = null;
         m_panControl = null;
     }
@@ -300,9 +300,9 @@ public class BasicPlayer implements BasicController, Runnable
             } else {
             	reset();
             }
-            System.out.println("4.1");
+            //System.out.println("4.1");
         	notifyEvent(BasicPlayerEvent.OPENING, getEncodedStreamPosition(), -1, m_dataSource);
-        	System.out.println("4.2");
+        	//System.out.println("4.2");
             if (m_dataSource instanceof URL)
             {
                 initAudioInputStream((URL) m_dataSource);
@@ -315,9 +315,9 @@ public class BasicPlayer implements BasicController, Runnable
             {
                 initAudioInputStream((InputStream) m_dataSource);
             }
-            System.out.println("4.3");
+            //System.out.println("4.3");
             createLine();
-            System.out.println("4.4");
+            //System.out.println("4.4");
             
             if(!resetBusqueda) {
             	// Notify listeners with AudioFileFormat properties.
@@ -778,7 +778,7 @@ public class BasicPlayer implements BasicController, Runnable
      */
     protected long skipBytes(long bytes) throws BasicPlayerException
     {
-    	System.out.println("1");
+    	//System.out.println("1");
     	long totalSkipped = 0;
         if (m_dataSource instanceof File)
         {
@@ -790,19 +790,19 @@ public class BasicPlayer implements BasicController, Runnable
             try
             {
             	//synchronized (m_audioInputStream)
-            	System.out.println("2");
+            	//System.out.println("2");
             	{
                 	notifyEvent(BasicPlayerEvent.SEEKING, getEncodedStreamPosition(), -1, null);
-                	System.out.println("2.1");
+                	//System.out.println("2.1");
                 	initAudioInputStream(true);
-                	System.out.println("2.2");
+                	//System.out.println("2.2");
                 	if (m_audioInputStream != null)
                     {
                 		 
                 		// Loop until bytes are really skipped.
                         while (totalSkipped < (bytes - SKIP_INACCURACY_SIZE))
                         {
-                        	System.out.println("2.3");
+                        	//System.out.println("2.3");
                             skipped = m_audioInputStream.skip(bytes - totalSkipped);
                             if (skipped == 0) {
                             	break;
@@ -813,11 +813,11 @@ public class BasicPlayer implements BasicController, Runnable
                         }
                     }
                 }
-            	System.out.println("3");
+            	//System.out.println("3");
                 notifyEvent(BasicPlayerEvent.SEEKED, getEncodedStreamPosition(), -1, null);  
                 // m_status = OPENED;
                
-                System.out.println("4");    
+                //System.out.println("4");    
                 try
                 {
                     initLine();
@@ -827,7 +827,7 @@ public class BasicPlayer implements BasicController, Runnable
                     throw new BasicPlayerException(BasicPlayerException.CANNOTINITLINE, e);
                 }
                 
-                System.out.println("5");
+                //System.out.println("5");
                 
                 if (m_line != null)
                 {
@@ -843,9 +843,9 @@ public class BasicPlayer implements BasicController, Runnable
                     pausePlayback();
                 }*/
                
-                System.out.println("6");
+                //System.out.println("6");
                m_thread.interrupt();
-               System.out.println("7");
+               //System.out.println("7");
                
             }
             catch (IOException e)

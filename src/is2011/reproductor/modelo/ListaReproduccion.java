@@ -19,7 +19,6 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
  * Clase que almacena toda la informacion referente a la lista de reproduccion
  * del reproductor.
  * @author Administrator
- *
  */
 public class ListaReproduccion {
 	
