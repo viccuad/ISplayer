@@ -39,6 +39,8 @@ public class CancionContainer {
 	/** Tiempo de duración de la cancion en segundos */
 	private int duracion;  
 	
+	/** pista  de la canción **/
+	private int pista;
 	
 	/**
 	 * Constructor parametrizado
@@ -56,7 +58,15 @@ public class CancionContainer {
 		genero = gene;
 		artista = art;
 		duracion = dur;
-	}
+	}//TODO   /*FALTA AÑADIR PISTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	
+	/*AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
+	
+	
+	
+	/*AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	
+	*/
 	
 	
 	/**
@@ -85,8 +95,11 @@ public class CancionContainer {
 				if (tag.getFirstField(FieldKey.GENRE) == null) genero = "Desconocido";
 				else genero = tag.getFirst(FieldKey.GENRE);
 				
-				if (tag.getFirstField(FieldKey.COMPOSER) == null) artista = "Desconocido";
-				else artista = tag.getFirst(FieldKey.COMPOSER);
+				if (tag.getFirstField(FieldKey.ARTIST) == null) artista = "Desconocido";
+				else artista = tag.getFirst(FieldKey.ARTIST);
+				
+				if (tag.getFirstField(FieldKey.TRACK) == null) artista = "Desconocido";
+				else artista = tag.getFirst(FieldKey.TRACK);
 				
 				duracion = filemp3.getAudioHeader().getTrackLength();
 				
@@ -211,6 +224,19 @@ public class CancionContainer {
 		this.duracion = duracion;
 	}
 	
+	public int getPista() {
+		return pista;
+	}
+
+	
+	/**
+	 * 
+	 * @param duracion
+	 */
+	public void setPista(int pista) {
+		this.pista = pista;
+	}
+	
 	
 	/**
 	 * 
@@ -273,9 +299,20 @@ public class CancionContainer {
 	*/
 
 	
-	//TODO quitar al hacer las pruebas de unificacion de listas de reproduccion
-	public String getPista() {
-		return "0";
-	}
+
 	
+	public boolean equals(CancionContainer s){
+		if (s==null) return false;
+		if (this.getClass()!= s.getClass()) return false;
+		if (this.getTitulo() != s.getTitulo()) return false;
+		if (this.getDuracion() != s.getDuracion()) return false;
+		if (this.getAlbum() != s.getAlbum()) return false;
+		if (this.getArtista() != s.getArtista()) return false;
+		if (this.getGenero() != s.getGenero()) return false;
+		if (this.getPista() != s.getPista()) return false;
+		if (this.getTotalPath() != s.getTotalPath()) return false;
+		if (this.getTrackPath() != s.getTrackPath()) return false;
+		return true;
+	}
+
 }
