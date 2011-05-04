@@ -180,14 +180,14 @@ public class BibliotecaMusical {
 	
 	
 	
-	//TODO
+	//TODO hacer la notificación al listener
 	/*
 	private void notificaAutoresBuscados( ArrayList<String> autores) {
 		for (BibliotecaListener l : listeners) {
 			l.autoresBuscados(autores);
 		}
 		
-	}
+	}	
 	*/
 	
 	
