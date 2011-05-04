@@ -161,4 +161,36 @@ public interface IAppController {
 	 * @return
 	 */
 	public PreferenciasSistema getPreferencias();
+
+	/**
+	 * Borra una cancion determinada por su numero de orden en la lista de repro
+	 * duccion
+	 * @param La cancion
+	 */
+	public void borrarCancion(int numCancion);
+
+	/**
+	 * Manda ordenar la lista de reproduccion por artista
+	 */
+	public void ordenarPorArtista();
+
+	/**
+	 * Manda ordenar la lista de reproduccion por genero
+	 */
+	public void ordenarPorGenero();
+
+	/**
+	 * Manda ordenar la lista de reproduccion por album
+	 */
+	public void ordenarPorAlbum();
+
+	/**
+	 * Manda ordenar la lista de reproduccion por duracion
+	 */
+	public void ordenarPorDuracion();
+
+	/**
+	 * Manda ordenar la lista de reproduccion por titulo
+	 */
+	public void ordenarPorTitulo();
 }

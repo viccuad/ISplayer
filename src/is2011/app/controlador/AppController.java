@@ -13,6 +13,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import is2011.app.preferencias.PreferenciasSistema;
 import is2011.biblioteca.BibliotecaMusical;
 import is2011.biblioteca.contenedores.CancionContainer;
+import is2011.biblioteca.sorts.SortAlbum;
+import is2011.biblioteca.sorts.SortArtista;
+import is2011.biblioteca.sorts.SortDuracion;
+import is2011.biblioteca.sorts.SortGenero;
+import is2011.biblioteca.sorts.SortTitulo;
 import is2011.reproductor.controlador.ControladorReproductor;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 
@@ -344,6 +349,39 @@ public class AppController implements IAppController {
 	@Override
 	public PreferenciasSistema getPreferencias() {
 		return preferencias;
+	}
+
+	@Override
+	public void borrarCancion(int numCancion) {
+		this.reproductor.borrarCancion(numCancion);
+		
+	}
+
+	
+	@Override
+	public void ordenarPorAlbum() {
+		this.reproductor.sort(new SortAlbum());
+	}
+
+	@Override
+	public void ordenarPorArtista() {
+		this.reproductor.sort(new SortArtista());
+	}
+
+	
+	@Override
+	public void ordenarPorDuracion() {
+		this.reproductor.sort(new SortDuracion());
+	}
+	
+	@Override
+	public void ordenarPorGenero() {
+		this.reproductor.sort(new SortGenero());
+	}
+
+	@Override
+	public void ordenarPorTitulo() {
+		this.reproductor.sort(new SortTitulo());
 	}
 
 

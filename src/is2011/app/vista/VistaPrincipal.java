@@ -16,7 +16,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 
 
@@ -211,7 +210,6 @@ public class VistaPrincipal extends JFrame
 
 			@Override
 			public void keyPressed(KeyEvent event) {
-				System.out.println("mierda");
 				switch(event.getKeyCode()) {
 				case KeyEvent.VK_RIGHT:
 					controlador.fastForward();

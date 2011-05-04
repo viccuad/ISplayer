@@ -12,7 +12,6 @@ import is2011.app.controlador.IAppController;
 import is2011.app.vista.VistaPreferencias;
 import is2011.app.vista.VistaPrincipal;
 import is2011.biblioteca.BibliotecaMusical;
-import is2011.biblioteca.sorts.*;
 import is2011.reproductor.controlador.ControladorReproductor;
 import is2011.reproductor.modelo.ListaReproduccion;
 import is2011.reproductor.modelo.ReproductorIS;
@@ -75,21 +74,7 @@ public class Principal {
 		appController.cargarBibliotecaPreferencias();
     	
     	
-    	//TODO quitar 
-    	
-    	try{
-    		Thread.currentThread().sleep(20000);
-    		lr.ordenar(new SortAlbum());
-    		Thread.currentThread().sleep(5000);
-    		lr.ordenar(new SortGenero());
-    		Thread.currentThread().sleep(50000);
-    		lr.ordenar(new SortArtista());
-
-    		}catch (Exception e) {
-    			// TODO: handle exception
-    		}
     	}
-
 	}
 
 }

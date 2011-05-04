@@ -3,6 +3,7 @@
  */
 package is2011.reproductor.controlador;
 
+import java.util.Comparator;
 import java.util.Random;
 
 import is2011.app.preferencias.Preferencias;
@@ -314,6 +315,41 @@ public class ControladorReproductor {
 	public void setVolumen(float porcentaje) {
 		this.reproductor.setVolumen(porcentaje);
 		
+	}
+
+	/**
+	 * Borra de la lista actual la cancion correspondiente.
+	 * @param numCancion Es recibido desde 0.
+	 */
+	public void borrarCancion(int numCancion) {
+		int actual = this.listaReproduccion.getActual();
+		
+		//Si estamos borrando la cancion actual...
+		if(numCancion == actual-1) {
+			try {
+				reproductor.stop();
+				//Si la cancion actual era la ultima...
+				if(listaReproduccion.getNumeroCanciones() == actual) {
+					listaReproduccion.setActual(actual-1);
+				}else {
+					//Si no era la ultima, la incrementamos en uno.
+					listaReproduccion.setActual(actual + 1);
+				}
+			} catch (BasicPlayerException e) {
+				e.printStackTrace();
+			}
+		}
+		this.listaReproduccion.removeCancion(numCancion);
+		
+	}
+
+	/**
+	 * Manda ordenar la lista de reproduccion segun el sort que se le 
+	 * pasa como parametro.
+	 * @param sortAlbum
+	 */
+	public void sort(Comparator<CancionContainer> sort) {
+		this.listaReproduccion.ordenar(sort);
 	}
 
 }

@@ -1,8 +1,11 @@
 package is2011.reproductor.vista;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import is2011.app.controlador.IAppController;
 import is2011.biblioteca.contenedores.CancionContainer;
@@ -12,6 +15,7 @@ import is2011.reproductor.modelo.listeners.ListaReproduccionListener;
 import is2011.reproductor.modelo.listeners.NuevaCancionEvent;
 
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -47,6 +51,9 @@ public class VistaListaReproduccion extends JScrollPane implements
 	/**Label que contiene el valor de aleatorio*/
 	private JLabel modoReproduccion;
 	
+	/** El menu popUp*/
+	private JPopupMenu popup;
+	
 	/** Columna en la que muestra si se esta reproduciendo la cancion*/
 	private static final int NUM_COLUMNA_REPRODUCIENDO = 0;
 	
@@ -70,8 +77,6 @@ public class VistaListaReproduccion extends JScrollPane implements
 
 	/** Numero de campos*/
 	private static final int NUM_CAMPOS = 7;
-	
-	JPopupMenu popup;
 	
 	
 	// ********************************************************************** //
@@ -113,22 +118,104 @@ public class VistaListaReproduccion extends JScrollPane implements
 		cm.getColumn(NUM_COLUMNA_DURACION).setPreferredWidth(50);
 		
 		
-		//Le a�adimos el scroll
+		//Le añadimos el scroll
 		setViewportView(tabla);
 		
+		//La cabecera de la tabla.
 		this.modoReproduccion = new JLabel("Modo de reproduccion NORMAL");
 		
 		setVisible(true);
 		tabla.setVisible(true);
-		//Solo permite seleccionar una columna.
-		tabla.setSelectionMode(0);
 		
 		this.setBorder(new TitledBorder("Lista de reproduccion"));
+		
+		//Menu desplegable
+		
 		popup = new JPopupMenu();
-		popup.add(new JMenuItem("Borrar"));
-		popup.add(new JMenuItem("Play"));
-		popup.add(new JMenuItem("Pause"));
-		popup.add(new JMenuItem("Stop"));
+		
+		JMenuItem borrar = new JMenuItem("Borrar");
+		popup.add(borrar);
+		
+		
+		JMenu ordenar = new JMenu("Ordenar");
+		JMenuItem ordenarAlbum = new JMenuItem("Album");
+		JMenuItem ordenarArtista = new JMenuItem("Artista");
+		JMenuItem ordenarGenero = new JMenuItem("Genero");
+		JMenuItem ordenarDuracion  = new JMenuItem("Duracion");
+		JMenuItem ordenarTitulo  = new JMenuItem("Titulo");
+		
+
+		ordenar.add(ordenarAlbum);
+		ordenar.add(ordenarArtista);
+		ordenar.add(ordenarGenero);
+		ordenar.add(ordenarDuracion);
+		ordenar.add(ordenarTitulo);
+		
+		popup.add(ordenar);
+		
+		borrar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				int[] rows = tabla.getSelectedRows();
+				
+				//Hay que notificar de la cancion mayor a la menor para poder
+				//borrar en bloques.
+				ArrayList<Integer> rowsOrdenadas = new ArrayList<Integer>();
+				for (int row: rows){
+					rowsOrdenadas.add(row);
+				}
+				
+				Collections.sort(rowsOrdenadas);
+				
+				for (int i = rowsOrdenadas.size()-1 ; i >= 0; i--) {
+					controlador.borrarCancion(rowsOrdenadas.get(i));
+				}
+				
+			}
+			
+		});
+		
+		ordenarAlbum.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controlador.ordenarPorAlbum();
+			}
+		});
+
+		ordenarArtista.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controlador.ordenarPorArtista();
+			}
+		});
+		
+		ordenarGenero.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controlador.ordenarPorGenero();
+			}
+		});
+		
+		ordenarDuracion.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controlador.ordenarPorDuracion();
+			}
+		});
+		
+		ordenarTitulo.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controlador.ordenarPorTitulo();
+			}
+		});
+		
 		
 		//Añadimos el oyente del raton
 		tabla.addMouseListener(new MouseAdapter() {
@@ -137,17 +224,12 @@ public class VistaListaReproduccion extends JScrollPane implements
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
+				//Si es boton derecho
 				if ( SwingUtilities.isRightMouseButton(e)){
-					
-					// Para ver que fila ha sido seleccionada
-		            int y = e.getY();
-		            int row = Math.round(y / tabla.getRowHeight());
-		            tabla.setRowSelectionInterval(row, row);               
-		            System.out.println("Row Selected = " + row);
-		            
-		            // Para mostrar el menu
+					//int row = Math.round(e.getY() / tabla.getRowHeight());
+		            //tabla.setRowSelectionInterval(row, row);
 		            popup.show(e.getComponent(), e.getX(), e.getY());
-
+					
 				}
 				else if(e.getClickCount() == 2) {
 					int cancionDeseada = e.getY()/tabla.getRowHeight();
@@ -237,6 +319,18 @@ public class VistaListaReproduccion extends JScrollPane implements
 	public JLabel getInfoReproduccion() {
 		return this.modoReproduccion;
 	}
+	
+	//TODO
+	/*public void ordenar(MouseEvent e) {
+		Point p = e.getPoint();
+		
+		int index = tabla.getColumnModel().getColumnIndexAtX(p.x);
+        int realIndex = 
+        	tabla.getColumnModel().getColumn(index).getModelIndex();
+
+        System.out.println(realIndex);
+
+	}*/
 	// ********************************************************************** //
 	// *************               GETTERS / SETTERS            ************* //
 	// ********************************************************************** //

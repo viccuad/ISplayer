@@ -18,6 +18,15 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 /**
  * Clase que almacena toda la informacion referente a la lista de reproduccion
  * del reproductor.
+ * 
+ * Puede ordenarse por algun sort definido en biliboteca.sorts
+ * (Es decir, por album, artista, ....)
+ * 
+ * Puede desordenarse para reproducir al azar.
+ * 
+ * Puede iniciar una reproduccion aleatoria.
+ *
+ * Puede añadir y borrar canciones.
  * @author Administrator
  */
 public class ListaReproduccion {
@@ -46,10 +55,6 @@ public class ListaReproduccion {
 
 	/** Lista de listeners del reproductor */
 	private ArrayList<ListaReproduccionListener> listeners;
-	
-	
-	
-	
 	
 	/** Flujo de lectura/escritura para ficheros XML */
 	private XStream stream;
@@ -232,9 +237,13 @@ public class ListaReproduccion {
 	 * @param orden: es el criterio por el cuál se desea ordenar la lista de reproducción
 	 */
 	public void ordenar(Comparator<CancionContainer> orden){
+		CancionContainer cancionActual = this.listaReproduccion.get(actual-1);
 		Collections.sort(this.listaReproduccion, orden);
 		modificado = true;
-		this.notificaNuevaListaReproduccion(this.listaReproduccion);
+		
+		int indiceActual = this.listaReproduccion.indexOf(cancionActual) +1;
+		System.out.println(indiceActual);
+		this.notificaNuevaListaReproduccion(this.listaReproduccion, indiceActual);
 	}
 	
 	
@@ -275,6 +284,7 @@ public class ListaReproduccion {
 	 */
 	public void setModoReproduccion(ModoReproduccionEnum modoReproduccion) {
 		this.modoReproduccion = modoReproduccion;
+		
 		notificaCambioTipoReproduccion(modoReproduccion);
 	}
 
@@ -358,12 +368,14 @@ public class ListaReproduccion {
 	 * y que cargue la nueva.
 	 * @param 
 	 */
-	private void notificaNuevaListaReproduccion(ArrayList<CancionContainer> c) {
+	private void notificaNuevaListaReproduccion(ArrayList<CancionContainer> c
+			,int indiceActual) {
 		for (ListaReproduccionListener l : listeners) {
 			l.reinicia();
 			l.nuevaListaReproduccion(c);
 		}
 		
+		this.setActual(indiceActual);
 	}
 	
 	
