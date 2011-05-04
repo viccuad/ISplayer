@@ -1,5 +1,7 @@
 package is2011.reproductor.vista;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -73,7 +75,7 @@ public class VistaBiblioteca extends JScrollPane implements
 	
 	JPopupMenu popup;
 	
-	
+	int y;
 	// ********************************************************************** //
 	// *************                CONSTRUCTORES               ************* //
 	// ********************************************************************** //
@@ -126,9 +128,24 @@ public class VistaBiblioteca extends JScrollPane implements
 		this.setBorder(new TitledBorder("Biblioteca"));
 		
 		popup = new JPopupMenu();
-		popup.add(new JMenuItem("Borrar"));
-		popup.add(new JMenuItem("Modificar"));
-		popup.add(new JMenuItem("Añadir a Lista de Reproduccion"));
+		JMenuItem borrar = new JMenuItem("Borrar");
+		popup.add(borrar);
+		JMenuItem modificar = new JMenuItem("Modificar");
+		popup.add(modificar);
+		JMenuItem aniadirLR = new JMenuItem("Añadir a la LR");
+		aniadirLR.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int row = y/tabla.getRowHeight();
+				System.out.println(row);
+				String path = controlador.getCanciones().get(row).getTotalPath();
+				System.out.println(path);
+				controlador.fromBibliotecaToListaReproduccion(path);
+			}
+			
+		});
+		popup.add(aniadirLR);
 		
 		tabla.addMouseListener(new MouseAdapter() {
 			@Override
@@ -137,7 +154,7 @@ public class VistaBiblioteca extends JScrollPane implements
 				if ( SwingUtilities.isRightMouseButton(e)){
 					
 					// Para ver que fila ha sido seleccionada
-		            int y = e.getY();
+		            y = e.getY();
 		            int row = Math.round(y / tabla.getRowHeight());
 		            tabla.setRowSelectionInterval(row, row);               
 		            System.out.println("Row Selected = " + row);
