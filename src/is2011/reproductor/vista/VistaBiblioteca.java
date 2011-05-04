@@ -12,8 +12,11 @@ import is2011.reproductor.modelo.listeners.BibliotecaListener;
 import is2011.reproductor.modelo.listeners.BorrarCancionEvent;
 import is2011.reproductor.modelo.listeners.NuevaCancionEvent;
 
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -68,7 +71,7 @@ public class VistaBiblioteca extends JScrollPane implements
 	/** Numero de campos*/
 	private static final int NUM_CAMPOS = 7;
 	
-	
+	JPopupMenu popup;
 	
 	
 	// ********************************************************************** //
@@ -122,11 +125,28 @@ public class VistaBiblioteca extends JScrollPane implements
 		
 		this.setBorder(new TitledBorder("Biblioteca"));
 		
+		popup = new JPopupMenu();
+		popup.add(new JMenuItem("Borrar"));
+		popup.add(new JMenuItem("Modificar"));
+		popup.add(new JMenuItem("Añadir a Lista de Reproduccion"));
 		
 		tabla.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(e.getClickCount() == 2) {
+				
+				if ( SwingUtilities.isRightMouseButton(e)){
+					
+					// Para ver que fila ha sido seleccionada
+		            int y = e.getY();
+		            int row = Math.round(y / tabla.getRowHeight());
+		            tabla.setRowSelectionInterval(row, row);               
+		            System.out.println("Row Selected = " + row);
+		            
+		            // Para mostrar el menu
+		            popup.show(e.getComponent(), e.getX(), e.getY());
+
+				}
+				else if(e.getClickCount() == 2) {
 					int row = e.getY()/tabla.getRowHeight();
 					System.out.println(row);
 					String path = controlador.getCanciones().get(row).getTotalPath();

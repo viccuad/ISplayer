@@ -10,8 +10,11 @@ import is2011.reproductor.modelo.listeners.ListaReproduccionListener;
 import is2011.reproductor.modelo.listeners.NuevaCancionEvent;
 
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -66,7 +69,7 @@ public class VistaListaReproduccion extends JScrollPane implements
 	/** Numero de campos*/
 	private static final int NUM_CAMPOS = 7;
 	
-	
+	JPopupMenu popup;
 	
 	
 	// ********************************************************************** //
@@ -119,12 +122,32 @@ public class VistaListaReproduccion extends JScrollPane implements
 		tabla.setSelectionMode(0);
 		
 		this.setBorder(new TitledBorder("Lista de reproduccion"));
+		popup = new JPopupMenu();
+		popup.add(new JMenuItem("Borrar"));
+		popup.add(new JMenuItem("Play"));
+		popup.add(new JMenuItem("Pause"));
+		popup.add(new JMenuItem("Stop"));
 		
 		//Añadimos el oyente del raton
 		tabla.addMouseListener(new MouseAdapter() {
+			
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(e.getClickCount() == 2) {
+				
+				if ( SwingUtilities.isRightMouseButton(e)){
+					
+					// Para ver que fila ha sido seleccionada
+		            int y = e.getY();
+		            int row = Math.round(y / tabla.getRowHeight());
+		            tabla.setRowSelectionInterval(row, row);               
+		            System.out.println("Row Selected = " + row);
+		            
+		            // Para mostrar el menu
+		            popup.show(e.getComponent(), e.getX(), e.getY());
+
+				}
+				else if(e.getClickCount() == 2) {
 					int cancionDeseada = e.getY()/tabla.getRowHeight();
 					controlador.play(cancionDeseada);
 				}
