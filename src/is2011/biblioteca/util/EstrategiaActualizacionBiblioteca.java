@@ -54,9 +54,10 @@ public abstract class EstrategiaActualizacionBiblioteca {
 	 * @return
 	 */
 	protected String getName(Tag tag) {
+		if(tag != null)
 		if (tag.getFirstField(FieldKey.TITLE) == null) return "Desconocido";
 		else return tag.getFirst(FieldKey.TITLE);
-		
+		else return "Desconocido";
 	}
 	
 	

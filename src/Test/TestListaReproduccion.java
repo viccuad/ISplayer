@@ -1,5 +1,6 @@
 package Test;
 
+import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.reproductor.modelo.Cancion;
 import is2011.reproductor.modelo.CancionMP3;
 import is2011.reproductor.modelo.CancionOGG;
@@ -19,9 +20,9 @@ public class TestListaReproduccion {
 		
 		System.out.println("Añadiendo tres canciones");
 
-		lr.addCancion(new CancionMP3(abrirArchivo()));
-		lr.addCancion(new CancionMP3(abrirArchivo()));
-		lr.addCancion(new CancionOGG(abrirArchivo()));
+		lr.addCancion(new CancionContainer(abrirArchivo()));
+		lr.addCancion(new CancionContainer(abrirArchivo()));
+		lr.addCancion(new CancionContainer(abrirArchivo()));
 		
 		System.out.println("Tres canciones añadidas");
 		System.out.println("Mostrando todas");

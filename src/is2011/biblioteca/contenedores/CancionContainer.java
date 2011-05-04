@@ -74,6 +74,7 @@ public class CancionContainer {
 		    	
 		    	trackPath = fichero.getName();
 		    	
+		    	//TODO modificar por si tag == null
 		    	if (tag.getFirstField(FieldKey.TITLE) == null) titulo = "Desconocido";
 				else titulo = tag.getFirst(FieldKey.TITLE);				
 				
