@@ -1,7 +1,6 @@
 package is2011.reproductor.modelo;
 
 
-
 import java.io.File;
 import java.io.IOException;
 
@@ -192,6 +191,18 @@ public class CancionMP3 implements Cancion{
 	@Override
 	public int getBytesMusica() {
 		return (int)( (new File(path)).length() - headermp3.getMp3StartByte());
+	}
+	
+	public boolean equals(CancionMP3 c){
+		if (c==null) return false;
+		if (this.getClass()!= c.getClass()) return false;
+		if (this.getName() != c.getName()) return false;
+		if (this.getAlbum() != c.getAlbum()) return false;
+		if (this.getCompositor() != c.getCompositor()) return false;
+		if (this.getGenero() != c.getGenero()) return false;
+		if (this.getPista() != c.getPista()) return false;		
+		
+		return true;
 	}
 
 }
