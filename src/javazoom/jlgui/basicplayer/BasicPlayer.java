@@ -778,6 +778,7 @@ public class BasicPlayer implements BasicController, Runnable
      */
     protected long skipBytes(long bytes) throws BasicPlayerException
     {
+    	
     	//System.out.println("1");
     	long totalSkipped = 0;
         if (m_dataSource instanceof File)
@@ -1032,7 +1033,11 @@ public class BasicPlayer implements BasicController, Runnable
      */
     public long seek(long bytes) throws BasicPlayerException
     {
-        return skipBytes(bytes);
+    	if(m_status == PLAYING) {
+    		return skipBytes(bytes);
+    	}
+    	return 0;
+        
     }
 
     /**
