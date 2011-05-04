@@ -41,7 +41,6 @@ public class TestCancionMP3 {
 			System.out.println("Nombre "+c.getTitulo());
 			System.out.println("Pista "+c.getPista());
 			System.out.println("Compositor "+c.getArtista());
-			c.getInfo();
         }
 	}
 }

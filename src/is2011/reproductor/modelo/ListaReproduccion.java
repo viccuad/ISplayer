@@ -202,31 +202,7 @@ public class ListaReproduccion {
 		
 	}
 	
-	/**
-	 * 
-	 * @param pos La primera posicion es la 0.
-	 * @return
-	 */
-	public String getInfoCancionAt(int pos){
-		return listaReproduccion.get(pos).getInfo();
-	}
 	
-	@Override
-	public String toString(){
-		
-		Iterator<CancionContainer> itr = listaReproduccion.iterator();
-		String s = "";
-		s = "LISTA DE REPRODUCCION";
-		int i =0;
-		while (itr.hasNext()){
-			s += ("- CANCION EN POS "+i) + "\n";
-			s += (itr.next().getInfo()) + "\n";
-			s += ("") + "\n";
-
-			i++;
-		}
-		return s;
-	}
 	
 	
 	/**

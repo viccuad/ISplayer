@@ -26,8 +26,6 @@ public class TestListaReproduccion {
 
 		System.out.println(lr.toString());
 		System.out.println("Mostrando la primera");
-
-		System.out.println(lr.getInfoCancionAt(0));
 		
 		System.out.println("Total canciones");
 		System.out.println(lr.getNumeroCanciones());

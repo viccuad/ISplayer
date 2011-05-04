@@ -266,9 +266,11 @@ public class CancionContainer {
 	
 	
 	//TODO quitar al hacer las pruebas de unificacion de listas de reproduccion
+	/*
 	public String getInfo(){
 		return "CancionContainer.getInfo() -> fake\n";
 	}
+	*/
 
 	
 	//TODO quitar al hacer las pruebas de unificacion de listas de reproduccion
