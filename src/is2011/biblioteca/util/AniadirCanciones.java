@@ -33,7 +33,8 @@ public class AniadirCanciones extends EstrategiaActualizacionBiblioteca {
 		    	Tag tag = filemp3.getTag();
 		    	// creamos la canción
 				CancionContainer nuevaCancion = new CancionContainer(fichero.getName(), super.getName(tag) , super.getAlbum(tag),
-												super.getGenero(tag), super.getCompositor(tag),  filemp3.getAudioHeader().getTrackLength());
+												super.getGenero(tag), super.getCompositor(tag),  
+												filemp3.getAudioHeader().getTrackLength(), super.getPista(tag));
 				nuevaCancion.setTotalPath(fichero.getAbsolutePath());
 				
 				// si el directorio no existe lo creamos

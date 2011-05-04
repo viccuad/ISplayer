@@ -54,10 +54,10 @@ public abstract class EstrategiaActualizacionBiblioteca {
 	 * @return
 	 */
 	protected String getName(Tag tag) {
-		if(tag != null)
-		if (tag.getFirstField(FieldKey.TITLE) == null) return "Desconocido";
-		else return tag.getFirst(FieldKey.TITLE);
-		else return "Desconocido";
+		if(tag == null || tag.getFirstField(FieldKey.TITLE) == null)
+			return "Desconocido";
+		else 
+			return tag.getFirst(FieldKey.TITLE);
 	}
 	
 	
@@ -67,7 +67,7 @@ public abstract class EstrategiaActualizacionBiblioteca {
 	 * @return
 	 */
 	public String getAlbum(Tag tag) {
-		if (tag.getFirstField(FieldKey.ALBUM) == null) return "Desconocido";
+		if (tag == null || tag.getFirstField(FieldKey.ALBUM) == null) return "Desconocido";
 		else return tag.getFirst(FieldKey.ALBUM);
 	}
 	
@@ -78,7 +78,7 @@ public abstract class EstrategiaActualizacionBiblioteca {
 	 * @return
 	 */
 	public String getCompositor(Tag tag) {
-		if (tag.getFirstField(FieldKey.COMPOSER) == null) return "Desconocido";
+		if (tag == null || tag.getFirstField(FieldKey.COMPOSER) == null) return "Desconocido";
 		else return tag.getFirst(FieldKey.COMPOSER);
 
 	}
@@ -90,9 +90,20 @@ public abstract class EstrategiaActualizacionBiblioteca {
 	 * @return
 	 */
 	public String getGenero(Tag tag) {
-		if (tag.getFirstField(FieldKey.GENRE) == null) return "Desconocido";
+		if (tag == null || tag.getFirstField(FieldKey.GENRE) == null) return "Desconocido";
 		else return tag.getFirst(FieldKey.GENRE);
 
 	}
 	
+	
+	/**
+	 * 
+	 * @param tag
+	 * @return
+	 */
+	public int getPista(Tag tag) {
+		if (tag == null || tag.getFirstField(FieldKey.DISC_NO) == null) return 0;
+		else return Integer.parseInt(tag.getFirst(FieldKey.DISC_NO));
+
+	}
 }

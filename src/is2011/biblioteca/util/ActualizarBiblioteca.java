@@ -42,7 +42,8 @@ public class ActualizarBiblioteca extends EstrategiaActualizacionBiblioteca {
 		    	AudioFile filemp3 = AudioFileIO.read(new File(fichero.getAbsolutePath()));
 		    	Tag tag = filemp3.getTag();
 				CancionContainer nuevaCancion = new CancionContainer(fichero.getName(), super.getName(tag) , super.getAlbum(tag),
-												super.getGenero(tag), super.getCompositor(tag),  filemp3.getAudioHeader().getTrackLength());
+												super.getGenero(tag), super.getCompositor(tag),  
+												filemp3.getAudioHeader().getTrackLength(), super.getPista(tag));
 				nuevaCancion.setTotalPath(fichero.getAbsolutePath());
 				
 				// si el directorio no existe lo creamos

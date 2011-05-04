@@ -42,6 +42,8 @@ public class CancionContainer {
 	/** pista  de la canción **/
 	private int pista;
 	
+	
+	
 	/**
 	 * Constructor parametrizado
 	 * @param trackP
@@ -51,22 +53,15 @@ public class CancionContainer {
 	 * @param art
 	 * @param dur
 	 */
-	public CancionContainer(String trackP, String tit, String alb, String gene, String art,  int dur){
+	public CancionContainer(String trackP, String tit, String alb, String gene, String art,  int dur, int pist){
 		trackPath = trackP;
 		titulo = tit;
 		album = alb;
 		genero = gene;
 		artista = art;
 		duracion = dur;
-	}//TODO   /*FALTA AÑADIR PISTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-	
-	/*AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
-	
-	
-	
-	/*AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-	
-	*/
+		pista = pist;
+	}
 	
 	
 	/**
@@ -84,22 +79,33 @@ public class CancionContainer {
 		    	
 		    	trackPath = fichero.getName();
 		    	
-		    	//TODO modificar por si tag == null
-		    	if (tag.getFirstField(FieldKey.TITLE) == null) titulo = "Desconocido";
-				else titulo = tag.getFirst(FieldKey.TITLE);				
-				
-				if (tag.getFirstField(FieldKey.ALBUM) == null) album = "Desconocido";
-				else album = tag.getFirst(FieldKey.ALBUM);
-				
-				
-				if (tag.getFirstField(FieldKey.GENRE) == null) genero = "Desconocido";
-				else genero = tag.getFirst(FieldKey.GENRE);
-				
-				if (tag.getFirstField(FieldKey.ARTIST) == null) artista = "Desconocido";
-				else artista = tag.getFirst(FieldKey.ARTIST);
-				
-				if (tag.getFirstField(FieldKey.TRACK) == null) artista = "Desconocido";
-				else artista = tag.getFirst(FieldKey.TRACK);
+		    	if(tag == null){
+		    		titulo  = "Desconocido";
+					album   = "Desconocido";
+					genero  = "Desconocido";
+					artista = "Desconocido";
+					artista = "Desconocido";
+					pista = 0;
+		    	}
+		    	else{
+			    	if (tag.getFirstField(FieldKey.TITLE) == null) titulo = "Desconocido";
+					else titulo = tag.getFirst(FieldKey.TITLE);				
+					
+					if (tag.getFirstField(FieldKey.ALBUM) == null) album = "Desconocido";
+					else album = tag.getFirst(FieldKey.ALBUM);
+					
+					if (tag.getFirstField(FieldKey.GENRE) == null) genero = "Desconocido";
+					else genero = tag.getFirst(FieldKey.GENRE);
+					
+					if (tag.getFirstField(FieldKey.ARTIST) == null) artista = "Desconocido";
+					else artista = tag.getFirst(FieldKey.ARTIST);
+					
+					if (tag.getFirstField(FieldKey.TRACK) == null) artista = "Desconocido";
+					else artista = tag.getFirst(FieldKey.TRACK);
+					
+					if (tag.getFirstField(FieldKey.DISC_NO) == null) pista = 0;
+					else pista = Integer.parseInt(tag.getFirst(FieldKey.DISC_NO));
+		    	}
 				
 				duracion = filemp3.getAudioHeader().getTrackLength();
 				
@@ -110,6 +116,7 @@ public class CancionContainer {
 				this.genero = "Desconocido";
 				this.artista = "Desconocido";
 				this.duracion = 0;
+				this.pista = 0;
 				
 				e.printStackTrace();
 			} 
@@ -285,21 +292,6 @@ public class CancionContainer {
 		return -1;
 	}
 	
-	
-	
-	
-	
-	
-	
-	//TODO quitar al hacer las pruebas de unificacion de listas de reproduccion
-	/*
-	public String getInfo(){
-		return "CancionContainer.getInfo() -> fake\n";
-	}
-	*/
-
-	
-
 	
 	public boolean equals(CancionContainer s){
 		if (s==null) return false;

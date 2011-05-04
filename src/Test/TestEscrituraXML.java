@@ -24,7 +24,7 @@ public class TestEscrituraXML {
 		BibliotecaContainer bib = new BibliotecaContainer();
 		bib.addDir(new DirectorioContainer("C:/hlocal/"));
 		for(int i = 0; i< 10; i++)
-			bib.addCancion(new CancionContainer("trackpath"+i,"tit","alb","gen","art",0), "C:/hlocal/");
+			bib.addCancion(new CancionContainer("trackpath"+i,"tit","alb","gen","art",0,0), "C:/hlocal/");
 			try {
 			stream.toXML(bib, new FileOutputStream("src/Recursos/testXML1.xml"));
 			

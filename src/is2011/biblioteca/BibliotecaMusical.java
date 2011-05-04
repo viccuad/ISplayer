@@ -165,6 +165,18 @@ public class BibliotecaMusical {
 	}
 	
 	
+	
+	//TODO
+	/*
+	private void notificaAutoresBuscados( ArrayList<String> autores) {
+		for (BibliotecaListener l : listeners) {
+			l.autoresBuscados(autores);
+		}
+		
+	}
+	*/
+	
+	
 	/**
 	 * Añade oyentes a la biblioteca
 	 * @param listener
