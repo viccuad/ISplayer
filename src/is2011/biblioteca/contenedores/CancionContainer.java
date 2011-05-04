@@ -52,6 +52,7 @@ public class CancionContainer {
 	 * @param gene
 	 * @param art
 	 * @param dur
+	 * @param pist
 	 */
 	public CancionContainer(String trackP, String tit, String alb, String gene, String art,  int dur, int pist){
 		trackPath = trackP;
