@@ -14,7 +14,6 @@ import is2011.app.preferencias.PreferenciasSistema;
 import is2011.biblioteca.BibliotecaMusical;
 import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.reproductor.controlador.ControladorReproductor;
-import is2011.reproductor.modelo.Cancion;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 
 

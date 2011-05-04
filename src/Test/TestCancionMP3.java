@@ -1,7 +1,7 @@
 package Test;
 
-import is2011.reproductor.modelo.Cancion;
-import is2011.reproductor.modelo.CancionMP3;
+import is2011.biblioteca.contenedores.CancionContainer;
+
 
 import java.awt.FileDialog;
 import java.io.File;
@@ -36,11 +36,11 @@ public class TestCancionMP3 {
         if (seleccion == JFileChooser.APPROVE_OPTION)
         {
             
-			Cancion c = new CancionMP3(fileChooser.getSelectedFile().getAbsolutePath());
+        	CancionContainer c = new CancionContainer(fileChooser.getSelectedFile().getAbsolutePath());
 			System.out.println("Album "+c.getAlbum());
-			System.out.println("Nombre "+c.getName());
+			System.out.println("Nombre "+c.getTitulo());
 			System.out.println("Pista "+c.getPista());
-			System.out.println("Compositor "+c.getCompositor());
+			System.out.println("Compositor "+c.getArtista());
 			c.getInfo();
         }
 	}

@@ -7,9 +7,6 @@ import java.util.Random;
 
 import is2011.app.preferencias.Preferencias;
 import is2011.biblioteca.contenedores.CancionContainer;
-import is2011.reproductor.modelo.Cancion;
-import is2011.reproductor.modelo.CancionMP3;
-import is2011.reproductor.modelo.CancionOGG;
 import is2011.reproductor.modelo.ListaReproduccion;
 import is2011.reproductor.modelo.Reproductor;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
