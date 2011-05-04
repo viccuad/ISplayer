@@ -103,8 +103,8 @@ public class CancionContainer {
 					if (tag.getFirstField(FieldKey.TRACK) == null) artista = "Desconocido";
 					else artista = tag.getFirst(FieldKey.TRACK);
 					
-					if (tag.getFirstField(FieldKey.DISC_NO) == null) pista = 0;
-					else pista = Integer.parseInt(tag.getFirst(FieldKey.DISC_NO));
+					if (tag.getFirstField(FieldKey.TRACK) == null) pista = 0;
+					else pista = Integer.parseInt(tag.getFirst(FieldKey.TRACK));
 		    	}
 				
 				duracion = filemp3.getAudioHeader().getTrackLength();

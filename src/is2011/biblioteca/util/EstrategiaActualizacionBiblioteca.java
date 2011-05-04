@@ -102,8 +102,8 @@ public abstract class EstrategiaActualizacionBiblioteca {
 	 * @return
 	 */
 	public int getPista(Tag tag) {
-		if (tag == null || tag.getFirstField(FieldKey.DISC_NO) == null) return 0;
-		else return Integer.parseInt(tag.getFirst(FieldKey.DISC_NO));
+		if (tag == null || tag.getFirstField(FieldKey.TRACK) == null) return 0;
+		else return Integer.parseInt(tag.getFirst(FieldKey.TRACK));
 
 	}
 }
