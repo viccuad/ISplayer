@@ -9,6 +9,11 @@ import org.jaudiotagger.tag.Tag;
 import is2011.biblioteca.contenedores.BibliotecaContainer;
 import is2011.biblioteca.contenedores.CancionContainer;
 
+/**
+ * Esta clase guarda canciones y sólo canciones en la biblioteca musical.
+ * Si recibe directorios o cualquier extensión de fichero no válido no hace nada
+ *
+ */
 public class AniadirCanciones extends EstrategiaActualizacionBiblioteca {
 
 	/**
@@ -21,7 +26,8 @@ public class AniadirCanciones extends EstrategiaActualizacionBiblioteca {
 	
 	
 	/**
-	 * 
+	 * Actualiza las canciones que recibe como parámetro. Si estas ya existían las sobreescribe.
+	 * En caso de recibir otras rutas de directorios o canciones con formato no válido no hace nada
 	 */
 	@Override
 	public void actualiza(String filePath) {

@@ -1,5 +1,7 @@
 package is2011.biblioteca.contenedores;
 
+import is2011.biblioteca.search.CriterioBusqueda;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -12,12 +14,22 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 public class BibliotecaContainer {
 	
-	/** Indica si la biblioteca ha sido modificada */
+	/** Indica si la biblioteca ha sido modificada para escribir el XML*/
 	@XStreamOmitField
-	private boolean modificado;
+	private boolean modificadoEscritura;
+	
+	/** Indica si la biblioteca ha sido modificada para escribir el XML*/
+	@XStreamOmitField
+	private boolean modificadoParaMostrar;
+	
+	/** Listado de todas las canciones de la biblioteca */
+	@XStreamOmitField
+	private ArrayList<CancionContainer> listaCanciones;
 	
 	/**  Contenedor de las canciones*/
 	private HashMap<String, DirectorioContainer> directorios;
+	
+	
 	
 
 	
@@ -25,7 +37,9 @@ public class BibliotecaContainer {
 	 * Crea un objeto vacío preparado para añadir canciones
 	 */
 	public BibliotecaContainer(){
-		this.modificado = false;
+		this.modificadoEscritura = false;
+		this.modificadoParaMostrar = false;
+		this.listaCanciones = null;
 		this.directorios = new HashMap<String, DirectorioContainer>();
 	}
 	
@@ -35,9 +49,10 @@ public class BibliotecaContainer {
 	 * @param song
 	 */
 	public void addCancion(CancionContainer song){
+		this.listaCanciones = null;
 		this.directorios.get(song.getTotalPath().substring(0, song.getTotalPath().indexOf(song.getTrackPath())-1)).addCancion(song);
-		this.modificado = true;
-		
+		this.modificadoEscritura = false;
+		this.modificadoParaMostrar = false;
 	}
 	
 	
@@ -47,7 +62,8 @@ public class BibliotecaContainer {
 	 */
 	public void addCancion(CancionContainer song, String parentPath){
 		this.directorios.get(parentPath).addCancion(song);
-		this.modificado = true;
+		this.modificadoEscritura = true;
+		this.modificadoParaMostrar = true;
 	}
 	
 	
@@ -58,7 +74,8 @@ public class BibliotecaContainer {
 	public void addDir(DirectorioContainer dir){
 		// si el directorio existia, se reemplaza
 		this.directorios.put(dir.getPath(), dir);
-		this.modificado = true;
+		this.modificadoEscritura = true;
+		this.modificadoParaMostrar = true;
 	}
 	
 	
@@ -68,7 +85,8 @@ public class BibliotecaContainer {
 	 */
 	public void addDir(String path){
 		this.directorios.put(path, new DirectorioContainer(path));
-		this.modificado = true;
+		this.modificadoEscritura = true;
+		this.modificadoParaMostrar = true;
 	}
 	
 	
@@ -78,7 +96,8 @@ public class BibliotecaContainer {
 	 */
 	public void removeDir(String path){
 		this.directorios.remove(path);
-		this.modificado = true;
+		this.modificadoEscritura = true;
+		this.modificadoParaMostrar = true;
 	}
 
 	
@@ -93,11 +112,12 @@ public class BibliotecaContainer {
 
 	
 	/**
-	 * Indica si se ha habido alguna modificado en la estrucura de contenedores
+	 * Indica si se ha habido alguna modificado en la estrucura de contenedores con
+	 * el fin de saber si se debe escribir en XML o no
 	 * @return
 	 */
 	public boolean isModificado() {
-		return modificado;
+		return modificadoEscritura;
 	}
 	
 	
@@ -122,14 +142,26 @@ public class BibliotecaContainer {
 	 * @return un ArrayList con todas las canciones de la biblioteca musical
 	 */
 	public ArrayList<CancionContainer> getArrayListCanciones(){
-		ArrayList<CancionContainer> canciones = new ArrayList<CancionContainer>();
+		if(this.modificadoParaMostrar || this.listaCanciones == null)
+			generarArrayListCanciones();
 		
-		Iterator<Entry<String, DirectorioContainer>> it =  this.directorios.entrySet().iterator();
-		while(it.hasNext())
-			canciones.addAll(it.next().getValue().getListaCanciones());
-		
-		return canciones;
+		return listaCanciones;
 	}
+	
+	
+	/**
+	 * Realiza una búsqueda en la lista de canciones según un criterio que recibe como parámetro
+	 * @param busqueda es el criterio por el cuál se desea buscar en la lista de reproducción
+	 * @return la nueva colección con los elementos que satisface el criterio de búsqueda
+	 */
+	public ArrayList<CancionContainer> getListaBusqueda(CriterioBusqueda busqueda){
+		// si no se ha generado la lista de canciones la crea
+		if(this.modificadoParaMostrar || this.listaCanciones == null)
+			generarArrayListCanciones();
+		
+		return busqueda.buscar(this.listaCanciones);
+	}
+	
 	
 	
 	/**
@@ -142,4 +174,29 @@ public class BibliotecaContainer {
 			it.next().getValue().actualizarPathCanciones();
 	}
 	
+	
+	/**
+	 * Genera una nueva lista con las canciones existentes en la biblioteca
+	 */
+	private void generarArrayListCanciones(){
+		ArrayList<CancionContainer> canciones = new ArrayList<CancionContainer>();
+		
+		Iterator<Entry<String, DirectorioContainer>> it =  this.directorios.entrySet().iterator();
+		while(it.hasNext())
+			canciones.addAll(it.next().getValue().getListaCanciones());
+		
+		listaCanciones = canciones;
+	}
+
+
+
+	/**
+	 * Cuando se escribe la biblioteca a un XML se fija su flag de escritura.
+	 * Cuando se invoca a este método se indica que ha sido guardado y por lo tanto está
+	 * actualizado
+	 */
+	public void guardado() {
+		this.modificadoEscritura = false;
+	}
+		
 }

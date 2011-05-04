@@ -12,6 +12,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import is2011.biblioteca.contenedores.BibliotecaContainer;
 import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.biblioteca.contenedores.DirectorioContainer;
+import is2011.biblioteca.search.CriterioBusqueda;
 import is2011.biblioteca.util.ActualizarBiblioteca;
 import is2011.biblioteca.util.AniadirCanciones;
 import is2011.biblioteca.util.RecorreFicheros;
@@ -51,7 +52,9 @@ public class BibliotecaMusical {
 		stream.alias("track", CancionContainer.class);
 		
 		//atributos que no se incluyen en el formato XML de la biblioteca
-		stream.omitField(BibliotecaContainer.class, "modificado");
+		stream.omitField(BibliotecaContainer.class, "modificadoEscritura");
+		stream.omitField(BibliotecaContainer.class, "modificadoParaMostrar");
+		stream.omitField(BibliotecaContainer.class, "listaCanciones");
 		stream.omitField(CancionContainer.class, "totalPath");
 		listeners = new ArrayList<BibliotecaListener>();
 	}
@@ -91,10 +94,10 @@ public class BibliotecaMusical {
 	 * @throws FileNotFoundException
 	 */
 	public void guardarXML(String pathYfichero) throws FileNotFoundException{
-		
-			if(canciones.isModificado())
-				stream.toXML(canciones, new FileOutputStream(pathYfichero));
-		
+		if(canciones.isModificado()){
+			stream.toXML(canciones, new FileOutputStream(pathYfichero));
+			this.canciones.guardado();
+		}
 	}
 	
 	
@@ -113,6 +116,17 @@ public class BibliotecaMusical {
 	 */
 	public ArrayList<CancionContainer> getCanciones(){
 		return this.canciones.getArrayListCanciones();
+	}
+	
+	
+	/**
+	 * Devuelve los elementos de la biblioteca musical que coincidan con el criterio de búsqueda
+	 * que recibe como parámetro
+	 * @param busqueda es el criterio de búsqueda
+	 * @return colección con los elementos que satisfacen el criterio de búsqueda
+	 */
+	public ArrayList<CancionContainer> getBusqueda(CriterioBusqueda busqueda){
+		return this.canciones.getListaBusqueda(busqueda);
 	}
 	
 	

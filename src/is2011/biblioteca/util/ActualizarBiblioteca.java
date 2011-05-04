@@ -10,7 +10,12 @@ import org.jaudiotagger.audio.AudioFileIO;
 
 import org.jaudiotagger.tag.Tag;
 
-
+/**
+ * Esta clase añade canciones y directorios a la biblioteca musical.
+ * Los directorios sólo se añaden si tienen canciones dentro y las canciones se añaden siempre
+ * creando el directorio en el que se encuentran si no existía previamente
+ *
+ */
 public class ActualizarBiblioteca extends EstrategiaActualizacionBiblioteca {
 	
 	/**
@@ -23,7 +28,7 @@ public class ActualizarBiblioteca extends EstrategiaActualizacionBiblioteca {
 	
 
 	/**
-	 * Actualiza los directorios. Si estos ya existían los sobreescribe
+	 * Actualiza los directorios y las canciones. Si estos ya existían los sobreescribe
 	 */
 	@Override
 	public void actualiza(String filePath) {
@@ -60,8 +65,4 @@ public class ActualizarBiblioteca extends EstrategiaActualizacionBiblioteca {
 	    }
 	}
 	
-
-
-	
-
 }
