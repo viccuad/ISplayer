@@ -242,13 +242,23 @@ public class ListaReproduccion {
 	 * @param orden: es el criterio por el cuál se desea ordenar la lista de reproducción
 	 */
 	public void ordenar(Comparator<CancionContainer> orden){
-		CancionContainer cancionActual = this.listaReproduccion.get(actual-1);
-		Collections.sort(this.listaReproduccion, orden);
-		modificado = true;
+		if(actual == 0) {
+			
+			Collections.sort(this.listaReproduccion, orden);
+			modificado = true;
+			
+			
+			this.notificaNuevaListaReproduccion(this.listaReproduccion, 0);
+		} else {
+			CancionContainer cancionActual = this.listaReproduccion.get(actual-1);
+			Collections.sort(this.listaReproduccion, orden);
+			modificado = true;
+			
+			int indiceActual = this.listaReproduccion.indexOf(cancionActual) +1;
+			this.notificaNuevaListaReproduccion(this.listaReproduccion, indiceActual);
+		}
 		
-		int indiceActual = this.listaReproduccion.indexOf(cancionActual) +1;
-		System.out.println(indiceActual);
-		this.notificaNuevaListaReproduccion(this.listaReproduccion, indiceActual);
+		
 	}
 	
 	
