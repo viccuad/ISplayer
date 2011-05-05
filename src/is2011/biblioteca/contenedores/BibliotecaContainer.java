@@ -119,6 +119,10 @@ public class BibliotecaContainer {
 		return modificadoEscritura;
 	}
 	
+	public void setModificado(boolean b){
+		modificadoEscritura = b;
+	}
+	
 	
 	/**
 	 * A partir del nombre de una cancion y el directorio indica si existe en la biblioteca

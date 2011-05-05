@@ -150,11 +150,6 @@ public interface IAppController {
 	 */
 	public void actualizaPreferencias(String pathBib, String pathListaRep, ModoReproduccionEnum modo);
 	
-	/**
-	 * Intentar cargar la libreria que se deberia de encontrar en la ruta que muestra
-	 * las preferencias del sistema
-	 */
-	public void cargarBibliotecaPreferencias();
 	
 	/**
 	 * Devuevle las preferencias del sistema
@@ -193,4 +188,19 @@ public interface IAppController {
 	 * Manda ordenar la lista de reproduccion por titulo
 	 */
 	public void ordenarPorTitulo();
+	
+	/**
+	 * Guarda la lista de reproduccion actual en formato XML
+	 */
+	public void guardarListaReproduccion();
+	
+	/**
+	 * Carga una lista de reproduccion XML como Lista de Reproduccion actual
+	 */
+	public void cargarListaReproduccion();
+	
+	/**
+	 * Carga la biblioteca y la lista de reproduccion por defecto, si las hubiera.
+	 */
+	public void cargarArchivosPreferencias();
 }

@@ -25,6 +25,11 @@ public class PreferenciasSistema {
 	public PreferenciasSistema(){
 		
 		String home = System.getProperty("user.home");
+		home = home+File.separator+"ISPlayer";
+		
+		File f = new File(home);
+		f.mkdir();
+		
 		home = home+File.separator;
 		
 		pathPreferenciasSistema = home+"ISPlayerPreferences.xml";

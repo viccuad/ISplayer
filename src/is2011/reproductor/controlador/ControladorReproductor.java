@@ -3,6 +3,7 @@
  */
 package is2011.reproductor.controlador;
 
+import java.io.FileNotFoundException;
 import java.util.Comparator;
 import java.util.Random;
 
@@ -350,6 +351,32 @@ public class ControladorReproductor {
 	 */
 	public void sort(Comparator<CancionContainer> sort) {
 		this.listaReproduccion.ordenar(sort);
+	}
+	
+	
+
+	/**
+	 * Llama a la lista de reproduccion para decirle que se guarde en un lugar concreto.
+	 * @param path
+	 */
+	public void guardarListaReproduccion(String path){
+		try {
+			listaReproduccion.guardarXML(path);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Llama a la lista de repoduccion para que cargue el contenido de una lista guardada
+	 * @param path
+	 */
+	public void cargarListaReproduccion(String path){
+		try {
+			listaReproduccion.cargarXML(path);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -4,6 +4,7 @@ package is2011.reproductor.modelo;
 import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.reproductor.modelo.listeners.*;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -215,8 +216,12 @@ public class ListaReproduccion {
 	 */
 	@SuppressWarnings("unchecked")
 	public void cargarXML(String pathYfichero) throws FileNotFoundException{
-		this.listaReproduccion = (ArrayList<CancionContainer>) stream.fromXML(new FileInputStream(pathYfichero));
-		modificado = true;
+		File aux = new File(pathYfichero);
+		if (aux.canRead()){
+			this.listaReproduccion = (ArrayList<CancionContainer>) stream.fromXML(new FileInputStream(pathYfichero));
+			modificado = true;
+			notificaNuevaListaReproduccion(listaReproduccion,0);
+		}else System.out.println("El fichero no existe");
 	}
 	
 	

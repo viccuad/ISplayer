@@ -71,7 +71,7 @@ public class Principal {
 		vlr.setControlador(appController);
 		vb.setControlador(appController);
 		vp.setControlador(appController);
-		appController.cargarBibliotecaPreferencias();
+		appController.cargarArchivosPreferencias();
     	
     	
     	}

@@ -83,6 +83,7 @@ public class BibliotecaMusical {
 		if (aux.canRead()){
 			canciones = (BibliotecaContainer) stream.fromXML(new FileInputStream(pathYfichero));
 			this.canciones.generarRutasAbsolutas();
+			canciones.setModificado(true);
 			notificaCancionesModificadas();
 		}else System.out.println("El fichero no existe");
 	}

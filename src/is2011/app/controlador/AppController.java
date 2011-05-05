@@ -49,19 +49,23 @@ public class AppController implements IAppController {
 		try{
 			
 			String home = System.getProperty("user.home");
+			home = home+File.separator+"ISPlayer";
+			
+			File f = new File(home);
+			f.mkdir();
+			
 			home = home+File.separator;
+			
 			File pref = new File(home+"ISPlayerPreferences.xml");
 			
 			if (pref.canRead()){
 				// Si ya tienes fichero de preferencias
 				preferencias = new PreferenciasSistema();
 				preferencias.cargarXML(home+"ISPlayerPreferences.xml");
-				System.out.println("Cargado archivo de preferencias");
 			}else{
 				// Si todavia no tienes fichero de preferencias
 				preferencias = new PreferenciasSistema(home+"ISPlayerBiblioteca.xml", home+"ISPlayerListaReproduccion.xml", ModoReproduccionEnum.NORMAL);
 				preferencias.guardarXML(home+"ISPlayerPreferences.xml");
-				System.out.println("Creado archivo de preferencias");
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -281,6 +285,7 @@ public class AppController implements IAppController {
 		if (seleccion == JFileChooser.APPROVE_OPTION){					
 			ruta = fileChooser.getSelectedFile().getAbsolutePath();					
 		}
+		
 		try {
 			biblioteca.guardarXML(ruta);
 		} catch (FileNotFoundException e) {
@@ -334,8 +339,10 @@ public class AppController implements IAppController {
 		
 	}
 	
-	public void cargarBibliotecaPreferencias(){
+	@Override
+	public void cargarArchivosPreferencias(){
 		
+		// Carga la biblioteca si exite
 		File bibXML = new File(preferencias.getPathBiblioteca());
 		if (bibXML.canRead()) {
 			try {
@@ -343,6 +350,14 @@ public class AppController implements IAppController {
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		// Carga la lista de reproduccion si existe
+		File listaRepXML = new File(preferencias.getPathListaReproduccion());
+		if (listaRepXML.canRead()) {
+
+			reproductor.cargarListaReproduccion(preferencias.getPathListaReproduccion());
+
 		}
 	}
 
@@ -383,6 +398,44 @@ public class AppController implements IAppController {
 	public void ordenarPorTitulo() {
 		this.reproductor.sort(new SortTitulo());
 	}
+
+	@Override
+	public void guardarListaReproduccion() {
+		String ruta = "";
+		
+		ArrayList<String> dir = new ArrayList<String>();
+		
+		JFileChooser fileChooser = new JFileChooser();
+		
+		int seleccion;
+		seleccion =fileChooser.showSaveDialog(null);
+		if (seleccion == JFileChooser.APPROVE_OPTION){					
+			ruta = fileChooser.getSelectedFile().getAbsolutePath();					
+		}
+
+		reproductor.guardarListaReproduccion(ruta);
+		
+	}
+
+	@Override
+	public void cargarListaReproduccion() {
+		String ruta = "";
+		
+		ArrayList<String> dir = new ArrayList<String>();
+
+		
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		
+		int seleccion;
+		seleccion =fileChooser.showOpenDialog(null);
+		if (seleccion == JFileChooser.APPROVE_OPTION){					
+			ruta = fileChooser.getSelectedFile().getAbsolutePath();					
+		}
+		
+		reproductor.cargarListaReproduccion(ruta);
+	}
+
 
 
 }
