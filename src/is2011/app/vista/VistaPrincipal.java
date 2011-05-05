@@ -16,6 +16,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 
 
@@ -163,6 +166,16 @@ public class VistaPrincipal extends JFrame
 			}}
 			
 		);
+		
+		/*play.addMouseListener(new MouseAdapter(){
+			public void mouseEntered  (MouseEvent e) { 
+				play.setIcon(new ImageIcon(getClass().getResource("/Recursos/playPush.png")));
+		      }
+
+			public void mouseExited (MouseEvent e){
+				play.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
+			}
+		});*/
 		
 		play.addActionListener(new ActionListener(){
 			@Override

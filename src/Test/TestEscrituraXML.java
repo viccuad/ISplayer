@@ -23,6 +23,7 @@ public class TestEscrituraXML {
 		
 		BibliotecaContainer bib = new BibliotecaContainer();
 		bib.addDir(new DirectorioContainer("C:/hlocal/"));
+		bib.addCancion(new CancionContainer("trackpath","tit","alb","gen","art",0,0), "C:/hlocal/");
 		for(int i = 0; i< 10; i++)
 			bib.addCancion(new CancionContainer("trackpath"+i,"tit","alb","gen","art",0,0), "C:/hlocal/");
 			try {

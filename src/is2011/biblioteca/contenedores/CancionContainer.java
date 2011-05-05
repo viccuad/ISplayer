@@ -99,10 +99,7 @@ public class CancionContainer {
 					else genero = tag.getFirst(FieldKey.GENRE);
 					
 					if (tag.getFirstField(FieldKey.ARTIST) == null) artista = "Desconocido";
-					else artista = tag.getFirst(FieldKey.ARTIST);
-					
-	/*->*/			/*if (tag.getFirstField(FieldKey.TRACK) == null) artista = "Desconocido";
-					else artista = tag.getFirst(FieldKey.TRACK);*/
+					else artista = tag.getFirst(FieldKey.ARTIST);					
 					
 					if (tag.getFirstField(FieldKey.TRACK) == null) pista = 0;
 					else pista = Integer.parseInt(tag.getFirst(FieldKey.TRACK));

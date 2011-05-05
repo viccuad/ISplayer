@@ -72,7 +72,10 @@ Pruebas de la lista de reproducción y/o interfaz:
 		
 Pruebas de optimización del reproductor:
 	Realizar todas las pruebas de "Pruebas Reproductor", y cerciorarse de que tarda menos. 
-	Deberia tardar menos de 0.5 segundos. 
+	Deberia tardar menos de 0.1 segundos (inperceptible).
+	
+	Abrir el reproductor, cargar una lista de reproducción, y sin tocar ningún botón, pulsar las flechas del teclado
+	(arriba, abajo, izq y dcha) muy rapido, para que reproduzca las canciones anterior y siguiente muy rápido. Comprobar que no da ningún error. 
 	
 Pruebas biblioteca en interfaz:
 		1. Llamar a la biblioteca al iniciarse la aplicacion
@@ -96,4 +99,6 @@ Pruebas Preferencias del Sistema
 	2. Guardar en un XML
 	3. Recuperar del XML
 	4. Comprobar que no se pierde informacion y que todos los pasos son coherentes.
+
+	
 	
