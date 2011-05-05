@@ -19,11 +19,11 @@ import org.jaudiotagger.tag.TagException;
 public class testCancionMP3JUnit extends TestCase{
 	
 	private AudioFile filemp3=null;
-	private MP3AudioHeader headermp3=null;
+	//private MP3AudioHeader headermp3=null;
 	private String path;
-	private Tag tag=null;
+	//private Tag tag=null;
 	private CancionContainer c1;
-	private CancionContainer c2;
+	//private CancionContainer c2;
 
 	public testCancionMP3JUnit(String name) {
 		super(name);
@@ -33,16 +33,17 @@ public class testCancionMP3JUnit extends TestCase{
 	public void setUp() {
 		
 		
-		path = "src/Recursos/01 Purple Haze.mp3";    //
+		//path = "src/Recursos/01 Purple Haze.mp3";    //
+		path = "C:/hlocal/01 Purple Haze.mp3";
 		try {
 			filemp3 = AudioFileIO.read(new File(path));
 
-			tag = filemp3.getTag();
-			headermp3 = (MP3AudioHeader) filemp3.getAudioHeader();
+			//tag = filemp3.getTag();
+			//headermp3 = (MP3AudioHeader) filemp3.getAudioHeader();
 			
 			c1 = new CancionContainer(path);
 			
-			c2 = new CancionContainer(path);
+			//c2 = new CancionContainer(path);
 			
 		} catch (CannotReadException e) {
 			// TODO Auto-generated catch block
@@ -78,7 +79,7 @@ public class testCancionMP3JUnit extends TestCase{
 	
 	public void testGetArtista(){
 		String artista = "Jimmy Hendrix";
-		String obtenida = c1.getArtista();
+		String obtenida = c1.getArtista();		
 		assertEquals(artista, obtenida);
 	}
 	
