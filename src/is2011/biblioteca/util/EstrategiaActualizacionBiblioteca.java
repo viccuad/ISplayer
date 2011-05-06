@@ -78,8 +78,8 @@ public abstract class EstrategiaActualizacionBiblioteca {
 	 * @return
 	 */
 	public String getCompositor(Tag tag) {
-		if (tag == null || tag.getFirstField(FieldKey.COMPOSER) == null) return "Desconocido";
-		else return tag.getFirst(FieldKey.COMPOSER);
+		if (tag == null || tag.getFirstField(FieldKey.ARTIST) == null) return "Desconocido";
+		else return tag.getFirst(FieldKey.ARTIST);
 
 	}
 	

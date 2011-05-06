@@ -14,6 +14,7 @@ import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.biblioteca.contenedores.DirectorioContainer;
 import is2011.biblioteca.search.CriterioBusqueda;
 import is2011.biblioteca.util.ActualizarBiblioteca;
+import is2011.biblioteca.util.CrearBiblioteca;
 import is2011.biblioteca.util.AniadirCanciones;
 import is2011.biblioteca.util.RecorreFicheros;
 import is2011.reproductor.modelo.listeners.BibliotecaListener;
@@ -153,6 +154,17 @@ public class BibliotecaMusical {
 	
 	
 	/**
+	 * Actualiza todos los directorios existentes en la biblioteca
+	 */
+	public void actualizar(){
+		RecorreFicheros recorre = new RecorreFicheros(this.canciones.getDirectorios());
+		recorre.setEstrategia(new ActualizarBiblioteca(this.canciones));
+		recorre.recorre();
+		notificaCancionesModificadas();
+	}
+	
+	
+	/**
 	 * Añade y actualiza (en caso de que ya exista) directorios y canciones. Si los directorios
 	 * ya existían los borra y añade su información de nuevo. Las canciones sólo se añaden
 	 * si no existen previamente.
@@ -160,7 +172,7 @@ public class BibliotecaMusical {
 	 */
 	public void actualizarDirectorios(ArrayList<String> ficheros){
 		RecorreFicheros recorre = new RecorreFicheros(ficheros);
-		recorre.setEstrategia(new ActualizarBiblioteca(this.canciones));
+		recorre.setEstrategia(new CrearBiblioteca(this.canciones));
 		recorre.recorre();
 		notificaCancionesModificadas();
 	}

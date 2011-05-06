@@ -214,6 +214,11 @@ public class BibliotecaContainer {
 	public void guardado() {
 		this.modificadoEscritura = false;
 	}
+
+
+	public ArrayList<String> getDirectorios() {
+		return new ArrayList<String>(this.directorios.keySet());
+	}
 	
 		
 }

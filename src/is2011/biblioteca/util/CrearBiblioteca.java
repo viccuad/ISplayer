@@ -7,15 +7,22 @@ import java.io.File;
 
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
+
 import org.jaudiotagger.tag.Tag;
 
-public class ActualizarBiblioteca extends EstrategiaActualizacionBiblioteca {
+/**
+ * Esta clase añade canciones y directorios a la biblioteca musical.
+ * Los directorios sólo se añaden si tienen canciones dentro y las canciones se añaden siempre
+ * creando el directorio en el que se encuentran si no existía previamente
+ *
+ */
+public class CrearBiblioteca extends EstrategiaActualizacionBiblioteca {
 	
 	/**
 	 * 
 	 * @param bib
 	 */
-	public ActualizarBiblioteca(BibliotecaContainer bib){
+	public CrearBiblioteca(BibliotecaContainer bib){
 		super(bib);
 	}
 	
@@ -26,14 +33,15 @@ public class ActualizarBiblioteca extends EstrategiaActualizacionBiblioteca {
 	@Override
 	public void actualiza(String filePath) {
 		File fichero = new File(filePath);
-		
-		// si es un directorio hacemos un recorrido por los elementos que contiene
-		if(fichero.isDirectory()){			
+		if(fichero.isDirectory()){
+			//borramos el directorio de la biblioteca. En caso de que no exista no pasa nada
+			super.biblioteca.removeDir(fichero.getAbsolutePath());
+			
 			String[] subFicheros = fichero.list(); 
 			for( String nombre : subFicheros)
 				actualiza(fichero.getAbsolutePath()+ File.separator +nombre);
-	    } 
-		else if(super.esFicheroValido(fichero)){ 
+			
+	    } else if(super.esFicheroValido(fichero)){ 
 			//añadimos la cancion a la biblioteca	    	
 			try {
 		    	AudioFile filemp3 = AudioFileIO.read(new File(fichero.getAbsolutePath()));
@@ -42,6 +50,10 @@ public class ActualizarBiblioteca extends EstrategiaActualizacionBiblioteca {
 												super.getGenero(tag), super.getCompositor(tag),  
 												filemp3.getAudioHeader().getTrackLength(), super.getPista(tag));
 				nuevaCancion.setTotalPath(fichero.getAbsolutePath());
+				
+				// si el directorio no existe lo creamos
+				if(!super.biblioteca.existeDirectorio(fichero.getParent()))
+					super.biblioteca.addDir(fichero.getParent());
 				
 				// si la canción no existe previamente la insertamos en la biblioteca
 				if(!super.biblioteca.existeCancion(fichero.getParent(), fichero.getName()))
