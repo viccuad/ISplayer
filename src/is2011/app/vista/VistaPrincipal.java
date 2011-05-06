@@ -140,7 +140,31 @@ public class VistaPrincipal extends JFrame
 		anterior.setIcon(new ImageIcon(getClass().getResource("/Recursos/previous_song.png")));
 		panelPpal.add(anterior);
 		
-		siguiente.addActionListener(new ActionListener(){
+		siguiente.addMouseListener(new MouseAdapter(){
+			public void mousePressed (MouseEvent e) {
+				siguiente.setBorder(BorderFactory.createEmptyBorder());
+				siguiente.setIcon(new ImageIcon(getClass().getResource("/Recursos/next_songPush.png")));				
+			}			
+			
+			public void mouseReleased (MouseEvent e) {
+				siguiente.setBorder(BorderFactory.createEmptyBorder());
+				siguiente.setIcon(new ImageIcon(getClass().getResource("/Recursos/next_songEnt.png")));				
+			}
+			
+			public void mouseEntered  (MouseEvent e) { 
+				siguiente.setBorder(BorderFactory.createEmptyBorder());
+				siguiente.setIcon(new ImageIcon(getClass().getResource("/Recursos/next_songEnt.png")));
+		      }
+
+			public void mouseExited (MouseEvent e){
+				siguiente.setBorder(BorderFactory.createEmptyBorder());
+				siguiente.setIcon(new ImageIcon(getClass().getResource("/Recursos/next_song.png")));
+			}
+			
+			
+		});
+		
+		siguiente.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				controlador.siguienteCancion();
@@ -149,7 +173,29 @@ public class VistaPrincipal extends JFrame
 			
 		);
 		
-		anterior.addActionListener(new ActionListener(){
+		anterior.addMouseListener(new MouseAdapter() {
+			public void mousePressed (MouseEvent e) {
+				anterior.setBorder(BorderFactory.createEmptyBorder());
+				anterior.setIcon(new ImageIcon(getClass().getResource("/Recursos/previous_songPush.png")));				
+			}			
+			
+			public void mouseReleased (MouseEvent e) {
+				anterior.setBorder(BorderFactory.createEmptyBorder());
+				anterior.setIcon(new ImageIcon(getClass().getResource("/Recursos/previous_songEnt.png")));				
+			}
+			public void mouseEntered  (MouseEvent e) { 
+				anterior.setBorder(BorderFactory.createEmptyBorder());
+				anterior.setIcon(new ImageIcon(getClass().getResource("/Recursos/previous_songEnt.png")));
+		      }
+
+			public void mouseExited (MouseEvent e) {
+				anterior.setBorder(BorderFactory.createEmptyBorder());
+				anterior.setIcon(new ImageIcon(getClass().getResource("/Recursos/previous_song.png")));
+			}
+		});		
+		
+		
+		anterior.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				controlador.cancionAnterior();
@@ -158,7 +204,32 @@ public class VistaPrincipal extends JFrame
 			
 		);
 		
-		aniadir.addActionListener(new ActionListener(){
+		
+		aniadir.addMouseListener(new MouseAdapter(){
+			public void mousePressed (MouseEvent e) {
+				aniadir.setBorder(BorderFactory.createEmptyBorder());
+				aniadir.setIcon(new ImageIcon(getClass().getResource("/Recursos/add2Push.png")));				
+			}			
+			
+			public void mouseReleased (MouseEvent e) {
+				aniadir.setBorder(BorderFactory.createEmptyBorder());
+				aniadir.setIcon(new ImageIcon(getClass().getResource("/Recursos/add2Ent.png")));				
+			}
+			
+			public void mouseEntered  (MouseEvent e) { 
+				aniadir.setBorder(BorderFactory.createEmptyBorder());
+				aniadir.setIcon(new ImageIcon(getClass().getResource("/Recursos/add2Ent.png")));
+		      }
+
+			public void mouseExited (MouseEvent e){
+				aniadir.setBorder(BorderFactory.createEmptyBorder());
+				aniadir.setIcon(new ImageIcon(getClass().getResource("/Recursos/add2.png")));
+			}
+			
+			
+		});
+		
+		aniadir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				controlador.aniadir();
@@ -167,15 +238,27 @@ public class VistaPrincipal extends JFrame
 			
 		);
 		
-		/*play.addMouseListener(new MouseAdapter(){
+		play.addMouseListener(new MouseAdapter() {
+			public void mousePressed (MouseEvent e) {
+				play.setBorder(BorderFactory.createEmptyBorder());
+				play.setIcon(new ImageIcon(getClass().getResource("/Recursos/playPush.png")));				
+			}			
+			
+			public void mouseReleased (MouseEvent e) {
+				play.setBorder(BorderFactory.createEmptyBorder());
+				play.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));				
+			}
+			
 			public void mouseEntered  (MouseEvent e) { 
-				play.setIcon(new ImageIcon(getClass().getResource("/Recursos/playPush.png")));
+				play.setBorder(BorderFactory.createEmptyBorder());
+				play.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));
 		      }
 
-			public void mouseExited (MouseEvent e){
+			public void mouseExited (MouseEvent e) {
+				play.setBorder(BorderFactory.createEmptyBorder());
 				play.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
 			}
-		});*/
+		});
 		
 		play.addActionListener(new ActionListener(){
 			@Override
@@ -189,6 +272,27 @@ public class VistaPrincipal extends JFrame
 				}
 			}
 		);
+		
+		pause.addMouseListener(new MouseAdapter(){
+			public void mousePressed (MouseEvent e) {
+				pause.setBorder(BorderFactory.createEmptyBorder());
+				pause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pausePush.png")));				
+			}			
+			
+			public void mouseReleased (MouseEvent e) {
+				pause.setBorder(BorderFactory.createEmptyBorder());
+				pause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pauseEnt.png")));				
+			}
+			public void mouseEntered  (MouseEvent e) { 
+				pause.setBorder(BorderFactory.createEmptyBorder());
+				pause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pauseEnt.png")));
+		      }
+
+			public void mouseExited (MouseEvent e){
+				pause.setBorder(BorderFactory.createEmptyBorder());
+				pause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pause.png")));
+			}
+		});
 
 		pause.addActionListener( new ActionListener() {
 			@Override
@@ -196,10 +300,53 @@ public class VistaPrincipal extends JFrame
 				controlador.pause();
 			}
 		});
+		
+		stop.addMouseListener(new MouseAdapter(){
+			public void mousePressed (MouseEvent e) {
+				stop.setBorder(BorderFactory.createEmptyBorder());
+				stop.setIcon(new ImageIcon(getClass().getResource("/Recursos/stopPush.png")));				
+			}			
+			
+			public void mouseReleased (MouseEvent e) {
+				stop.setBorder(BorderFactory.createEmptyBorder());
+				stop.setIcon(new ImageIcon(getClass().getResource("/Recursos/stopEnt.png")));				
+			}
+			public void mouseEntered  (MouseEvent e) { 
+				stop.setBorder(BorderFactory.createEmptyBorder());
+				stop.setIcon(new ImageIcon(getClass().getResource("/Recursos/stopEnt.png")));
+		      }
+
+			public void mouseExited (MouseEvent e){
+				stop.setBorder(BorderFactory.createEmptyBorder());
+				stop.setIcon(new ImageIcon(getClass().getResource("/Recursos/stop.png")));
+			}
+		});
+		
 		stop.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				controlador.stop();
+			}
+		});
+		
+		avanzar.addMouseListener(new MouseAdapter(){
+			public void mousePressed (MouseEvent e) {
+				avanzar.setBorder(BorderFactory.createEmptyBorder());
+				avanzar.setIcon(new ImageIcon(getClass().getResource("/Recursos/ffPush.png")));				
+			}			
+			
+			public void mouseReleased (MouseEvent e) {
+				avanzar.setBorder(BorderFactory.createEmptyBorder());
+				avanzar.setIcon(new ImageIcon(getClass().getResource("/Recursos/ffEnt2.png")));				
+			}
+			public void mouseEntered  (MouseEvent e) { 
+				avanzar.setBorder(BorderFactory.createEmptyBorder());
+				avanzar.setIcon(new ImageIcon(getClass().getResource("/Recursos/ffEnt2.png")));
+		      }
+
+			public void mouseExited (MouseEvent e){
+				avanzar.setBorder(BorderFactory.createEmptyBorder());
+				avanzar.setIcon(new ImageIcon(getClass().getResource("/Recursos/ff.png")));
 			}
 		});
 
@@ -207,6 +354,27 @@ public class VistaPrincipal extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				controlador.fastForward();
+			}
+		});
+		
+		atrasar.addMouseListener(new MouseAdapter(){
+			public void mousePressed (MouseEvent e) {
+				atrasar.setBorder(BorderFactory.createEmptyBorder());
+				atrasar.setIcon(new ImageIcon(getClass().getResource("/Recursos/rewPush.png")));				
+			}			
+			
+			public void mouseReleased (MouseEvent e) {
+				atrasar.setBorder(BorderFactory.createEmptyBorder());
+				atrasar.setIcon(new ImageIcon(getClass().getResource("/Recursos/rewEnt.png")));				
+			}
+			public void mouseEntered  (MouseEvent e) { 
+				atrasar.setBorder(BorderFactory.createEmptyBorder());
+				atrasar.setIcon(new ImageIcon(getClass().getResource("/Recursos/rewEnt.png")));
+		      }
+
+			public void mouseExited (MouseEvent e){
+				atrasar.setBorder(BorderFactory.createEmptyBorder());
+				atrasar.setIcon(new ImageIcon(getClass().getResource("/Recursos/rew.png")));
 			}
 		});
 
