@@ -2,6 +2,7 @@ package is2011.reproductor.modelo;
 
 
 import is2011.biblioteca.contenedores.CancionContainer;
+import is2011.biblioteca.search.CriterioBusqueda;
 import is2011.reproductor.modelo.listeners.*;
 
 import java.io.File;
@@ -260,6 +261,17 @@ public class ListaReproduccion {
 		
 		
 	}
+	
+	
+	/**
+	 * Realiza una búsqueda en la lista de canciones según un criterio que recibe como parámetro
+	 * @param busqueda es el criterio por el cuál se desea buscar en la lista de reproducción
+	 * @return la nueva colección con los elementos que satisface el criterio de búsqueda
+	 */
+	public ArrayList<CancionContainer> getBusqueda(CriterioBusqueda busqueda){		
+		return busqueda.buscar(this.listaReproduccion);
+	}
+	
 	
 	
 	// ********************************************************************** //
