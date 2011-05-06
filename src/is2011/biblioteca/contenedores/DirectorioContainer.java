@@ -15,7 +15,7 @@ public class DirectorioContainer {
 	
 	
 	/**
-	 * Crea un objeto a partir de un path correspondiente a un directorio una lista de canciones
+	 * Crea un objeto a partir de un path correspondiente a un directorio y una lista de canciones
 	 * @param path ruta de un directorio
 	 * @param listaCanciones lista de canciones que se encuentrar en el directorio 'path'
 	 */
