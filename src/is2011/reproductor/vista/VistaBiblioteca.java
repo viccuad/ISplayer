@@ -267,9 +267,17 @@ public class VistaBiblioteca extends JPanel implements
 				else if(e.getClickCount() == 2) {
 					int row = e.getY()/tabla.getRowHeight();
 					System.out.println(row);
-					String path = controlador.getCanciones().get(row).getTotalPath();
-					System.out.println(path);
-					controlador.fromBibliotecaToListaReproduccion(path);
+					
+					if (busquedaRealizada){
+						String path = busqueda.get(row).getTotalPath();
+						System.out.println(path);
+						controlador.fromBibliotecaToListaReproduccion(path);
+					}else{
+						String path = controlador.getCanciones().get(row).getTotalPath();
+						System.out.println(path);
+						controlador.fromBibliotecaToListaReproduccion(path);
+					}
+
 				}
 			}
 		});
