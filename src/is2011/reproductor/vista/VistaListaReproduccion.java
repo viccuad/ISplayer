@@ -8,9 +8,15 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 import is2011.app.controlador.IAppController;
 import is2011.biblioteca.contenedores.CancionContainer;
+import is2011.biblioteca.search.BuscarAlbum;
+import is2011.biblioteca.search.BuscarArtista;
+import is2011.biblioteca.search.BuscarGenero;
+import is2011.biblioteca.search.BuscarTitulo;
+import is2011.biblioteca.search.CriterioBusqueda;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 import is2011.reproductor.modelo.listeners.BorrarCancionEvent;
 import is2011.reproductor.modelo.listeners.ListaReproduccionListener;
@@ -52,17 +58,29 @@ public class VistaListaReproduccion extends JPanel implements
 	/** Atributo que contendra las canciones*/
 	private JTable  tabla;
 	
+	/** Panel con scroll que contiene a la tabla */
 	private JScrollPane panelScroll;
 	
+	/** Layout de JPanel principal de la vista */
 	private BorderLayout border;
 	
+	/** Panel que contiene los elementos necesarios para realizar la busqueda */
 	private JPanel panelBusqueda;
 	
+	/** Boton que genera la accion de buscar */
 	private JButton buscar;
 	
+	/** Boton que genera la accion de buscar avanzada*/
+	private JButton buscarAvanzada;
+	
+	/** Area de texto donde insertar los valores a buscar */
 	private JTextField textoBusqueda;
 	
+	/** Campo sobre el que quieres realizar la busqueda */
 	private Choice tipoBusqueda;
+	
+	/** Array que contiene las canciones buscadas */
+	private ArrayList<CancionContainer> busqueda;
 	
 	/** Modelo de la tabla*/
 	private DefaultTableModel modelo;
@@ -97,7 +115,8 @@ public class VistaListaReproduccion extends JPanel implements
 	/** Numero de campos*/
 	private static final int NUM_CAMPOS = 7;
 	
-	boolean search;
+	/** Atributo que indica si lo que se esta mostrando es una busqueda o la biblioteca */
+	boolean busquedaRealizada = false;
 	
 	
 	// ********************************************************************** //
@@ -117,34 +136,72 @@ public class VistaListaReproduccion extends JPanel implements
 		buscar = new JButton();
 		buscar.setBorder(BorderFactory.createEmptyBorder());
 		buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/search.png")));
-		search = true;
+		
+		buscarAvanzada = new JButton();
+		buscarAvanzada.setBorder(BorderFactory.createEmptyBorder());
+		buscarAvanzada.setIcon(new ImageIcon(getClass().getResource("/Recursos/advanced_search.png")));
+		
 		buscar.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if (search){
+				if (!busquedaRealizada){
+					
+					
+					System.out.println("Mostrar busqueda");
+
 					buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/Delete.png")));
-					search = false;
 					
 					
+					CriterioBusqueda criterio = null;
+					
+					switch (tipoBusqueda.getSelectedIndex()){
+					case 0:{
+						criterio = new BuscarAlbum(textoBusqueda.getText());
+						break;
+					}
+					case 1:{
+
+						criterio = new BuscarArtista(textoBusqueda.getText());
+						break;
+					}
+					case 2:{
+
+						criterio = new BuscarGenero(textoBusqueda.getText());
+						break;
+					}
+					case 3: 
+						criterio = new BuscarTitulo(textoBusqueda.getText());
+						
+					}
+
+					busqueda = controlador.buscaListaReproduccion(criterio);
+					mostrarBusqueda(busqueda);
+					busquedaRealizada = true;
 				}
 				else {
-					buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/search.png")));
-					search = true;
+					System.out.println("Mostar biblioteca");
+					buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/Search.png")));
+					
+					mostrarTodas(controlador.getCancionesListaReproduccion());
+					
+					busquedaRealizada = false;
 				}
 			}
 			
 		});
 		textoBusqueda = new JTextField("Busqueda...", 10);
 		tipoBusqueda = new Choice();
-		tipoBusqueda.add("ARTISTA");
 		tipoBusqueda.add("ALBUM");
-		tipoBusqueda.add("CANCION");
+		tipoBusqueda.add("ARTISTA");
+		tipoBusqueda.add("GENERO");
+		tipoBusqueda.add("TITULO");
 		
 		panelBusqueda.add(textoBusqueda);
 		panelBusqueda.add(tipoBusqueda);
 		panelBusqueda.add(buscar);
+		panelBusqueda.add(buscarAvanzada);
 		modelo = new DefaultTableModel()
 		{@Override     
 			public boolean isCellEditable (int fila, int columna) {
@@ -215,19 +272,24 @@ public class VistaListaReproduccion extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				int[] rows = tabla.getSelectedRows();
 				
-				//Hay que notificar de la cancion mayor a la menor para poder
-				//borrar en bloques.
-				ArrayList<Integer> rowsOrdenadas = new ArrayList<Integer>();
-				for (int row: rows){
-					rowsOrdenadas.add(row);
-				}
-				
-				Collections.sort(rowsOrdenadas);
-				
-				for (int i = rowsOrdenadas.size()-1 ; i >= 0; i--) {
-					controlador.borrarCancion(rowsOrdenadas.get(i));
+				if (busquedaRealizada){
+					//TODO
+				}else{
+					int[] rows = tabla.getSelectedRows();
+					
+					//Hay que notificar de la cancion mayor a la menor para poder
+					//borrar en bloques.
+					ArrayList<Integer> rowsOrdenadas = new ArrayList<Integer>();
+					for (int row: rows){
+						rowsOrdenadas.add(row);
+					}
+					
+					Collections.sort(rowsOrdenadas);
+					
+					for (int i = rowsOrdenadas.size()-1 ; i >= 0; i--) {
+						controlador.borrarCancion(rowsOrdenadas.get(i));
+					}
 				}
 				
 			}
@@ -238,7 +300,11 @@ public class VistaListaReproduccion extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controlador.ordenarPorAlbum();
+				if (busquedaRealizada){
+					//TODO
+				}else{
+					controlador.ordenarPorAlbum();
+				}
 			}
 		});
 
@@ -246,7 +312,11 @@ public class VistaListaReproduccion extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controlador.ordenarPorArtista();
+				if (busquedaRealizada){
+					//TODO
+				}else{
+					controlador.ordenarPorArtista();
+				}
 			}
 		});
 		
@@ -254,7 +324,12 @@ public class VistaListaReproduccion extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controlador.ordenarPorGenero();
+				
+				if (busquedaRealizada){
+					//TODO
+				}else{
+					controlador.ordenarPorGenero();
+				}
 			}
 		});
 		
@@ -262,7 +337,11 @@ public class VistaListaReproduccion extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controlador.ordenarPorDuracion();
+				if (busquedaRealizada){
+					//TODO
+				}else{
+					controlador.ordenarPorDuracion();
+				}
 			}
 		});
 		
@@ -270,7 +349,11 @@ public class VistaListaReproduccion extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controlador.ordenarPorTitulo();
+				if (busquedaRealizada){
+					//TODO
+				}else{
+					controlador.ordenarPorTitulo();
+				}
 			}
 		});
 		
@@ -291,7 +374,11 @@ public class VistaListaReproduccion extends JPanel implements
 				}
 				else if(e.getClickCount() == 2) {
 					int cancionDeseada = e.getY()/tabla.getRowHeight();
-					controlador.play(cancionDeseada);
+					if (busquedaRealizada){
+						//TODO
+					}else{
+						controlador.play(cancionDeseada);
+					}
 				}
 			}
 		});
@@ -436,6 +523,44 @@ public class VistaListaReproduccion extends JPanel implements
 		}
 	}
 
+	public void mostrarTodas(ArrayList<CancionContainer> buscados) {
+		
+		
+		Iterator<CancionContainer> itr = buscados.iterator();
+		
+		CancionContainer aux=null;
+		
+		// Eliminamos lo que contiene la tabla para no mostrar lo anterior y lo nuevo
+		for (int i = tabla.getRowCount()-1;i>=0;i--) modelo.removeRow(i);
+
+		int pos = 0;
+		while (itr.hasNext()){
+			aux = itr.next();
+
+			nuevaCancion(new NuevaCancionEvent(aux.getTitulo(), aux.getAlbum(), aux.getPista(), 
+					     aux.getArtista(), aux.getGenero(), aux.getDuracion(), pos++));
+			System.out.println(aux.getTitulo());
+		}
+	}
+	public void mostrarBusqueda(ArrayList<CancionContainer> buscados) {
+		
+		
+		Iterator<CancionContainer> itr = buscados.iterator();
+		
+		CancionContainer aux=null;
+		
+		// Eliminamos lo que contiene la tabla para no mostrar lo anterior y lo nuevo
+		for (int i = tabla.getRowCount()-1;i>=0;i--) modelo.removeRow(i);
+
+		int pos = 0;
+		while (itr.hasNext()){
+			aux = itr.next();
+
+			nuevaCancion(new NuevaCancionEvent(aux.getTitulo(), aux.getAlbum(), aux.getPista(), 
+					     aux.getArtista(), aux.getGenero(), aux.getDuracion(), pos++));
+			System.out.println(aux.getTitulo());
+		}
+	}
 
 	
 }

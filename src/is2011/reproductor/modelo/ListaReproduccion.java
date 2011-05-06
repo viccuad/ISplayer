@@ -414,6 +414,14 @@ public class ListaReproduccion {
 		this.setActual(indiceActual);
 	}
 	
+	/**
+	 * Devuelve las canciones de la lista de reproduccion
+	 * @return
+	 */
+	public ArrayList<CancionContainer> getCancionesListaReproduccion(){
+		return listaReproduccion;
+	}
+	
 	
 }
 

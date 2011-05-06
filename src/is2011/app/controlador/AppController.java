@@ -441,5 +441,19 @@ public class AppController implements IAppController {
 		return biblioteca.getBusqueda(criterio);
 	}
 
+	public ArrayList<CancionContainer> buscaBibliotecaAvanzada(CriterioBusqueda criterio){
+		return biblioteca.getBusquedaAvanzada(criterio);
+	}
 
+	public ArrayList<CancionContainer> buscaListaReproduccion(CriterioBusqueda criterio){
+		return reproductor.getBusqueda(criterio);
+	}
+	public ArrayList<CancionContainer> buscaListaReproduccionAvanzada(CriterioBusqueda criterio){
+		return reproductor.getBusquedaAvanzada(criterio);
+	}
+
+	@Override
+	public ArrayList<CancionContainer> getCancionesListaReproduccion() {
+		return reproductor.getCancionesListaReproduccion();
+	}
 }

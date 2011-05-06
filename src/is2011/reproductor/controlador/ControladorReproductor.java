@@ -4,11 +4,13 @@
 package is2011.reproductor.controlador;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
 
 import is2011.app.preferencias.Preferencias;
 import is2011.biblioteca.contenedores.CancionContainer;
+import is2011.biblioteca.search.CriterioBusqueda;
 import is2011.reproductor.modelo.ListaReproduccion;
 import is2011.reproductor.modelo.Reproductor;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
@@ -377,6 +379,33 @@ public class ControladorReproductor {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Devuelve las canciones de la lista de reproduccion
+	 * @return
+	 */
+	public ArrayList<CancionContainer> getCancionesListaReproduccion(){
+		return listaReproduccion.getCancionesListaReproduccion();
+	}
+	
+	/**
+	 * Metodo que devuelve la lista de reproduccion filtrada con los parametros de busqueda
+	 * @param c
+	 * @return
+	 */
+	public ArrayList<CancionContainer> getBusqueda(CriterioBusqueda c){
+		return listaReproduccion.getBusqueda(c);
+	}
+	
+	
+	/**
+	 * Metodo que devuelve la lista de reproduccion filtrada con los parametros de busqueda avanzada
+	 * @param c
+	 * @return
+	 */
+	public ArrayList<CancionContainer> getBusquedaAvanzada(CriterioBusqueda c){
+		return listaReproduccion.getBusquedaAvanzada(c);
 	}
 
 }

@@ -210,4 +210,31 @@ public interface IAppController {
 	 * @param criterio
 	 */
 	public ArrayList<CancionContainer> buscaBiblioteca(CriterioBusqueda criterio);
+
+	/**
+	 * Realiza una busqueda sobre la lista de reproduccion
+	 * @param criterio
+	 * @return
+	 */
+	public ArrayList<CancionContainer> buscaListaReproduccion(CriterioBusqueda criterio);
+	
+	/**
+	 * Realiza una busqueda avanzada sobre una biblioteca
+	 * @param criterio
+	 * @return
+	 */
+	public ArrayList<CancionContainer> buscaBibliotecaAvanzada(CriterioBusqueda criterio);
+	
+	/**
+	 * Realiza una busqueda avanzada sobre una lista de reproduccion
+	 * @param criterio
+	 * @return
+	 */
+	public ArrayList<CancionContainer> buscaListaReproduccionAvanzada(CriterioBusqueda criterio);
+	
+	/**
+	 * Devuelve las canciones que componen la lista de reproduccion actual
+	 * @return
+	 */
+	public ArrayList<CancionContainer> getCancionesListaReproduccion();
 }

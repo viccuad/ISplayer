@@ -54,18 +54,28 @@ public class VistaBiblioteca extends JPanel implements
 	/** Modelo de la tabla de la TS*/
 	private DefaultTableModel modelo;
 	
+	/** Panel con scroll que contiene a la tabla */
 	private JScrollPane panelScroll;
 	
+	/** Layout de JPanel principal de la vista */
 	private BorderLayout border;
 	
+	/** Panel que contiene los elementos necesarios para realizar la busqueda */
 	private JPanel panelBusqueda;
 	
+	/** Boton que genera la accion de buscar */
 	private JButton buscar;
 	
+	/** Boton que genera la accion de buscar avanzada*/
+	private JButton buscarAvanzada;
+	
+	/** Area de texto donde insertar los valores a buscar */
 	private JTextField textoBusqueda;
 	
+	/** Campo sobre el que quieres realizar la busqueda */
 	private Choice tipoBusqueda;
 	
+	/** Array que contiene las canciones buscadas */
 	private ArrayList<CancionContainer> busqueda;
 	
 	/**Label que contiene el valor de aleatorio*/
@@ -95,8 +105,10 @@ public class VistaBiblioteca extends JPanel implements
 	/** Numero de campos*/
 	private static final int NUM_CAMPOS = 7;
 	
+	/** Atributo que indica si lo que se esta mostrando es una busqueda o la biblioteca */
 	boolean busquedaRealizada = false;
 	
+	/** Menu pop up */
 	private JPopupMenu popup;
 	
 	int y;
@@ -114,9 +126,15 @@ public class VistaBiblioteca extends JPanel implements
 		this.setLayout(border);
 		
 		panelBusqueda = new JPanel();
+		
 		buscar = new JButton();
 		buscar.setBorder(BorderFactory.createEmptyBorder());
 		buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/search.png")));
+		
+		buscarAvanzada = new JButton();
+		buscarAvanzada.setBorder(BorderFactory.createEmptyBorder());
+		buscarAvanzada.setIcon(new ImageIcon(getClass().getResource("/Recursos/advanced_search.png")));
+		
 		buscar.addActionListener(new ActionListener(){
 
 			@Override
@@ -128,7 +146,7 @@ public class VistaBiblioteca extends JPanel implements
 					System.out.println("Mostrar busqueda");
 
 					buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/Delete.png")));
-					
+					buscarAvanzada.setEnabled(false);
 					
 					CriterioBusqueda criterio = null;
 					
@@ -159,6 +177,7 @@ public class VistaBiblioteca extends JPanel implements
 				else {
 					System.out.println("Mostar biblioteca");
 					buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/Search.png")));
+					buscarAvanzada.setEnabled(true);
 					
 					mostrarTodas();
 					
@@ -167,6 +186,58 @@ public class VistaBiblioteca extends JPanel implements
 			}
 			
 		});
+		buscarAvanzada.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if (!busquedaRealizada){
+					
+					
+					System.out.println("Mostrar busqueda");
+
+					buscarAvanzada.setIcon(new ImageIcon(getClass().getResource("/Recursos/Delete.png")));
+					buscar.setEnabled(false);
+					
+					CriterioBusqueda criterio = null;
+					
+					switch (tipoBusqueda.getSelectedIndex()){
+					case 0:{
+						criterio = new BuscarAlbum(textoBusqueda.getText());
+						break;
+					}
+					case 1:{
+
+						criterio = new BuscarArtista(textoBusqueda.getText());
+						break;
+					}
+					case 2:{
+
+						criterio = new BuscarGenero(textoBusqueda.getText());
+						break;
+					}
+					case 3: 
+						criterio = new BuscarTitulo(textoBusqueda.getText());
+						
+					}
+
+					busqueda = controlador.buscaBibliotecaAvanzada(criterio);
+					mostrarBusqueda(busqueda);
+					busquedaRealizada = true;
+				}
+				else {
+					System.out.println("Mostar biblioteca");
+					buscarAvanzada.setIcon(new ImageIcon(getClass().getResource("/Recursos/advanced_search.png")));
+					buscar.setEnabled(true);
+					
+					mostrarTodas();
+					
+					busquedaRealizada = false;
+				}
+			}
+			
+		});
+		
 		textoBusqueda = new JTextField("Busqueda...", 10);
 		tipoBusqueda = new Choice();
 		tipoBusqueda.add("ALBUM");
@@ -177,6 +248,7 @@ public class VistaBiblioteca extends JPanel implements
 		panelBusqueda.add(textoBusqueda);
 		panelBusqueda.add(tipoBusqueda);
 		panelBusqueda.add(buscar);
+		panelBusqueda.add(buscarAvanzada);
 		
 		modelo = new DefaultTableModel()
 		{@Override     
