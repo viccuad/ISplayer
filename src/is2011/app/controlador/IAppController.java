@@ -78,29 +78,34 @@ public interface IAppController {
 	public void aniadir();
 
 	/**
-	 * Actualiza la biblioteca musical desde una serie de ficheros que
-	 * recibe como parametro 
-	 * @param dir
+	 * Crea la biblioteca musical desde una serie de ficheros
+	 */
+	public void crearBiblioteca();
+	
+	/**
+	 * Actualiza la biblioteca musical 
 	 */
 	public void actualizarBiblioteca();
 	
 	/**
 	 * Carga la biblioteca mediante un archivo XML
-	 * * @param path
 	 */
 	public void cargarBiblioteca();
 	
 	/**
 	 * Guarda la biblioteca en un archivo XML
-	 * @param path
 	 */
 	public void guardarBiblioteca();
 	
 	/**
 	 * Permite añadir canciones a la biblioteca.
-	 * @param dir
 	 */
 	public void aniadirCancionesBiblioteca();
+	
+	/**
+	 * Permite añadir canciones y carpetas con canciones a la biblioteca.
+	 */
+	public void aniadirCancionesYCarpetasBiblioteca();
 	
 	/**
 	 * Devuelve las canciones de la lista de reproduccion

@@ -226,9 +226,9 @@ public class AppController implements IAppController {
 	public boolean listaReproduccionVacia() {
 		return reproductor.listaReproduccionVacia();
 	}
-
+	
 	@Override
-	public void actualizarBiblioteca() {
+	public void crearBiblioteca() {
 		
 		String ruta = "";
 		ArrayList<String> dir = new ArrayList<String>();
@@ -247,7 +247,14 @@ public class AppController implements IAppController {
 				System.out.println(f.getAbsolutePath());
 			}			
 		}
+		
 		biblioteca.actualizarDirectorios(dir);
+	}
+
+	@Override
+	public void actualizarBiblioteca() {
+		
+		biblioteca.actualizar();
 	}
 
 	@Override
@@ -309,6 +316,28 @@ public class AppController implements IAppController {
 		biblioteca.aniadirCanciones(dir);		
 	}
 
+	@Override
+	public void aniadirCancionesYCarpetasBiblioteca() {
+
+		String ruta = "";
+		ArrayList<String> dir = new ArrayList<String>();
+		
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setMultiSelectionEnabled(true);
+		
+		int seleccion;
+		seleccion =fileChooser.showOpenDialog(null);
+		if (seleccion == JFileChooser.APPROVE_OPTION){			
+			File[] files = fileChooser.getSelectedFiles();
+			for (File f : files) {		
+				ruta = f.getAbsolutePath();
+				dir.add(ruta);
+				System.out.println(f.getAbsolutePath());
+			}			
+		}
+
+		biblioteca.aniadir(dir);	
+	}
 	@Override
 	public ArrayList<CancionContainer> getCanciones() {
 		return biblioteca.getCanciones();

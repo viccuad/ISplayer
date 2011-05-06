@@ -72,10 +72,12 @@ public class VistaPrincipal extends JFrame
 	private JMenuItem ocultaListaReporduccion;
 	
 	private JMenu menuBiblioteca;
+	private JMenuItem crearBiblioteca;
 	private JMenuItem actualizarBiblioteca;
 	private JMenuItem cargarBiblioteca;
 	private JMenuItem guardarBiblioteca;
 	private JMenuItem aniadirCancionBiblioteca;
+	private JMenuItem aniadirCancionYCarpetaBiblioteca;
 	
 	GridBagConstraints grid;
 	private VistaReproduccion vistaReproduccion;
@@ -503,7 +505,7 @@ public class VistaPrincipal extends JFrame
 		
         
         this.setVisible(true);
-		this.setSize(1000,660);
+		this.setSize(1100,660);
 		this.setResizable(false);
 		
 		this.menu = new JMenuBar();
@@ -570,26 +572,30 @@ public class VistaPrincipal extends JFrame
 		});
 		
 		this.menuBiblioteca = new JMenu("Biblioteca");
-		this.actualizarBiblioteca = new JMenuItem("Crear biblioteca");
 		
-		
-		//TODO: carlos, estas son las sugerencias para la GUI sobre las funcionalidades de añadir canciones
-		//this.actualizarBiblioteca = new JMenuItem("Actualizar Biblioteca");
-		//this.actualizarBiblioteca = new JMenuItem("Añadir canciones");
-		//this.actualizarBiblioteca = new JMenuItem("Añadir canciones y carpetas");
-		
-		
+		this.crearBiblioteca = new JMenuItem("Crear biblioteca");
+		this.actualizarBiblioteca = new JMenuItem("Actualizar Biblioteca");
+		this.aniadirCancionYCarpetaBiblioteca = new JMenuItem("Añadir canciones y carpetas");
 		this.cargarBiblioteca = new JMenuItem("Cargar Biblioteca Existente");
 		this.guardarBiblioteca = new JMenuItem("Guardar Biblioteca Actual");
 		this.aniadirCancionBiblioteca = new JMenuItem("Añadir Cancion Biblioteca");
 		
+		this.menuBiblioteca.add(crearBiblioteca);
 		this.menuBiblioteca.add(actualizarBiblioteca);
+		this.menuBiblioteca.add(aniadirCancionYCarpetaBiblioteca);
+		this.menuBiblioteca.add(aniadirCancionBiblioteca);
 		this.menuBiblioteca.add(cargarBiblioteca);
 		this.menuBiblioteca.add(guardarBiblioteca);
-		this.menuBiblioteca.add(aniadirCancionBiblioteca);
 		
 		this.menu.add(menuBiblioteca);
 		
+		this.crearBiblioteca.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				controlador.crearBiblioteca();
+			}
+
+		});
 		this.actualizarBiblioteca.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
@@ -618,6 +624,14 @@ public class VistaPrincipal extends JFrame
 
 			public void actionPerformed(ActionEvent e) {
 				controlador.aniadirCancionesBiblioteca();
+			}
+
+		});
+		
+		this.aniadirCancionYCarpetaBiblioteca.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				controlador.aniadirCancionesYCarpetasBiblioteca();
 			}
 
 		});
