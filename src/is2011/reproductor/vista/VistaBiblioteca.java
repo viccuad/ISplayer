@@ -2,6 +2,7 @@ package is2011.reproductor.vista;
 
 import java.awt.BorderLayout;
 import java.awt.Choice;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -186,6 +187,7 @@ public class VistaBiblioteca extends JPanel implements
 			}
 			
 		});
+		
 		buscarAvanzada.addActionListener(new ActionListener(){
 
 			@Override
