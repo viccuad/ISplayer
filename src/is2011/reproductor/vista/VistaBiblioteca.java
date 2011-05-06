@@ -1,5 +1,7 @@
 package is2011.reproductor.vista;
 
+import java.awt.BorderLayout;
+import java.awt.Choice;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -14,10 +16,13 @@ import is2011.reproductor.modelo.listeners.BibliotecaListener;
 import is2011.reproductor.modelo.listeners.BorrarCancionEvent;
 import is2011.reproductor.modelo.listeners.NuevaCancionEvent;
 
+import javax.swing.JButton;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -31,7 +36,7 @@ import javax.swing.table.TableColumnModel;
  *
  */
 @SuppressWarnings("serial")
-public class VistaBiblioteca extends JScrollPane implements
+public class VistaBiblioteca extends JPanel implements
 		BibliotecaListener {
 
 	// ********************************************************************** //
@@ -45,6 +50,18 @@ public class VistaBiblioteca extends JScrollPane implements
 	
 	/** Modelo de la tabla de la TS*/
 	private DefaultTableModel modelo;
+	
+	private JScrollPane panelScroll;
+	
+	private BorderLayout border;
+	
+	private JPanel panelBusqueda;
+	
+	private JButton buscar;
+	
+	private JTextField textoBusqueda;
+	
+	private Choice tipoBusqueda;
 	
 	/**Label que contiene el valor de aleatorio*/
 	//private JLabel modoReproduccion;
@@ -84,6 +101,23 @@ public class VistaBiblioteca extends JScrollPane implements
 	 * Prepara a la vista de reproduccion para mostrar las canciones.
 	 */
 	public VistaBiblioteca() {
+		
+		panelScroll = new JScrollPane();
+		border = new BorderLayout();
+		this.setLayout(border);
+		
+		panelBusqueda = new JPanel();
+		buscar = new JButton("Buscar");
+		textoBusqueda = new JTextField("Busqueda...", 10);
+		tipoBusqueda = new Choice();
+		tipoBusqueda.add("ARTISTA");
+		tipoBusqueda.add("ALBUM");
+		tipoBusqueda.add("CANCION");
+		
+		panelBusqueda.add(textoBusqueda);
+		panelBusqueda.add(tipoBusqueda);
+		panelBusqueda.add(buscar);
+		
 		modelo = new DefaultTableModel()
 		{@Override     
 			public boolean isCellEditable (int fila, int columna) {
@@ -116,7 +150,7 @@ public class VistaBiblioteca extends JScrollPane implements
 		
 		
 		//Le a�adimos el scroll
-		setViewportView(tabla);
+		panelScroll.setViewportView(tabla);
 		
 		//this.modoReproduccion = new JLabel("Modo de reproduccion NORMAL");
 		
@@ -173,6 +207,8 @@ public class VistaBiblioteca extends JScrollPane implements
 			}
 		});
 		
+		this.add(panelBusqueda, BorderLayout.NORTH);
+		this.add(panelScroll, BorderLayout.CENTER);
 	}
 	
 
