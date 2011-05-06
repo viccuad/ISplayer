@@ -120,7 +120,7 @@ public class VistaPreferencias extends JFrame{
 				case 3: modo = ModoReproduccionEnum.REPETIR_TODOS;
 				}
 				controlador.actualizaPreferencias(textPathBiblioteca.getText(), textPathListaReproduccion.getText(), modo);
-				
+				setVisible(false);
 			}
 			
 		});
