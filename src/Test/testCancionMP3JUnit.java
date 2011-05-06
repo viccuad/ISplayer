@@ -33,8 +33,7 @@ public class testCancionMP3JUnit extends TestCase{
 	public void setUp() {
 		
 		
-		//path = "src/Recursos/01 Purple Haze.mp3";    //
-		path = "C:/hlocal/01 Purple Haze.mp3";
+		path = "src/Recursos/01 Purple Haze.mp3";    
 		try {
 			filemp3 = AudioFileIO.read(new File(path));
 
