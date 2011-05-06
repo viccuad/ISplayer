@@ -13,7 +13,6 @@ import is2011.biblioteca.contenedores.BibliotecaContainer;
 import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.biblioteca.contenedores.DirectorioContainer;
 import is2011.biblioteca.search.CriterioBusqueda;
-import is2011.biblioteca.util.ActualizarBiblioteca;
 import is2011.biblioteca.util.CrearBiblioteca;
 import is2011.biblioteca.util.AniadirCanciones;
 import is2011.biblioteca.util.RecorreFicheros;
@@ -158,7 +157,7 @@ public class BibliotecaMusical {
 	 */
 	public void actualizar(){
 		RecorreFicheros recorre = new RecorreFicheros(this.canciones.getDirectorios());
-		recorre.setEstrategia(new ActualizarBiblioteca(this.canciones));
+		recorre.setEstrategia(new CrearBiblioteca(this.canciones));
 		recorre.recorre();
 		notificaCancionesModificadas();
 	}
