@@ -66,6 +66,8 @@ public class VistaBiblioteca extends JPanel implements
 	
 	private Choice tipoBusqueda;
 	
+	private ArrayList<CancionContainer> busqueda;
+	
 	/**Label que contiene el valor de aleatorio*/
 	//private JLabel modoReproduccion;
 	
@@ -150,8 +152,8 @@ public class VistaBiblioteca extends JPanel implements
 						
 					}
 
-					ArrayList<CancionContainer> buscados = controlador.buscaBiblioteca(criterio);
-					mostrarBusqueda(buscados);
+					busqueda = controlador.buscaBiblioteca(criterio);
+					mostrarBusqueda(busqueda);
 					busquedaRealizada = true;
 				}
 				else {
@@ -231,9 +233,16 @@ public class VistaBiblioteca extends JPanel implements
 			public void actionPerformed(ActionEvent arg0) {
 				int row = y/tabla.getRowHeight();
 				System.out.println(row);
-				String path = controlador.getCanciones().get(row).getTotalPath();
-				System.out.println(path);
-				controlador.fromBibliotecaToListaReproduccion(path);
+				if (busquedaRealizada){
+					String path = busqueda.get(row).getTotalPath();
+					System.out.println(path);
+					controlador.fromBibliotecaToListaReproduccion(path);
+				}else{
+					String path = controlador.getCanciones().get(row).getTotalPath();
+					System.out.println(path);
+					controlador.fromBibliotecaToListaReproduccion(path);
+				}
+
 			}
 			
 		});
