@@ -16,6 +16,8 @@ import is2011.reproductor.modelo.listeners.BorrarCancionEvent;
 import is2011.reproductor.modelo.listeners.ListaReproduccionListener;
 import is2011.reproductor.modelo.listeners.NuevaCancionEvent;
 
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -95,6 +97,8 @@ public class VistaListaReproduccion extends JPanel implements
 	/** Numero de campos*/
 	private static final int NUM_CAMPOS = 7;
 	
+	boolean search;
+	
 	
 	// ********************************************************************** //
 	// *************                CONSTRUCTORES               ************* //
@@ -110,7 +114,28 @@ public class VistaListaReproduccion extends JPanel implements
 		this.setLayout(border);
 		
 		panelBusqueda = new JPanel();
-		buscar = new JButton("Buscar");
+		buscar = new JButton();
+		buscar.setBorder(BorderFactory.createEmptyBorder());
+		buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/search.png")));
+		search = true;
+		buscar.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if (search){
+					buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/Delete.png")));
+					search = false;
+					
+					
+				}
+				else {
+					buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/search.png")));
+					search = true;
+				}
+			}
+			
+		});
 		textoBusqueda = new JTextField("Busqueda...", 10);
 		tipoBusqueda = new Choice();
 		tipoBusqueda.add("ARTISTA");

@@ -13,6 +13,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import is2011.app.preferencias.PreferenciasSistema;
 import is2011.biblioteca.BibliotecaMusical;
 import is2011.biblioteca.contenedores.CancionContainer;
+import is2011.biblioteca.search.CriterioBusqueda;
 import is2011.biblioteca.sorts.SortAlbum;
 import is2011.biblioteca.sorts.SortArtista;
 import is2011.biblioteca.sorts.SortDuracion;
@@ -436,6 +437,9 @@ public class AppController implements IAppController {
 		reproductor.cargarListaReproduccion(ruta);
 	}
 
+	public ArrayList<CancionContainer> buscaBiblioteca(CriterioBusqueda criterio){
+		return biblioteca.getBusqueda(criterio);
+	}
 
 
 }

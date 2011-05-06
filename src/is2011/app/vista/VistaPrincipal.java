@@ -114,31 +114,31 @@ public class VistaPrincipal extends JFrame
 		stop.setIcon(new ImageIcon(getClass().getResource("/Recursos/stop.png")));
 		panelPpal.add(stop);
 		
+		atrasar= new JButton();
+		atrasar.setBorder(BorderFactory.createEmptyBorder());
+		atrasar.setIcon(new ImageIcon(getClass().getResource("/Recursos/rew.png")));
+		panelPpal.add(atrasar);	
+		
 		avanzar= new JButton();
 		avanzar.setBorder(BorderFactory.createEmptyBorder());
 		avanzar.setIcon(new ImageIcon(getClass().getResource("/Recursos/ff.png")));
 		panelPpal.add(avanzar);
-		
-		atrasar= new JButton();
-		atrasar.setBorder(BorderFactory.createEmptyBorder());
-		atrasar.setIcon(new ImageIcon(getClass().getResource("/Recursos/rew.png")));
-		panelPpal.add(atrasar);		
 		
 		aniadir= new JButton();
 		aniadir.setBorder(BorderFactory.createEmptyBorder());
 		aniadir.setIcon(new ImageIcon(getClass().getResource("/Recursos/add2.png")));
 		panelPpal.add(aniadir);	
 		
-		siguiente  = new JButton();
-		siguiente.setBorder(BorderFactory.createEmptyBorder());
-		siguiente.setIcon(new ImageIcon(getClass().getResource("/Recursos/next_song.png")));
-		panelPpal.add(siguiente);
-		
-		
 		anterior  = new JButton();
 		anterior.setBorder(BorderFactory.createEmptyBorder());
 		anterior.setIcon(new ImageIcon(getClass().getResource("/Recursos/previous_song.png")));
 		panelPpal.add(anterior);
+		
+		siguiente  = new JButton();
+		siguiente.setBorder(BorderFactory.createEmptyBorder());
+		siguiente.setIcon(new ImageIcon(getClass().getResource("/Recursos/next_song.png")));
+		panelPpal.add(siguiente);
+	
 		
 		siguiente.addMouseListener(new MouseAdapter(){
 			public void mousePressed (MouseEvent e) {
@@ -503,7 +503,8 @@ public class VistaPrincipal extends JFrame
 		
         
         this.setVisible(true);
-		this.setSize(1000,650);
+		this.setSize(1000,660);
+		this.setResizable(false);
 		
 		this.menu = new JMenuBar();
 		

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import is2011.app.preferencias.PreferenciasSistema;
 import is2011.biblioteca.contenedores.CancionContainer;
+import is2011.biblioteca.search.CriterioBusqueda;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 
 /**
@@ -203,4 +204,10 @@ public interface IAppController {
 	 * Carga la biblioteca y la lista de reproduccion por defecto, si las hubiera.
 	 */
 	public void cargarArchivosPreferencias();
+	
+	/**
+	 * Realiza una busqueda sobre la biblioteca y devuelve lo buscado
+	 * @param criterio
+	 */
+	public ArrayList<CancionContainer> buscaBiblioteca(CriterioBusqueda criterio);
 }

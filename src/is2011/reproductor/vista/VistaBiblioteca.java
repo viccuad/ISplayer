@@ -11,11 +11,14 @@ import java.util.Iterator;
 
 import is2011.app.controlador.IAppController;
 import is2011.biblioteca.contenedores.CancionContainer;
+import is2011.biblioteca.search.*;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 import is2011.reproductor.modelo.listeners.BibliotecaListener;
 import is2011.reproductor.modelo.listeners.BorrarCancionEvent;
 import is2011.reproductor.modelo.listeners.NuevaCancionEvent;
 
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -90,7 +93,9 @@ public class VistaBiblioteca extends JPanel implements
 	/** Numero de campos*/
 	private static final int NUM_CAMPOS = 7;
 	
-	JPopupMenu popup;
+	boolean busquedaRealizada = false;
+	
+	private JPopupMenu popup;
 	
 	int y;
 	// ********************************************************************** //
@@ -107,12 +112,65 @@ public class VistaBiblioteca extends JPanel implements
 		this.setLayout(border);
 		
 		panelBusqueda = new JPanel();
-		buscar = new JButton("Buscar");
+		buscar = new JButton();
+		buscar.setBorder(BorderFactory.createEmptyBorder());
+		buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/search.png")));
+		buscar.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if (!busquedaRealizada){
+					
+					
+					System.out.println("Mostrar busqueda");
+
+					buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/Delete.png")));
+					
+					
+					CriterioBusqueda criterio = null;
+					
+					switch (tipoBusqueda.getSelectedIndex()){
+					case 0:{
+						criterio = new BuscarAlbum(textoBusqueda.getText());
+						break;
+					}
+					case 1:{
+
+						criterio = new BuscarArtista(textoBusqueda.getText());
+						break;
+					}
+					case 2:{
+
+						criterio = new BuscarGenero(textoBusqueda.getText());
+						break;
+					}
+					case 3: 
+						criterio = new BuscarTitulo(textoBusqueda.getText());
+						
+					}
+
+					ArrayList<CancionContainer> buscados = controlador.buscaBiblioteca(criterio);
+					mostrarBusqueda(buscados);
+					busquedaRealizada = true;
+				}
+				else {
+					System.out.println("Mostar biblioteca");
+					buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/Search.png")));
+					
+					mostrarTodas();
+					
+					busquedaRealizada = false;
+				}
+			}
+			
+		});
 		textoBusqueda = new JTextField("Busqueda...", 10);
 		tipoBusqueda = new Choice();
-		tipoBusqueda.add("ARTISTA");
 		tipoBusqueda.add("ALBUM");
-		tipoBusqueda.add("CANCION");
+		tipoBusqueda.add("ARTISTA");
+		tipoBusqueda.add("GENERO");
+		tipoBusqueda.add("TITULO");
 		
 		panelBusqueda.add(textoBusqueda);
 		panelBusqueda.add(tipoBusqueda);
@@ -302,6 +360,27 @@ public class VistaBiblioteca extends JPanel implements
 		ArrayList<CancionContainer> cancionesBib = controlador.getCanciones();
 		
 		Iterator<CancionContainer> itr = cancionesBib.iterator();
+		
+		CancionContainer aux=null;
+		
+		// Eliminamos lo que contiene la tabla para no mostrar lo anterior y lo nuevo
+		for (int i = tabla.getRowCount()-1;i>=0;i--) modelo.removeRow(i);
+
+		int pos = 0;
+		while (itr.hasNext()){
+			aux = itr.next();
+
+			nuevaCancion(new NuevaCancionEvent(aux.getTitulo(), aux.getAlbum(), aux.getPista(), 
+					     aux.getArtista(), aux.getGenero(), aux.getDuracion(), pos++));
+			System.out.println(aux.getTitulo());
+		}
+	}
+	
+	
+	public void mostrarBusqueda(ArrayList<CancionContainer> buscados) {
+		
+		
+		Iterator<CancionContainer> itr = buscados.iterator();
 		
 		CancionContainer aux=null;
 		
