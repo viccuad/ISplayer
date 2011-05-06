@@ -52,7 +52,7 @@ public class BuscarTitulo implements CriterioBusqueda {
 		
 		while(it.hasNext()){
 			CancionContainer actual = it.next();
-			if(actual.getTitulo().contains(titulo))
+			if(actual.getTitulo().toLowerCase().contains(titulo.toLowerCase()))
 				encontrados.add(actual);
 		}
 		

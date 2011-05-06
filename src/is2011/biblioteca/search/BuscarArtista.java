@@ -52,7 +52,7 @@ public class BuscarArtista implements CriterioBusqueda {
 		
 		while(it.hasNext()){
 			CancionContainer actual = it.next();
-			if(actual.getArtista().contains(artista))
+			if(actual.getArtista().toLowerCase().contains(artista.toLowerCase()))
 				encontrados.add(actual);
 		}
 		

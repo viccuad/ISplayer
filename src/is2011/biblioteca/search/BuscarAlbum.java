@@ -52,7 +52,7 @@ public class BuscarAlbum implements CriterioBusqueda {
 		
 		while(it.hasNext()){
 			CancionContainer actual = it.next();
-			if(actual.getAlbum().contains(album))
+			if(actual.getAlbum().toLowerCase().contains(album.toLowerCase()))
 				encontrados.add(actual);
 		}
 		

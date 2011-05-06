@@ -219,8 +219,7 @@ public class BibliotecaMusical {
 	 * Añade oyentes a la biblioteca
 	 * @param listener
 	 */
-	public void addBibliotecaListeners(BibliotecaListener listener)
-	{
+	public void addBibliotecaListeners(BibliotecaListener listener){
 		listeners.add(listener);
 	}
 	

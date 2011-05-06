@@ -52,7 +52,7 @@ public class BuscarGenero implements CriterioBusqueda {
 		
 		while(it.hasNext()){
 			CancionContainer actual = it.next();
-			if(actual.getGenero().contains(genero))
+			if(actual.getGenero().toLowerCase().contains(genero.toLowerCase()))
 				encontrados.add(actual);
 		}
 		
