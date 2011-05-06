@@ -39,4 +39,24 @@ public class BuscarArtista implements CriterioBusqueda {
 		return encontrados;
 	}
 
+
+	/**
+	 * Realiza la búsqueda avanzada (coincidencias de cadenas) soble la colección que recible como parámetro.
+	 * @param lista es la colección de elemenentos dónde se desea realizar la búsqueda
+	 * @return una nueva colección con los elements que coinciden con el criterio de búsqueda
+	 */
+	@Override
+	public ArrayList<CancionContainer> buscarAvanzado(ArrayList<CancionContainer> lista) {
+		ArrayList<CancionContainer> encontrados = new ArrayList<CancionContainer>();
+		Iterator<CancionContainer> it = lista.iterator();
+		
+		while(it.hasNext()){
+			CancionContainer actual = it.next();
+			if(actual.getArtista().contains(artista))
+				encontrados.add(actual);
+		}
+		
+		return encontrados;
+	}
+
 }

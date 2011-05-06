@@ -166,6 +166,19 @@ public class BibliotecaContainer {
 	}
 	
 	
+	/**
+	 * Realiza una búsqueda avanzada en la lista de canciones según un criterio que recibe como parámetro
+	 * @param busqueda es el criterio por el cuál se desea buscar en la lista de reproducción
+	 * @return la nueva colección con los elementos que satisface el criterio de búsqueda
+	 */
+	public ArrayList<CancionContainer> getListaBusquedaAvanzada(CriterioBusqueda busqueda){
+		// si no se ha generado la lista de canciones la crea
+		if(this.modificadoParaMostrar || this.listaCanciones == null)
+			generarArrayListCanciones();
+		
+		return busqueda.buscarAvanzado(this.listaCanciones);
+	}
+	
 	
 	/**
 	 * Genera las rutas absolutas de las canciones. Se debe hacer siempre que se lea la biblioteca musical

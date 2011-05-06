@@ -132,6 +132,18 @@ public class BibliotecaMusical {
 	
 	
 	/**
+	 * Devuelve los elementos de la biblioteca musical que coincidan con el criterio de búsqueda
+	 * que recibe como parámetro. En vez de por coincidencia total se hace la búsqueda por
+	 * cualquier subcadena que este contenida en otra.
+	 * @param busqueda es el criterio de búsqueda
+	 * @return colección con los elementos que satisfacen el criterio de búsqueda
+	 */
+	public ArrayList<CancionContainer> getBusquedaAvanzada(CriterioBusqueda busqueda){
+		return this.canciones.getListaBusquedaAvanzada(busqueda);
+	}
+	
+	
+	/**
 	 * Dice si la biblioteca musical ha sido modificada en algún momento
 	 * @return true si la biblioteca ha sido modificada, false en otro caso
 	 */

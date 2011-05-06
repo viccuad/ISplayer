@@ -273,6 +273,15 @@ public class ListaReproduccion {
 	}
 	
 	
+	/**
+	 * Realiza una búsqueda avanzada en la lista de canciones según un criterio que recibe como parámetro
+	 * @param busqueda es el criterio por el cuál se desea buscar en la lista de reproducción
+	 * @return la nueva colección con los elementos que satisface el criterio de búsqueda
+	 */
+	public ArrayList<CancionContainer> getBusquedaAvanzada(CriterioBusqueda busqueda){		
+		return busqueda.buscarAvanzado(this.listaReproduccion);
+	}
+	
 	
 	// ********************************************************************** //
 	// *************           GETTERS Y SETTERS                ************* //
