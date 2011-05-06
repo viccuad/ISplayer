@@ -21,7 +21,7 @@ public class TestBibliotecaMusical {
 		String ruta = "";
 		
 		ArrayList<String> dir = new ArrayList<String>();
-		//dir.add("src/Recursos");
+		dir.add("src/Recursos");
 		//dir.add("/Users/david/Desktop/pruebaIS");
 		
 		JFileChooser fileChooser = new JFileChooser();
@@ -44,10 +44,10 @@ public class TestBibliotecaMusical {
 		BibliotecaMusical bib = BibliotecaMusical.getInstacia();
 		
 		bib.actualizarDirectorios(dir);
-		
+		CancionContainer c = null;
 		try {
 			//genera el fichero XML
-			bib.guardarXML("src/Recursos/testXML2.xml");
+			//bib.guardarXML("src/Recursos/testXML2.xml");
 			//bib.guardarXML( "src/Recursos/testXML2.xml");
 			//bib.guardarXML("/Users/david/Desktop/pruebaIS/lista.xml");
 			
@@ -58,7 +58,7 @@ public class TestBibliotecaMusical {
 			//recuperamos las canciones y las mostramos por consola
 			Iterator<CancionContainer> it = bib.getCanciones().iterator();
 			while(it.hasNext()){
-				CancionContainer c = it.next();
+				c = it.next();
 				System.out.println("---------------------------------");
 				System.out.println("Titulo: " + c.getTitulo());
 				System.out.println("TrackPath: " + c.getTrackPath());
@@ -72,6 +72,7 @@ public class TestBibliotecaMusical {
 			e.printStackTrace();
 		}
 		
+		System.out.println("Artista: " + c.getArtista());
 		
 
 	}
