@@ -152,7 +152,7 @@ public class VistaListaReproduccion extends JPanel implements
 					System.out.println("Mostrar busqueda");
 
 					buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/Delete.png")));
-					
+					buscarAvanzada.setEnabled(false);
 					
 					CriterioBusqueda criterio = null;
 					
@@ -183,7 +183,7 @@ public class VistaListaReproduccion extends JPanel implements
 				else {
 					System.out.println("Mostar biblioteca");
 					buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/Search.png")));
-					
+					buscarAvanzada.setEnabled(true);
 					mostrarTodas(controlador.getCancionesListaReproduccion());
 					
 					busquedaRealizada = false;
@@ -191,6 +191,58 @@ public class VistaListaReproduccion extends JPanel implements
 			}
 			
 		});
+		
+		buscarAvanzada.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if (!busquedaRealizada){
+					
+					
+					System.out.println("Mostrar busqueda");
+
+					buscarAvanzada.setIcon(new ImageIcon(getClass().getResource("/Recursos/Delete.png")));
+					buscar.setEnabled(false);
+					
+					CriterioBusqueda criterio = null;
+					
+					switch (tipoBusqueda.getSelectedIndex()){
+					case 0:{
+						criterio = new BuscarAlbum(textoBusqueda.getText());
+						break;
+					}
+					case 1:{
+
+						criterio = new BuscarArtista(textoBusqueda.getText());
+						break;
+					}
+					case 2:{
+
+						criterio = new BuscarGenero(textoBusqueda.getText());
+						break;
+					}
+					case 3: 
+						criterio = new BuscarTitulo(textoBusqueda.getText());
+						
+					}
+
+					busqueda = controlador.buscaListaReproduccionAvanzada(criterio);
+					mostrarBusqueda(busqueda);
+					busquedaRealizada = true;
+				}
+				else {
+					System.out.println("Mostar biblioteca");
+					buscarAvanzada.setIcon(new ImageIcon(getClass().getResource("/Recursos/advanced_search.png")));
+					buscar.setEnabled(true);
+					mostrarTodas(controlador.getCancionesListaReproduccion());
+					
+					busquedaRealizada = false;
+				}
+			}
+			
+		});
+		
 		textoBusqueda = new JTextField("Busqueda...", 10);
 		tipoBusqueda = new Choice();
 		tipoBusqueda.add("ALBUM");
