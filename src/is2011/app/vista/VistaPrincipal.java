@@ -570,7 +570,15 @@ public class VistaPrincipal extends JFrame
 		});
 		
 		this.menuBiblioteca = new JMenu("Biblioteca");
-		this.actualizarBiblioteca = new JMenuItem("Actualizar biblioteca");
+		this.actualizarBiblioteca = new JMenuItem("Crear biblioteca");
+		
+		
+		//TODO: carlos, estas son las sugerencias para la GUI sobre las funcionalidades de añadir canciones
+		//this.actualizarBiblioteca = new JMenuItem("Actualizar Biblioteca");
+		//this.actualizarBiblioteca = new JMenuItem("Añadir canciones");
+		//this.actualizarBiblioteca = new JMenuItem("Añadir canciones y carpetas");
+		
+		
 		this.cargarBiblioteca = new JMenuItem("Cargar Biblioteca Existente");
 		this.guardarBiblioteca = new JMenuItem("Guardar Biblioteca Actual");
 		this.aniadirCancionBiblioteca = new JMenuItem("Añadir Cancion Biblioteca");

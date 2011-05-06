@@ -13,6 +13,7 @@ import is2011.biblioteca.contenedores.BibliotecaContainer;
 import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.biblioteca.contenedores.DirectorioContainer;
 import is2011.biblioteca.search.CriterioBusqueda;
+import is2011.biblioteca.util.Aniadir;
 import is2011.biblioteca.util.CrearBiblioteca;
 import is2011.biblioteca.util.AniadirCanciones;
 import is2011.biblioteca.util.RecorreFicheros;
@@ -178,8 +179,9 @@ public class BibliotecaMusical {
 	
 	
 	/**
-	 * Añade canciones a la biblioteca en caso de que no existan previamente, de ser así no hace nada al
-	 * igual que si recibiese algún directorio en vez de canciones.
+	 * Añade canciones a la biblioteca en caso de que no existan previamente, 
+	 * de ser así no hace nada al igual que si recibiese algún directorio en vez de canciones. 
+	 * Las canciones y directorios que ya existían no se ven modificadas
 	 * @param canciones lista de canciones a insertar
 	 */
 	public void aniadirCanciones(ArrayList<String> canciones){
@@ -189,6 +191,19 @@ public class BibliotecaMusical {
 		notificaCancionesModificadas();
 
 	}
+	
+	/**
+	 * Añade canciones y directorios a la biblioteca en caso de que no existan previamente, 
+	 * de ser así no hace nada. Las canciones y directorios que ya existían no se ven modificadas
+	 * @param canciones lista de canciones a insertar
+	 */
+	public void aniadir(ArrayList<String> canciones){
+		RecorreFicheros recorre = new RecorreFicheros(canciones);
+		recorre.setEstrategia(new Aniadir(this.canciones));
+		recorre.recorre();
+		notificaCancionesModificadas();
+
+	} 
 	
 	
 	/**
