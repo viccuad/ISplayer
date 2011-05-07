@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
@@ -33,7 +32,7 @@ public class JRoundTextField extends JTextField {
         setOpaque(false);
         setBorder(new EmptyBorder(0,5,0,2));
         setPreferredSize(new Dimension(200, 23));
-        //setFont(new Font("Arial", Font.BOLD, 13));
+        setFont(new Font("", Font.ITALIC , 12));
     }
 
     
@@ -43,7 +42,7 @@ public class JRoundTextField extends JTextField {
         setBorder(new EmptyBorder(0,5,0,2));
         setPreferredSize(new Dimension(200, 23));
         descripcion = texto;
-        //setFont(new Font("Arial", Font.BOLD, 13));
+        setFont(new Font("", Font.ITALIC , 12));
     }
     
     
