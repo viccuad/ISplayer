@@ -2,7 +2,6 @@ package is2011.reproductor.vista;
 
 import java.awt.BorderLayout;
 import java.awt.Choice;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -15,7 +14,6 @@ import java.util.Iterator;
 import is2011.app.controlador.IAppController;
 import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.biblioteca.search.*;
-import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 import is2011.reproductor.modelo.listeners.BibliotecaListener;
 import is2011.reproductor.modelo.listeners.BorrarCancionEvent;
 import is2011.reproductor.modelo.listeners.NuevaCancionEvent;
@@ -29,7 +27,6 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -38,8 +35,6 @@ import javax.swing.table.TableColumnModel;
 /**
  * Vista que implementa al listener de la lista de reproduccion y que se 
  * encargara de mostrarla por pantalla.
- * 
- * @author Administrator
  *
  */
 @SuppressWarnings("serial")
@@ -184,7 +179,7 @@ public class VistaBiblioteca extends JPanel implements
 					busquedaRealizada = true;
 				}
 				else {
-					System.out.println("Mostar biblioteca");
+					System.out.println("Mostrar biblioteca");
 					buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/Search.png")));
 					buscarAvanzada.setEnabled(true);
 					
@@ -231,7 +226,7 @@ public class VistaBiblioteca extends JPanel implements
 					busquedaRealizada = true;
 				}
 				else {
-					System.out.println("Mostar biblioteca");
+					System.out.println("Mostrar biblioteca");
 					buscarAvanzada.setIcon(new ImageIcon(getClass().getResource("/Recursos/advanced_search.png")));
 					buscar.setEnabled(true);
 					
@@ -244,57 +239,50 @@ public class VistaBiblioteca extends JPanel implements
 		});
 		
 		
-	
+		// creamos el cuadro de texto para las búsquedas
 		textoBusqueda = new JRoundTextField("Buscar...", 0);
 		
-		
-		/*
+		// añadimos el listener para el evento de pulsar teclas
 		textoBusqueda.addKeyListener(new KeyListener(){
-
+			
+			/**
+			 * No es necesario implementar este método
+			 */
 			@Override
 			public void keyPressed(KeyEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				//No es necesario implementarlo
 			}
 
+			/** 
+			 * Cada vez que se libera una tecla se realiza la búsqueda
+			 */
 			@Override
-			public void keyReleased(KeyEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-				CriterioBusqueda criterio = null;
-				
-				switch (tipoBusqueda.getSelectedIndex()){
-				case 0:{
-					criterio = new BuscarAlbum(textoBusqueda.getText());
-					break;
+			public void keyReleased(KeyEvent arg0) {				
+				switch (tipoBusqueda.getSelectedIndex()) {
+					case titulo  : busqueda = controlador.buscaListaReproduccionAvanzada(
+											new BuscarTitulo(textoBusqueda.getText()));										   
+											break;
+					case genero  : busqueda = controlador.buscaListaReproduccionAvanzada(
+											new BuscarGenero(textoBusqueda.getText()));
+											break;
+					case artista : busqueda = controlador.buscaListaReproduccionAvanzada(
+											new BuscarArtista(textoBusqueda.getText()));
+											break;
+					case album   : busqueda = controlador.buscaListaReproduccionAvanzada(
+										    new BuscarAlbum(textoBusqueda.getText()));
+											break;
 				}
-				case 1:{
-
-					criterio = new BuscarArtista(textoBusqueda.getText());
-					break;
-				}
-				case 2:{
-
-					criterio = new BuscarGenero(textoBusqueda.getText());
-					break;
-				}
-				case 3: 
-					criterio = new BuscarTitulo(textoBusqueda.getText());
-					
-				}
-
-				busqueda = controlador.buscaListaReproduccionAvanzada(criterio);
 				mostrarBusqueda(busqueda);
 			}
-			
+
+			/**
+			 * No es necesario implementar este método
+			 */
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				//No es necesario implementarlo
+			}
 		});
-		*/
-		
-		
 		
 		
 		tipoBusqueda = new Choice();
@@ -357,11 +345,11 @@ public class VistaBiblioteca extends JPanel implements
 		this.popup = new JPopupMenu();
 		
 		JMenu ordenar = new JMenu("Ordenar");
-		JMenuItem ordenarAlbum = new JMenuItem("Album");
+		JMenuItem ordenarAlbum = new JMenuItem("Álbum");
 		JMenuItem ordenarArtista = new JMenuItem("Artista");
-		JMenuItem ordenarGenero = new JMenuItem("Genero");
-		JMenuItem ordenarDuracion  = new JMenuItem("Duracion");
-		JMenuItem ordenarTitulo  = new JMenuItem("Titulo");
+		JMenuItem ordenarGenero = new JMenuItem("Género");
+		JMenuItem ordenarDuracion  = new JMenuItem("Duración");
+		JMenuItem ordenarTitulo  = new JMenuItem("Título");
 		
 
 		ordenar.add(ordenarAlbum);

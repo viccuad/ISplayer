@@ -34,7 +34,6 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -43,8 +42,6 @@ import javax.swing.table.TableColumnModel;
 /**
  * Vista que implementa al listener de la lista de reproduccion y que se 
  * encargara de mostrarla por pantalla.
- * 
- * @author Administrator
  *
  */
 @SuppressWarnings("serial")
@@ -293,7 +290,6 @@ public class VistaListaReproduccion extends JPanel implements
 			public void keyTyped(KeyEvent arg0) {
 				//No es necesario implementarlo
 			}
-			
 		});
 		
 		
@@ -327,7 +323,7 @@ public class VistaListaReproduccion extends JPanel implements
 		tabla  = new JTable(modelo);
 		tabla.setShowHorizontalLines(true);	
 		
-		//Configuramos el tama�o
+		//Configuramos el tamaño
 		TableColumnModel cm = tabla.getColumnModel();
         cm.getColumn(NUM_COLUMNA_REPRODUCIENDO).setPreferredWidth(35);
         cm.getColumn(NUM_COLUMNA_TITULO).setPreferredWidth(250);
@@ -347,7 +343,7 @@ public class VistaListaReproduccion extends JPanel implements
 		setVisible(true);
 		tabla.setVisible(true);
 		
-		this.setBorder(new TitledBorder("Lista de reproduccion"));
+		this.setBorder(new TitledBorder("Lista de reproducción"));
 		
 		//Menu desplegable
 		
