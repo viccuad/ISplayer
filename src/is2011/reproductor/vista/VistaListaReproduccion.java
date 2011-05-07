@@ -287,10 +287,10 @@ public class VistaListaReproduccion extends JPanel implements
 		
 		
 		tipoBusqueda = new Choice();
-		tipoBusqueda.add("ÁLBUM");
-		tipoBusqueda.add("ARTISTA");
-		tipoBusqueda.add("GÉNERO");
 		tipoBusqueda.add("TÍTULO");
+		tipoBusqueda.add("GÉNERO");
+		tipoBusqueda.add("ARTISTA");
+		tipoBusqueda.add("ÁLBUM");
 		
 		panelBusqueda.add(textoBusqueda);
 		panelBusqueda.add(tipoBusqueda);
