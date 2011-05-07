@@ -20,13 +20,28 @@ import javax.swing.border.EmptyBorder;
 @SuppressWarnings("serial")
 public class JRoundTextField extends JTextField { 
 
-    private Boolean left=true;
-    protected float anchoDeBorde=2f;
+	/** Alineamiento a la izquierda */
+    private Boolean left = true;
+    
+    /** Grosor del borde */
+    protected float anchoDeBorde = 2f;
+    
+    /** Color del borde */
     protected Color colorDeBorde = new Color(173,173,173);
+    
+    /** Texto que se muestra */
     private String descripcion = "Buscar...";
+    
+    /** Color del texto que se muestra */
     private Color colorDeTextoBackground = Color.GRAY;
+    
+    /** Indica el angulo de corvatura de las esquinas */
     private Integer curvatura = 20;
 
+    
+    /**
+     * Constructor por defecto
+     */
     public JRoundTextField() {
     	super(null,0);
         setOpaque(false);
@@ -36,6 +51,12 @@ public class JRoundTextField extends JTextField {
     }
 
     
+    /**
+     * Crea un objeto con el texto y número de 
+     * columnas que recibe como parámetro
+     * @param texto texto inicial a mostrar
+     * @param col numero de columnas
+     */
     public JRoundTextField(String texto, int col) {
     	super(null,col); 
         setOpaque(false);
@@ -46,6 +67,9 @@ public class JRoundTextField extends JTextField {
     }
     
     
+    /**
+     * Método que es invocado cuándo se va a dibujar el componente
+     */
     @Override
     protected void paintComponent(Graphics g) {
 
