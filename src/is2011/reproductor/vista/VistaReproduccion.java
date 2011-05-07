@@ -6,6 +6,8 @@ import is2011.app.preferencias.Preferencias;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
 import java.util.Map;
 
 
@@ -98,11 +100,9 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		
 		reset();
 		
-		this.progreso = new JScrollBar(JScrollBar.HORIZONTAL, 0, 0, 0, 1000);
-		this.progreso.setEnabled(false);
+		this.resetProgreso();
 		
-		this.setLayout(new GridLayout(3,1));
-		this.add(this.progreso);
+		this.setLayout(new GridLayout(2,1));
 		
 		this.labelEstado = new JLabel("");
 		this.add(this.labelEstado);
@@ -124,67 +124,12 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 					}
 					
 					volumen.setValue((int)(100*porcentaje));
-					/*
-					System.out.println("putno" + e.getPoint());
-					System.out.println("yReal" + yReal);
-					System.out.println("altura" + altoReal);
-					
-					System.out.println(porcentaje);*/
-					
 					controlador.setVolumen((1-porcentaje));
 				}
 			}
 		});	
 		
-		this.progreso.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				if(progreso.isEnabled()) {
-					buscando = true;
-				}
-				
-			}
-			
-			/*@Override
-			public void mouseClicked(MouseEvent e) {
-				System.out.print("Cliked");
-				int anchoReal = progreso.getWidth() -1 - progreso.getHeight();
-				int xReal = e.getX() - progreso.getHeight();
-				float porcentaje = ((float)xReal)/anchoReal;
-				buscando = false;
-				controlador.irA(porcentaje);
-			}*/
-			
-			public void mouseReleased(MouseEvent e) {
-				if(progreso.isEnabled()) {
-					buscando = true;
-
-					int anchoReal = progreso.getWidth()  -progreso.getHeight()*2;
-					int xReal = e.getX() - progreso.getHeight();
-
-					float porcentaje;
-					if(xReal <= anchoReal) {
-						porcentaje = ((float)xReal)/anchoReal;
-					}else {
-						porcentaje = ((float)progreso.getValue())/1000;
-					}
-
-					buscando = false;
-					controlador.irA(porcentaje);
-				}
-				/*if(buscando) {
-					int posicionDeseada;
-
-					synchronized (progreso) {
-						posicionDeseada = progreso.getValue();
-					}
-					buscando = false;
-					controlador.irA((float)posicionDeseada/1000);
-				
-				}*/
-				
-			}
-		});
+		
 		
 	}
 	
@@ -230,6 +175,74 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 			+minutos)+ ":" + ((segundos > 9)? segundos : "0"+segundos);
 	}
 	
+	private void resetProgreso() {
+		if(this.progreso != null) {
+			this.remove(progreso);
+		}
+		this.progreso = new JScrollBar(JScrollBar.HORIZONTAL, 0, 0, 0, 1000);
+		this.progreso.setEnabled(false);
+		
+		this.progreso.addMouseMotionListener(new MouseMotionAdapter(){
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				synchronized (progreso) {
+					if(progreso.isEnabled()) {
+						int anchoReal = progreso.getWidth()  -progreso.getHeight()*2;
+						int xReal = e.getX() - progreso.getHeight();
+
+						float porcentaje;
+						if(xReal <= anchoReal) {
+							porcentaje = ((float)xReal)/anchoReal;
+						}else {
+							porcentaje = ((float)progreso.getValue())/1000;
+						}
+						controlador.irA(porcentaje);
+					}
+				}
+			}
+		});
+		
+		this.progreso.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				synchronized (progreso) {
+					if(progreso.isEnabled()) {
+						buscando = true;
+					}
+				}
+			}
+			
+			public void mouseReleased(MouseEvent e) {
+				
+				synchronized (progreso) {
+					if(progreso.isEnabled()) {
+
+						int anchoReal = progreso.getWidth()  -progreso.getHeight()*2;
+						int xReal = e.getX() - progreso.getHeight();
+
+						float porcentaje;
+						if(xReal <= anchoReal) {
+							porcentaje = ((float)xReal)/anchoReal;
+						}else {
+							porcentaje = ((float)progreso.getValue())/1000;
+						}
+
+						buscando = false;
+						controlador.irA(porcentaje);
+
+					}
+				}
+			}
+		});
+		
+		
+		this.add(this.progreso);
+		
+		if(this.labelEstado != null){
+			this.remove(labelEstado);
+			this.add(labelEstado);
+		}
+	}
 	/**
 	 * Recoge toda la informacion de la cancion que estamos reproduciendo.
 	 * @param properties
@@ -385,15 +398,19 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		//por pantalla.
 		//pasamos a la siguiente.
 		if(event.getCode() == BasicPlayerEvent.EOM ) {
-			this.reset();
-			this.progreso.setEnabled(false);
-			this.progreso.setValue(this.posicion);
+			synchronized (progreso) {
+				this.reset();
+				this.resetProgreso();
+			}
+			
 			this.labelEstado.setText("");
 			controlador.siguienteCancion();
 		}else if ( event.getCode() == BasicPlayerEvent.STOP ) {
-			this.reset();
-			this.progreso.setEnabled(false);
-			this.progreso.setValue(this.posicion);
+			synchronized (progreso) {
+				this.reset();
+				this.progreso.setEnabled(false);
+				this.progreso.setValue(0);
+			}
 			this.labelEstado.setText("");
 		}else if(event.getCode() == BasicPlayerEvent.SEEKED) {
 			this.progreso.setValue((int)(((float)event.getPosition()
