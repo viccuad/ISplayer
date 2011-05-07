@@ -242,4 +242,44 @@ public interface IAppController {
 	 * @return
 	 */
 	public ArrayList<CancionContainer> getCancionesListaReproduccion();
+	
+	/**
+	 * Le pasamos la posicion que la cancion ocupa en la biblioteca y esta 
+	 * se pasa a la lista de reproduccion actual
+	 * @param La posicion de la cancion en la bib
+	 */
+	public void fromBibliotecaToListaReproduccion(int posicion);
+	
+	/**
+	 * Le pasamos un array de posiciones, que indican la sposiciones de las 
+	 * canciones en la biblioteca que queremso pasar a la lista de reproduccion
+	 * actual.
+	 * @param El array de posiciones
+	 */
+	public void fromBibliotecaToListaReproduccion(int[] posiciones);
+
+	/**
+	 * Ordena las canciones de la biblioteca por album
+	 */
+	public void ordenarBibliotecaPorAlbum();
+
+	/**
+	 * Ordena las canciones de la biblioteca por genero
+	 */
+	public void ordenarBibliotecaPorGenero();
+
+	/**
+	 * Ordena las canciones de la biblioteca por artista
+	 */
+	public void ordenarBibliotecaPorArtista();
+
+	/**
+	 * Ordena las canciones de la biblioteca por duracion
+	 */
+	public void ordenarBibliotecaPorDuracion();
+
+	/**
+	 * Ordena las canciones de la biblioteca por titulo
+	 */
+	public void ordenarBibliotecaPorTitulo();
 }

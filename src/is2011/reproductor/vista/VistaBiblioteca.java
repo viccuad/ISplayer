@@ -21,6 +21,7 @@ import is2011.reproductor.modelo.listeners.NuevaCancionEvent;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -82,29 +83,27 @@ public class VistaBiblioteca extends JPanel implements
 	/**Label que contiene el valor de aleatorio*/
 	//private JLabel modoReproduccion;
 	
-	/** Columna en la que muestra si se esta reproduciendo la cancion*/
-	private static final int NUM_COLUMNA_REPRODUCIENDO = 0;
 	
 	/** Columna en la que se almacena titulo*/
-	private static final int NUM_COLUMNA_TITULO =1; 
+	private static final int NUM_COLUMNA_TITULO =0; 
 	
 	/** Columna en la que se almacena genero*/
-	private static final int NUM_COLUMNA_GENERO = 2;
+	private static final int NUM_COLUMNA_GENERO = 1;
 	
 	/** Columna en la que se almacena artista*/
-	private static final int NUM_COLUMNA_ARTISTA = 3;
+	private static final int NUM_COLUMNA_ARTISTA = 2;
 	
 	/** Columna en la que se almacena album*/
-	private static final int NUM_COLUMNA_ALBUM = 4;
+	private static final int NUM_COLUMNA_ALBUM = 3;
 	
 	/** Columna en la que se almacena Trak Nº*/
-	private static final int NUM_COLUMNA_TRACKNO = 5;
+	private static final int NUM_COLUMNA_TRACKNO = 4;
 	
 	/** Columna en la que se almacena duracion*/
-	private static final int NUM_COLUMNA_DURACION = 6;
+	private static final int NUM_COLUMNA_DURACION = 5;
 
 	/** Numero de campos*/
-	private static final int NUM_CAMPOS = 7;
+	private static final int NUM_CAMPOS = 6;
 	
 	/** Atributo que indica si lo que se esta mostrando es una busqueda o la biblioteca */
 	boolean busquedaRealizada = false;
@@ -259,8 +258,14 @@ public class VistaBiblioteca extends JPanel implements
 			}
 		}; 
 
-		//Añadimos las columnas del modelo
-		modelo.addColumn("Actual");
+		modelo = new DefaultTableModel()
+		{@Override     
+			public boolean isCellEditable (int fila, int columna) {
+				return false; 
+			}
+		}; 
+
+		//AÃ±adimos las columnas del modelo
 		modelo.addColumn("Titulo");
 		modelo.addColumn("Genero");
 		modelo.addColumn("Artista");
@@ -272,10 +277,9 @@ public class VistaBiblioteca extends JPanel implements
 		tabla  = new JTable(modelo);
 		tabla.setShowHorizontalLines(true);	
 		
-		//Configuramos el tama�o
+		//Configuramos el tamaño
 		TableColumnModel cm = tabla.getColumnModel();
-		cm.getColumn(NUM_COLUMNA_REPRODUCIENDO).setPreferredWidth(35);
-        cm.getColumn(NUM_COLUMNA_TITULO).setPreferredWidth(250);
+		cm.getColumn(NUM_COLUMNA_TITULO).setPreferredWidth(250);
         cm.getColumn(NUM_COLUMNA_GENERO).setPreferredWidth(50);
         cm.getColumn(NUM_COLUMNA_ARTISTA).setPreferredWidth(150);
         cm.getColumn(NUM_COLUMNA_ALBUM).setPreferredWidth(150);
@@ -283,79 +287,106 @@ public class VistaBiblioteca extends JPanel implements
 		cm.getColumn(NUM_COLUMNA_DURACION).setPreferredWidth(50);
 		
 		
-		//Le a�adimos el scroll
+		//Le aï¿½adimos el scroll
 		panelScroll.setViewportView(tabla);
 		
 		//this.modoReproduccion = new JLabel("Modo de reproduccion NORMAL");
 		
 		setVisible(true);
 		tabla.setVisible(true);
-		//Solo permite seleccionar una columna.
-		tabla.setSelectionMode(0);
 		
 		this.setBorder(new TitledBorder("Biblioteca"));
 		
-		popup = new JPopupMenu();
-		JMenuItem borrar = new JMenuItem("Borrar");
-		popup.add(borrar);
-		JMenuItem modificar = new JMenuItem("Modificar");
-		popup.add(modificar);
+		this.popup = new JPopupMenu();
+		
+		JMenu ordenar = new JMenu("Ordenar");
+		JMenuItem ordenarAlbum = new JMenuItem("Album");
+		JMenuItem ordenarArtista = new JMenuItem("Artista");
+		JMenuItem ordenarGenero = new JMenuItem("Genero");
+		JMenuItem ordenarDuracion  = new JMenuItem("Duracion");
+		JMenuItem ordenarTitulo  = new JMenuItem("Titulo");
+		
+
+		ordenar.add(ordenarAlbum);
+		ordenar.add(ordenarArtista);
+		ordenar.add(ordenarGenero);
+		ordenar.add(ordenarDuracion);
+		ordenar.add(ordenarTitulo);
+		
+		this.popup.add(ordenar);
+		
+		ordenarAlbum.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controlador.ordenarBibliotecaPorAlbum();
+			}
+		});
+
+		ordenarArtista.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controlador.ordenarBibliotecaPorArtista();
+			}
+		});
+		
+		ordenarGenero.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controlador.ordenarBibliotecaPorGenero();
+			}
+		});
+		
+		ordenarDuracion.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controlador.ordenarBibliotecaPorDuracion();
+			}
+		});
+		
+		ordenarTitulo.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controlador.ordenarBibliotecaPorTitulo();
+			}
+		});
+		
+		
 		JMenuItem aniadirLR = new JMenuItem("Añadir a la LR");
 		aniadirLR.addActionListener(new ActionListener(){
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				int row = y/tabla.getRowHeight();
-				System.out.println(row);
-				if (busquedaRealizada){
-					String path = busqueda.get(row).getTotalPath();
-					System.out.println(path);
-					controlador.fromBibliotecaToListaReproduccion(path);
-				}else{
-					String path = controlador.getCanciones().get(row).getTotalPath();
-					System.out.println(path);
-					controlador.fromBibliotecaToListaReproduccion(path);
-				}
-
+			public void actionPerformed(ActionEvent e) {
+				int[] canciones = tabla.getSelectedRows();
+				controlador.fromBibliotecaToListaReproduccion(canciones);
 			}
 			
 		});
+		
 		popup.add(aniadirLR);
+		
 		
 		tabla.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
+				//Si es boton derecho
 				if ( SwingUtilities.isRightMouseButton(e)){
+					popup.show(e.getComponent(), e.getX(), e.getY());
 					
-					// Para ver que fila ha sido seleccionada
-		            y = e.getY();
-		            int row = Math.round(y / tabla.getRowHeight());
-		            tabla.setRowSelectionInterval(row, row);               
-		            System.out.println("Row Selected = " + row);
-		            
-		            // Para mostrar el menu
-		            popup.show(e.getComponent(), e.getX(), e.getY());
-
 				}
+				
 				else if(e.getClickCount() == 2) {
 					int row = e.getY()/tabla.getRowHeight();
-					System.out.println(row);
-					
-					if (busquedaRealizada){
-						String path = busqueda.get(row).getTotalPath();
-						System.out.println(path);
-						controlador.fromBibliotecaToListaReproduccion(path);
-					}else{
-						String path = controlador.getCanciones().get(row).getTotalPath();
-						System.out.println(path);
-						controlador.fromBibliotecaToListaReproduccion(path);
-					}
-
+					controlador.fromBibliotecaToListaReproduccion(row);
 				}
 			}
 		});
-		
+
 		this.add(panelBusqueda, BorderLayout.NORTH);
 		this.add(panelScroll, BorderLayout.CENTER);
 	}
@@ -489,5 +520,27 @@ public class VistaBiblioteca extends JPanel implements
 	}
 
 
+	@Override
+	public void nuevaListaCanciones(ArrayList<CancionContainer> canciones) {
+		
+		int pos = 0;
+		
+		for (CancionContainer c : canciones) {
+			Object [] rowData = new Object[NUM_CAMPOS];
+			rowData[NUM_COLUMNA_TITULO] = c.getTitulo();
+			rowData[NUM_COLUMNA_GENERO] = c.getGenero();
+			rowData[NUM_COLUMNA_ARTISTA] = c.getArtista();
+			rowData[NUM_COLUMNA_ALBUM] = c.getAlbum();
+			rowData[NUM_COLUMNA_TRACKNO] = c.getPista();
+			rowData[NUM_COLUMNA_DURACION] = toHora(c.getDuracion());
+			
+				
+			modelo.insertRow(pos, rowData);
+			
+			pos++;
+		}
+		
+		
+	};
 	
 }

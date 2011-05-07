@@ -485,4 +485,50 @@ public class AppController implements IAppController {
 	public ArrayList<CancionContainer> getCancionesListaReproduccion() {
 		return reproductor.getCancionesListaReproduccion();
 	}
+	
+	@Override
+	public void fromBibliotecaToListaReproduccion(int posicion) {
+		this.reproductor.aniadirCancion(
+				this.biblioteca.getCanciones().get(posicion).getTotalPath());
+		;
+	}
+
+	@Override
+	public void fromBibliotecaToListaReproduccion(int[] posiciones) {
+		for (int i : posiciones) {
+			this.reproductor.aniadirCancion(
+					this.biblioteca.getCanciones().get(i).getTotalPath());
+			;
+		}
+		
+	}
+
+	
+	@Override
+	public void ordenarBibliotecaPorAlbum() {
+		this.biblioteca.ordenar(new SortAlbum());
+	}
+
+	@Override
+	public void ordenarBibliotecaPorArtista() {
+		this.biblioteca.ordenar(new SortArtista());
+		
+	}
+
+
+	@Override
+	public void ordenarBibliotecaPorDuracion() {
+		this.biblioteca.ordenar(new SortDuracion());
+	}
+
+	@Override
+	public void ordenarBibliotecaPorGenero() {
+		this.biblioteca.ordenar(new SortGenero());
+	}
+
+	@Override
+	public void ordenarBibliotecaPorTitulo() {
+		this.biblioteca.ordenar(new SortTitulo());
+	}
+
 }

@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -238,4 +239,24 @@ public class BibliotecaMusical {
 		listeners.add(listener);
 	}
 	
+	/**
+	 * Ordena la lista biblioteca siguiendo un criterio de ordenacion
+	 * que recibe como parametro
+	 * @param orden: es el criterio por el cual se desea ordenar la lista de reproduccion
+	 */
+	public void ordenar(Comparator<CancionContainer> orden){
+		this.notificaNuevaBiblioteca(this.canciones.getArrayListCanciones());
+	}
+	
+	/**
+	 * Notifica a los oyentes que se ha cargado una nueva lista de canciones.
+	 * Manda borrar la anteriory notifica la nueva
+	 * @param las canciones nuevas de la biblioteca
+	 */
+	private void notificaNuevaBiblioteca(ArrayList<CancionContainer> canciones){
+		for (BibliotecaListener l : listeners) {
+			l.reinicia();
+			l.nuevaListaCanciones(canciones);
+		}
+	}
 }
