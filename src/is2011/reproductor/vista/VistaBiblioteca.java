@@ -239,7 +239,7 @@ public class VistaBiblioteca extends JPanel implements
 			
 		});
 		
-		textoBusqueda = new JRoundTextField("Búsqueda...", 0);
+		textoBusqueda = new JRoundTextField("Buscar...", 0);
 		tipoBusqueda = new Choice();
 		tipoBusqueda.add("ÁLBUM");
 		tipoBusqueda.add("ARTISTA");

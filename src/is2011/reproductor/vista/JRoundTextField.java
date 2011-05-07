@@ -24,8 +24,8 @@ public class JRoundTextField extends JTextField {
     private Boolean left=true;
     protected float anchoDeBorde=2f;
     protected Color colorDeBorde = new Color(173,173,173);
-    private String descripcion="ingrese el texto aquí";
-    private Color colorDeTextoBackground=Color.GRAY;
+    private String descripcion = "Buscar...";
+    private Color colorDeTextoBackground = Color.GRAY;
     private Integer curvatura = 20;
 
     public JRoundTextField() {
