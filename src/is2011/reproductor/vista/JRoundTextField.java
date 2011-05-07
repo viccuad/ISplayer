@@ -29,20 +29,20 @@ public class JRoundTextField extends JTextField {
     private Integer curvatura = 20;
 
     public JRoundTextField() {
-    	super("",0);
+    	super(null,0);
         setOpaque(false);
         setBorder(new EmptyBorder(0,5,0,2));
-        setPreferredSize(new Dimension(100, 20));
-        this.setBackground(Color.GRAY);
+        setPreferredSize(new Dimension(200, 23));
         //setFont(new Font("Arial", Font.BOLD, 13));
     }
 
     
     public JRoundTextField(String texto, int col) {
-    	super(texto,col); 
+    	super(null,col); 
         setOpaque(false);
         setBorder(new EmptyBorder(0,5,0,2));
         setPreferredSize(new Dimension(200, 23));
+        descripcion = texto;
         //setFont(new Font("Arial", Font.BOLD, 13));
     }
     

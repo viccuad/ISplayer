@@ -5,6 +5,8 @@ import java.awt.Choice;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -239,7 +241,60 @@ public class VistaBiblioteca extends JPanel implements
 			
 		});
 		
+		
+	
 		textoBusqueda = new JRoundTextField("Buscar...", 0);
+		
+		
+		/*
+		textoBusqueda.addKeyListener(new KeyListener(){
+
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				CriterioBusqueda criterio = null;
+				
+				switch (tipoBusqueda.getSelectedIndex()){
+				case 0:{
+					criterio = new BuscarAlbum(textoBusqueda.getText());
+					break;
+				}
+				case 1:{
+
+					criterio = new BuscarArtista(textoBusqueda.getText());
+					break;
+				}
+				case 2:{
+
+					criterio = new BuscarGenero(textoBusqueda.getText());
+					break;
+				}
+				case 3: 
+					criterio = new BuscarTitulo(textoBusqueda.getText());
+					
+				}
+
+				busqueda = controlador.buscaListaReproduccionAvanzada(criterio);
+				mostrarBusqueda(busqueda);
+			}
+			
+		});
+		*/
+		
+		
+		
+		
 		tipoBusqueda = new Choice();
 		tipoBusqueda.add("ÁLBUM");
 		tipoBusqueda.add("ARTISTA");

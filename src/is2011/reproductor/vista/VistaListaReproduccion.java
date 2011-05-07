@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Choice;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -243,7 +245,47 @@ public class VistaListaReproduccion extends JPanel implements
 			
 		});
 		
-		textoBusqueda = new JRoundTextField("Buscar...", 0);
+		
+		
+		// Creamos el campo del texto de búsqueda
+		textoBusqueda = new JRoundTextField("Buscar...",0);
+		
+		// añadimos el listener para el evento de pulsar teclas
+		textoBusqueda.addKeyListener(new KeyListener(){
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				//No es necesario implementarlo
+			}
+
+			// cada vez que se libera una tecla se realiza la búsqueda
+			@Override
+			public void keyReleased(KeyEvent arg0) {				
+				switch (tipoBusqueda.getSelectedIndex()) {
+				
+					case 0: busqueda = controlador.buscaListaReproduccionAvanzada(
+									   new BuscarAlbum(textoBusqueda.getText()));
+							break;
+					case 1: busqueda = controlador.buscaListaReproduccionAvanzada(
+									   new BuscarArtista(textoBusqueda.getText()));
+							break;
+					case 2: busqueda = controlador.buscaListaReproduccionAvanzada(
+									   new BuscarGenero(textoBusqueda.getText()));
+							break;
+					case 3: busqueda = controlador.buscaListaReproduccionAvanzada(
+									   new BuscarTitulo(textoBusqueda.getText()));	
+							break;
+				}
+				mostrarBusqueda(busqueda);
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				//No es necesario implementarlo
+			}
+			
+		});
+		
+		
 		tipoBusqueda = new Choice();
 		tipoBusqueda.add("ÁLBUM");
 		tipoBusqueda.add("ARTISTA");
