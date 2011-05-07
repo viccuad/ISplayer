@@ -101,6 +101,8 @@ public class JRoundTextField extends JTextField {
         g2.drawRoundRect(x, y, w, h, curvatura, curvatura);
         g2.dispose();
     }
+    
+    
 
     public Color getColorDeTextoBackground() {
         return colorDeTextoBackground;
