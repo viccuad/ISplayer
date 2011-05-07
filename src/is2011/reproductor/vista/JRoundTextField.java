@@ -33,6 +33,7 @@ public class JRoundTextField extends JTextField {
         setOpaque(false);
         setBorder(new EmptyBorder(0,5,0,2));
         setPreferredSize(new Dimension(100, 20));
+        this.setBackground(Color.GRAY);
         //setFont(new Font("Arial", Font.BOLD, 13));
     }
 
@@ -69,7 +70,7 @@ public class JRoundTextField extends JTextField {
             if(getText()==null)
                 setText("  ");
             
-            TextLayout layout = new TextLayout(descripcion==null? " ":descripcion,
+            TextLayout layout = new TextLayout(descripcion == null ? " ":descripcion,
                     							getFont(), g2.getFontRenderContext());
             
             Rectangle2D bounds = layout.getBounds();
@@ -84,6 +85,7 @@ public class JRoundTextField extends JTextField {
             g2.setColor(colorDeTextoBackground);
             layout.draw(g2, x, y);
         }
+        
         g2.setPaint(oldPaint);
         super.paintComponent(g);
     }
