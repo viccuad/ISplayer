@@ -72,7 +72,7 @@ public class VistaBiblioteca extends JPanel implements
 	private JButton buscarAvanzada;
 	
 	/** Area de texto donde insertar los valores a buscar */
-	private JTextField textoBusqueda;
+	private JRoundTextField textoBusqueda;
 	
 	/** Campo sobre el que quieres realizar la busqueda */
 	private Choice tipoBusqueda;
@@ -143,7 +143,7 @@ public class VistaBiblioteca extends JPanel implements
 				if (!busquedaRealizada){
 					
 					
-					System.out.println("Mostrar busqueda");
+					System.out.println("Mostrar búsqueda");
 
 					buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/Delete.png")));
 					buscarAvanzada.setEnabled(false);
@@ -195,7 +195,7 @@ public class VistaBiblioteca extends JPanel implements
 				if (!busquedaRealizada){
 					
 					
-					System.out.println("Mostrar busqueda");
+					System.out.println("Mostrar búsqueda");
 
 					buscarAvanzada.setIcon(new ImageIcon(getClass().getResource("/Recursos/Delete.png")));
 					buscar.setEnabled(false);
@@ -239,12 +239,12 @@ public class VistaBiblioteca extends JPanel implements
 			
 		});
 		
-		textoBusqueda = new JTextField("Busqueda...", 10);
+		textoBusqueda = new JRoundTextField("Búsqueda...", 0);
 		tipoBusqueda = new Choice();
-		tipoBusqueda.add("ALBUM");
+		tipoBusqueda.add("ÁLBUM");
 		tipoBusqueda.add("ARTISTA");
-		tipoBusqueda.add("GENERO");
-		tipoBusqueda.add("TITULO");
+		tipoBusqueda.add("GÉNERO");
+		tipoBusqueda.add("TÍTULO");
 		
 		panelBusqueda.add(textoBusqueda);
 		panelBusqueda.add(tipoBusqueda);
@@ -266,12 +266,12 @@ public class VistaBiblioteca extends JPanel implements
 		}; 
 
 		//AÃ±adimos las columnas del modelo
-		modelo.addColumn("Titulo");
-		modelo.addColumn("Genero");
+		modelo.addColumn("Título");
+		modelo.addColumn("Género");
 		modelo.addColumn("Artista");
-		modelo.addColumn("Album");
+		modelo.addColumn("Álbum");
 		modelo.addColumn("Pista");
-		modelo.addColumn("Duracion");
+		modelo.addColumn("Duración");
 		
 		//Creamos la tabla
 		tabla  = new JTable(modelo);
@@ -287,7 +287,7 @@ public class VistaBiblioteca extends JPanel implements
 		cm.getColumn(NUM_COLUMNA_DURACION).setPreferredWidth(50);
 		
 		
-		//Le aï¿½adimos el scroll
+		//Le añadimos el scroll
 		panelScroll.setViewportView(tabla);
 		
 		//this.modoReproduccion = new JLabel("Modo de reproduccion NORMAL");
@@ -319,7 +319,7 @@ public class VistaBiblioteca extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controlador.ordenarBibliotecaPorAlbum();
+				controlador.ordenarPorAlbum();
 			}
 		});
 
@@ -327,7 +327,7 @@ public class VistaBiblioteca extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controlador.ordenarBibliotecaPorArtista();
+				controlador.ordenarPorArtista();
 			}
 		});
 		
@@ -335,7 +335,7 @@ public class VistaBiblioteca extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controlador.ordenarBibliotecaPorGenero();
+				controlador.ordenarPorGenero();
 			}
 		});
 		
@@ -343,7 +343,7 @@ public class VistaBiblioteca extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controlador.ordenarBibliotecaPorDuracion();
+				controlador.ordenarPorDuracion();
 			}
 		});
 		
@@ -351,7 +351,7 @@ public class VistaBiblioteca extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controlador.ordenarBibliotecaPorTitulo();
+				controlador.ordenarPorTitulo();
 			}
 		});
 		

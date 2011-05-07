@@ -74,7 +74,7 @@ public class VistaListaReproduccion extends JPanel implements
 	private JButton buscarAvanzada;
 	
 	/** Area de texto donde insertar los valores a buscar */
-	private JTextField textoBusqueda;
+	private JRoundTextField textoBusqueda;
 	
 	/** Campo sobre el que quieres realizar la busqueda */
 	private Choice tipoBusqueda;
@@ -149,7 +149,7 @@ public class VistaListaReproduccion extends JPanel implements
 				if (!busquedaRealizada){
 					
 					
-					System.out.println("Mostrar busqueda");
+					System.out.println("Mostrar búsqueda");
 
 					buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/Delete.png")));
 					buscarAvanzada.setEnabled(false);
@@ -200,7 +200,7 @@ public class VistaListaReproduccion extends JPanel implements
 				if (!busquedaRealizada){
 					
 					
-					System.out.println("Mostrar busqueda");
+					System.out.println("Mostrar búsqueda");
 
 					buscarAvanzada.setIcon(new ImageIcon(getClass().getResource("/Recursos/Delete.png")));
 					buscar.setEnabled(false);
@@ -243,12 +243,12 @@ public class VistaListaReproduccion extends JPanel implements
 			
 		});
 		
-		textoBusqueda = new JTextField("Busqueda...", 10);
+		textoBusqueda = new JRoundTextField("Búsqueda...", 0);
 		tipoBusqueda = new Choice();
-		tipoBusqueda.add("ALBUM");
+		tipoBusqueda.add("ÁLBUM");
 		tipoBusqueda.add("ARTISTA");
-		tipoBusqueda.add("GENERO");
-		tipoBusqueda.add("TITULO");
+		tipoBusqueda.add("GÉNERO");
+		tipoBusqueda.add("TÍTULO");
 		
 		panelBusqueda.add(textoBusqueda);
 		panelBusqueda.add(tipoBusqueda);
@@ -263,12 +263,12 @@ public class VistaListaReproduccion extends JPanel implements
 
 		//Añadimos las columnas del modelo
 		modelo.addColumn("Actual");
-		modelo.addColumn("Titulo");
-		modelo.addColumn("Genero");
+		modelo.addColumn("Título");
+		modelo.addColumn("Género");
 		modelo.addColumn("Artista");
-		modelo.addColumn("Album");
+		modelo.addColumn("Álbum");
 		modelo.addColumn("Pista");
-		modelo.addColumn("Duracion");
+		modelo.addColumn("Duración");
 		
 		//Creamos la tabla
 		tabla  = new JTable(modelo);
@@ -289,7 +289,7 @@ public class VistaListaReproduccion extends JPanel implements
 		panelScroll.setViewportView(tabla);
 		
 		//La cabecera de la tabla.
-		this.modoReproduccion = new JLabel("Modo de reproduccion NORMAL");
+		this.modoReproduccion = new JLabel("Modo de reproducción NORMAL");
 		
 		setVisible(true);
 		tabla.setVisible(true);
@@ -305,11 +305,11 @@ public class VistaListaReproduccion extends JPanel implements
 		
 		
 		JMenu ordenar = new JMenu("Ordenar");
-		JMenuItem ordenarAlbum = new JMenuItem("Album");
+		JMenuItem ordenarAlbum = new JMenuItem("Álbum");
 		JMenuItem ordenarArtista = new JMenuItem("Artista");
-		JMenuItem ordenarGenero = new JMenuItem("Genero");
-		JMenuItem ordenarDuracion  = new JMenuItem("Duracion");
-		JMenuItem ordenarTitulo  = new JMenuItem("Titulo");
+		JMenuItem ordenarGenero = new JMenuItem("Género");
+		JMenuItem ordenarDuracion  = new JMenuItem("Duración");
+		JMenuItem ordenarTitulo  = new JMenuItem("Título");
 		
 
 		ordenar.add(ordenarAlbum);
@@ -513,7 +513,7 @@ public class VistaListaReproduccion extends JPanel implements
 	
 	@Override
 	public void cambioTipoReproduccion(ModoReproduccionEnum modo) {
-		this.modoReproduccion.setText("Modo de reproduccion " + modo);
+		this.modoReproduccion.setText("Modo de reproducción " + modo);
 	}
 
 	public JLabel getInfoReproduccion() {
