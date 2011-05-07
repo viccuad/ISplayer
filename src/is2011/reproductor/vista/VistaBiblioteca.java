@@ -110,6 +110,18 @@ public class VistaBiblioteca extends JPanel implements
 	/** Atributo que indica si lo que se esta mostrando es una busqueda o la biblioteca */
 	boolean busquedaRealizada = false;
 	
+	/** Posición del choice para el titulo */
+	private final int titulo = 0;
+	
+	/** Posición del choice para el genero */
+	private final int genero = 1;
+	
+	/** Posición del choice para el artista */
+	private final int artista = 2;
+	
+	/** Posición del choice para el album */
+	private final int album = 3;
+	
 	/** Menu pop up */
 	private JPopupMenu popup;
 	
@@ -143,8 +155,6 @@ public class VistaBiblioteca extends JPanel implements
 			public void actionPerformed(ActionEvent arg0) {
 				
 				if (!busquedaRealizada){
-					
-					
 					System.out.println("Mostrar búsqueda");
 
 					buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/Delete.png")));
@@ -153,23 +163,20 @@ public class VistaBiblioteca extends JPanel implements
 					CriterioBusqueda criterio = null;
 					
 					switch (tipoBusqueda.getSelectedIndex()){
-					case 0:{
-						criterio = new BuscarAlbum(textoBusqueda.getText());
+					case titulo:{
+						criterio = new BuscarTitulo(textoBusqueda.getText());
 						break;
 					}
-					case 1:{
-
-						criterio = new BuscarArtista(textoBusqueda.getText());
-						break;
-					}
-					case 2:{
-
+					case genero:{
 						criterio = new BuscarGenero(textoBusqueda.getText());
 						break;
 					}
-					case 3: 
-						criterio = new BuscarTitulo(textoBusqueda.getText());
-						
+					case artista:{
+						criterio = new BuscarArtista(textoBusqueda.getText());
+						break;
+					}
+					case album: 
+						criterio = new BuscarAlbum(textoBusqueda.getText());
 					}
 
 					busqueda = controlador.buscaBiblioteca(criterio);
@@ -195,8 +202,6 @@ public class VistaBiblioteca extends JPanel implements
 			public void actionPerformed(ActionEvent arg0) {
 				
 				if (!busquedaRealizada){
-					
-					
 					System.out.println("Mostrar búsqueda");
 
 					buscarAvanzada.setIcon(new ImageIcon(getClass().getResource("/Recursos/Delete.png")));
@@ -205,23 +210,20 @@ public class VistaBiblioteca extends JPanel implements
 					CriterioBusqueda criterio = null;
 					
 					switch (tipoBusqueda.getSelectedIndex()){
-					case 0:{
-						criterio = new BuscarAlbum(textoBusqueda.getText());
+					case titulo:{
+						criterio = new BuscarTitulo(textoBusqueda.getText());
 						break;
 					}
-					case 1:{
-
-						criterio = new BuscarArtista(textoBusqueda.getText());
-						break;
-					}
-					case 2:{
-
+					case genero:{
 						criterio = new BuscarGenero(textoBusqueda.getText());
 						break;
 					}
-					case 3: 
-						criterio = new BuscarTitulo(textoBusqueda.getText());
-						
+					case artista:{
+						criterio = new BuscarArtista(textoBusqueda.getText());
+						break;
+					}
+					case album: 
+						criterio = new BuscarAlbum(textoBusqueda.getText());
 					}
 
 					busqueda = controlador.buscaBibliotecaAvanzada(criterio);

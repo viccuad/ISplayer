@@ -120,6 +120,18 @@ public class VistaListaReproduccion extends JPanel implements
 	/** Atributo que indica si lo que se esta mostrando es una busqueda o la biblioteca */
 	boolean busquedaRealizada = false;
 	
+	/** Posición del choice para el titulo */
+	private final int titulo = 0;
+	
+	/** Posición del choice para el genero */
+	private final int genero = 1;
+	
+	/** Posición del choice para el artista */
+	private final int artista = 2;
+	
+	/** Posición del choice para el album */
+	private final int album = 3;
+	
 	
 	// ********************************************************************** //
 	// *************                CONSTRUCTORES               ************* //
@@ -159,23 +171,20 @@ public class VistaListaReproduccion extends JPanel implements
 					CriterioBusqueda criterio = null;
 					
 					switch (tipoBusqueda.getSelectedIndex()){
-					case 0:{
-						criterio = new BuscarAlbum(textoBusqueda.getText());
+					case titulo:{
+						criterio = new BuscarTitulo(textoBusqueda.getText());
 						break;
 					}
-					case 1:{
-
-						criterio = new BuscarArtista(textoBusqueda.getText());
-						break;
-					}
-					case 2:{
-
+					case genero:{
 						criterio = new BuscarGenero(textoBusqueda.getText());
 						break;
 					}
-					case 3: 
-						criterio = new BuscarTitulo(textoBusqueda.getText());
-						
+					case artista:{
+						criterio = new BuscarArtista(textoBusqueda.getText());
+						break;
+					}
+					case album: 
+						criterio = new BuscarAlbum(textoBusqueda.getText());
 					}
 
 					busqueda = controlador.buscaListaReproduccion(criterio);
@@ -198,10 +207,7 @@ public class VistaListaReproduccion extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
 				if (!busquedaRealizada){
-					
-					
 					System.out.println("Mostrar búsqueda");
 
 					buscarAvanzada.setIcon(new ImageIcon(getClass().getResource("/Recursos/Delete.png")));
@@ -210,23 +216,20 @@ public class VistaListaReproduccion extends JPanel implements
 					CriterioBusqueda criterio = null;
 					
 					switch (tipoBusqueda.getSelectedIndex()){
-					case 0:{
-						criterio = new BuscarAlbum(textoBusqueda.getText());
+					case titulo:{
+						criterio = new BuscarTitulo(textoBusqueda.getText());
 						break;
 					}
-					case 1:{
-
-						criterio = new BuscarArtista(textoBusqueda.getText());
-						break;
-					}
-					case 2:{
-
+					case genero:{
 						criterio = new BuscarGenero(textoBusqueda.getText());
 						break;
 					}
-					case 3: 
-						criterio = new BuscarTitulo(textoBusqueda.getText());
-						
+					case artista:{
+						criterio = new BuscarArtista(textoBusqueda.getText());
+						break;
+					}
+					case album: 
+						criterio = new BuscarAlbum(textoBusqueda.getText());
 					}
 
 					busqueda = controlador.buscaListaReproduccionAvanzada(criterio);
@@ -252,32 +255,40 @@ public class VistaListaReproduccion extends JPanel implements
 		
 		// añadimos el listener para el evento de pulsar teclas
 		textoBusqueda.addKeyListener(new KeyListener(){
+			
+			/**
+			 * No es necesario implementar este método
+			 */
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 				//No es necesario implementarlo
 			}
 
-			// cada vez que se libera una tecla se realiza la búsqueda
+			/** 
+			 * Cada vez que se libera una tecla se realiza la búsqueda
+			 */
 			@Override
 			public void keyReleased(KeyEvent arg0) {				
 				switch (tipoBusqueda.getSelectedIndex()) {
-				
-					case 0: busqueda = controlador.buscaListaReproduccionAvanzada(
-									   new BuscarAlbum(textoBusqueda.getText()));
-							break;
-					case 1: busqueda = controlador.buscaListaReproduccionAvanzada(
-									   new BuscarArtista(textoBusqueda.getText()));
-							break;
-					case 2: busqueda = controlador.buscaListaReproduccionAvanzada(
-									   new BuscarGenero(textoBusqueda.getText()));
-							break;
-					case 3: busqueda = controlador.buscaListaReproduccionAvanzada(
-									   new BuscarTitulo(textoBusqueda.getText()));	
-							break;
+					case titulo  : busqueda = controlador.buscaListaReproduccionAvanzada(
+											new BuscarTitulo(textoBusqueda.getText()));										   
+											break;
+					case genero  : busqueda = controlador.buscaListaReproduccionAvanzada(
+											new BuscarGenero(textoBusqueda.getText()));
+											break;
+					case artista : busqueda = controlador.buscaListaReproduccionAvanzada(
+											new BuscarArtista(textoBusqueda.getText()));
+											break;
+					case album   : busqueda = controlador.buscaListaReproduccionAvanzada(
+										    new BuscarAlbum(textoBusqueda.getText()));
+											break;
 				}
 				mostrarBusqueda(busqueda);
 			}
 
+			/**
+			 * No es necesario implementar este método
+			 */
 			@Override
 			public void keyTyped(KeyEvent arg0) {
 				//No es necesario implementarlo
