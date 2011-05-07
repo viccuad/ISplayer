@@ -363,6 +363,7 @@ public class VistaBiblioteca extends JPanel implements
 			public void actionPerformed(ActionEvent e) {
 				int[] canciones = tabla.getSelectedRows();
 				controlador.fromBibliotecaToListaReproduccion(canciones);
+				
 			}
 			
 		});
@@ -381,9 +382,26 @@ public class VistaBiblioteca extends JPanel implements
 				}
 				
 				else if(e.getClickCount() == 2) {
-					int row = e.getY()/tabla.getRowHeight();
+					/*
+					 * int row = e.getY()/tabla.getRowHeight();
 					controlador.fromBibliotecaToListaReproduccion(row);
-				}
+					 */
+						int row = e.getY()/tabla.getRowHeight();
+						System.out.println(row);
+						
+						if (busquedaRealizada){
+							String path = busqueda.get(row).getTotalPath();
+							System.out.println(path);
+							controlador.fromBibliotecaToListaReproduccion(path);
+						}else{
+							String path = controlador.getCanciones().get(row).getTotalPath();
+							System.out.println(path);
+							controlador.fromBibliotecaToListaReproduccion(path);
+						}
+
+					}
+					
+				
 			}
 		});
 
