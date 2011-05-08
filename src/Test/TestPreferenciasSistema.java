@@ -7,7 +7,7 @@ import java.util.Iterator;
 
 import javax.swing.JFileChooser;
 
-import is2011.app.preferencias.PreferenciasSistema;
+import is2011.app.preferencias.Preferencias;
 import is2011.biblioteca.BibliotecaMusical;
 import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
@@ -20,26 +20,24 @@ public class TestPreferenciasSistema {
 	public static void main(String[] args) {
 		
 
-		PreferenciasSistema preferencias = new PreferenciasSistema("/Useres/carlos/Desktop", "/Useres/carlos/Desktop", ModoReproduccionEnum.NORMAL);
+		Preferencias preferencias = Preferencias.getInstance();
 		
-		try {
+		
 			//genera el fichero XML
-			preferencias.guardarXML("src/Recursos/testConf.xml");
+			preferencias.guardarXML();
 			//bib.guardarXML( "src/Recursos/testXML2.xml");
 			//bib.guardarXML("/Users/david/Desktop/pruebaIS/lista.xml");
 			
 			// carga el fichero XML a memoria
-			preferencias.cargarXML("src/Recursos/testConf.xml");
+			//preferencias.cargarXML();
 			//bib.cargarXML("/Users/david/Desktop/pruebaIS/lista.xml");
 			
-		
 			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		
-
+			System.out.println(preferencias.getPathBiblioteca());
+			System.out.println(preferencias.getPathListaReproduccion());
+			System.out.println(preferencias.getPathPreferenciasSistema());
+			System.out.println(preferencias.getVolumen());
+			System.out.println(preferencias.isAbrirUltimaLista());
 	}
 
 }

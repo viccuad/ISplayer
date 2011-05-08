@@ -2,7 +2,7 @@ package is2011.app.controlador;
 
 import java.util.ArrayList;
 
-import is2011.app.preferencias.PreferenciasSistema;
+import is2011.app.preferencias.Preferencias;
 import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.biblioteca.search.CriterioBusqueda;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
@@ -131,10 +131,6 @@ public interface IAppController {
 	public void setModoReproduccion(ModoReproduccionEnum modo);
 	
 
-	public void borrarCanciones();
-	
-	public void reproducirSeleccionada();
-	
 	public boolean listaReproduccionVacia();
 
 	/**
@@ -148,20 +144,12 @@ public interface IAppController {
 	 */
 	public void fromBibliotecaToListaReproduccion(String path);
 	
-	/**
-	 * Actualiza las preferencias del sistema con los parametros recogidos a traves de la interfaz
-	 * @param pathBib
-	 * @param pathListaRep
-	 * @param modo
-	 */
-	public void actualizaPreferencias(String pathBib, String pathListaRep, ModoReproduccionEnum modo);
-	
 	
 	/**
 	 * Devuevle las preferencias del sistema
 	 * @return
 	 */
-	public PreferenciasSistema getPreferencias();
+	public Preferencias getPreferencias();
 
 	/**
 	 * Borra una cancion determinada por su numero de orden en la lista de repro
@@ -282,4 +270,10 @@ public interface IAppController {
 	 * Ordena las canciones de la biblioteca por titulo
 	 */
 	public void ordenarBibliotecaPorTitulo();
+
+	/**
+	 * Realizas las operaciones oportunas antes de cerrar la apliacion...
+	 * Guarda la las preferencias, lista de reproduccion....
+	 */
+	public void requestSalir();
 }

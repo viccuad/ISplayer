@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
 
+
 import is2011.app.preferencias.Preferencias;
 import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.biblioteca.search.CriterioBusqueda;
@@ -83,7 +84,7 @@ public class ControladorReproductor {
 			try {
 				this.reproductor.open(cancion);
 				this.reproductor.play();
-				this.reproductor.setVolumen(Preferencias.getInstancia().getVolumen());
+				this.reproductor.setVolumen(Preferencias.getInstance().getVolumen());
 			} catch (BasicPlayerException e) {
 				e.printStackTrace();
 			}
@@ -100,6 +101,14 @@ public class ControladorReproductor {
 			listaReproduccion.setActual(cancionSeleccionada + 1);
 		}
 		this.play();
+	}
+	
+	public void guardarListaActual() {
+		try {
+			this.listaReproduccion.guardarXML(Preferencias.getInstance().getPathListaReproduccionDefecto());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

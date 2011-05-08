@@ -416,7 +416,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 					/bytesMusica)*1000));
 		}else if (event.getCode() == BasicPlayerEvent.GAIN) {
 			this.volumen.setValue( (int) ((1- Math.sqrt(event.getValue()))*100));
-			Preferencias.getInstancia().setVolumen(Math.sqrt(event.getValue()));
+			Preferencias.getInstance().setVolumen((float) Math.sqrt(event.getValue()));
 		
 		}
 		

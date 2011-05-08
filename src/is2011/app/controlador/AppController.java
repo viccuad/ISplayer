@@ -10,7 +10,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import is2011.app.preferencias.PreferenciasSistema;
+import is2011.app.preferencias.Preferencias;
 import is2011.biblioteca.BibliotecaMusical;
 import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.biblioteca.search.CriterioBusqueda;
@@ -37,7 +37,7 @@ public class AppController implements IAppController {
 	/** Biblioteca de la aplicacion */
 	private BibliotecaMusical biblioteca;
 	/** Archivo de preferencias del sistema */
-	private PreferenciasSistema preferencias;
+	private Preferencias preferencias;
 	
 	// ********************************************************************** //
 	// *************                CONSTRUCTOR                 ************* //
@@ -47,32 +47,8 @@ public class AppController implements IAppController {
 	 */
 	public AppController(ControladorReproductor rep, BibliotecaMusical bib) {
 		reproductor = rep;
-		try{
-			
-			String home = System.getProperty("user.home");
-			home = home+File.separator+"ISPlayer";
-			
-			File f = new File(home);
-			f.mkdir();
-			
-			home = home+File.separator;
-			
-			File pref = new File(home+"ISPlayerPreferences.xml");
-			
-			if (pref.canRead()){
-				// Si ya tienes fichero de preferencias
-				preferencias = new PreferenciasSistema();
-				preferencias.cargarXML(home+"ISPlayerPreferences.xml");
-			}else{
-				// Si todavia no tienes fichero de preferencias
-				preferencias = new PreferenciasSistema(home+"ISPlayerBiblioteca.xml", home+"ISPlayerListaReproduccion.xml", ModoReproduccionEnum.NORMAL);
-				preferencias.guardarXML(home+"ISPlayerPreferences.xml");
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
 		biblioteca = bib;
+		preferencias = Preferencias.getInstance();
 	}
 	
 	// ********************************************************************** //
@@ -86,7 +62,7 @@ public class AppController implements IAppController {
 	 */
 	private File[] abrirArchivo()
 	    {
-	        JFileChooser fileChooser = new JFileChooser();
+	        JFileChooser fileChooser = new JFileChooser(Preferencias.getInstance().getUltimoDirectorioAbierto());
 	        //FileDialog fileChooser = new FileDialog(new JFrame(), "Cargar", FileDialog.LOAD);
 	        //Lo configuramos para permitir apertura multiple
 	        fileChooser.setMultiSelectionEnabled(true);
@@ -112,6 +88,10 @@ public class AppController implements IAppController {
 	        if (seleccion == JFileChooser.APPROVE_OPTION)
 	        {
 	            File[] files = fileChooser.getSelectedFiles();
+	            if(files.length>0) {
+	            	this.preferencias.setUltimoDirectorioAbierto(
+	            			files[0].getParentFile().getAbsolutePath());
+	            }
 	            
 	            //Si algun fichero no esta soportado, lo quitamos de la 
 	            //seleccion.
@@ -129,7 +109,7 @@ public class AppController implements IAppController {
 	    }
 	
 	// ********************************************************************** //
-	// *************              METODOS PUBLICOS             ************* //
+	// *************              METODOS PUBLICOS              ************* //
 	// ********************************************************************** //
 	@Override
 	public boolean play(int cancionSeleccionada) {
@@ -210,18 +190,6 @@ public class AppController implements IAppController {
 		this.reproductor.setModoRepdroduccion(modo);
 	}
 	
-	@Override
-	public void borrarCanciones() {
-		// TODO Implementar
-		
-	}
-
-	@Override
-	public void reproducirSeleccionada() {
-		// TODO Implementar
-		
-	}
-
 	@Override
 	public boolean listaReproduccionVacia() {
 		return reproductor.listaReproduccionVacia();
@@ -353,22 +321,6 @@ public class AppController implements IAppController {
 		reproductor.aniadirCancion(path);
 	}
 	
-	public void actualizaPreferencias(String bib, String listaRep, ModoReproduccionEnum modo){
-		
-		preferencias.setPathBiblioteca(bib);
-		preferencias.setPathListaReproduccion(listaRep);
-		preferencias.setModoReproduccion(modo);
-		
-		System.out.println("Modificado archivo de preferencias");
-		
-		try {
-			preferencias.guardarXML(preferencias.getPathPreferenciasSistema());
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
 	@Override
 	public void cargarArchivosPreferencias(){
 		
@@ -383,16 +335,23 @@ public class AppController implements IAppController {
 		}
 		
 		// Carga la lista de reproduccion si existe
-		File listaRepXML = new File(preferencias.getPathListaReproduccion());
+		String path;
+		
+		if(preferencias.getPathListaReproduccion() == "") {
+			path = preferencias.getPathListaReproduccion();
+		}else {
+			path = preferencias.getPathListaReproduccionDefecto();
+		}
+		File listaRepXML = new File(path);
 		if (listaRepXML.canRead()) {
-
-			reproductor.cargarListaReproduccion(preferencias.getPathListaReproduccion());
+			
+			reproductor.cargarListaReproduccion(path);
 
 		}
 	}
 
 	@Override
-	public PreferenciasSistema getPreferencias() {
+	public Preferencias getPreferencias() {
 		return preferencias;
 	}
 
@@ -433,7 +392,7 @@ public class AppController implements IAppController {
 	public void guardarListaReproduccion() {
 		String ruta = "";
 		
-		ArrayList<String> dir = new ArrayList<String>();
+		//ArrayList<String> dir = new ArrayList<String>();
 		
 		JFileChooser fileChooser = new JFileChooser();
 		
@@ -451,7 +410,7 @@ public class AppController implements IAppController {
 	public void cargarListaReproduccion() {
 		String ruta = "";
 		
-		ArrayList<String> dir = new ArrayList<String>();
+		//ArrayList<String> dir = new ArrayList<String>();
 
 		
 		JFileChooser fileChooser = new JFileChooser();
@@ -498,7 +457,7 @@ public class AppController implements IAppController {
 		for (int i : posiciones) {
 			this.reproductor.aniadirCancion(
 					this.biblioteca.getCanciones().get(i).getTotalPath());
-			;
+			
 		}
 		
 	}
@@ -529,6 +488,17 @@ public class AppController implements IAppController {
 	@Override
 	public void ordenarBibliotecaPorTitulo() {
 		this.biblioteca.ordenar(new SortTitulo());
+	}
+
+	@Override
+	public void requestSalir() {
+		if(Preferencias.getInstance().isHayCambios()) {
+			Preferencias.getInstance().guardarXML();
+			if (this.reproductor.getCancionesListaReproduccion().size() >0) {
+				this.reproductor.guardarListaActual();
+			}
+		}
+		
 	}
 
 }

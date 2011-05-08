@@ -65,7 +65,7 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 			}else {
 				this.buscar(0);
 			}
-			this.setVolumen(Preferencias.getInstancia().getVolumen());
+			this.setVolumen(Preferencias.getInstance().getVolumen());
 			 
 		}
 		
@@ -130,7 +130,7 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 		} catch (BasicPlayerException e) {
 			e.printStackTrace();
 		}
-		this.setVolumen(Preferencias.getInstancia().getVolumen());
+		this.setVolumen(Preferencias.getInstance().getVolumen());
 	}
 	
 }
