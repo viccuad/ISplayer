@@ -37,6 +37,7 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
 /**
@@ -337,6 +338,38 @@ public class VistaListaReproduccion extends JPanel implements
 		//Le añadimos el scroll
 		panelScroll.setViewportView(tabla);
 		
+		JTableHeader header = tabla.getTableHeader() ; 
+
+		header.addMouseListener( 
+		  new MouseAdapter() 
+		  { 
+		    public void mouseClicked(MouseEvent e) 
+		    { 
+		      JTableHeader h = (JTableHeader)e.getSource() ; 
+		      int nColumn = h.columnAtPoint(e.getPoint());
+		      System.out.println(nColumn);
+		      switch (nColumn) {
+		      case NUM_COLUMNA_ALBUM:
+		    	  controlador.ordenarPorAlbum();
+		    	  break;
+		      case NUM_COLUMNA_ARTISTA:
+		    	  controlador.ordenarPorArtista();
+		    	  break;
+		      case NUM_COLUMNA_DURACION:
+		    	  controlador.ordenarPorDuracion();
+		    	  break;
+		      case NUM_COLUMNA_GENERO:
+		    	  controlador.ordenarPorGenero();
+		    	  break;
+		      case NUM_COLUMNA_TITULO:
+		    	  controlador.ordenarPorTitulo();
+		    	  break;
+		      }
+		    } 
+		  } 
+		) ; 
+
+
 		//La cabecera de la tabla.
 		this.modoReproduccion = new JLabel("Modo de reproducción NORMAL");
 		
