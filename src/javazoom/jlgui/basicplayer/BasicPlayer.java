@@ -36,7 +36,6 @@ import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Control;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.Line;
@@ -54,6 +53,8 @@ import org.tritonus.share.sampled.file.TAudioFileFormat;
  * BasicPlayer is a threaded simple player class based on JavaSound API.
  * It has been successfully tested under J2SE 1.3.x, 1.4.x and 1.5.x.
  */
+@SuppressWarnings(value={"deprecation","unchecked"})
+
 public class BasicPlayer implements BasicController, Runnable
 {
 	public static int EXTERNAL_BUFFER_SIZE = 4000 * 4;
@@ -84,7 +85,8 @@ public class BasicPlayer implements BasicController, Runnable
     public static final int SEEKING = 4;
     protected int m_status = UNKNOWN;
     // Listeners to be notified.
-    private Collection m_listeners = null;
+    
+	private Collection m_listeners = null;
     private Map empty_map = new HashMap();
 
     /**
@@ -238,7 +240,8 @@ public class BasicPlayer implements BasicController, Runnable
     /**
      * Open file to play.
      */
-    public void open(File file) throws BasicPlayerException
+    
+	public void open(File file) throws BasicPlayerException
     {
     	if(m_thread != null) {
     		m_thread.stop();
@@ -698,7 +701,7 @@ public class BasicPlayer implements BasicController, Runnable
     				if (nBytesRead >= 0) {
     					//synchronized (m_line) {
     						if(m_line!= null) {
-    							int nBytesWritten = m_line.write(abData, 0, nBytesRead);
+    							 m_line.write(abData, 0, nBytesRead);
     						}
     					//}
     					//int nBytesWritten = m_line.write(abData, 0, nBytesRead);

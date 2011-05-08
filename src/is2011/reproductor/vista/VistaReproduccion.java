@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
+import javax.swing.JSlider;
 
 
 import javazoom.jlgui.basicplayer.BasicController;
@@ -37,7 +38,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	private IAppController controlador;
 	
 	/** Progreso*/
-	private JScrollBar progreso;
+	private JSlider progreso;
 	
 	/** Muestra el estado de la reproduccion*/
 	private JLabel labelEstado;
@@ -178,7 +179,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		if(this.progreso != null) {
 			this.remove(progreso);
 		}
-		this.progreso = new JScrollBar(JScrollBar.HORIZONTAL, 0, 0, 0, 1000);
+		this.progreso = new JSlider(JSlider.HORIZONTAL, 0, 1000, 0);
 		this.progreso.setEnabled(false);
 		
 		this.progreso.addMouseMotionListener(new MouseMotionAdapter(){

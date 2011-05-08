@@ -28,6 +28,7 @@ import java.util.Map;
  * This interface defines callbacks methods that will be notified
  * for all registered BasicPlayerListener of BasicPlayer.
  */
+@SuppressWarnings("unchecked")
 public interface BasicPlayerListener
 {
     /**
@@ -40,7 +41,8 @@ public interface BasicPlayerListener
      * @param stream could be File, URL or InputStream
      * @param properties audio stream properties.
      */
-    public void opened(Object stream, Map properties);
+    
+	public void opened(Object stream, Map properties);
 
     /**
      * Progress callback while playing.
