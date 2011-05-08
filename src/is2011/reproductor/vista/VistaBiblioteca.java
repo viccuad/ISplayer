@@ -259,19 +259,20 @@ public class VistaBiblioteca extends JPanel implements
 			@Override
 			public void keyReleased(KeyEvent arg0) {				
 				switch (tipoBusqueda.getSelectedIndex()) {
-					case titulo  : busqueda = controlador.buscaListaReproduccionAvanzada(
+					case titulo  : busqueda = controlador.buscaBibliotecaAvanzada(
 											new BuscarTitulo(textoBusqueda.getText()));										   
 											break;
-					case genero  : busqueda = controlador.buscaListaReproduccionAvanzada(
+					case genero  : busqueda = controlador.buscaBibliotecaAvanzada(
 											new BuscarGenero(textoBusqueda.getText()));
 											break;
-					case artista : busqueda = controlador.buscaListaReproduccionAvanzada(
+					case artista : busqueda = controlador.buscaBibliotecaAvanzada(
 											new BuscarArtista(textoBusqueda.getText()));
 											break;
-					case album   : busqueda = controlador.buscaListaReproduccionAvanzada(
+					case album   : busqueda = controlador.buscaBibliotecaAvanzada(
 										    new BuscarAlbum(textoBusqueda.getText()));
 											break;
 				}
+		
 				mostrarBusqueda(busqueda);
 				busquedaRealizada = true;
 			}
