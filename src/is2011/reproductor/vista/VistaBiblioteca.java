@@ -360,7 +360,7 @@ public class VistaBiblioteca extends JPanel implements
 		ordenar.add(ordenarDuracion);
 		ordenar.add(ordenarTitulo);
 		
-		this.popup.add(ordenar);
+		//this.popup.add(ordenar);
 		
 		ordenarAlbum.addActionListener(new ActionListener(){
 
@@ -409,7 +409,23 @@ public class VistaBiblioteca extends JPanel implements
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int[] canciones = tabla.getSelectedRows();
-				controlador.fromBibliotecaToListaReproduccion(canciones);
+				
+				
+				if (busquedaRealizada){
+					for(int i : canciones) {
+						String path = busqueda.get(i).getTotalPath();
+						//System.out.println(path);
+						controlador.fromBibliotecaToListaReproduccion(path);	
+					}
+
+				}else{
+					for(int i : canciones) {
+						String path = controlador.getCanciones().get(i).getTotalPath();
+						//System.out.println(path);
+						controlador.fromBibliotecaToListaReproduccion(path);
+					}
+				}
+				
 				
 			}
 			
@@ -604,7 +620,7 @@ public class VistaBiblioteca extends JPanel implements
 			
 			pos++;
 		}
-		
+		System.out.println(pos);
 		
 	};
 	
