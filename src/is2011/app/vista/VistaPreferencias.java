@@ -85,8 +85,12 @@ public class VistaPreferencias extends JFrame{
 		examinarBiblioteca.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Preferencias.getInstance().setPathBiblioteca(openXML().getAbsolutePath());
-				textPathBiblioteca.setText(Preferencias.getInstance().getPathBiblioteca());
+				File f = openXML();
+				if(f!= null) {
+					Preferencias.getInstance().setPathBiblioteca(f.getAbsolutePath());
+					textPathBiblioteca.setText(Preferencias.getInstance().getPathBiblioteca());
+				}
+				
 			}
 		});
 		
@@ -108,8 +112,11 @@ public class VistaPreferencias extends JFrame{
 		examinarListaReproduccion.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Preferencias.getInstance().setPathListaReproduccion(openXML().getAbsolutePath());
-				textPathListaReproduccion.setText(Preferencias.getInstance().getPathListaReproduccion());
+				File f = openXML();
+				if(f!= null) {
+					Preferencias.getInstance().setPathListaReproduccion(f.getAbsolutePath());
+					textPathListaReproduccion.setText(Preferencias.getInstance().getPathListaReproduccion());
+				}
 			}
 		});
 		

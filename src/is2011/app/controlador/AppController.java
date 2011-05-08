@@ -212,7 +212,7 @@ public class AppController implements IAppController {
 			for (File f : files) {		
 				ruta = f.getAbsolutePath();
 				dir.add(ruta);
-				System.out.println(f.getAbsolutePath());
+				//System.out.println(f.getAbsolutePath());
 			}			
 		}
 		
@@ -300,7 +300,7 @@ public class AppController implements IAppController {
 			for (File f : files) {		
 				ruta = f.getAbsolutePath();
 				dir.add(ruta);
-				System.out.println(f.getAbsolutePath());
+				//System.out.println(f.getAbsolutePath());
 			}			
 		}
 
@@ -337,7 +337,7 @@ public class AppController implements IAppController {
 		// Carga la lista de reproduccion si existe
 		String path;
 		
-		if(preferencias.getPathListaReproduccion() == "") {
+		if(!preferencias.getPathListaReproduccion().equals("")) {
 			path = preferencias.getPathListaReproduccion();
 		}else {
 			path = preferencias.getPathListaReproduccionDefecto();

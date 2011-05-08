@@ -432,15 +432,15 @@ public class VistaBiblioteca extends JPanel implements
 					controlador.fromBibliotecaToListaReproduccion(row);
 					 */
 						int row = e.getY()/tabla.getRowHeight();
-						System.out.println(row);
+						//System.out.println(row);
 						
 						if (busquedaRealizada){
 							String path = busqueda.get(row).getTotalPath();
-							System.out.println(path);
+							//System.out.println(path);
 							controlador.fromBibliotecaToListaReproduccion(path);
 						}else{
 							String path = controlador.getCanciones().get(row).getTotalPath();
-							System.out.println(path);
+							//System.out.println(path);
 							controlador.fromBibliotecaToListaReproduccion(path);
 						}
 
@@ -557,7 +557,7 @@ public class VistaBiblioteca extends JPanel implements
 
 			nuevaCancion(new NuevaCancionEvent(aux.getTitulo(), aux.getAlbum(), aux.getPista(), 
 					     aux.getArtista(), aux.getGenero(), aux.getDuracion(), pos++));
-			System.out.println(aux.getTitulo());
+			//System.out.println(aux.getTitulo());
 		}
 	}
 	
@@ -578,7 +578,7 @@ public class VistaBiblioteca extends JPanel implements
 
 			nuevaCancion(new NuevaCancionEvent(aux.getTitulo(), aux.getAlbum(), aux.getPista(), 
 					     aux.getArtista(), aux.getGenero(), aux.getDuracion(), pos++));
-			System.out.println(aux.getTitulo());
+			//System.out.println(aux.getTitulo());
 		}
 	}
 
