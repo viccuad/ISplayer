@@ -273,6 +273,7 @@ public class VistaBiblioteca extends JPanel implements
 											break;
 				}
 				mostrarBusqueda(busqueda);
+				busquedaRealizada = true;
 			}
 
 			/**
