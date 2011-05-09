@@ -46,9 +46,9 @@ public class VistaPrincipal extends JFrame
 	
 	private IAppController controlador;
 	
-
-	private JButton play;
-	private JButton pause;
+	private JButton playPause;
+	//private JButton play;
+	//private JButton pause;
 	private JButton stop;
 	private JButton avanzar;
 	private JButton atrasar;
@@ -88,6 +88,10 @@ public class VistaPrincipal extends JFrame
 	private VistaListaReproduccion vistaListaReproduccion;
 	private VistaBiblioteca vistaBiblioteca;
 	private VistaPreferencias vistaPreferencias;
+	
+	
+	private boolean reproduciendo;
+	private boolean reproduciendo2;
 
 	
 
@@ -104,16 +108,22 @@ public class VistaPrincipal extends JFrame
 		JPanel panelPpal = new JPanel();
 		panelPpal.setLayout(new GridLayout(1,8));
 		
-		play = new JButton();
+		playPause = new JButton();
+		playPause.setBorder(BorderFactory.createEmptyBorder());
+		playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
+		panelPpal.add(playPause);
+		
+		/*play = new JButton();
 		play.setBorder(BorderFactory.createEmptyBorder());
 		play.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
-		panelPpal.add(play);
+		panelPpal.add(play);*/
 
 		
-		pause = new JButton();
+		/*pause = new JButton();
 		pause.setBorder(BorderFactory.createEmptyBorder());
 		pause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pause.png")));
-		panelPpal.add(pause);
+		panelPpal.add(pause);*/
+		
 		
 		stop = new JButton();
 		stop.setBorder(BorderFactory.createEmptyBorder());
@@ -244,7 +254,7 @@ public class VistaPrincipal extends JFrame
 			
 		);
 		
-		play.addMouseListener(new MouseAdapter() {
+		/*play.addMouseListener(new MouseAdapter() {
 			public void mousePressed (MouseEvent e) {
 				play.setBorder(BorderFactory.createEmptyBorder());
 				play.setIcon(new ImageIcon(getClass().getResource("/Recursos/playPush.png")));				
@@ -264,22 +274,113 @@ public class VistaPrincipal extends JFrame
 				play.setBorder(BorderFactory.createEmptyBorder());
 				play.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
 			}
-		});
+		});*/
 		
-		play.addActionListener(new ActionListener(){
+		
+		/*play.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				int cancionSeleccionada = vistaListaReproduccion.getCancionSeleccionada();
+    			
+				controlador.play(cancionSeleccionada);
+			}
+		});*/
+		
+		
+		playPause.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int cancionSeleccionada = vistaListaReproduccion.getCancionSeleccionada();
-				
-				
+				if(!reproduciendo){
+					
+					playPause.addMouseListener(new MouseAdapter() {
+						public void mousePressed (MouseEvent e) {
+							playPause.setBorder(BorderFactory.createEmptyBorder());
+							playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pausePush.png")));				
+						}			
+						
+						public void mouseReleased (MouseEvent e) {
+							playPause.setBorder(BorderFactory.createEmptyBorder());
+							playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pauseEnt.png")));				
+						}
+						
+						public void mouseEntered  (MouseEvent e) { 
+							playPause.setBorder(BorderFactory.createEmptyBorder());
+							playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pauseEnt.png")));
+					      }
+
+						public void mouseExited (MouseEvent e) {
+							playPause.setBorder(BorderFactory.createEmptyBorder());
+							playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pause.png")));
+						}
+					});
+					reproduciendo = true;
+					reproduciendo2 = true;
+					int cancionSeleccionada = vistaListaReproduccion.getCancionSeleccionada();
+				    			
 					controlador.play(cancionSeleccionada);
-				
+							
+				}
+				else{
+					
+					controlador.pause();
+					
+					if(reproduciendo2){
+					playPause.addMouseListener(new MouseAdapter() {
+						public void mousePressed (MouseEvent e) {
+							playPause.setBorder(BorderFactory.createEmptyBorder());
+							playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playPush.png")));				
+						}			
+						
+						public void mouseReleased (MouseEvent e) {
+							playPause.setBorder(BorderFactory.createEmptyBorder());
+							playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));				
+						}
+						
+						public void mouseEntered  (MouseEvent e) { 
+							playPause.setBorder(BorderFactory.createEmptyBorder());
+							playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));
+					      }
+
+						public void mouseExited (MouseEvent e) {
+							playPause.setBorder(BorderFactory.createEmptyBorder());
+							playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
+						}
+					});
+					reproduciendo2 = false;
+					}
+					else{
+						playPause.addMouseListener(new MouseAdapter() {
+							public void mousePressed (MouseEvent e) {
+								playPause.setBorder(BorderFactory.createEmptyBorder());
+								playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pausePush.png")));				
+							}			
+							
+							public void mouseReleased (MouseEvent e) {
+								playPause.setBorder(BorderFactory.createEmptyBorder());
+								playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pauseEnt.png")));				
+							}
+							
+							public void mouseEntered  (MouseEvent e) { 
+								playPause.setBorder(BorderFactory.createEmptyBorder());
+								playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pauseEnt.png")));
+						      }
+
+							public void mouseExited (MouseEvent e) {
+								playPause.setBorder(BorderFactory.createEmptyBorder());
+								playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pause.png")));
+							}
+						});
+						reproduciendo2 = true;
+					}
+					//reproduciendo = false;
+					
 					
 				}
 			}
+			}
 		);
 		
-		pause.addMouseListener(new MouseAdapter(){
+		/*pause.addMouseListener(new MouseAdapter(){
 			public void mousePressed (MouseEvent e) {
 				pause.setBorder(BorderFactory.createEmptyBorder());
 				pause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pausePush.png")));				
@@ -305,7 +406,7 @@ public class VistaPrincipal extends JFrame
 			public void actionPerformed(ActionEvent e) {
 				controlador.pause();
 			}
-		});
+		});*/
 		
 		stop.addMouseListener(new MouseAdapter(){
 			public void mousePressed (MouseEvent e) {
@@ -332,6 +433,8 @@ public class VistaPrincipal extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				controlador.stop();
+				reproduciendo = false;
+				reproduciendo2 = false;
 			}
 		});
 		
@@ -496,7 +599,8 @@ public class VistaPrincipal extends JFrame
 		this.setTitle("ISPlayer v0.1");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLayout(new GridBagLayout());
-
+		this.reproduciendo = false;
+		this.reproduciendo2 = false;
 		
 		grid.gridx       = 0;
         grid.gridy       = 0;
