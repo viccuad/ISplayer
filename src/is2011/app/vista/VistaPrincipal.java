@@ -9,6 +9,7 @@ import is2011.reproductor.vista.VistaListaReproduccion;
 import is2011.reproductor.vista.VistaReproduccion;
 
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -32,6 +33,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
+import javax.swing.JSlider;
 
 
 import javax.swing.JFrame;
@@ -431,13 +433,14 @@ public class VistaPrincipal extends JFrame
 		
         this.add(vistaRep,grid);
 
-        JScrollBar volumen =  this.vistaReproduccion.getVolumen();
+        JSlider volumen =  this.vistaReproduccion.getVolumen();
+        volumen.setPreferredSize(new Dimension(20,100));
         grid.gridx       = 2;
         grid.gridy       = 0;
         grid.gridheight  = 2;
         grid.gridwidth   = 1;
         grid.weightx     = 0.0;
-        grid.weighty     = 1;
+        grid.weighty     = 0.0;
         grid.fill        = GridBagConstraints.BOTH;
 
         this.add(volumen, grid);
