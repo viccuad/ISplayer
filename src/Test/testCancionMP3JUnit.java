@@ -12,12 +12,12 @@ import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.audio.mp3.MP3AudioHeader;
-import org.jaudiotagger.tag.Tag;
+
 import org.jaudiotagger.tag.TagException;
 
 public class testCancionMP3JUnit extends TestCase{
 	
+	@SuppressWarnings("unused")
 	private AudioFile filemp3=null;
 	//private MP3AudioHeader headermp3=null;
 	private String path;

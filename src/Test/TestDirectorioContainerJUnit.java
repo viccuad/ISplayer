@@ -18,10 +18,9 @@ import is2011.biblioteca.contenedores.DirectorioContainer;
 
 public class TestDirectorioContainerJUnit extends TestCase{
 
-	private AudioFile filemp3=null;
-	//private MP3AudioHeader headermp3=null;
-	private String path,pathprueba;
-	//private Tag tag=null;
+	@SuppressWarnings("unused")
+	private AudioFile filemp3 = null;
+	private String path,pathprueba,pathprueba2;
 	private DirectorioContainer dir, dir1cancion, dirvacio;
 	private CancionContainer c1;
 	private ArrayList<CancionContainer> lista, lista1;
@@ -36,26 +35,22 @@ public class TestDirectorioContainerJUnit extends TestCase{
 	
 	
 	public void setUp() {
-		DirectorioContainer dirvacio = new DirectorioContainer("path");
-		path = "src/Recursos/01 Purple Haze.mp3";    
-		pathprueba ="prueba";
+		
+		
+		path = "src/Recursos/01 Purple Haze.mp3";    // no cambiar!
+		pathprueba = path;
+		pathprueba2 = "";
 		try {
-			lista = new ArrayList<CancionContainer>();
+			
 			filemp3 = AudioFileIO.read(new File(path));
 			c1 = new CancionContainer(path);
+			lista = new ArrayList<CancionContainer>();
 			for (int i = 0;  i < 5; i++){
 				c1.setPista(i);
 				lista.add(c1);
 			}
 		
-		DirectorioContainer dir = new DirectorioContainer(pathprueba,lista);
-		dirvacio.setListaCanciones(lista);		
-			
-		lista1 = new ArrayList<CancionContainer>();
-		lista1.add(c1);
-		DirectorioContainer dir1cancion = new DirectorioContainer("path",lista1);
-		
-		
+
 		} catch (CannotReadException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -73,60 +68,76 @@ public class TestDirectorioContainerJUnit extends TestCase{
 			e.printStackTrace();
 		}
 		
+		DirectorioContainer dirvacio = new DirectorioContainer(pathprueba);
+		DirectorioContainer dir = new DirectorioContainer(pathprueba,lista);	
+			
+		lista1 = new ArrayList<CancionContainer>();
+		lista1.add(c1);
+		DirectorioContainer dir1cancion = new DirectorioContainer(pathprueba,lista1);
+		
+		
 	}
 	
 	
 	public void testConstvaciaDirectorioContainer() {
-		DirectorioContainer dirprueba = new DirectorioContainer("pathprueba");
-		dirprueba.setListaCanciones(dirvacio.getListaCanciones());
+		DirectorioContainer dirprueba = new DirectorioContainer(pathprueba);
 		assertEquals(dirprueba, dirvacio);
 		
 	}
 	
 	public void testConstDirectorioContainer() {
-		DirectorioContainer dirprueba = new DirectorioContainer("pathprueba", dirvacio.getListaCanciones());
-		assertEquals(dirprueba, dirvacio);
+		ArrayList<CancionContainer> listaaux = new ArrayList<CancionContainer>();
+		listaaux = lista;
+		DirectorioContainer dirprueba = new DirectorioContainer(pathprueba, listaaux);
+		assertEquals(dirprueba, dir);
 		
 	}
 	
 	public void testAddCancion() {
-		DirectorioContainer dir1 = new DirectorioContainer("pathprueba");
+		DirectorioContainer dir1 = new DirectorioContainer(pathprueba);
 		dir1.addCancion(c1);
 		assertEquals(dir1, dir1cancion);
 	}
 	
 	public void testActualizarPathCanciones() {
-		dir1cancion.actualizarPathCanciones();
-		DirectorioContainer dirprueba = new DirectorioContainer("pathprueba");
-		c1.setTrackPath(pathprueba + File.separator + c1.getTrackPath());
-		dirprueba.getListaCanciones().add(c1);
+		DirectorioContainer dir1cancionprueba = new DirectorioContainer(pathprueba, lista1);
+		DirectorioContainer dirprueba = new DirectorioContainer(pathprueba);
+		dirprueba.actualizarPathCanciones();
+		CancionContainer c2 = new CancionContainer(path); 
+		c2.setTrackPath(pathprueba + File.separator + c1.getTrackPath());
+		dir1cancionprueba.getListaCanciones().add(c1);
 		assertEquals(dirprueba, dir1cancion);
 	}
 	
 	public void testExisteCancion() {
-		DirectorioContainer dirprueba = new DirectorioContainer("pathprueba");
-		dirprueba.getListaCanciones().add(c1);
-		assertTrue(dirprueba.existeCancion(c1.getTitulo()));
+		DirectorioContainer dirprueba = new DirectorioContainer(pathprueba,lista1);
+		assertTrue(dirprueba.existeCancion(c1.getTitulo()) == true);
 		
 		
 	}
 	
 	public void testGetListaCanciones(){
-		ArrayList<CancionContainer> listaprueba = new ArrayList<CancionContainer>();
-		listaprueba.add(c1);
-		assertEquals(listaprueba, dir1cancion.getListaCanciones());
+		assertEquals(dir.getListaCanciones(),lista);
 	}
 	
 	
 	public void testGetPath() {
-		String pathaux = "prueba";
-		assertEquals(pathaux, dir.getPath());
+		String pathaux = "src/Recursos/01 Purple Haze.mp3";    
+		assertTrue(dir.getPath().compareTo(pathaux) == 0);
 	}
 	
-	public void testGetListaCanciones(ArrayList<CancionContainer> listaCanciones) {
-		DirectorioContainer dirprueba = new DirectorioContainer("pathprueba");
+	public void testSetListaCanciones(){
+		DirectorioContainer dirprueba = new DirectorioContainer(pathprueba);
 		dirprueba.setListaCanciones(lista);
-		assertEquals(dirprueba.getListaCanciones(), lista);
+		assertEquals(dirprueba, dir);
+	}
+	
+	
+	public void testSetPath() {
+		String pathaux = "src/Recursos/01 Purple Haze.mp3";  
+		DirectorioContainer dirprueba = new DirectorioContainer(pathprueba2);
+		dirprueba.setPath(pathaux);
+		assertEquals(dirprueba, dir);
 	}
 	
 	
@@ -136,11 +147,13 @@ public class TestDirectorioContainerJUnit extends TestCase{
 		TestSuite suite=new TestSuite("Directorio");
 		suite.addTest(new TestDirectorioContainerJUnit("testConstvaciaDirectorioContainer"));
 		suite.addTest(new TestDirectorioContainerJUnit("testConstDirectorioContainer"));
-		suite.addTest(new TestDirectorioContainerJUnit("testAddCancion"));
 		suite.addTest(new TestDirectorioContainerJUnit("testActualizarPathCanciones"));
+		suite.addTest(new TestDirectorioContainerJUnit("testAddCancion"));
 		suite.addTest(new TestDirectorioContainerJUnit("testExisteCancion"));
 		suite.addTest(new TestDirectorioContainerJUnit("testGetListaCanciones"));
 		suite.addTest(new TestDirectorioContainerJUnit("testGetPath"));
+		suite.addTest(new TestDirectorioContainerJUnit("testSetListaCanciones"));
+		suite.addTest(new TestDirectorioContainerJUnit("testSetPath"));
 		raiz.addTest(suite);
 		return raiz;
 		
@@ -148,6 +161,14 @@ public class TestDirectorioContainerJUnit extends TestCase{
 	
 	public boolean assertEquals(DirectorioContainer d1, DirectorioContainer d2){
 		return d1.equals(d2);
+	}
+	
+	public boolean assertEquals(CancionContainer c1, CancionContainer c2){
+		return c1.equals(c2);
+	}
+		
+	public boolean assertEquals(ArrayList<CancionContainer>  c1, ArrayList<CancionContainer>  c2){
+		return c1.equals(c2);
 	}
 	
 }

@@ -21,13 +21,16 @@ public class JUnitBibliotecaContainer extends TestCase{
 	
 	public void setUp(){
 		
-		String path = "C:/hlocal/01 Purple Haze.mp3";
+		String path = "src/Recursos/01 Purple Haze.mp3";
 		c1 = new CancionContainer(path);
+		listaCanciones = new ArrayList<CancionContainer>();
+		listaCanciones.add(c1);
 	}
 	
 	public void testAddCancion(){
 		
-		listaCanciones.add(c1);
+		
+		BibliotecaContainer bib = new BibliotecaContainer();
 		bib.addCancion(c1);
 		ArrayList<CancionContainer> obtenida = bib.getArrayListCanciones();
 		assertEquals(listaCanciones, obtenida);
@@ -47,5 +50,13 @@ public class JUnitBibliotecaContainer extends TestCase{
 		return raiz;		
 	}
 	
+	
+	public boolean assertEquals(CancionContainer c1, CancionContainer c2){
+		return c1.equals(c2);
+	}
+	
+	public boolean assertEquals(ArrayList<CancionContainer>  c1, ArrayList<CancionContainer>  c2){
+		return c1.equals(c2);
+	}
 	
 }

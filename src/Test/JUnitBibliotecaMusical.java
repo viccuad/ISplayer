@@ -1,6 +1,7 @@
 package Test;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import is2011.biblioteca.BibliotecaMusical;
@@ -62,4 +63,10 @@ public class JUnitBibliotecaMusical extends TestCase{
 	public boolean assertEquals(CancionContainer c1, CancionContainer c2){
 		return c1.equals(c2);
 	}
+
+	public boolean assertEquals(ArrayList<CancionContainer>  c1, ArrayList<CancionContainer>  c2){
+		return c1.equals(c2);
+	}
+
+
 }

@@ -33,7 +33,7 @@ public class BibliotecaContainer {
 
 	
 	/**
-	 * Crea un objeto vacío preparado para añadir canciones
+	 * Crea un objeto vacio preparado para añadir canciones
 	 */
 	public BibliotecaContainer(){
 		this.modificadoEscritura = false;
@@ -44,7 +44,7 @@ public class BibliotecaContainer {
 	
 	
 	/**
-	 * Añade una canción a un directorio ya existente
+	 * Añade una cancion a un directorio ya existente
 	 * @param song
 	 */
 	public void addCancion(CancionContainer song){
@@ -56,7 +56,7 @@ public class BibliotecaContainer {
 	
 	
 	/**
-	 * Añade una canción a un directorio ya existente a partir del directorio del padre
+	 * AÃ±ade una canciÃ³n a un directorio ya existente a partir del directorio del padre
 	 * @param song
 	 */
 	public void addCancion(CancionContainer song, String parentPath){
@@ -67,7 +67,7 @@ public class BibliotecaContainer {
 	
 	
 	/**
-	 * Añade un directorio a la biblioteca. Si este ya existia lo reemplaza
+	 * AÃ±ade un directorio a la biblioteca. Si este ya existia lo reemplaza
 	 * @param dir
 	 */
 	public void addDir(DirectorioContainer dir){
@@ -79,7 +79,7 @@ public class BibliotecaContainer {
 	
 	
 	/**
-	 * Añade un nuevo directorio vario a partir de su ruta
+	 * AÃ±ade un nuevo directorio vario a partir de su ruta
 	 * @param path
 	 */
 	public void addDir(String path){
@@ -101,7 +101,7 @@ public class BibliotecaContainer {
 
 	
 	/**
-	 * Comprueba que exista creado un directorio correpondiente con el path absoluto que recibe como parámetro
+	 * Comprueba que exista creado un directorio correpondiente con el path absoluto que recibe como parÃ¡metro
 	 * @param path ruta absoluta del directorio que se quiere comprobar
 	 * @return true si el directorio existe en el container, false en otro caso
 	 */
@@ -153,9 +153,9 @@ public class BibliotecaContainer {
 	
 	
 	/**
-	 * Realiza una búsqueda en la lista de canciones según un criterio que recibe como parámetro
-	 * @param busqueda es el criterio por el cuál se desea buscar en la lista de reproducción
-	 * @return la nueva colección con los elementos que satisface el criterio de búsqueda
+	 * Realiza una bÃºsqueda en la lista de canciones segÃºn un criterio que recibe como parÃ¡metro
+	 * @param busqueda es el criterio por el cuÃ¡l se desea buscar en la lista de reproducciÃ³n
+	 * @return la nueva colecciÃ³n con los elementos que satisface el criterio de bÃºsqueda
 	 */
 	public ArrayList<CancionContainer> getListaBusqueda(CriterioBusqueda busqueda){
 		// si no se ha generado la lista de canciones la crea
@@ -167,9 +167,9 @@ public class BibliotecaContainer {
 	
 	
 	/**
-	 * Realiza una búsqueda avanzada en la lista de canciones según un criterio que recibe como parámetro
-	 * @param busqueda es el criterio por el cuál se desea buscar en la lista de reproducción
-	 * @return la nueva colección con los elementos que satisface el criterio de búsqueda
+	 * Realiza una bÃºsqueda avanzada en la lista de canciones segÃºn un criterio que recibe como parÃ¡metro
+	 * @param busqueda es el criterio por el cuÃ¡l se desea buscar en la lista de reproducciÃ³n
+	 * @return la nueva colecciÃ³n con los elementos que satisface el criterio de bÃºsqueda
 	 */
 	public ArrayList<CancionContainer> getListaBusquedaAvanzada(CriterioBusqueda busqueda){
 		// si no se ha generado la lista de canciones la crea
@@ -208,7 +208,7 @@ public class BibliotecaContainer {
 
 	/**
 	 * Cuando se escribe la biblioteca a un XML se fija su flag de escritura.
-	 * Cuando se invoca a este método se indica que ha sido guardado y por lo tanto está
+	 * Cuando se invoca a este mÃ©todo se indica que ha sido guardado y por lo tanto estÃ¡
 	 * actualizado
 	 */
 	public void guardado() {

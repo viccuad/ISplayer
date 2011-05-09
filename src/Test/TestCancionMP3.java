@@ -2,12 +2,8 @@ package Test;
 
 import is2011.biblioteca.contenedores.CancionContainer;
 
-
-import java.awt.FileDialog;
-import java.io.File;
-
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
+
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class TestCancionMP3 {
