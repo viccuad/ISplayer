@@ -74,6 +74,7 @@ public class VistaPreferencias extends JFrame{
 		panel.add(pathBiblioteca);
 
 		textPathBiblioteca = new JTextField("src/Recursos/testXML2", 30);
+		textPathBiblioteca.setEditable(false);
 		spring.putConstraint(SpringLayout.WEST, textPathBiblioteca, 155, SpringLayout.WEST, panel);
 		spring.putConstraint(SpringLayout.NORTH, textPathBiblioteca, 5, SpringLayout.NORTH, panel);
 		panel.add(textPathBiblioteca);
@@ -104,6 +105,7 @@ public class VistaPreferencias extends JFrame{
 		spring.putConstraint(SpringLayout.WEST, textPathListaReproduccion, 155, SpringLayout.WEST, panel);
 		spring.putConstraint(SpringLayout.NORTH, textPathListaReproduccion, 35, SpringLayout.NORTH, panel);
 		panel.add(textPathListaReproduccion);
+		textPathListaReproduccion.setEditable(false);
 		
 		examinarListaReproduccion = new JButton("cambiar");
 		spring.putConstraint(SpringLayout.WEST, examinarListaReproduccion, 430, SpringLayout.WEST, panel);

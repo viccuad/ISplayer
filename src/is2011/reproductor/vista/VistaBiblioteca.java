@@ -110,7 +110,7 @@ public class VistaBiblioteca extends JPanel implements
 	/** Menu pop up */
 	private JPopupMenu popup;
 	
-	int y;
+	
 	// ********************************************************************** //
 	// *************                CONSTRUCTORES               ************* //
 	// ********************************************************************** //
@@ -274,13 +274,13 @@ public class VistaBiblioteca extends JPanel implements
 		ordenar.add(ordenarDuracion);
 		ordenar.add(ordenarTitulo);
 		
-		//this.popup.add(ordenar);
+		this.popup.add(ordenar);
 		
 		ordenarAlbum.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controlador.ordenarPorAlbum();
+				controlador.ordenarBibliotecaPorAlbum();
 			}
 		});
 
@@ -288,7 +288,7 @@ public class VistaBiblioteca extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controlador.ordenarPorArtista();
+				controlador.ordenarBibliotecaPorArtista();
 			}
 		});
 		
@@ -296,7 +296,7 @@ public class VistaBiblioteca extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controlador.ordenarPorGenero();
+				controlador.ordenarBibliotecaPorGenero();
 			}
 		});
 		
@@ -304,7 +304,7 @@ public class VistaBiblioteca extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controlador.ordenarPorDuracion();
+				controlador.ordenarBibliotecaPorDuracion();
 			}
 		});
 		
@@ -312,7 +312,7 @@ public class VistaBiblioteca extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controlador.ordenarPorTitulo();
+				controlador.ordenarBibliotecaPorTitulo();
 			}
 		});
 		

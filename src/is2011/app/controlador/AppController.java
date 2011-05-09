@@ -1,13 +1,11 @@
 package is2011.app.controlador;
 
 
-import java.awt.FileDialog;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import is2011.app.preferencias.Preferencias;
