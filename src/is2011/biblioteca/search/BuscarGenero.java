@@ -19,7 +19,12 @@ public class BuscarGenero implements CriterioBusqueda {
 		this.genero = elemento;
 	}
 	
-	
+	/**
+	 * Devuelve la cadena sobre la que se busca
+	 */
+	public String getCadena(){
+		return genero;
+	}
 	/**
 	 * Realiza la búsqueda soble la colección que recible como parámetro
 	 * @param lista es la colección de elemenentos dónde se desea realizar la búsqueda

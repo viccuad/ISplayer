@@ -30,6 +30,7 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
 /**
@@ -62,20 +63,12 @@ public class VistaBiblioteca extends JPanel implements
 	/** Panel que contiene los elementos necesarios para realizar la busqueda */
 	private JPanel panelBusqueda;
 	
-	/** Boton que genera la accion de buscar */
-	private JButton buscar;
-	
-	/** Boton que genera la accion de buscar avanzada*/
-	private JButton buscarAvanzada;
-	
 	/** Area de texto donde insertar los valores a buscar */
 	private JRoundTextField textoBusqueda;
 	
 	/** Campo sobre el que quieres realizar la busqueda */
 	private Choice tipoBusqueda;
 	
-	/** Array que contiene las canciones buscadas */
-	private ArrayList<CancionContainer> busqueda;
 	
 	/**Label que contiene el valor de aleatorio*/
 	//private JLabel modoReproduccion;
@@ -101,9 +94,6 @@ public class VistaBiblioteca extends JPanel implements
 
 	/** Numero de campos*/
 	private static final int NUM_CAMPOS = 6;
-	
-	/** Atributo que indica si lo que se esta mostrando es una busqueda o la biblioteca */
-	boolean busquedaRealizada = false;
 	
 	/** Posición del choice para el titulo */
 	private final int titulo = 0;
@@ -136,109 +126,6 @@ public class VistaBiblioteca extends JPanel implements
 		
 		panelBusqueda = new JPanel();
 		
-		buscar = new JButton();
-		buscar.setBorder(BorderFactory.createEmptyBorder());
-		buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/search.png")));
-		
-		buscarAvanzada = new JButton();
-		buscarAvanzada.setBorder(BorderFactory.createEmptyBorder());
-		buscarAvanzada.setIcon(new ImageIcon(getClass().getResource("/Recursos/advanced_search.png")));
-		
-		buscar.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				
-				if (!busquedaRealizada){
-					System.out.println("Mostrar búsqueda");
-
-					buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/Delete.png")));
-					buscarAvanzada.setEnabled(false);
-					
-					CriterioBusqueda criterio = null;
-					
-					switch (tipoBusqueda.getSelectedIndex()){
-					case titulo:{
-						criterio = new BuscarTitulo(textoBusqueda.getText());
-						break;
-					}
-					case genero:{
-						criterio = new BuscarGenero(textoBusqueda.getText());
-						break;
-					}
-					case artista:{
-						criterio = new BuscarArtista(textoBusqueda.getText());
-						break;
-					}
-					case album: 
-						criterio = new BuscarAlbum(textoBusqueda.getText());
-					}
-
-					busqueda = controlador.buscaBiblioteca(criterio);
-					mostrarBusqueda(busqueda);
-					busquedaRealizada = true;
-				}
-				else {
-					System.out.println("Mostrar biblioteca");
-					buscar.setIcon(new ImageIcon(getClass().getResource("/Recursos/Search.png")));
-					buscarAvanzada.setEnabled(true);
-					
-					mostrarTodas();
-					
-					busquedaRealizada = false;
-				}
-			}
-			
-		});
-		
-		buscarAvanzada.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				
-				if (!busquedaRealizada){
-					System.out.println("Mostrar búsqueda");
-
-					buscarAvanzada.setIcon(new ImageIcon(getClass().getResource("/Recursos/Delete.png")));
-					buscar.setEnabled(false);
-					
-					CriterioBusqueda criterio = null;
-					
-					switch (tipoBusqueda.getSelectedIndex()){
-					case titulo:{
-						criterio = new BuscarTitulo(textoBusqueda.getText());
-						break;
-					}
-					case genero:{
-						criterio = new BuscarGenero(textoBusqueda.getText());
-						break;
-					}
-					case artista:{
-						criterio = new BuscarArtista(textoBusqueda.getText());
-						break;
-					}
-					case album: 
-						criterio = new BuscarAlbum(textoBusqueda.getText());
-					}
-
-					busqueda = controlador.buscaBibliotecaAvanzada(criterio);
-					mostrarBusqueda(busqueda);
-					busquedaRealizada = true;
-				}
-				else {
-					System.out.println("Mostrar biblioteca");
-					buscarAvanzada.setIcon(new ImageIcon(getClass().getResource("/Recursos/advanced_search.png")));
-					buscar.setEnabled(true);
-					
-					mostrarTodas();
-					
-					busquedaRealizada = false;
-				}
-			}
-			
-		});
-		
-		
 		// creamos el cuadro de texto para las búsquedas
 		textoBusqueda = new JRoundTextField("Buscar...", 0);
 		
@@ -259,22 +146,21 @@ public class VistaBiblioteca extends JPanel implements
 			@Override
 			public void keyReleased(KeyEvent arg0) {				
 				switch (tipoBusqueda.getSelectedIndex()) {
-					case titulo  : busqueda = controlador.buscaBibliotecaAvanzada(
+					case titulo  : controlador.buscaBibliotecaAvanzada(
 											new BuscarTitulo(textoBusqueda.getText()));										   
 											break;
-					case genero  : busqueda = controlador.buscaBibliotecaAvanzada(
+					case genero  : controlador.buscaBibliotecaAvanzada(
 											new BuscarGenero(textoBusqueda.getText()));
 											break;
-					case artista : busqueda = controlador.buscaBibliotecaAvanzada(
+					case artista : controlador.buscaBibliotecaAvanzada(
 											new BuscarArtista(textoBusqueda.getText()));
 											break;
-					case album   : busqueda = controlador.buscaBibliotecaAvanzada(
+					case album   : controlador.buscaBibliotecaAvanzada(
 										    new BuscarAlbum(textoBusqueda.getText()));
 											break;
 				}
-		
-				mostrarBusqueda(busqueda);
-				busquedaRealizada = true;
+			
+				
 			}
 
 			/**
@@ -295,8 +181,7 @@ public class VistaBiblioteca extends JPanel implements
 		
 		panelBusqueda.add(textoBusqueda);
 		panelBusqueda.add(tipoBusqueda);
-		panelBusqueda.add(buscar);
-		panelBusqueda.add(buscarAvanzada);
+
 		
 		modelo = new DefaultTableModel()
 		{@Override     
@@ -336,7 +221,36 @@ public class VistaBiblioteca extends JPanel implements
 		
 		//Le añadimos el scroll
 		panelScroll.setViewportView(tabla);
-		
+		JTableHeader header = tabla.getTableHeader() ; 
+
+		header.addMouseListener( 
+		  new MouseAdapter() 
+		  { 
+		    public void mouseClicked(MouseEvent e) 
+		    { 
+		      JTableHeader h = (JTableHeader)e.getSource() ; 
+		      int nColumn = h.columnAtPoint(e.getPoint());
+		      System.out.println(nColumn);
+		      switch (nColumn) {
+		      case NUM_COLUMNA_ALBUM:
+		    	  controlador.ordenarBibliotecaPorAlbum();
+		    	  break;
+		      case NUM_COLUMNA_ARTISTA:
+		    	  controlador.ordenarBibliotecaPorArtista();
+		    	  break;
+		      case NUM_COLUMNA_DURACION:
+		    	  controlador.ordenarBibliotecaPorDuracion();
+		    	  break;
+		      case NUM_COLUMNA_GENERO:
+		    	  controlador.ordenarBibliotecaPorGenero();
+		    	  break;
+		      case NUM_COLUMNA_TITULO:
+		    	  controlador.ordenarBibliotecaPorTitulo();
+		    	  break;
+		      }
+		    } 
+		  } 
+		) ; 
 		//this.modoReproduccion = new JLabel("Modo de reproduccion NORMAL");
 		
 		setVisible(true);
@@ -410,7 +324,7 @@ public class VistaBiblioteca extends JPanel implements
 			public void actionPerformed(ActionEvent e) {
 				int[] canciones = tabla.getSelectedRows();
 				
-				
+				/*
 				if (busquedaRealizada){
 					for(int i : canciones) {
 						String path = busqueda.get(i).getTotalPath();
@@ -418,13 +332,13 @@ public class VistaBiblioteca extends JPanel implements
 						controlador.fromBibliotecaToListaReproduccion(path);	
 					}
 
-				}else{
+				}else{ */
 					for(int i : canciones) {
 						String path = controlador.getCanciones().get(i).getTotalPath();
 						//System.out.println(path);
 						controlador.fromBibliotecaToListaReproduccion(path);
 					}
-				}
+				//}
 				
 				
 			}
@@ -452,15 +366,11 @@ public class VistaBiblioteca extends JPanel implements
 						int row = e.getY()/tabla.getRowHeight();
 						//System.out.println(row);
 						
-						if (busquedaRealizada){
-							String path = busqueda.get(row).getTotalPath();
-							//System.out.println(path);
-							controlador.fromBibliotecaToListaReproduccion(path);
-						}else{
-							String path = controlador.getCanciones().get(row).getTotalPath();
-							//System.out.println(path);
-							controlador.fromBibliotecaToListaReproduccion(path);
-						}
+	
+						String path = controlador.getCanciones().get(row).getTotalPath();
+						//System.out.println(path);
+						controlador.fromBibliotecaToListaReproduccion(path);
+						
 
 					}
 					
@@ -579,26 +489,7 @@ public class VistaBiblioteca extends JPanel implements
 		}
 	}
 	
-	
-	public void mostrarBusqueda(ArrayList<CancionContainer> buscados) {
-		
-		
-		Iterator<CancionContainer> itr = buscados.iterator();
-		
-		CancionContainer aux=null;
-		
-		// Eliminamos lo que contiene la tabla para no mostrar lo anterior y lo nuevo
-		for (int i = tabla.getRowCount()-1;i>=0;i--) modelo.removeRow(i);
 
-		int pos = 0;
-		while (itr.hasNext()){
-			aux = itr.next();
-
-			nuevaCancion(new NuevaCancionEvent(aux.getTitulo(), aux.getAlbum(), aux.getPista(), 
-					     aux.getArtista(), aux.getGenero(), aux.getDuracion(), pos++));
-			//System.out.println(aux.getTitulo());
-		}
-	}
 
 
 	@Override

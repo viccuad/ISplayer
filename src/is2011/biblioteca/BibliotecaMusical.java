@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 import com.thoughtworks.xstream.XStream;
@@ -27,6 +28,12 @@ public class BibliotecaMusical {
 	/** Contenedor de canciones para la biblioteca musical */
 	private BibliotecaContainer canciones;
 	
+	/** Subcojunto de las canciones buscadas */
+	private ArrayList<CancionContainer> buscadas;
+	
+	/** Atributo que indica si la biblioteca se encuentra en fase de busqueda */
+	boolean busquedaRealizada;
+	
 	/** Única instancia de la biblioteca musical. Sigue el patrón Singleton */
 	private static BibliotecaMusical singleBibliotecaMusical = null;
 	
@@ -47,6 +54,8 @@ public class BibliotecaMusical {
 	 */
 	private BibliotecaMusical(){
 		busquedaRecursiva = false;
+		buscadas = null;
+		busquedaRealizada = false;
 		canciones = new BibliotecaContainer();
 		stream = new XStream(new DomDriver());
 		stream.alias("biblioteca", BibliotecaContainer.class);
@@ -121,6 +130,13 @@ public class BibliotecaMusical {
 		return this.canciones.getArrayListCanciones();
 	}
 	
+	/**
+	 * Devuelve una lista con todas las canciones dbuscadas
+	 * @return
+	 */
+	public ArrayList<CancionContainer> getCancionesBuscadas(){
+		return this.buscadas;
+	}
 	
 	/**
 	 * Devuelve los elementos de la biblioteca musical que coincidan con el criterio de búsqueda
@@ -128,10 +144,21 @@ public class BibliotecaMusical {
 	 * @param busqueda es el criterio de búsqueda
 	 * @return colección con los elementos que satisfacen el criterio de búsqueda
 	 */
-	public ArrayList<CancionContainer> getBusqueda(CriterioBusqueda busqueda){
-		return this.canciones.getListaBusqueda(busqueda);
-	}
+	/*
+	public void realizaBusqueda(CriterioBusqueda busqueda){
+		 this.buscadas = this.canciones.getListaBusqueda(busqueda);
+		 		 
+		 if (busqueda.getCadena().equals("")) busquedaRealizada = false;
+		 else busquedaRealizada = true;
+	}*/
 	
+	/**
+	 * Devuelve si hay o no busqueda realizada
+	 * @return
+	 */
+	public boolean getBusquedaRealizada(){
+		return busquedaRealizada;
+	}
 	
 	/**
 	 * Devuelve los elementos de la biblioteca musical que coincidan con el criterio de búsqueda
@@ -140,8 +167,17 @@ public class BibliotecaMusical {
 	 * @param busqueda es el criterio de búsqueda
 	 * @return colección con los elementos que satisfacen el criterio de búsqueda
 	 */
-	public ArrayList<CancionContainer> getBusquedaAvanzada(CriterioBusqueda busqueda){
-		return this.canciones.getListaBusquedaAvanzada(busqueda);
+	public void realizaBusquedaAvanzada(CriterioBusqueda busqueda){
+		this.buscadas =  this.canciones.getListaBusquedaAvanzada(busqueda);
+		 
+		 if (busqueda.getCadena().equals("")){
+			 busquedaRealizada = false;
+			 notificaNuevaBiblioteca(getCanciones());
+		 }
+		 else{
+			 busquedaRealizada = true;
+			 notificaNuevaBiblioteca(getCancionesBuscadas());
+		 }
 	}
 	
 	
@@ -245,7 +281,16 @@ public class BibliotecaMusical {
 	 * @param orden: es el criterio por el cual se desea ordenar la lista de reproduccion
 	 */
 	public void ordenar(Comparator<CancionContainer> orden){
-		this.notificaNuevaBiblioteca(this.canciones.getArrayListCanciones());
+		
+		if (busquedaRealizada){
+			Collections.sort(this.buscadas, orden);
+			this.notificaNuevaBiblioteca(this.buscadas);
+		}else{
+			Collections.sort(this.getCanciones(), orden);
+			this.notificaNuevaBiblioteca(this.getCanciones());
+
+			
+		}
 	}
 	
 	/**

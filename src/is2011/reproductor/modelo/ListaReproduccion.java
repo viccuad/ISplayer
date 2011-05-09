@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -49,6 +50,12 @@ public class ListaReproduccion {
 	/** Lista de canciones */
 	private ArrayList<CancionContainer> listaReproduccion;
 	
+	/** Subcojunto de las canciones buscadas */
+	private ArrayList<CancionContainer> buscadas;
+	
+	/** Atributo que indica si la biblioteca se encuentra en fase de busqueda */
+	boolean busquedaRealizada;
+	
 	/** Cancion actual. va de 0 a numero de canciones*/
 	private int actual;
 	
@@ -75,6 +82,8 @@ public class ListaReproduccion {
 	 * Crea lista de reproduccion y oyentes.
 	 */
 	public ListaReproduccion(){
+		buscadas = null;
+		busquedaRealizada = false;
 		listaReproduccion = new ArrayList<CancionContainer>();
 		actual = 0;
 		modoReproduccion = ModoReproduccionEnum.NORMAL;
@@ -243,49 +252,97 @@ public class ListaReproduccion {
 	 * @param orden: es el criterio por el cuál se desea ordenar la lista de reproducción
 	 */
 	public void ordenar(Comparator<CancionContainer> orden){
-		if(actual == 0) {
+		
+		if (busquedaRealizada){
+			Collections.sort(this.buscadas, orden);
+			this.notificaNuevaListaReproduccion(this.buscadas, 0);
+		}else{
 			
-			Collections.sort(this.listaReproduccion, orden);
-			modificado = true;
-			
-			
-			this.notificaNuevaListaReproduccion(this.listaReproduccion, 0);
-		} else {
-			CancionContainer cancionActual = this.listaReproduccion.get(actual-1);
-			Collections.sort(this.listaReproduccion, orden);
-			modificado = true;
-			
-			int indiceActual = this.listaReproduccion.indexOf(cancionActual) +1;
-			this.notificaNuevaListaReproduccion(this.listaReproduccion, indiceActual);
+			if(actual == 0) {
+				
+				Collections.sort(this.listaReproduccion, orden);
+				modificado = true;
+				
+				
+				this.notificaNuevaListaReproduccion(this.listaReproduccion, 0);
+			} else {
+				CancionContainer cancionActual = this.listaReproduccion.get(actual-1);
+				Collections.sort(this.listaReproduccion, orden);
+				modificado = true;
+				
+				int indiceActual = this.listaReproduccion.indexOf(cancionActual) +1;
+				this.notificaNuevaListaReproduccion(this.listaReproduccion, indiceActual);
+			}
 		}
+
 		
 		
 	}
-	
+
 	
 	/**
 	 * Realiza una búsqueda en la lista de canciones según un criterio que recibe como parámetro
 	 * @param busqueda es el criterio por el cuál se desea buscar en la lista de reproducción
 	 * @return la nueva colección con los elementos que satisface el criterio de búsqueda
 	 */
+	/*
 	public ArrayList<CancionContainer> getBusqueda(CriterioBusqueda busqueda){		
 		return busqueda.buscar(this.listaReproduccion);
 	}
-	
+	*/
 	
 	/**
 	 * Realiza una búsqueda avanzada en la lista de canciones según un criterio que recibe como parámetro
 	 * @param busqueda es el criterio por el cuál se desea buscar en la lista de reproducción
 	 * @return la nueva colección con los elementos que satisface el criterio de búsqueda
 	 */
-	public ArrayList<CancionContainer> getBusquedaAvanzada(CriterioBusqueda busqueda){		
-		return busqueda.buscarAvanzado(this.listaReproduccion);
+	public void realizarBusquedaAvanzada(CriterioBusqueda busqueda){		
+		this.buscadas = busqueda.buscarAvanzado(this.listaReproduccion);
+		
+		 if (busqueda.getCadena().equals("")){
+			 busquedaRealizada = false;
+			 notificaNuevaListaReproduccion(listaReproduccion, actual);
+			 
+		 }
+		 else{
+			 busquedaRealizada = true;
+			 notificaNuevaListaReproduccion(buscadas, actual);
+		 }
 	}
 	
 	
 	// ********************************************************************** //
 	// *************           GETTERS Y SETTERS                ************* //
 	// ********************************************************************** //
+	
+	/**
+	 * Devuelve si hay o no busqueda realizada
+	 * @return
+	 */
+	public boolean getBusquedaRealizada(){
+		return busquedaRealizada;
+	}
+	
+	public int getIndexOf(CancionContainer c, ArrayList<CancionContainer> lr){
+	
+		Iterator<CancionContainer> itr = lr.iterator();
+		int i=0;
+		boolean encontrada = false;
+		while (itr.hasNext() && !encontrada){
+			if (itr.next().equals(c)) encontrada = true;
+			else i++;
+		}
+		
+		return i;
+	}
+	
+	/**
+	 * Devuelve una lista con todas las canciones dbuscadas
+	 * @return
+	 */
+	public ArrayList<CancionContainer> getCancionesBuscadas(){
+		return this.buscadas;
+	}
 
 	/**
 	 * Devuelve el numero de la cancion actual. (De 1 hasta size).
@@ -302,7 +359,11 @@ public class ListaReproduccion {
 	public void setActual(int actual) {
 		int viejo = this.actual;
 		this.actual = actual;
-		notificaCambioNumeroCancionActual(actual,viejo);
+		
+		System.out.println("Actual "+actual);
+		if (!busquedaRealizada)		
+			notificaCambioNumeroCancionActual(actual,viejo);
+
 	}
 	
 
@@ -363,8 +424,11 @@ public class ListaReproduccion {
 	 */
 	private void notificaNuevaCancionAniadida(CancionContainer c, int pos) {
 		for (ListaReproduccionListener l : listeners) {
+			
+			if (!busquedaRealizada){
 			l.nuevaCancion(new NuevaCancionEvent(c.getTitulo(),c.getAlbum(),
 					c.getPista(),c.getArtista(), c.getGenero(),c.getDuracion(), pos));
+			}
 		}
 		
 	}
@@ -377,6 +441,7 @@ public class ListaReproduccion {
 		for (ListaReproduccionListener l : listeners) {
 			l.setActual(actualNuevo, actualViejo);
 		}
+		
 	}
 	
 	/**

@@ -97,10 +97,22 @@ public class ControladorReproductor {
 	// *************              METODOS PUBLICOS              ************* //
 	// ********************************************************************** //
 	public void play(int cancionSeleccionada) {
-		if(cancionSeleccionada >= 0 && cancionSeleccionada < this.listaReproduccion.getNumeroCanciones()){
-			listaReproduccion.setActual(cancionSeleccionada + 1);
+		
+		if (listaReproduccion.getBusquedaRealizada()){
+			if(cancionSeleccionada >= 0 && cancionSeleccionada < this.listaReproduccion.getCancionesBuscadas().size()){
+				
+				// Indice en la lista de reproduccion de la cancion a reproducir (que es cogida de la busqueda)
+				int cancionEnListaReproduccion = listaReproduccion.getIndexOf(listaReproduccion.getCancionesBuscadas().get(cancionSeleccionada), listaReproduccion.getCancionesListaReproduccion());
+				listaReproduccion.setActual(cancionEnListaReproduccion + 1);
+			}
+			this.play();
+		}else{
+			if(cancionSeleccionada >= 0 && cancionSeleccionada < this.listaReproduccion.getNumeroCanciones()){
+				listaReproduccion.setActual(cancionSeleccionada + 1);
+			}
+			this.play();
 		}
-		this.play();
+
 	}
 	
 	public void guardarListaActual() {
@@ -395,7 +407,9 @@ public class ControladorReproductor {
 	 * @return
 	 */
 	public ArrayList<CancionContainer> getCancionesListaReproduccion(){
-		return listaReproduccion.getCancionesListaReproduccion();
+		
+		if (listaReproduccion.getBusquedaRealizada()) return listaReproduccion.getCancionesBuscadas();
+		else return listaReproduccion.getCancionesListaReproduccion();
 	}
 	
 	/**
@@ -403,18 +417,27 @@ public class ControladorReproductor {
 	 * @param c
 	 * @return
 	 */
+	/*
 	public ArrayList<CancionContainer> getBusqueda(CriterioBusqueda c){
 		return listaReproduccion.getBusqueda(c);
 	}
-	
+	*/
 	
 	/**
 	 * Metodo que devuelve la lista de reproduccion filtrada con los parametros de busqueda avanzada
 	 * @param c
 	 * @return
 	 */
-	public ArrayList<CancionContainer> getBusquedaAvanzada(CriterioBusqueda c){
-		return listaReproduccion.getBusquedaAvanzada(c);
+	public void getBusquedaAvanzada(CriterioBusqueda c){
+		listaReproduccion.realizarBusquedaAvanzada(c);
+	}
+	
+	/**
+	 * Devuelve si hay o no busqueda
+	 * @return
+	 */
+	public boolean getBusquedaRealizada(){
+		return listaReproduccion.getBusquedaRealizada();
 	}
 
 }

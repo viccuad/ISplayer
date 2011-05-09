@@ -19,7 +19,12 @@ public class BuscarTitulo implements CriterioBusqueda {
 		this.titulo = elemento;
 	}
 	
-	
+	/**
+	 * Devuelve la cadena sobre la que se busca
+	 */
+	public String getCadena(){
+		return titulo;
+	}
 	/**
 	 * Realiza la búsqueda soble la colección que recible como parámetro
 	 * @param lista es la colección de elemenentos dónde se desea realizar la búsqueda

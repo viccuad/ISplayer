@@ -308,7 +308,9 @@ public class AppController implements IAppController {
 	}
 	@Override
 	public ArrayList<CancionContainer> getCanciones() {
-		return biblioteca.getCanciones();
+		
+		if (biblioteca.getBusquedaRealizada()) return biblioteca.getCancionesBuscadas();
+		else return biblioteca.getCanciones();
 	}
 
 
@@ -424,20 +426,21 @@ public class AppController implements IAppController {
 		
 		reproductor.cargarListaReproduccion(ruta);
 	}
-
+/*
 	public ArrayList<CancionContainer> buscaBiblioteca(CriterioBusqueda criterio){
 		return biblioteca.getBusqueda(criterio);
-	}
+	}*/
 
-	public ArrayList<CancionContainer> buscaBibliotecaAvanzada(CriterioBusqueda criterio){
-		return biblioteca.getBusquedaAvanzada(criterio);
+	public void buscaBibliotecaAvanzada(CriterioBusqueda criterio){
+		 biblioteca.realizaBusquedaAvanzada(criterio);
 	}
-
+/*
 	public ArrayList<CancionContainer> buscaListaReproduccion(CriterioBusqueda criterio){
 		return reproductor.getBusqueda(criterio);
-	}
-	public ArrayList<CancionContainer> buscaListaReproduccionAvanzada(CriterioBusqueda criterio){
-		return reproductor.getBusquedaAvanzada(criterio);
+	}*/
+	
+	public void buscaListaReproduccionAvanzada(CriterioBusqueda criterio){
+		reproductor.getBusquedaAvanzada(criterio);
 	}
 
 	@Override

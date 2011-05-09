@@ -29,4 +29,10 @@ public interface CriterioBusqueda {
 	 */
 	public ArrayList<CancionContainer> buscarAvanzado(ArrayList<CancionContainer> lista); 
 	
+	/**
+	 * Devuelve la candena sobre la que se realiza las comparaciones
+	 * @return
+	 */
+	public String getCadena();
+	
 }

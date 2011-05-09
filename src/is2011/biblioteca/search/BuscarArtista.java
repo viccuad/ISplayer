@@ -18,7 +18,12 @@ public class BuscarArtista implements CriterioBusqueda {
 	public BuscarArtista(String elemento){
 		this.artista = elemento;
 	}
-	
+	/**
+	 * Devuelve la cadena sobre la que se busca
+	 */
+	public String getCadena(){
+		return artista;
+	}
 	
 	/**
 	 * Realiza la búsqueda soble la colección que recible como parámetro

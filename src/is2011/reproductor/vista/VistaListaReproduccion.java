@@ -79,9 +79,6 @@ public class VistaListaReproduccion extends JPanel implements
 	/** Campo sobre el que quieres realizar la busqueda */
 	private Choice tipoBusqueda;
 	
-	/** Array que contiene las canciones buscadas */
-	private ArrayList<CancionContainer> busqueda;
-	
 	/** Modelo de la tabla*/
 	private DefaultTableModel modelo;
 	
@@ -114,9 +111,7 @@ public class VistaListaReproduccion extends JPanel implements
 
 	/** Numero de campos*/
 	private static final int NUM_CAMPOS = 7;
-	
-	/** Atributo que indica si lo que se esta mostrando es una busqueda o la biblioteca */
-	boolean busquedaRealizada = false;
+
 	
 	/** Posición del choice para el titulo */
 	private final int titulo = 0;
@@ -158,6 +153,8 @@ public class VistaListaReproduccion extends JPanel implements
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
+				
+				/*
 				if (!busquedaRealizada){
 					
 					
@@ -185,7 +182,7 @@ public class VistaListaReproduccion extends JPanel implements
 						criterio = new BuscarAlbum(textoBusqueda.getText());
 					}
 
-					busqueda = controlador.buscaListaReproduccion(criterio);
+					//busqueda = controlador.buscaListaReproduccion(criterio);
 					mostrarBusqueda(busqueda);
 					busquedaRealizada = true;
 				}
@@ -197,6 +194,7 @@ public class VistaListaReproduccion extends JPanel implements
 					
 					busquedaRealizada = false;
 				}
+				*/
 			}
 			
 		});
@@ -205,6 +203,8 @@ public class VistaListaReproduccion extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				
+				/*
 				if (!busquedaRealizada){
 					System.out.println("Mostrar búsqueda");
 
@@ -230,7 +230,7 @@ public class VistaListaReproduccion extends JPanel implements
 						criterio = new BuscarAlbum(textoBusqueda.getText());
 					}
 
-					busqueda = controlador.buscaListaReproduccionAvanzada(criterio);
+					//busqueda = controlador.buscaListaReproduccionAvanzada(criterio);
 					mostrarBusqueda(busqueda);
 					busquedaRealizada = true;
 				}
@@ -242,6 +242,8 @@ public class VistaListaReproduccion extends JPanel implements
 					
 					busquedaRealizada = false;
 				}
+				
+				*/
 			}
 			
 		});
@@ -266,22 +268,23 @@ public class VistaListaReproduccion extends JPanel implements
 			 * Cada vez que se libera una tecla se realiza la búsqueda
 			 */
 			@Override
-			public void keyReleased(KeyEvent arg0) {				
+			public void keyReleased(KeyEvent arg0) {	
+				
+				
 				switch (tipoBusqueda.getSelectedIndex()) {
-					case titulo  : busqueda = controlador.buscaListaReproduccionAvanzada(
+					case titulo  : controlador.buscaListaReproduccionAvanzada(
 											new BuscarTitulo(textoBusqueda.getText()));										   
 											break;
-					case genero  : busqueda = controlador.buscaListaReproduccionAvanzada(
+					case genero  : controlador.buscaListaReproduccionAvanzada(
 											new BuscarGenero(textoBusqueda.getText()));
 											break;
-					case artista : busqueda = controlador.buscaListaReproduccionAvanzada(
+					case artista : controlador.buscaListaReproduccionAvanzada(
 											new BuscarArtista(textoBusqueda.getText()));
 											break;
-					case album   : busqueda = controlador.buscaListaReproduccionAvanzada(
+					case album   : controlador.buscaListaReproduccionAvanzada(
 										    new BuscarAlbum(textoBusqueda.getText()));
 											break;
 				}
-				mostrarBusqueda(busqueda);
 			}
 
 			/**
@@ -302,8 +305,8 @@ public class VistaListaReproduccion extends JPanel implements
 		
 		panelBusqueda.add(textoBusqueda);
 		panelBusqueda.add(tipoBusqueda);
-		panelBusqueda.add(buscar);
-		panelBusqueda.add(buscarAvanzada);
+		//panelBusqueda.add(buscar);
+		//panelBusqueda.add(buscarAvanzada);
 		modelo = new DefaultTableModel()
 		{@Override     
 			public boolean isCellEditable (int fila, int columna) {
@@ -407,9 +410,7 @@ public class VistaListaReproduccion extends JPanel implements
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				
-				if (busquedaRealizada){
-					//TODO
-				}else{
+
 					int[] rows = tabla.getSelectedRows();
 					
 					//Hay que notificar de la cancion mayor a la menor para poder
@@ -424,7 +425,7 @@ public class VistaListaReproduccion extends JPanel implements
 					for (int i = rowsOrdenadas.size()-1 ; i >= 0; i--) {
 						controlador.borrarCancion(rowsOrdenadas.get(i));
 					}
-				}
+				
 				
 			}
 			
@@ -434,11 +435,9 @@ public class VistaListaReproduccion extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (busquedaRealizada){
-					//TODO
-				}else{
+
 					controlador.ordenarPorAlbum();
-				}
+				
 			}
 		});
 
@@ -446,11 +445,9 @@ public class VistaListaReproduccion extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (busquedaRealizada){
-					//TODO
-				}else{
+
 					controlador.ordenarPorArtista();
-				}
+				
 			}
 		});
 		
@@ -459,11 +456,9 @@ public class VistaListaReproduccion extends JPanel implements
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				if (busquedaRealizada){
-					//TODO
-				}else{
+
 					controlador.ordenarPorGenero();
-				}
+				
 			}
 		});
 		
@@ -471,11 +466,9 @@ public class VistaListaReproduccion extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (busquedaRealizada){
-					//TODO
-				}else{
+
 					controlador.ordenarPorDuracion();
-				}
+				
 			}
 		});
 		
@@ -483,11 +476,9 @@ public class VistaListaReproduccion extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (busquedaRealizada){
-					//TODO
-				}else{
+
 					controlador.ordenarPorTitulo();
-				}
+				
 			}
 		});
 		
@@ -508,11 +499,9 @@ public class VistaListaReproduccion extends JPanel implements
 				}
 				else if(e.getClickCount() == 2) {
 					int cancionDeseada = e.getY()/tabla.getRowHeight();
-					if (busquedaRealizada){
-						//TODO
-					}else{
+
 						controlador.play(cancionDeseada);
-					}
+					
 				}
 			}
 		});
@@ -589,6 +578,7 @@ public class VistaListaReproduccion extends JPanel implements
 		
 		if(modelo.getRowCount() >= (actualNuevo) && actualNuevo >0) {
 			modelo.setValueAt("->", actualNuevo-1, NUM_COLUMNA_REPRODUCIENDO);
+			
 		}
 	}
 
@@ -657,10 +647,12 @@ public class VistaListaReproduccion extends JPanel implements
 		}
 	}
 
-	public void mostrarTodas(ArrayList<CancionContainer> buscados) {
+
+	public void mostrarTodas() {
 		
+		ArrayList<CancionContainer> cancionesLr = controlador.getCancionesListaReproduccion();
 		
-		Iterator<CancionContainer> itr = buscados.iterator();
+		Iterator<CancionContainer> itr = cancionesLr.iterator();
 		
 		CancionContainer aux=null;
 		
@@ -673,28 +665,10 @@ public class VistaListaReproduccion extends JPanel implements
 
 			nuevaCancion(new NuevaCancionEvent(aux.getTitulo(), aux.getAlbum(), aux.getPista(), 
 					     aux.getArtista(), aux.getGenero(), aux.getDuracion(), pos++));
-			System.out.println(aux.getTitulo());
+			//System.out.println(aux.getTitulo());
 		}
 	}
-	public void mostrarBusqueda(ArrayList<CancionContainer> buscados) {
-		
-		
-		Iterator<CancionContainer> itr = buscados.iterator();
-		
-		CancionContainer aux=null;
-		
-		// Eliminamos lo que contiene la tabla para no mostrar lo anterior y lo nuevo
-		for (int i = tabla.getRowCount()-1;i>=0;i--) modelo.removeRow(i);
 
-		int pos = 0;
-		while (itr.hasNext()){
-			aux = itr.next();
-
-			nuevaCancion(new NuevaCancionEvent(aux.getTitulo(), aux.getAlbum(), aux.getPista(), 
-					     aux.getArtista(), aux.getGenero(), aux.getDuracion(), pos++));
-			System.out.println(aux.getTitulo());
-		}
-	}
 
 	
 }
