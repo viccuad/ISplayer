@@ -112,5 +112,20 @@ public class DirectorioContainer {
 		return false;
 	}
 	
-	
+	/**
+	 * 
+	 * @param s
+	 * @return
+	 */
+	public boolean equals(DirectorioContainer s) {
+		if (s==null) return false;
+		if (this.getClass()!= s.getClass()) return false;
+		if (this.getPath() != s.getPath()) return false;
+		for ( int i = 0;i == s.getListaCanciones().size()  ; i++){
+			String nombrecancion = s.getListaCanciones().get(i).getTitulo();
+			if (this.existeCancion(nombrecancion) != true) return false;				
+		}
+
+		return true;
+	}
 }
