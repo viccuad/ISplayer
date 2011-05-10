@@ -927,12 +927,13 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 			for (MouseListener l : listeners) {
 				playPause.removeMouseListener(l);
 			}
-			
+			System.out.println(playPause.getActionListeners().length);
 			ActionListener[] alis = playPause.getActionListeners();
 			for (ActionListener l : alis) {
 				playPause.removeActionListener(l);
 			}
 			
+			System.out.println(playPause.getActionListeners().length);
 			playPause.addActionListener(new ActionListener(){
 
 				

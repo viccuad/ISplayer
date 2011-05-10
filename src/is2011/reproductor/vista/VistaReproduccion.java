@@ -81,7 +81,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	private String modoAudio;
 	
 	/**Tiempo total de reproduccion de esta cancion*/
-	private String tiempoTotal;
+	private int tiempoTotal;
 	
 	/** Tiempo actual de reproduccion de esta cancion*/
 	private int tiempoActual;
@@ -166,7 +166,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		this.framerate = 0;
 		this.sampleRate = 0;
 		this.modoAudio = "";
-		this.tiempoTotal = "";
+		this.tiempoTotal = 0;
 		this.tiempoActual = 0;
 	}
 	
@@ -332,8 +332,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
         	this.bytesMusica = bytesArchivo - byteInicioMusica;
             
         	//El tiempo que dura la cancion
-        	this.tiempoTotal = toHora(Math.round(
-        			( (float)bytesMusica / (bitrate/8))));
+        	this.tiempoTotal =Math.round(((float)bytesMusica / (bitrate/8)));
         }
     }
 	
@@ -348,7 +347,9 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		info += this.sampleRate + "hz ";
 		info += " ♣♣ ";
 		info += " sonido " + this.modoAudio + " ";
-		info += this.toHora(this.tiempoActual) + "/" + tiempoTotal;
+		info += this.toHora(this.tiempoActual) + "/";
+		info += toHora(tiempoTotal-tiempoActual) + " ♫♫♫ " ;
+		info += toHora(tiempoTotal);
 		
 		this.labelEstado.setText(info);
 	}
