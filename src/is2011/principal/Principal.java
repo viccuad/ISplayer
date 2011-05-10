@@ -50,6 +50,7 @@ public class Principal {
 		ControladorReproductor controlador = new ControladorReproductor();
 		ReproductorIS rep = new ReproductorIS();
 		rep.addBasicPlayerListener(vr);
+		rep.addBasicPlayerListener(vista);
 		controlador.setReproductor(rep);
 		
 		ListaReproduccion lr = new ListaReproduccion();
