@@ -44,7 +44,7 @@ public class JUnitBibliotecaContainer extends TestCase{
 	
 	
 	public static TestSuite suite(){
-		TestSuite raiz=new TestSuite("bibliotecaContainer");
+		TestSuite raiz=new TestSuite("Biblioteca Container");
 		
 		TestSuite suite1=new TestSuite("Cancion vacia");
 		

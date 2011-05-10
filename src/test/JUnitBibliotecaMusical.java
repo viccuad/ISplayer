@@ -47,7 +47,7 @@ public class JUnitBibliotecaMusical extends TestCase{
 	}
 	
 	public static TestSuite suite(){
-		TestSuite raiz=new TestSuite("raiz");
+		TestSuite raiz=new TestSuite("Biblioteca Musical");
 		
 		TestSuite suite1=new TestSuite("Cancion vacia");
 		
