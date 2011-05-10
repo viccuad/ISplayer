@@ -1,9 +1,11 @@
-package Test;
+package test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import is2011.biblioteca.contenedores.BibliotecaContainer;
 import is2011.biblioteca.contenedores.CancionContainer;
+import is2011.biblioteca.contenedores.DirectorioContainer;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
@@ -11,6 +13,7 @@ public class JUnitBibliotecaContainer extends TestCase{
 
 	private BibliotecaContainer bib;
 	private CancionContainer c1;
+	private HashMap<String, DirectorioContainer> dir;
 	
 	private ArrayList<CancionContainer> listaCanciones;
 	
@@ -25,12 +28,15 @@ public class JUnitBibliotecaContainer extends TestCase{
 		c1 = new CancionContainer(path);
 		listaCanciones = new ArrayList<CancionContainer>();
 		listaCanciones.add(c1);
+		dir = new HashMap<String, DirectorioContainer>();
 	}
+	
+	
 	
 	public void testAddCancion(){
 		
 		
-		BibliotecaContainer bib = new BibliotecaContainer();
+		BibliotecaContainer bib = new BibliotecaContainer(); // crea un directorio
 		bib.addCancion(c1);
 		ArrayList<CancionContainer> obtenida = bib.getArrayListCanciones();
 		assertEquals(listaCanciones, obtenida);

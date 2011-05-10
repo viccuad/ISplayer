@@ -1,4 +1,4 @@
-package Test;
+package test;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

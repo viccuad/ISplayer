@@ -1,4 +1,4 @@
-package Test;
+package test;
 
 import is2011.biblioteca.BibliotecaMusical;
 
