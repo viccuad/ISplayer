@@ -194,16 +194,34 @@ public class ListaReproduccion {
 	 * @param pos La primera posicion es la 0
 	 */
 	public void removeCancion(int pos){
-		this.borrarCancion(pos);
 		
-		//Si la cancion que borramos esta por debajo de actual
-		//O actual apuntaba a la ultima cancion
-		if (pos < (actual-1) || actual > this.listaReproduccion.size()) {
-			setActual(actual -1);
+		if (busquedaRealizada){
+			if(pos < buscadas.size() && pos >= 0) {
+				
+				int pos2  = getIndexOf(buscadas.get(pos), listaReproduccion);
+				buscadas.remove(pos);
+				listaReproduccion.remove(pos2);
+				notificaCancionBorrada(pos);
+				if (pos2 < (actual-1) || actual > this.listaReproduccion.size()) {
+					setActual(actual -1);
+				}				
+				modificado = true;
+			} else {
+				throw new IndexOutOfBoundsException();
+			}
+		}else{
+			this.borrarCancion(pos);
+			
+			//Si la cancion que borramos esta por debajo de actual
+			//O actual apuntaba a la ultima cancion
+			if (pos < (actual-1) || actual > this.listaReproduccion.size()) {
+				setActual(actual -1);
+			}
+			
+			//TODO comprobar
+			modificado = true;
 		}
-		
-		//TODO comprobar
-		modificado = true;
+
 	}
 	
 	/**

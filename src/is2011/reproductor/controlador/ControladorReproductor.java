@@ -346,24 +346,50 @@ public class ControladorReproductor {
 	 * @param numCancion Es recibido desde 0.
 	 */
 	public void borrarCancion(int numCancion) {
-		int actual = this.listaReproduccion.getActual();
 		
-		//Si estamos borrando la cancion actual...
-		if(numCancion == actual-1) {
-			try {
-				reproductor.stop();
-				//Si la cancion actual era la ultima...
-				if(listaReproduccion.getNumeroCanciones() == actual) {
-					listaReproduccion.setActual(actual-1);
-				}else {
-					//Si no era la ultima, la incrementamos en uno.
-					listaReproduccion.setActual(actual + 1);
+		
+		if (listaReproduccion.getBusquedaRealizada()){
+			// Indice en la lista de reproduccion de la cancion a borrar (que es cogida de la busqueda)
+			int cancionEnListaReproduccion = listaReproduccion.getIndexOf(listaReproduccion.getCancionesBuscadas().get(numCancion), listaReproduccion.getCancionesListaReproduccion());
+			int actual = this.listaReproduccion.getActual();
+			
+			//Si estamos borrando la cancion actual...
+			if(cancionEnListaReproduccion == actual-1) {
+				try {
+					reproductor.stop();
+					//Si la cancion actual era la ultima...
+					if(listaReproduccion.getNumeroCanciones() == actual) {
+						listaReproduccion.setActual(actual-1);
+					}else {
+						//Si no era la ultima, la incrementamos en uno.
+						listaReproduccion.setActual(actual + 1);
+					}
+				} catch (BasicPlayerException e) {
+					e.printStackTrace();
 				}
-			} catch (BasicPlayerException e) {
-				e.printStackTrace();
 			}
+			this.listaReproduccion.removeCancion(numCancion);
 		}
-		this.listaReproduccion.removeCancion(numCancion);
+		else{
+			int actual = this.listaReproduccion.getActual();
+			
+			//Si estamos borrando la cancion actual...
+			if(numCancion == actual-1) {
+				try {
+					reproductor.stop();
+					//Si la cancion actual era la ultima...
+					if(listaReproduccion.getNumeroCanciones() == actual) {
+						listaReproduccion.setActual(actual-1);
+					}else {
+						//Si no era la ultima, la incrementamos en uno.
+						listaReproduccion.setActual(actual + 1);
+					}
+				} catch (BasicPlayerException e) {
+					e.printStackTrace();
+				}
+			}
+			this.listaReproduccion.removeCancion(numCancion);
+		}
 		
 	}
 
