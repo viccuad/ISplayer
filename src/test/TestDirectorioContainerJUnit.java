@@ -37,7 +37,7 @@ public class TestDirectorioContainerJUnit extends TestCase{
 	public void setUp() {
 		
 		
-		pathprueba =  "src/Recursos/01 Purple Haze.mp3";    // no cambiar!
+		pathprueba =  "src/recursos/01 Purple Haze.mp3";    // no cambiar!
 		
 		pathprueba2 = "";
 		try {

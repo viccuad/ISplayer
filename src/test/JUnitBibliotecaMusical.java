@@ -29,7 +29,7 @@ public class JUnitBibliotecaMusical extends TestCase{
 		
 		try {
 			//bib.guardarXML("src/Recursos/testXML2.xml");
-			bib.cargarXML("src/Recursos/testXML2.xml");			
+			bib.cargarXML("src/recursos/testXML2.xml");			
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
