@@ -20,7 +20,7 @@ public class TestDirectorioContainerJUnit extends TestCase{
 
 	@SuppressWarnings("unused")
 	private AudioFile filemp3 = null;
-	private String path,pathprueba,pathprueba2;
+	private String pathprueba,pathprueba2;
 	private DirectorioContainer dir, dir1cancion, dirvacio;
 	private CancionContainer c1;
 	private ArrayList<CancionContainer> lista, lista1;
@@ -37,13 +37,13 @@ public class TestDirectorioContainerJUnit extends TestCase{
 	public void setUp() {
 		
 		
-		path = "src/Recursos/01 Purple Haze.mp3";    // no cambiar!
-		pathprueba = path;
+		pathprueba =  "src/Recursos/01 Purple Haze.mp3";    // no cambiar!
+		
 		pathprueba2 = "";
 		try {
 			
-			filemp3 = AudioFileIO.read(new File(path));
-			c1 = new CancionContainer(path);
+			filemp3 = AudioFileIO.read(new File(pathprueba));
+			c1 = new CancionContainer(pathprueba);
 			lista = new ArrayList<CancionContainer>();
 			for (int i = 0;  i < 5; i++){
 				c1.setPista(i);
@@ -103,7 +103,7 @@ public class TestDirectorioContainerJUnit extends TestCase{
 		DirectorioContainer dir1cancionprueba = new DirectorioContainer(pathprueba, lista1);
 		DirectorioContainer dirprueba = new DirectorioContainer(pathprueba);
 		dirprueba.actualizarPathCanciones();
-		CancionContainer c2 = new CancionContainer(path); 
+		CancionContainer c2 = new CancionContainer(pathprueba); 
 		c2.setTrackPath(pathprueba + File.separator + c1.getTrackPath());
 		dir1cancionprueba.getListaCanciones().add(c1);
 		assertEquals(dirprueba, dir1cancion);
@@ -111,19 +111,24 @@ public class TestDirectorioContainerJUnit extends TestCase{
 	
 	public void testExisteCancion() {
 		DirectorioContainer dirprueba = new DirectorioContainer(pathprueba,lista1);
-		assertTrue(dirprueba.existeCancion(c1.getTitulo()) == true);
+		assertTrue(dirprueba.existeCancion(c1.getTrackPath()) == true);
 		
 		
 	}
 	
 	public void testGetListaCanciones(){
-		assertEquals(dir.getListaCanciones(),lista);
+		assertEquals(lista, dir.getListaCanciones() );
 	}
 	
 	
 	public void testGetPath() {
-		String pathaux = "src/Recursos/01 Purple Haze.mp3";    
-		assertTrue(dir.getPath().compareTo(pathaux) == 0);
+		String pathaux = pathprueba;
+		String pathaux2 = dir.getPath();
+		assertTrue(pathaux2.compareTo(pathaux) == 0);
+		/*DirectorioContainer dirprueba = new DirectorioContainer(pathprueba2,lista);
+		dirprueba.setPath(dir.getPath());
+		assertEquals(dirprueba,dir);*/
+	
 	}
 	
 	public void testSetListaCanciones(){
@@ -134,7 +139,7 @@ public class TestDirectorioContainerJUnit extends TestCase{
 	
 	
 	public void testSetPath() {
-		String pathaux = "src/Recursos/01 Purple Haze.mp3";  
+		String pathaux = pathprueba;  
 		DirectorioContainer dirprueba = new DirectorioContainer(pathprueba2);
 		dirprueba.setPath(pathaux);
 		assertEquals(dirprueba, dir);
@@ -142,7 +147,7 @@ public class TestDirectorioContainerJUnit extends TestCase{
 	
 	
 	public static TestSuite suite(){
-		TestSuite raiz=new TestSuite("raiz");
+		//TestSuite raiz=new TestSuite("raiz");
 		
 		TestSuite suite=new TestSuite("Directorio");
 		suite.addTest(new TestDirectorioContainerJUnit("testConstvaciaDirectorioContainer"));
@@ -154,8 +159,8 @@ public class TestDirectorioContainerJUnit extends TestCase{
 		suite.addTest(new TestDirectorioContainerJUnit("testGetPath"));
 		suite.addTest(new TestDirectorioContainerJUnit("testSetListaCanciones"));
 		suite.addTest(new TestDirectorioContainerJUnit("testSetPath"));
-		raiz.addTest(suite);
-		return raiz;
+		//raiz.addTest(suite);
+		return suite;
 		
 	}
 	
@@ -168,7 +173,20 @@ public class TestDirectorioContainerJUnit extends TestCase{
 	}
 		
 	public boolean assertEquals(ArrayList<CancionContainer>  c1, ArrayList<CancionContainer>  c2){
-		return c1.equals(c2);
+
+		if (c1.size() != c2.size()) return false;
+		
+		for ( int i = 0; i == c1.size(); i++){
+			
+			if ( c1.get(i).equals(c2.get(i)) != true) return false;				
+		}
+
+		return true;
 	}
+	
+	
+
+		
+	
 	
 }

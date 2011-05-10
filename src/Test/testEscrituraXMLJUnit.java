@@ -32,7 +32,7 @@ public class testEscrituraXMLJUnit extends TestCase{
 	}
 	
 	public static TestSuite suite(){
-		TestSuite raiz=new TestSuite("raiz");
+		TestSuite raiz=new TestSuite("escritura XML");
 		
 		TestSuite suite1=new TestSuite("Cancion vacia");
 		

@@ -96,7 +96,7 @@ public class testCancionMP3JUnit extends TestCase{
 	
 	
 	public static TestSuite suite(){
-		TestSuite raiz=new TestSuite("raiz");
+		//TestSuite raiz=new TestSuite("raiz");
 		
 		//TestSuite suite1=new TestSuite("Cancion vacia");
 		
@@ -108,8 +108,8 @@ public class testCancionMP3JUnit extends TestCase{
 		suite2.addTest(new testCancionMP3JUnit("testGetPista"));
 		
 		//raiz.addTest(suite1);
-		raiz.addTest(suite2);
-		return raiz;
+		//raiz.addTest(suite2);
+		return suite2;
 		
 	}
 	
