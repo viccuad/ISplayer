@@ -74,6 +74,9 @@ Pruebas de optimizaciÃ³n del reproductor:
 	Realizar todas las pruebas de "Pruebas Reproductor", y cerciorarse de que tarda menos. 
 	Deberia tardar menos de 0.1 segundos (inperceptible).
 	
+	Cargar una canción, y comprobar que se puede mover la barra de desplazamiento de la cancion
+	sin retardo alguno, y que suena la canción mientras se mueve la barra de desplazamiento.
+	
 	Abrir el reproductor, cargar una lista de reproducciÃ³n, y sin tocar ningÃºn botÃ³n, pulsar las flechas del teclado
 	(arriba, abajo, izq y dcha) muy rapido, para que reproduzca las canciones anterior y siguiente muy rÃ¡pido. Comprobar que no da ningÃºn error. 
 	
@@ -111,17 +114,17 @@ Eliminar una/varias canciones
 
 
 Añadir una/varias canciones a la lista de reproduccion desde biblioteca
-
-Esta accion se puede hacer de 2 modos:
-
-a.1 cargar una biblioteca
-a.2 hacer doble click sobre la cancion q desea añadir a la lista
-a.3 cerciorarse que la cancion se ha añadido a la lista de reproduccion actual
-
-b.1 cargar una biblioteca
-b.2 seleccionar una/varias canciones manteniendo pulsado el CONTROL
-b.3 click derecho y "añadir a LR"
-b.4 cerciorarse que la cancion se ha añadido a la lista de reproduccion actual
+		
+		Esta accion se puede hacer de 2 modos:
+		
+		a.1 cargar una biblioteca
+		a.2 hacer doble click sobre la cancion q desea añadir a la lista
+		a.3 cerciorarse que la cancion se ha añadido a la lista de reproduccion actual
+		
+		b.1 cargar una biblioteca
+		b.2 seleccionar una/varias canciones manteniendo pulsado el CONTROL
+		b.3 click derecho y "añadir a LR"
+		b.4 cerciorarse que la cancion se ha añadido a la lista de reproduccion actual
 
 	
 	
