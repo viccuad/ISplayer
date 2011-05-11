@@ -94,6 +94,35 @@ public class testCancionMP3JUnit extends TestCase{
 		assertEquals(pista, obtenida);
 	}
 	
+	public void testSetName(){
+		String name = "PURPLE HAZE";
+		c1.setTitulo(name);
+		assertEquals(name, c1.getTitulo());
+	}
+	
+	public void testSetAlbum(){
+		String album = "EXPERIENCE HENDRIX";
+		c1.setAlbum(album);
+		assertEquals(album, c1.getAlbum());
+	}
+	
+	public void testSetArtista(){
+		String artista = "JIMMY HENDRIX";
+		c1.setArtista(artista);
+		assertEquals(artista, c1.getArtista());
+	}
+	
+	public void testSetGenero(){
+		String genero = "ROCK";
+		c1.setGenero(genero);
+		assertEquals(genero, c1.getGenero());
+	}
+	
+	public void testSetPista(){
+		int pista = 10;
+		c1.setPista(pista);
+		assertEquals(pista, c1.getPista());
+	}
 	
 	public static TestSuite suite(){
 		//TestSuite raiz=new TestSuite("raiz");
@@ -106,6 +135,11 @@ public class testCancionMP3JUnit extends TestCase{
 		suite2.addTest(new testCancionMP3JUnit("testGetArtista"));
 		suite2.addTest(new testCancionMP3JUnit("testGetGenero"));
 		suite2.addTest(new testCancionMP3JUnit("testGetPista"));
+		suite2.addTest(new testCancionMP3JUnit("testSetName"));
+		suite2.addTest(new testCancionMP3JUnit("testSetAlbum"));
+		suite2.addTest(new testCancionMP3JUnit("testSetArtista"));
+		suite2.addTest(new testCancionMP3JUnit("testSetGenero"));
+		suite2.addTest(new testCancionMP3JUnit("testSetPista"));
 		
 		//raiz.addTest(suite1);
 		//raiz.addTest(suite2);

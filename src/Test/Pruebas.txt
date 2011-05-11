@@ -99,6 +99,29 @@ Pruebas Preferencias del Sistema
 	2. Guardar en un XML
 	3. Recuperar del XML
 	4. Comprobar que no se pierde informacion y que todos los pasos son coherentes.
+	
+	
+	
+Eliminar una/varias canciones
+
+1. seleccionar una o varias canciones de la lista
+2. click derecho
+3. seleccionar borrar
+4. se borran de la lista
+
+
+Añadir una/varias canciones a la lista de reproduccion desde biblioteca
+
+Esta accion se puede hacer de 2 modos:
+
+a.1 cargar una biblioteca
+a.2 hacer doble click sobre la cancion q desea añadir a la lista
+a.3 cerciorarse que la cancion se ha añadido a la lista de reproduccion actual
+
+b.1 cargar una biblioteca
+b.2 seleccionar una/varias canciones manteniendo pulsado el CONTROL
+b.3 click derecho y "añadir a LR"
+b.4 cerciorarse que la cancion se ha añadido a la lista de reproduccion actual
 
 	
 	

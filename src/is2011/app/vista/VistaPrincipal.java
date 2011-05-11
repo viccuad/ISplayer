@@ -927,27 +927,27 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 			for (MouseListener l : listeners) {
 				playPause.removeMouseListener(l);
 			}
-			System.out.println(playPause.getActionListeners().length);
+			
 			ActionListener[] alis = playPause.getActionListeners();
 			for (ActionListener l : alis) {
 				playPause.removeActionListener(l);
 			}
 			
-			System.out.println(playPause.getActionListeners().length);
+			
 			playPause.addActionListener(new ActionListener(){
 
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					controlador.pause();
-					System.out.println("actionperformed!!");
+					
 				}
 				
 			});
 			
-			System.out.println(playPause.getActionListeners().length);
 			
-			System.out.println("Aadido action listener!!");
+			
+			
 			
 			playPause.addMouseListener(new MouseAdapter() {
 				public void mousePressed (MouseEvent e) {
@@ -959,26 +959,26 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 				public void mouseReleased (MouseEvent e) {
 					playPause.setBorder(BorderFactory.createEmptyBorder());
 					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pauseEnt.png")));
-					System.out.println("hola");
+					
 				}
 				
 				public void mouseEntered  (MouseEvent e) { 
 					playPause.setBorder(BorderFactory.createEmptyBorder());
 					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pauseEnt.png")));
-					System.out.println("hola");
+					
 			      }
 
 				public void mouseExited (MouseEvent e) {
 					playPause.setBorder(BorderFactory.createEmptyBorder());
 					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pause.png")));
-					System.out.println("hola");
+					
 				}
 			});
 
 		} else if (event.getCode() == BasicPlayerEvent.EOM 
 				|| event.getCode() == BasicPlayerEvent.PAUSED
 				
-				|| event.getCode() == BasicPlayerEvent.STOPPED
+				
 				|| event.getCode() == BasicPlayerEvent.OPENED) {
 			
 			MouseListener[] listeners = playPause.getMouseListeners();
@@ -999,7 +999,7 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					int cancionSeleccionada = vistaListaReproduccion.getCancionSeleccionada();
-					System.out.println("mierda");
+					
 					controlador.pause();
 					
 				}
@@ -1030,17 +1030,43 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 				}
 			});			
 			
-		} else if (event.getCode() == BasicPlayerEvent.STOP) {
-			playPause.addActionListener(new ActionListener(){
+		} else if (event.getCode() == BasicPlayerEvent.STOP || event.getCode() == BasicPlayerEvent.STOPPED ) {
+			MouseListener[] listeners = playPause.getMouseListeners();
+			for (MouseListener l : listeners) {
+				playPause.removeMouseListener(l);
+			}
+			
+			
+			ActionListener[] alis = playPause.getActionListeners();
+			for (ActionListener l : alis) {
+				playPause.removeActionListener(l);
+			}
+			
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
+			playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
+			playPause.addMouseListener(new MouseAdapter() {
+				public void mousePressed (MouseEvent e) {
+					playPause.setBorder(BorderFactory.createEmptyBorder());
+					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playPush.png")));		
 					int cancionSeleccionada = vistaListaReproduccion.getCancionSeleccionada();
-					
 					controlador.play(cancionSeleccionada);
+				}			
+				
+				public void mouseReleased (MouseEvent e) {
+					playPause.setBorder(BorderFactory.createEmptyBorder());
+					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));				
 				}
 				
-			});
+				public void mouseEntered  (MouseEvent e) { 
+					playPause.setBorder(BorderFactory.createEmptyBorder());
+					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));
+			      }
+
+				public void mouseExited (MouseEvent e) {
+					playPause.setBorder(BorderFactory.createEmptyBorder());
+					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
+				}
+			});		
 		}
 	}
 	
