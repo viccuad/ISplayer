@@ -1,0 +1,21 @@
+<biblioteca>
+  <directorios>
+    <entry>
+      <string>C:\hlocal\IS-2011\src\Recursos\carpetaPrueba\raiz\nodo1.2</string>
+      <dir>
+        <dirPath>C:\hlocal\IS-2011\src\Recursos\carpetaPrueba\raiz\nodo1.2</dirPath>
+        <listaCanciones>
+          <track>
+            <trackPath>1cancion1.2.mp3</trackPath>
+            <titulo>Desconocido</titulo>
+            <album>Desconocido</album>
+            <genero>(12)</genero>
+            <artista>Jimmy</artista>
+            <duracion>0</duracion>
+            <pista>0</pista>
+          </track>
+        </listaCanciones>
+      </dir>
+    </entry>   
+  </directorios>
+</biblioteca>
