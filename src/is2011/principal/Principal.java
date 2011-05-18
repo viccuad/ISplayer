@@ -5,6 +5,14 @@ package is2011.principal;
 
 
 
+import java.io.IOException;
+
+import javax.media.Manager;
+import javax.media.MediaLocator;
+import javax.media.NoDataSourceException;
+import javax.media.NoPlayerException;
+import javax.media.Player;
+import javax.media.protocol.DataSource;
 import javax.swing.UIManager;
 
 import is2011.app.controlador.AppController;
@@ -74,8 +82,7 @@ public class Principal {
 		vp.setControlador(appController);
 		appController.cargarArchivosPreferencias();
     	
-    	
-    	}
+	
 	}
 
 }
