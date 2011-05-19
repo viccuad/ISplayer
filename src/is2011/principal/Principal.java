@@ -7,13 +7,10 @@ package is2011.principal;
 
 import java.io.IOException;
 
-import javax.media.Manager;
-import javax.media.MediaLocator;
-import javax.media.NoDataSourceException;
-import javax.media.NoPlayerException;
-import javax.media.Player;
-import javax.media.protocol.DataSource;
+
 import javax.swing.UIManager;
+
+import de.javasoft.plaf.synthetica.*;
 
 import is2011.app.controlador.AppController;
 import is2011.app.controlador.IAppController;
@@ -43,7 +40,13 @@ public class Principal {
          */
         try
         {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        	// PARA LA LICENCIA DE Synthetica:
+        	String[] li = {"Licensee=Victor Cuadrado Juan", "LicenseRegistrationNumber=NCVC110518", "Product=Synthetica", "LicenseType=Non Commercial", "ExpireDate=--.--.----", "MaxVersion=2.999.999"};
+        	UIManager.put("Synthetica.license.info", li);
+        	UIManager.put("Synthetica.license.key", "F8A52C36-F58CE8EF-8D455B99-C3456027-CF87F5BA");
+        	
+        	//UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        	UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
         }
         catch (Exception ignored) {}
     	finally {

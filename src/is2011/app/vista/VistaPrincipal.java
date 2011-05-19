@@ -596,7 +596,7 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
         this.add(vistaRep,grid);
 
         JSlider volumen =  this.vistaReproduccion.getVolumen();
-        volumen.setPreferredSize(new Dimension(20,100));
+        volumen.setPreferredSize(new Dimension(30,100));
         grid.gridx       = 2;
         grid.gridy       = 0;
         grid.gridheight  = 2;
