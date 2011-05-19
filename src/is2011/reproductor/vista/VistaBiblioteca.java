@@ -212,11 +212,11 @@ public class VistaBiblioteca extends JPanel implements
 		//Configuramos el tamaño
 		TableColumnModel cm = tabla.getColumnModel();
 		cm.getColumn(NUM_COLUMNA_TITULO).setPreferredWidth(250);
-        cm.getColumn(NUM_COLUMNA_GENERO).setPreferredWidth(50);
+        cm.getColumn(NUM_COLUMNA_GENERO).setPreferredWidth(81);
         cm.getColumn(NUM_COLUMNA_ARTISTA).setPreferredWidth(150);
         cm.getColumn(NUM_COLUMNA_ALBUM).setPreferredWidth(150);
-		cm.getColumn(NUM_COLUMNA_TRACKNO).setPreferredWidth(35);
-		cm.getColumn(NUM_COLUMNA_DURACION).setPreferredWidth(50);
+		cm.getColumn(NUM_COLUMNA_TRACKNO).setPreferredWidth(75);
+		cm.getColumn(NUM_COLUMNA_DURACION).setPreferredWidth(75);
 		
 		
 		//Le añadimos el scroll

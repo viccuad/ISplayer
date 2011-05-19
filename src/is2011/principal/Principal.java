@@ -47,6 +47,7 @@ public class Principal {
         	
         	//UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         	UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
+        	//UIManager.setLookAndFeel(new SyntheticaBlackEyeLookAndFeel());
         }
         catch (Exception ignored) {}
     	finally {
