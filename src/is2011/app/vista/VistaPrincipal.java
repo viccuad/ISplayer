@@ -22,6 +22,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.ParseException;
 import java.util.Map;
 
 
@@ -34,9 +35,25 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 
 import javax.swing.JFrame;
+
+import de.javasoft.plaf.synthetica.SyntheticaBlackEyeLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaBlackMoonLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaBlackStarLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaBlueIceLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaBlueMoonLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaClassyLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaGreenDreamLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaMauveMetallicLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaOrangeMetallicLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaSilverMoonLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaSkyMetallicLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaWhiteVisionLookAndFeel;
 
 import javazoom.jlgui.basicplayer.BasicController;
 import javazoom.jlgui.basicplayer.BasicPlayerEvent;
@@ -50,24 +67,34 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 	
 	private IAppController controlador;
 	
-	private JButton playPause;
-	//private JButton play;
-	//private JButton pause;
-	private JButton stop;
-	private JButton avanzar;
-	private JButton atrasar;
-	private JButton aniadir;
-	
-	private JButton siguiente;
-	private JButton anterior;
+
 	
 	private JMenuBar menu;
+	
 	private JMenu menuArchivo;
 	private JMenuItem menuItemAbrir;
 	private JMenuItem menuItemAniadir;
 	private JMenuItem menuItemGuardarLrXML;
 	private JMenuItem menuItemAbrirLrXML;
 	private JMenuItem menuPreferencias;
+	
+	private JMenu menuApariencia;
+	private JMenuItem SyntheticaSimple2DLookAndFeel;
+	private JMenuItem SyntheticaBlackEyeLookAndFeel;
+	private JMenuItem SyntheticaBlackMoonLookAndFeel;
+	private JMenuItem SyntheticaBlackStarLookAndFeel;
+	private JMenuItem  SyntheticaBlueIceLookAndFeel;
+	private JMenuItem SyntheticaBlueMoonLookAndFeel;
+	private JMenuItem SyntheticaClassyLookAndFeel;
+	private JMenuItem SyntheticaGreenDreamLookAndFeel;
+	private JMenuItem SyntheticaMauveMetallicLookAndFeel;
+	private JMenuItem SyntheticaOrangeMetallicLookAndFeel;
+	private JMenuItem SyntheticaSilverMoonLookAndFeel;
+	private JMenuItem SyntheticaSkyMetallicLookAndFeel;
+	private JMenuItem SyntheticaWhiteVisionLookAndFeel;
+	
+	private JMenu ayuda;
+	
 	
 	private JMenu modoReproduccion;
 	private JMenuItem aleatorio;
@@ -87,11 +114,14 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 	private JMenuItem aniadirCancionBiblioteca;
 	private JMenuItem aniadirCancionYCarpetaBiblioteca;
 	
+	 
+	
 	GridBagConstraints grid;
 	private VistaReproduccion vistaReproduccion;
 	private VistaListaReproduccion vistaListaReproduccion;
 	private VistaBiblioteca vistaBiblioteca;
 	private VistaPreferencias vistaPreferencias;
+	
 	
 	
 	//private boolean reproduciendo;
@@ -107,512 +137,26 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 		
 	}
 
-	public JPanel getContenido(){
-		
-		JPanel panelPpal = new JPanel();
-		panelPpal.setLayout(new GridLayout(1,8));
-		
-		playPause = new JButton();
-		playPause.setBorder(BorderFactory.createEmptyBorder());
-		playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
-		panelPpal.add(playPause);
-		
-		/*play = new JButton();
-		play.setBorder(BorderFactory.createEmptyBorder());
-		play.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
-		panelPpal.add(play);*/
-
-		
-		/*pause = new JButton();
-		pause.setBorder(BorderFactory.createEmptyBorder());
-		pause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pause.png")));
-		panelPpal.add(pause);*/
-		
-		
-		stop = new JButton();
-		stop.setBorder(BorderFactory.createEmptyBorder());
-		stop.setIcon(new ImageIcon(getClass().getResource("/Recursos/stop.png")));
-		panelPpal.add(stop);
-		
-		atrasar= new JButton();
-		atrasar.setBorder(BorderFactory.createEmptyBorder());
-		atrasar.setIcon(new ImageIcon(getClass().getResource("/Recursos/rew.png")));
-		panelPpal.add(atrasar);	
-		
-		avanzar= new JButton();
-		avanzar.setBorder(BorderFactory.createEmptyBorder());
-		avanzar.setIcon(new ImageIcon(getClass().getResource("/Recursos/ff.png")));
-		panelPpal.add(avanzar);
-		
-		aniadir= new JButton();
-		aniadir.setBorder(BorderFactory.createEmptyBorder());
-		aniadir.setIcon(new ImageIcon(getClass().getResource("/Recursos/add2.png")));
-		panelPpal.add(aniadir);	
-		
-		anterior  = new JButton();
-		anterior.setBorder(BorderFactory.createEmptyBorder());
-		anterior.setIcon(new ImageIcon(getClass().getResource("/Recursos/previous_song.png")));
-		panelPpal.add(anterior);
-		
-		siguiente  = new JButton();
-		siguiente.setBorder(BorderFactory.createEmptyBorder());
-		siguiente.setIcon(new ImageIcon(getClass().getResource("/Recursos/next_song.png")));
-		panelPpal.add(siguiente);
-	
-		
-		siguiente.addMouseListener(new MouseAdapter(){
-			public void mousePressed (MouseEvent e) {
-				siguiente.setBorder(BorderFactory.createEmptyBorder());
-				siguiente.setIcon(new ImageIcon(getClass().getResource("/Recursos/next_songPush.png")));				
-			}			
-			
-			public void mouseReleased (MouseEvent e) {
-				siguiente.setBorder(BorderFactory.createEmptyBorder());
-				siguiente.setIcon(new ImageIcon(getClass().getResource("/Recursos/next_songEnt.png")));				
-			}
-			
-			public void mouseEntered  (MouseEvent e) { 
-				siguiente.setBorder(BorderFactory.createEmptyBorder());
-				siguiente.setIcon(new ImageIcon(getClass().getResource("/Recursos/next_songEnt.png")));
-		      }
-
-			public void mouseExited (MouseEvent e){
-				siguiente.setBorder(BorderFactory.createEmptyBorder());
-				siguiente.setIcon(new ImageIcon(getClass().getResource("/Recursos/next_song.png")));
-			}
-			
-			
-		});
-		playPause.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int cancionSeleccionada = vistaListaReproduccion.getCancionSeleccionada();
-				
-				controlador.play(cancionSeleccionada);
-			}
-			
-		});
-		
-		siguiente.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				controlador.siguienteCancion();
-				
-			}}
-			
-		);
-		
-		anterior.addMouseListener(new MouseAdapter() {
-			public void mousePressed (MouseEvent e) {
-				anterior.setBorder(BorderFactory.createEmptyBorder());
-				anterior.setIcon(new ImageIcon(getClass().getResource("/Recursos/previous_songPush.png")));				
-			}			
-			
-			public void mouseReleased (MouseEvent e) {
-				anterior.setBorder(BorderFactory.createEmptyBorder());
-				anterior.setIcon(new ImageIcon(getClass().getResource("/Recursos/previous_songEnt.png")));				
-			}
-			public void mouseEntered  (MouseEvent e) { 
-				anterior.setBorder(BorderFactory.createEmptyBorder());
-				anterior.setIcon(new ImageIcon(getClass().getResource("/Recursos/previous_songEnt.png")));
-		      }
-
-			public void mouseExited (MouseEvent e) {
-				anterior.setBorder(BorderFactory.createEmptyBorder());
-				anterior.setIcon(new ImageIcon(getClass().getResource("/Recursos/previous_song.png")));
-			}
-		});		
-		
-		
-		anterior.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				controlador.cancionAnterior();
-				
-			}}
-			
-		);
-		
-		
-		aniadir.addMouseListener(new MouseAdapter(){
-			public void mousePressed (MouseEvent e) {
-				aniadir.setBorder(BorderFactory.createEmptyBorder());
-				aniadir.setIcon(new ImageIcon(getClass().getResource("/Recursos/add2Push.png")));				
-			}			
-			
-			public void mouseReleased (MouseEvent e) {
-				aniadir.setBorder(BorderFactory.createEmptyBorder());
-				aniadir.setIcon(new ImageIcon(getClass().getResource("/Recursos/add2Ent.png")));				
-			}
-			
-			public void mouseEntered  (MouseEvent e) { 
-				aniadir.setBorder(BorderFactory.createEmptyBorder());
-				aniadir.setIcon(new ImageIcon(getClass().getResource("/Recursos/add2Ent.png")));
-		      }
-
-			public void mouseExited (MouseEvent e){
-				aniadir.setBorder(BorderFactory.createEmptyBorder());
-				aniadir.setIcon(new ImageIcon(getClass().getResource("/Recursos/add2.png")));
-			}
-			
-			
-		});
-		
-		aniadir.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				controlador.aniadir();
-				
-			}}
-			
-		);
-		
-		/*play.addMouseListener(new MouseAdapter() {
-			public void mousePressed (MouseEvent e) {
-				play.setBorder(BorderFactory.createEmptyBorder());
-				play.setIcon(new ImageIcon(getClass().getResource("/Recursos/playPush.png")));				
-			}			
-			
-			public void mouseReleased (MouseEvent e) {
-				play.setBorder(BorderFactory.createEmptyBorder());
-				play.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));				
-			}
-			
-			public void mouseEntered  (MouseEvent e) { 
-				play.setBorder(BorderFactory.createEmptyBorder());
-				play.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));
-		      }
-
-			public void mouseExited (MouseEvent e) {
-				play.setBorder(BorderFactory.createEmptyBorder());
-				play.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
-			}
-		});*/
-		
-		
-		/*play.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e){
-				int cancionSeleccionada = vistaListaReproduccion.getCancionSeleccionada();
-    			
-				controlador.play(cancionSeleccionada);
-			}
-		});*/
-		
-		
-		playPause.addMouseListener(new MouseAdapter() {
-			public void mousePressed (MouseEvent e) {
-				playPause.setBorder(BorderFactory.createEmptyBorder());
-				playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playPush.png")));				
-			}			
-			
-			public void mouseReleased (MouseEvent e) {
-				playPause.setBorder(BorderFactory.createEmptyBorder());
-				playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));				
-			}
-			
-			public void mouseEntered  (MouseEvent e) { 
-				playPause.setBorder(BorderFactory.createEmptyBorder());
-				playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));
-		      }
-
-			public void mouseExited (MouseEvent e) {
-				playPause.setBorder(BorderFactory.createEmptyBorder());
-				playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
-			}
-		});
-		
-		/*playPause.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(!reproduciendo){
-					
-					playPause.addMouseListener(new MouseAdapter() {
-						public void mousePressed (MouseEvent e) {
-							playPause.setBorder(BorderFactory.createEmptyBorder());
-							playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pausePush.png")));				
-						}			
-						
-						public void mouseReleased (MouseEvent e) {
-							playPause.setBorder(BorderFactory.createEmptyBorder());
-							playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pauseEnt.png")));				
-						}
-						
-						public void mouseEntered  (MouseEvent e) { 
-							playPause.setBorder(BorderFactory.createEmptyBorder());
-							playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pauseEnt.png")));
-					      }
-
-						public void mouseExited (MouseEvent e) {
-							playPause.setBorder(BorderFactory.createEmptyBorder());
-							playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pause.png")));
-						}
-					});
-					reproduciendo = true;
-					reproduciendo2 = true;
-					int cancionSeleccionada = vistaListaReproduccion.getCancionSeleccionada();
-				    			
-					controlador.play(cancionSeleccionada);
-							
-				}
-				else{
-					
-					controlador.pause();
-					
-					if(reproduciendo2){
-					playPause.addMouseListener(new MouseAdapter() {
-						public void mousePressed (MouseEvent e) {
-							playPause.setBorder(BorderFactory.createEmptyBorder());
-							playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playPush.png")));				
-						}			
-						
-						public void mouseReleased (MouseEvent e) {
-							playPause.setBorder(BorderFactory.createEmptyBorder());
-							playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));				
-						}
-						
-						public void mouseEntered  (MouseEvent e) { 
-							playPause.setBorder(BorderFactory.createEmptyBorder());
-							playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));
-					      }
-
-						public void mouseExited (MouseEvent e) {
-							playPause.setBorder(BorderFactory.createEmptyBorder());
-							playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
-						}
-					});
-					reproduciendo2 = false;
-					}
-					else{
-						playPause.addMouseListener(new MouseAdapter() {
-							public void mousePressed (MouseEvent e) {
-								playPause.setBorder(BorderFactory.createEmptyBorder());
-								playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pausePush.png")));				
-							}			
-							
-							public void mouseReleased (MouseEvent e) {
-								playPause.setBorder(BorderFactory.createEmptyBorder());
-								playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pauseEnt.png")));				
-							}
-							
-							public void mouseEntered  (MouseEvent e) { 
-								playPause.setBorder(BorderFactory.createEmptyBorder());
-								playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pauseEnt.png")));
-						      }
-
-							public void mouseExited (MouseEvent e) {
-								playPause.setBorder(BorderFactory.createEmptyBorder());
-								playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pause.png")));
-							}
-						});
-						reproduciendo2 = true;
-					}
-					//reproduciendo = false;
-					
-					
-				}
-			}
-			}
-		);*/
-		
-		/*pause.addMouseListener(new MouseAdapter(){
-			public void mousePressed (MouseEvent e) {
-				pause.setBorder(BorderFactory.createEmptyBorder());
-				pause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pausePush.png")));				
-			}			
-			
-			public void mouseReleased (MouseEvent e) {
-				pause.setBorder(BorderFactory.createEmptyBorder());
-				pause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pauseEnt.png")));				
-			}
-			public void mouseEntered  (MouseEvent e) { 
-				pause.setBorder(BorderFactory.createEmptyBorder());
-				pause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pauseEnt.png")));
-		      }
-
-			public void mouseExited (MouseEvent e){
-				pause.setBorder(BorderFactory.createEmptyBorder());
-				pause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pause.png")));
-			}
-		});
-
-		pause.addActionListener( new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				controlador.pause();
-			}
-		});*/
-		
-		stop.addMouseListener(new MouseAdapter(){
-			public void mousePressed (MouseEvent e) {
-				stop.setBorder(BorderFactory.createEmptyBorder());
-				stop.setIcon(new ImageIcon(getClass().getResource("/Recursos/stopPush.png")));				
-			}			
-			
-			public void mouseReleased (MouseEvent e) {
-				stop.setBorder(BorderFactory.createEmptyBorder());
-				stop.setIcon(new ImageIcon(getClass().getResource("/Recursos/stopEnt.png")));				
-			}
-			public void mouseEntered  (MouseEvent e) { 
-				stop.setBorder(BorderFactory.createEmptyBorder());
-				stop.setIcon(new ImageIcon(getClass().getResource("/Recursos/stopEnt.png")));
-		      }
-
-			public void mouseExited (MouseEvent e){
-				stop.setBorder(BorderFactory.createEmptyBorder());
-				stop.setIcon(new ImageIcon(getClass().getResource("/Recursos/stop.png")));
-			}
-		});
-		
-		stop.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				controlador.stop();
-				//reproduciendo = false;
-				//reproduciendo2 = false;
-			/*	
-				playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
-				playPause.addMouseListener(new MouseAdapter() {
-					public void mousePressed (MouseEvent e) {
-						playPause.setBorder(BorderFactory.createEmptyBorder());
-						playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playPush.png")));				
-					}			
-					
-					public void mouseReleased (MouseEvent e) {
-						playPause.setBorder(BorderFactory.createEmptyBorder());
-						playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));				
-					}
-					
-					public void mouseEntered  (MouseEvent e) { 
-						playPause.setBorder(BorderFactory.createEmptyBorder());
-						playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));
-				      }
-
-					public void mouseExited (MouseEvent e) {
-						playPause.setBorder(BorderFactory.createEmptyBorder());
-						playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
-					}
-				});*/
-			}			
-		});
-		
-		avanzar.addMouseListener(new MouseAdapter(){
-			public void mousePressed (MouseEvent e) {
-				avanzar.setBorder(BorderFactory.createEmptyBorder());
-				avanzar.setIcon(new ImageIcon(getClass().getResource("/Recursos/ffPush.png")));				
-			}			
-			
-			public void mouseReleased (MouseEvent e) {
-				avanzar.setBorder(BorderFactory.createEmptyBorder());
-				avanzar.setIcon(new ImageIcon(getClass().getResource("/Recursos/ffEnt2.png")));				
-			}
-			public void mouseEntered  (MouseEvent e) { 
-				avanzar.setBorder(BorderFactory.createEmptyBorder());
-				avanzar.setIcon(new ImageIcon(getClass().getResource("/Recursos/ffEnt2.png")));
-		      }
-
-			public void mouseExited (MouseEvent e){
-				avanzar.setBorder(BorderFactory.createEmptyBorder());
-				avanzar.setIcon(new ImageIcon(getClass().getResource("/Recursos/ff.png")));
-			}
-		});
-
-		avanzar.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				controlador.fastForward();
-			}
-		});
-		
-		atrasar.addMouseListener(new MouseAdapter(){
-			public void mousePressed (MouseEvent e) {
-				atrasar.setBorder(BorderFactory.createEmptyBorder());
-				atrasar.setIcon(new ImageIcon(getClass().getResource("/Recursos/rewPush.png")));				
-			}			
-			
-			public void mouseReleased (MouseEvent e) {
-				atrasar.setBorder(BorderFactory.createEmptyBorder());
-				atrasar.setIcon(new ImageIcon(getClass().getResource("/Recursos/rewEnt.png")));				
-			}
-			public void mouseEntered  (MouseEvent e) { 
-				atrasar.setBorder(BorderFactory.createEmptyBorder());
-				atrasar.setIcon(new ImageIcon(getClass().getResource("/Recursos/rewEnt.png")));
-		      }
-
-			public void mouseExited (MouseEvent e){
-				atrasar.setBorder(BorderFactory.createEmptyBorder());
-				atrasar.setIcon(new ImageIcon(getClass().getResource("/Recursos/rew.png")));
-			}
-		});
-
-		atrasar.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-			controlador.rewind();	
-			}}
-		);
-
-		this.setFocusable(true);
-		this.addKeyListener(new KeyAdapter(){
-
-			@Override
-			public void keyPressed(KeyEvent event) {
-				switch(event.getKeyCode()) {
-				case KeyEvent.VK_RIGHT:
-					controlador.fastForward();
-					break;
-				case KeyEvent.VK_LEFT:
-					controlador.rewind();
-					break;
-				case KeyEvent.VK_DOWN:
-					controlador.siguienteCancion();
-					break;
-				case KeyEvent.VK_UP:
-					controlador.cancionAnterior();
-					break;
-				}
-					
-			}
-			
-		});
-		
-		return panelPpal;
-
-	}
-
 	public void setVistaReproductor( VistaReproduccion vistaRep) {
 		vistaReproduccion = vistaRep;
 		
-		grid.gridx       = 0;
-        grid.gridy       = 1;
+		grid.gridx       = 0; //0
+        grid.gridy       = 1; //1
         grid.gridheight  = 1;
         grid.gridwidth   = 2;
         grid.weightx     = 1;
-        grid.weighty     = 0.15;
+        grid.weighty     = 0.1;
         grid.fill        = GridBagConstraints.BOTH;
 		
         this.add(vistaRep,grid);
 
-        JSlider volumen =  this.vistaReproduccion.getVolumen();
-        volumen.setPreferredSize(new Dimension(30,100));
-        grid.gridx       = 2;
-        grid.gridy       = 0;
-        grid.gridheight  = 2;
-        grid.gridwidth   = 1;
-        grid.weightx     = 0.0;
-        grid.weighty     = 0.0;
-        grid.fill        = GridBagConstraints.BOTH;
-
-        this.add(volumen, grid);
 	}
 	
 	
 	public void setVistaListaReproduccion(VistaListaReproduccion vlr) {
 		vistaListaReproduccion = vlr;
-		grid.gridx       = 0;
-        grid.gridy       = 2;
+		grid.gridx       = 0; //0
+        grid.gridy       = 0; // 2
         grid.gridheight  = 1;
         grid.gridwidth   = 1;
         grid.weightx     = 1;
@@ -621,6 +165,7 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
         
         this.add(vlr,grid);
         
+        /*
         grid.gridx       = 0;
         grid.gridy       = 3;
         grid.gridheight  = 1;
@@ -631,14 +176,14 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
         
         this.add(vlr.getInfoReproduccion(),grid);
 		
-       
+       */
 		
 	} 
 	
 	public void setVistaBiblioteca(VistaBiblioteca vb) {
 		vistaBiblioteca = vb;
-		grid.gridx       = 1;
-        grid.gridy       = 2;
+		grid.gridx       = 1; // 1
+        grid.gridy       = 0; // 2
         grid.gridheight  = 1;
         grid.gridwidth   = 1;
         grid.weightx     = 1;
@@ -660,24 +205,15 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 		this.setLayout(new GridBagLayout());
 		//this.reproduciendo = false;
 		//this.reproduciendo2 = false;
-		
-		grid.gridx       = 0;
-        grid.gridy       = 0;
-        grid.gridheight  = 1;
-        grid.gridwidth   = 2;
-        grid.weightx     = 0.15;
-        grid.weighty     = 1;
-        grid.fill        = GridBagConstraints.BOTH;
-        
-        this.add(getContenido(),grid);
-		
+
         
         this.setVisible(true);
 		this.setSize(1100,660);
-		this.setResizable(false);
+		//this.setResizable(false);
 		
 		this.menu = new JMenuBar();
-		
+	  
+	  
 		this.menuArchivo = new JMenu("Archivo");
 		this.menuItemAbrir = new JMenuItem ("Abrir");
 		this.menuItemAniadir = new JMenuItem ("Añadir");
@@ -757,6 +293,227 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 		
 		this.menu.add(menuBiblioteca);
 		
+		
+		this.ayuda = new JMenu();
+		ayuda.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+			
+		});
+		
+		this.menu.add(ayuda);
+		this.menuApariencia = new JMenu("Apariencia");
+		this.SyntheticaSimple2DLookAndFeel= new JMenuItem("Simple2D");
+		this.SyntheticaBlackEyeLookAndFeel= new JMenuItem("BlackEye");
+		this.SyntheticaBlackMoonLookAndFeel= new JMenuItem("BlackMoon");
+		this.SyntheticaBlackStarLookAndFeel= new JMenuItem("BlackStar");
+		this.SyntheticaBlueIceLookAndFeel= new JMenuItem("BlueIce");
+		this.SyntheticaBlueMoonLookAndFeel= new JMenuItem("BlueMoon");
+		this.SyntheticaClassyLookAndFeel= new JMenuItem("ClassyLook");
+		this.SyntheticaGreenDreamLookAndFeel= new JMenuItem("GreenDream");
+		this.SyntheticaMauveMetallicLookAndFeel= new JMenuItem("MauveMetallic");
+		this.SyntheticaOrangeMetallicLookAndFeel= new JMenuItem("OrangeMetallic");
+		this.SyntheticaSilverMoonLookAndFeel= new JMenuItem("SilverMoon");
+		this.SyntheticaSkyMetallicLookAndFeel= new JMenuItem("SkyMetallic");
+		this.SyntheticaWhiteVisionLookAndFeel= new JMenuItem("WhiteVision");
+		  
+		this.menuApariencia.add(SyntheticaSimple2DLookAndFeel);
+		this.menuApariencia.add(SyntheticaBlackEyeLookAndFeel);
+		this.menuApariencia.add(SyntheticaBlackMoonLookAndFeel);
+		this.menuApariencia.add(SyntheticaBlackStarLookAndFeel);
+		this.menuApariencia.add(SyntheticaBlueIceLookAndFeel);
+		this.menuApariencia.add(SyntheticaBlueMoonLookAndFeel);
+		this.menuApariencia.add(SyntheticaClassyLookAndFeel);
+		this.menuApariencia.add(SyntheticaGreenDreamLookAndFeel);
+		this.menuApariencia.add(SyntheticaMauveMetallicLookAndFeel);
+		this.menuApariencia.add(SyntheticaOrangeMetallicLookAndFeel);
+		this.menuApariencia.add(SyntheticaSilverMoonLookAndFeel);
+		this.menuApariencia.add(SyntheticaSkyMetallicLookAndFeel);
+		this.menuApariencia.add(SyntheticaWhiteVisionLookAndFeel);
+		
+		this.menu.add(menuApariencia);
+		
+
+		this.SyntheticaSimple2DLookAndFeel.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				update(getGraphics());
+			}
+
+		});
+		
+		this.SyntheticaBlackEyeLookAndFeel.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					UIManager.setLookAndFeel(new SyntheticaBlackEyeLookAndFeel());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				update(getGraphics());
+			}
+
+		});
+		
+		this.SyntheticaBlackMoonLookAndFeel.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					UIManager.setLookAndFeel(new SyntheticaBlackMoonLookAndFeel());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				update(getGraphics());
+			}
+
+		});
+		this.SyntheticaBlackStarLookAndFeel.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					UIManager.setLookAndFeel(new SyntheticaBlackStarLookAndFeel());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				update(getGraphics());
+			}
+
+		});
+		
+		this.SyntheticaBlueIceLookAndFeel.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					UIManager.setLookAndFeel(new SyntheticaBlueIceLookAndFeel());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				update(getGraphics());
+			}
+
+		});
+		this.SyntheticaBlueMoonLookAndFeel.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					UIManager.setLookAndFeel(new SyntheticaBlueMoonLookAndFeel());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				update(getGraphics());
+			}
+
+		});
+		
+		this.SyntheticaClassyLookAndFeel.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					UIManager.setLookAndFeel(new SyntheticaClassyLookAndFeel());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				update(getGraphics());
+			}
+
+		});
+		
+		this.SyntheticaGreenDreamLookAndFeel.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					UIManager.setLookAndFeel(new SyntheticaGreenDreamLookAndFeel());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				update(getGraphics());
+			}
+
+		});
+		
+		this.SyntheticaMauveMetallicLookAndFeel.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					UIManager.setLookAndFeel(new SyntheticaMauveMetallicLookAndFeel());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				update(getGraphics());
+			}
+
+		});
+		this.SyntheticaOrangeMetallicLookAndFeel.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					UIManager.setLookAndFeel(new SyntheticaOrangeMetallicLookAndFeel());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				update(getGraphics());
+			}
+
+		});
+		this.SyntheticaSilverMoonLookAndFeel.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					UIManager.setLookAndFeel(new SyntheticaSilverMoonLookAndFeel());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				update(getGraphics());
+			}
+
+		});
+		this.SyntheticaSkyMetallicLookAndFeel.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					UIManager.setLookAndFeel(new SyntheticaSkyMetallicLookAndFeel());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				update(getGraphics());
+			}
+
+		});
+		
+		this.SyntheticaWhiteVisionLookAndFeel.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					UIManager.setLookAndFeel(new SyntheticaWhiteVisionLookAndFeel());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				update(getGraphics());
+			}
+
+		});
+
 		this.crearBiblioteca.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
@@ -915,7 +672,15 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 		//No hace falta
 	}
 
+	@Override
+	public void stateUpdated(BasicPlayerEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
 	
+
+
+	/*
 	@Override
 	public void stateUpdated(BasicPlayerEvent event) {
 		if(event.getCode() == BasicPlayerEvent.PLAYING
@@ -951,25 +716,25 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 			
 			playPause.addMouseListener(new MouseAdapter() {
 				public void mousePressed (MouseEvent e) {
-					playPause.setBorder(BorderFactory.createEmptyBorder());
+					playPause.setBorder(BorderFactory.createEmptyBorder,
 					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pausePush.png")));	
 					controlador.pause();
 				}			
 				
 				public void mouseReleased (MouseEvent e) {
-					playPause.setBorder(BorderFactory.createEmptyBorder());
+					playPause.setBorder(BorderFactory.createEmptyBorder,
 					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pauseEnt.png")));
 					
 				}
 				
 				public void mouseEntered  (MouseEvent e) { 
-					playPause.setBorder(BorderFactory.createEmptyBorder());
+					playPause.setBorder(BorderFactory.createEmptyBorder,
 					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pauseEnt.png")));
 					
 			      }
 
 				public void mouseExited (MouseEvent e) {
-					playPause.setBorder(BorderFactory.createEmptyBorder());
+					playPause.setBorder(BorderFactory.createEmptyBorder,
 					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pause.png")));
 					
 				}
@@ -1009,23 +774,23 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 			playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
 			playPause.addMouseListener(new MouseAdapter() {
 				public void mousePressed (MouseEvent e) {
-					playPause.setBorder(BorderFactory.createEmptyBorder());
+					playPause.setBorder(BorderFactory.createEmptyBorder,
 					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playPush.png")));		
 					controlador.pause();
 				}			
 				
 				public void mouseReleased (MouseEvent e) {
-					playPause.setBorder(BorderFactory.createEmptyBorder());
+					playPause.setBorder(BorderFactory.createEmptyBorder,
 					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));				
 				}
 				
 				public void mouseEntered  (MouseEvent e) { 
-					playPause.setBorder(BorderFactory.createEmptyBorder());
+					playPause.setBorder(BorderFactory.createEmptyBorder,
 					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));
 			      }
 
 				public void mouseExited (MouseEvent e) {
-					playPause.setBorder(BorderFactory.createEmptyBorder());
+					playPause.setBorder(BorderFactory.createEmptyBorder,
 					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
 				}
 			});			
@@ -1046,24 +811,24 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 			playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
 			playPause.addMouseListener(new MouseAdapter() {
 				public void mousePressed (MouseEvent e) {
-					playPause.setBorder(BorderFactory.createEmptyBorder());
+					playPause.setBorder(BorderFactory.createEmptyBorder,
 					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playPush.png")));		
 					int cancionSeleccionada = vistaListaReproduccion.getCancionSeleccionada();
 					controlador.play(cancionSeleccionada);
 				}			
 				
 				public void mouseReleased (MouseEvent e) {
-					playPause.setBorder(BorderFactory.createEmptyBorder());
+					playPause.setBorder(BorderFactory.createEmptyBorder,
 					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));				
 				}
 				
 				public void mouseEntered  (MouseEvent e) { 
-					playPause.setBorder(BorderFactory.createEmptyBorder());
+					playPause.setBorder(BorderFactory.createEmptyBorder,
 					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));
 			      }
 
 				public void mouseExited (MouseEvent e) {
-					playPause.setBorder(BorderFactory.createEmptyBorder());
+					playPause.setBorder(BorderFactory.createEmptyBorder,
 					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
 				}
 			});		
@@ -1071,5 +836,5 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 	}
 	
 	
-	
+	*/  //TODO
 }

@@ -31,9 +31,11 @@ import is2011.reproductor.vista.VistaReproduccion;
 public class Principal {
 
 	/**
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
+
 
 		 /**
          * Muy importante para mostrarlo con el look and feel del sistema operativo!!
@@ -45,9 +47,9 @@ public class Principal {
         	UIManager.put("Synthetica.license.info", li);
         	UIManager.put("Synthetica.license.key", "F8A52C36-F58CE8EF-8D455B99-C3456027-CF87F5BA");
         	
-        	//UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         	UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
-        	//UIManager.setLookAndFeel(new SyntheticaBlackEyeLookAndFeel());
+	
+        	
         }
         catch (Exception ignored) {}
     	finally {
@@ -85,7 +87,7 @@ public class Principal {
 		vb.setControlador(appController);
 		vp.setControlador(appController);
 		appController.cargarArchivosPreferencias();
-    	
+
 	
 	}
 
