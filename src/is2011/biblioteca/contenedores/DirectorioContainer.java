@@ -16,6 +16,7 @@ public class DirectorioContainer {
 	
 	/**
 	 * Crea un objeto a partir de un path correspondiente a un directorio y una lista de canciones
+	 * 
 	 * @param path ruta de un directorio
 	 * @param listaCanciones lista de canciones que se encuentrar en el directorio 'path'
 	 */
@@ -27,6 +28,7 @@ public class DirectorioContainer {
 	
 	/**
 	 * Crea un objeto directorio vacio (sin canciones) a partir de un path de directorio
+	 * 
 	 * @param path ruta de un directorio
 	 */
 	public DirectorioContainer(String path) {
@@ -37,6 +39,7 @@ public class DirectorioContainer {
 	
 	/**
 	 * Añade una canción al directorio. No comprueba que la canción exista previamente
+	 * 
 	 * @param cancion
 	 */
 	public void addCancion(CancionContainer cancion){
@@ -47,8 +50,9 @@ public class DirectorioContainer {
 	
 	
 	/**
+	 * Devuelve la path de un directorio
 	 * 
-	 * @return
+	 * @return dirPath
 	 */
 	public String getPath() {
 		return dirPath;
@@ -56,6 +60,7 @@ public class DirectorioContainer {
 
 	
 	/**
+	 * Da valor a la path de un directorio
 	 * 
 	 * @param path
 	 */
@@ -65,8 +70,9 @@ public class DirectorioContainer {
 
 	
 	/**
+	 * Devuelve la lista de canciones de un directorio
 	 * 
-	 * @return
+	 * @return listaCanciones
 	 */
 	public ArrayList<CancionContainer> getListaCanciones() {
 		return listaCanciones;
@@ -74,6 +80,7 @@ public class DirectorioContainer {
 
 	
 	/**
+	 * Da valor a la listaCanciones dentro del directorio
 	 * 
 	 * @param listaCanciones
 	 */
@@ -83,7 +90,8 @@ public class DirectorioContainer {
 	
 	
 	/**
-	 * Actualiza el path completo de las canciones: 
+	 * Actualiza el path completo (TotalPath) de todas las canciones dentro del directorio 
+	 * dirPath + TrackPath
 	 * /home/luis/miMusica + waKawaKa.mp3
 	 */
 	public void actualizarPathCanciones(){
@@ -98,6 +106,7 @@ public class DirectorioContainer {
 	/**
 	 * Comprueba si existe alguna canción en el directorio que se corresponda con un nombre de canción
 	 * o trackPath pasado como parámetro en forma de string.
+	 * 
 	 * @param nombreCancion nombre del fichero de la canción que se quiere comprobar
 	 * @return true si existe una canción con un nombre o trackPath igual al que recibe la funcion como
 	 * parámetro, false en otro caso
@@ -113,9 +122,10 @@ public class DirectorioContainer {
 	}
 	
 	/**
+	 * Redefinición del método equals
 	 * 
-	 * @param s
-	 * @return
+	 * @param s Directorio con el que se hace la comparación
+	 * @return boolean
 	 */
 	public boolean equals(DirectorioContainer s) {
 		if (s==null) return false;

@@ -67,6 +67,8 @@ public class CancionContainer {
 	
 	/**
 	 * Crea un objeto a partir de su ruta en disco
+	 * Abre el fichero con ruta absolutePath
+	 * 
 	 * @param absolutePath ruta absoluta del fichero canción
 	 */
 	public CancionContainer(String absolutePath){
@@ -123,8 +125,9 @@ public class CancionContainer {
 	
 	
 	/**
+	 * Devuelve el trackPath de una cancíon
 	 * 
-	 * @return
+	 * @return TrackPath
 	 */
 	public String getTrackPath() {
 		return trackPath;
@@ -132,6 +135,7 @@ public class CancionContainer {
 
 	
 	/**
+	 * Da valor al TrackPath de una canción
 	 * 
 	 * @param trackPath
 	 */
@@ -141,8 +145,9 @@ public class CancionContainer {
 
 	
 	/**
+	 * Devuelve el título de una canción
 	 * 
-	 * @return
+	 * @return titulo
 	 */
 	public String getTitulo() {
 		return titulo;
@@ -150,6 +155,7 @@ public class CancionContainer {
 
 	
 	/**
+	 * Da valor al título de una canción
 	 * 
 	 * @param titulo
 	 */
@@ -159,8 +165,9 @@ public class CancionContainer {
 
 	
 	/**
+	 * Devuelve el Álbum de una canción
 	 * 
-	 * @return
+	 * @return album 
 	 */
 	public String getAlbum() {
 		return album;
@@ -168,6 +175,7 @@ public class CancionContainer {
 
 	
 	/**
+	 * Da valor álbum de una canción
 	 * 
 	 * @param album
 	 */
@@ -177,8 +185,9 @@ public class CancionContainer {
 
 	
 	/**
+	 * Devuelve el Género de una canción
 	 * 
-	 * @return
+	 * @return genero
 	 */
 	public String getGenero() {
 		return genero;
@@ -186,6 +195,7 @@ public class CancionContainer {
 
 	
 	/**
+	 * Da valor al Género de una canción
 	 * 
 	 * @param genero
 	 */
@@ -195,8 +205,9 @@ public class CancionContainer {
 
 	
 	/**
+	 * Devuelve el Artista de una canción
 	 * 
-	 * @return
+	 * @return artista
 	 */
 	public String getArtista() {		
 		return artista;
@@ -204,6 +215,7 @@ public class CancionContainer {
 
 	
 	/**
+	 * Da valor al Artista de una canción
 	 * 
 	 * @param artista
 	 */
@@ -213,8 +225,9 @@ public class CancionContainer {
 
 	
 	/**
+	 * Devuelve el valor Duración de una canción
 	 * 
-	 * @return
+	 * @return duracion
 	 */
 	public int getDuracion() {
 		return duracion;
@@ -222,6 +235,7 @@ public class CancionContainer {
 
 	
 	/**
+	 * Da valor a la Duración de una canción
 	 * 
 	 * @param duracion
 	 */
@@ -229,14 +243,21 @@ public class CancionContainer {
 		this.duracion = duracion;
 	}
 	
+
+	/**
+	 * Devuelve el valor Pista de una canción
+	 * 
+	 * @return pista
+	 */
 	public int getPista() {
 		return pista;
 	}
 
 	
 	/**
+	 * Da valor a la Pista de una canción
 	 * 
-	 * @param duracion
+	 * @param pista
 	 */
 	public void setPista(int pista) {
 		this.pista = pista;
@@ -244,6 +265,7 @@ public class CancionContainer {
 	
 	
 	/**
+	 * Da valor a la TotalPath de una Canción
 	 * 
 	 * @param totpath
 	 */
@@ -253,8 +275,9 @@ public class CancionContainer {
 	
 	
 	/**
+	 * Devuelve la TotalPath de una canción
 	 * 
-	 * @return
+	 * @return totalPath
 	 */
 	public String getTotalPath(){
 		return this.totalPath;
@@ -264,7 +287,9 @@ public class CancionContainer {
 	/**
 	 * Devuelve los bytes de la canción. Esto es necesario para poder reproducir
 	 * canciones desde la clase contenedora
-	 * @return
+	 * Abre el archivo canción para ello. 
+	 *  
+	 * @return int 
 	 */
 	public int getBytesMusica() {
 		AudioFile filemp3;
@@ -290,6 +315,13 @@ public class CancionContainer {
 		return -1;
 	}
 	
+	
+	/**
+	 * Redefinición del método equals para canción
+	 * 
+	 * @param s Cancion con la que se compara
+	 * @return boolean 
+	 */
 	
 	public boolean equals(CancionContainer s){
 		if (s==null) return false;
