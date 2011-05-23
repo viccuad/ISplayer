@@ -302,9 +302,10 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("asdfasfdasdf");
+				
 				try{
 				    String osName = System.getProperty("os.name");
+				    System.out.println(osName);
 				    
 				    if(osName.startsWith("Windows")) {
 				      
