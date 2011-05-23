@@ -94,7 +94,7 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 	private JMenuItem SyntheticaWhiteVisionLookAndFeel;
 	
 	private JMenu ayuda;
-	
+	private JMenuItem ayudaOnLine;
 	
 	private JMenu modoReproduccion;
 	private JMenuItem aleatorio;
@@ -114,7 +114,7 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 	private JMenuItem aniadirCancionBiblioteca;
 	private JMenuItem aniadirCancionYCarpetaBiblioteca;
 	
-	 
+	
 	
 	GridBagConstraints grid;
 	private VistaReproduccion vistaReproduccion;
@@ -294,17 +294,45 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 		this.menu.add(menuBiblioteca);
 		
 		
-		this.ayuda = new JMenu();
-		ayuda.addActionListener(new ActionListener(){
+		this.ayuda = new JMenu("Ayuda");
+		this.ayudaOnLine = new JMenuItem("Mostrar ayuda online");
+		ayuda.add(ayudaOnLine);
+		ayudaOnLine.addActionListener(new ActionListener(){
 
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("asdfasfdasdf");
+				try{
+				    String osName = System.getProperty("os.name");
+				    
+				    if(osName.startsWith("Windows")) {
+				      
+						Runtime.getRuntime().exec("start explorer src/Recursos/index.html");
 				
+				
+				    } else if (osName.startsWith("Mac OS X")) {
+				  	  
+						
+						Runtime.getRuntime().exec("open -a Safari src/Recursos/index.html");
+
+				
+				    }else if (osName.startsWith("Linux")) {
+				  	  
+						
+						Runtime.getRuntime().exec("./firefox src/Recursos/index.html");
+				
+				    }
+			    
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 			
 		});
 		
 		this.menu.add(ayuda);
+		
 		this.menuApariencia = new JMenu("Apariencia");
 		this.SyntheticaSimple2DLookAndFeel= new JMenuItem("Simple2D");
 		this.SyntheticaBlackEyeLookAndFeel= new JMenuItem("BlackEye");
