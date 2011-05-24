@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>Documento sin t&iacute;tulo</title>
+<!-- TemplateEndEditable -->
+<!-- TemplateBeginEditable name="head" -->
+<!-- TemplateEndEditable -->
+</head>
+
+<body>
+<table width="924" border="0" cellpadding="0" cellspacing="0">
+  <!--DWLayoutTable-->
+  <tr>
+    <td height="113" colspan="2" valign="top"><!-- TemplateBeginEditable name="Titulo" -->Titulo<!-- TemplateEndEditable --></td>
+  </tr>
+  <tr>
+    <td width="171" rowspan="2" valign="top"><!-- TemplateBeginEditable name="Barra navegacion" -->Barra navegacion<!-- TemplateEndEditable --></td>
+    <td width="753" height="471" valign="top"><!-- TemplateBeginEditable name="Contenido" -->Contenido<!-- TemplateEndEditable --></td>
+  </tr>
+  <tr>
+    <td height="52" valign="top"><!-- TemplateBeginEditable name="Pie de pagina" -->Pie de pagina<!-- TemplateEndEditable --></td>
+  </tr>
+  <tr>
+    <td height="151">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

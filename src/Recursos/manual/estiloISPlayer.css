@@ -1,0 +1,25 @@
+.barraNav {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: #006600;
+	border-top-style: ridge;
+	border-right-style: ridge;
+	border-bottom-style: ridge;
+	border-left-style: ridge;
+	border-top-color: #000000;
+	border-right-color: #000000;
+	border-bottom-color: #000000;
+	border-left-color: #000000;
+}
+.titulo {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 36px;
+	font-weight: bold;
+	font-variant: small-caps;
+	color: #0099FF;
+	border-top-color: #669900;
+	border-right-color: #669900;
+	border-bottom-color: #669900;
+	border-left-color: #669900;
+}
