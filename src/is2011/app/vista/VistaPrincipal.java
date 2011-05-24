@@ -22,6 +22,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.text.ParseException;
 import java.util.Map;
 
@@ -310,11 +311,14 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 				    if(osName.startsWith("Windows")) {
 				      
 				    	//String url = "src/Recursos/manual/Introduccion.html";
-				    	
+				    	//File f = new File("src/Recursos/manual/Introduccion.html");
+				    	File f = new File("C:/Users/carlosmoya/Desktop/Grupo31_Practica7.pdf");
+				    	//String url = f.getAbsolutePath();
+
 				    	//java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
-				
+				    	java.awt.Desktop.getDesktop().open(f);
 				    	//Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler src/Recursos/manual/Introduccion.html");
-				    	Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler src/Recursos/manual/Introduccion.html");
+				    	//Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler src/Recursos/manual/Introduccion.html");
 				
 				    } else if (osName.startsWith("Mac OS X")) {
 				  	  
