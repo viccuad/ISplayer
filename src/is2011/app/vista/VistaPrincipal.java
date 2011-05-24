@@ -309,8 +309,10 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 				    
 				    if(osName.startsWith("Windows")) {
 				      
-						Runtime.getRuntime().exec("C:\\>start chrome");
-				
+						//Runtime.getRuntime().exec("C:\\>start chrome");
+
+				    	Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler C:/Users/Marco/Desktop/IS/src/Recursos/manual/Introduccion.html");
+				    	//Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler src/Recursos/manual/Introduccion.html");
 				
 				    } else if (osName.startsWith("Mac OS X")) {
 				  	  
