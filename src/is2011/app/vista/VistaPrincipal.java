@@ -309,7 +309,7 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 				    
 				    if(osName.startsWith("Windows")) {
 				      
-						Runtime.getRuntime().exec("start explorer src/Recursos/index.html");
+						Runtime.getRuntime().exec("C:\\>start chrome");
 				
 				
 				    } else if (osName.startsWith("Mac OS X")) {
