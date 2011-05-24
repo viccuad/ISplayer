@@ -311,8 +311,8 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 				    if(osName.startsWith("Windows")) {
 				      
 				    	//String url = "src/Recursos/manual/Introduccion.html";
-				    	//File f = new File("src/Recursos/manual/Introduccion.html");
-				    	File f = new File("C:/Users/carlosmoya/Desktop/Grupo31_Practica7.pdf");
+				    	File f = new File("src/Recursos/manual/Introduccion.html");
+				    	//File f = new File("C:/Users/carlosmoya/Desktop/Grupo31_Practica7.pdf");
 				    	//String url = f.getAbsolutePath();
 
 				    	//java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
