@@ -296,6 +296,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener,
 		// mente al hacer click.
 		this.volumen = new JSlider(JSlider.HORIZONTAL, 0, 100, 0);
 		this.volumen.setPreferredSize(new Dimension(100,20));
+		this.volumen.setEnabled(false);
 		this.panelBotones.add(this.volumen);
 		this.volumen.removeMouseListener(volumen.getMouseListeners()[0]);
 		this.volumen.addMouseListener(new MouseAdapter(){

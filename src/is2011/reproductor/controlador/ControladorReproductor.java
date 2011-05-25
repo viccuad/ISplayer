@@ -77,7 +77,8 @@ public class ControladorReproductor {
 		
 		//Si es la priemra cancion y hay canciones...
 		if (cancionActual == 0 && listaReproduccion.getNumeroCanciones() > 0) {
-			listaReproduccion.setActual(++cancionActual);
+			this.siguiente();
+			cancionActual = listaReproduccion.getActual();
 		}
 		
 		if(listaReproduccion.getNumeroCanciones() >= cancionActual 
@@ -246,14 +247,16 @@ public class ControladorReproductor {
 					% this.listaReproduccion.getNumeroCanciones()) +1;
 			
 		}else if (modo == ModoReproduccionEnum.ALEATORIO){
-			actual = rnd.nextInt(this.listaReproduccion.getNumeroCanciones()) +1;
+			//actual = rnd.nextInt(this.listaReproduccion.getNumeroCanciones()) +1;
+			actual = this.listaReproduccion.getSiguienteAleatoria();
 		
 		}else if(modo == ModoReproduccionEnum.NORMAL) {
 			actual = this.listaReproduccion.getActual() + 1;
 		}
 		
-		if (modo == ModoReproduccionEnum.NORMAL  && 
-				actual-1 == this.listaReproduccion.getNumeroCanciones()) {
+		if ((modo == ModoReproduccionEnum.NORMAL 
+				|| modo == ModoReproduccionEnum.ALEATORIO)  && 
+				actual-1 >= this.listaReproduccion.getNumeroCanciones()) {
 			actual = this.listaReproduccion.getNumeroCanciones() ;
 			this.stop();
 		} else {
@@ -284,14 +287,16 @@ public class ControladorReproductor {
 			}
 			
 		}else if (modo == ModoReproduccionEnum.ALEATORIO){
-			actual = rnd.nextInt(this.listaReproduccion.getNumeroCanciones()) +1;
+			//actual = rnd.nextInt(this.listaReproduccion.getNumeroCanciones()) +1;
+			actual = this.listaReproduccion.getAnteriorAleatoria();
 		
 		}else if(modo == ModoReproduccionEnum.NORMAL ) {
 			actual = this.listaReproduccion.getActual()-1;
 			
 		}
 		
-		if ( modo == ModoReproduccionEnum.NORMAL && (actual + 1) == 1) {
+		if ((modo == ModoReproduccionEnum.NORMAL 
+				|| modo == ModoReproduccionEnum.ALEATORIO) && (actual + 1) <= 1) {
 			actual = 1;
 			this.stop();
 			//Estamos en la ultima cancion.

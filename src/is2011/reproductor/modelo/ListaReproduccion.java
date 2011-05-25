@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Random;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -50,6 +51,9 @@ public class ListaReproduccion {
 	/** Lista de canciones */
 	private ArrayList<CancionContainer> listaReproduccion;
 	
+	/** Indices de las canciones en orden aleatorio */
+	private ArrayList<Integer> listaAleatoria;
+	
 	/** Subcojunto de las canciones buscadas */
 	private ArrayList<CancionContainer> buscadas;
 	
@@ -71,7 +75,11 @@ public class ListaReproduccion {
 	/** Indica si la lista de reproducción sufrió algún cambio */
 	private boolean modificado;
 	
-	
+	/** Objeto utilizado para generar números aleatorios. */
+	private transient Random rnd;
+
+	/** Cancion actual Aleatoria*/
+	private int actualAleatoria;
 	
 	// ********************************************************************** //
 	// *************                CONSTRUCTOR                 ************* //
@@ -85,6 +93,8 @@ public class ListaReproduccion {
 		buscadas = null;
 		busquedaRealizada = false;
 		listaReproduccion = new ArrayList<CancionContainer>();
+		listaAleatoria = new ArrayList<Integer>();
+		actualAleatoria = 0;
 		actual = 0;
 		modoReproduccion = ModoReproduccionEnum.NORMAL;
 		listeners = new ArrayList<ListaReproduccionListener>();
@@ -92,6 +102,8 @@ public class ListaReproduccion {
 		this.modificado = false;
 		stream = new XStream(new DomDriver());
 		stream.alias("track", CancionContainer.class);
+		
+		rnd = new Random();
 	}
 	
 	/**
@@ -103,6 +115,7 @@ public class ListaReproduccion {
 	 */
 	public void reiniciar(boolean borrarOyentes) {
 		listaReproduccion = new ArrayList<CancionContainer>();
+		listaAleatoria = new ArrayList<Integer>();
 		actual = 0;
 		modoReproduccion = ModoReproduccionEnum.NORMAL;
 		modificado = true;
@@ -127,8 +140,12 @@ public class ListaReproduccion {
 		listaReproduccion.add(pos, cancion);
 		modificado = true;
 		notificaNuevaCancionAniadida(cancion, pos);
+		
+		crearListaAleatoria();
 	}
 	
+	
+
 	/**
 	 * Añade una cancion al final.
 	 * @param cancion La cancion que queremos añadir.
@@ -151,8 +168,36 @@ public class ListaReproduccion {
 		} else {
 			throw new IndexOutOfBoundsException();
 		}
+		crearListaAleatoria();
 	}
 	
+	
+	/**
+	 * Toma el arrayList de canciones actual y crea del mismo tamaño con indices
+	 * los indices de las canciones.
+	 */
+	private void crearListaAleatoria() {
+		//Creamos un arrayList con todas las posiciones posibles.
+		ArrayList<Integer> indices = new ArrayList<Integer>();
+		for(int i = 0; i < this.listaReproduccion.size();  i++) {
+			indices.add(i);
+		}
+		
+		//Creamos una nueva lista aleatoria.
+		this.listaAleatoria = new ArrayList<Integer>();
+		
+		int aleatorio = 0;
+		for(int i = 0; i < this.listaReproduccion.size();  i++) {
+			aleatorio = indices.remove(rnd.nextInt(indices.size()));
+			
+			this.listaAleatoria.add(aleatorio+1);
+		}
+		
+		if(this.actualAleatoria < this.listaReproduccion.size()) {
+			this.actualAleatoria = 0;
+		} 
+		System.out.println(listaAleatoria);
+	}
 	// ********************************************************************** //
 	// *************              MÉTODOS PUBLICOS              ************* //
 	// ********************************************************************** //
@@ -244,6 +289,8 @@ public class ListaReproduccion {
 			(new FileInputStream(pathYfichero));
 			modificado = true;
 			notificaNuevaListaReproduccion(listaReproduccion,0);
+			this.crearListaAleatoria();
+			this.setActual(1);
 		}else System.out.println("El fichero no existe");
 	}
 	
@@ -515,7 +562,54 @@ public class ListaReproduccion {
 	public ArrayList<CancionContainer> getCancionesListaReproduccion(){
 		return listaReproduccion;
 	}
-	
-	
-}
 
+	/**
+	 * Devulve el indice de la cancion actual pero en orden aleatorio.
+	 * @return El indice de la siguietne cancion aleatoria.
+	 */ 
+	public int getSiguienteAleatoria() {
+		if(this.actualAleatoria >= this.listaReproduccion.size()){
+			return this.actualAleatoria+1;
+		}else {
+			if(actualAleatoria <=0) {
+				this.actualAleatoria = 0;
+			}
+			if(this.listaAleatoria.size() > 0) {
+				int aux = this.listaAleatoria.get(this.actualAleatoria);
+				this.actualAleatoria++;
+				return aux;
+			}
+			return 0;
+		}
+		
+	}
+	
+	public int getAnteriorAleatoria() {
+		
+		if(this.actualAleatoria <= 1){
+			return 0;
+		}/*if(this.actualAleatoria == 1) {
+			return this.listaAleatoria.get(--this.actualAleatoria );
+		}*/
+		
+		else {
+			if (actualAleatoria > this.listaReproduccion.size()) {
+				actualAleatoria = this.listaReproduccion.size() +1;
+			}else {
+				
+			}
+			
+			return this.listaAleatoria.get(--this.actualAleatoria -1);
+		}
+	}
+	
+	/**
+	 * Incrementa la cancion Actual en 1. Solo se debe utilizar en modo de
+	 * reproduccion aleatorio, ya que este metodo no notificara 
+	 * el numero de cancion actual, sino su posicion real.
+	 *
+	 */
+	public void incrementaActual() {
+		
+	}
+}
