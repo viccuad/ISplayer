@@ -713,6 +713,7 @@ public class VistaPrincipal extends JFrame
 			this.vistaBiblioteca.setVisible(false);
 			this.vistaReproduccion.setBotonCompacto(false);
 			this.menu.setVisible(false);
+			this.vistaLateral.setVisible(false);
 			this.pack();
 		}else {
 
@@ -720,7 +721,8 @@ public class VistaPrincipal extends JFrame
 			this.vistaBiblioteca.setVisible(true);
 			this.vistaReproduccion.setBotonCompacto(true);
 			this.menu.setVisible(true);
-			this.pack();
+			this.vistaLateral.setVisible(true);
+			this.setSize(1100,660);
 		}
 	}
 	
