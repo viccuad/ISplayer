@@ -656,6 +656,7 @@ public class VistaPrincipal extends JFrame
 			
 			public void actionPerformed(ActionEvent e) {
 				controlador.guardarListaReproduccion();
+				vistaLateral.refrescar();
 			}
 			
 		});

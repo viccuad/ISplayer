@@ -301,6 +301,10 @@ public class ListaReproduccion {
 	 * @throws FileNotFoundException
 	 */
 	public void guardarXML(String pathYfichero) throws FileNotFoundException{
+		File f = new File (pathYfichero);
+		File f2 = f.getParentFile();
+		f2.mkdirs();
+		
 		if(modificado)
 			stream.toXML(listaReproduccion, new FileOutputStream(pathYfichero));
 	}

@@ -179,7 +179,7 @@ public class VistaLateral extends JPanel{
 		
 	}
 	
-	private void refrescar() {
+	public void refrescar() {
 		File f = new File(Preferencias.getInstance().getDirecctorioListasDeReproduccion());
 		if(f.isDirectory()) {
 			listas = f.list();
