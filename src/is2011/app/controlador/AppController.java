@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import is2011.app.preferencias.Preferencias;
@@ -400,15 +401,28 @@ public class AppController implements IAppController {
 		
 		//ArrayList<String> dir = new ArrayList<String>();
 		
-		JFileChooser fileChooser = new JFileChooser();
+		/*JFileChooser fileChooser = new JFileChooser();
 		
 		int seleccion;
 		seleccion =fileChooser.showSaveDialog(null);
 		if (seleccion == JFileChooser.APPROVE_OPTION){					
 			ruta = fileChooser.getSelectedFile().getAbsolutePath();					
+		}*/
+		String s = (String)JOptionPane.showInputDialog(
+				null,
+				"Introduzca el nombre de la lista de reproduccion","",
+				JOptionPane.PLAIN_MESSAGE);
+
+		//If a string was returned, say so.
+		if ((s != null && !s.equals(""))){
+			ruta = Preferencias.getInstance().
+			  getDirecctorioListasDeReproduccion() + File.separator + s + ".xml";
+			
+			reproductor.guardarListaReproduccion(ruta);
 		}
 
-		reproductor.guardarListaReproduccion(ruta);
+
+		
 		
 	}
 
@@ -506,6 +520,13 @@ public class AppController implements IAppController {
 			}
 		}
 		
+	}
+
+	@Override
+	public void openLR(String string) {
+		String ruta = Preferencias.getInstance().getDirecctorioListasDeReproduccion() + 
+		File.separator + string + ".xml";
+		reproductor.cargarListaReproduccion(ruta);
 	}
 
 	

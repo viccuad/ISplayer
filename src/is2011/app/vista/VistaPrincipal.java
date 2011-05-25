@@ -5,6 +5,7 @@ package is2011.app.vista;
 import is2011.app.controlador.IAppController;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 import is2011.reproductor.vista.VistaBiblioteca;
+import is2011.reproductor.vista.VistaLateral;
 import is2011.reproductor.vista.VistaListaReproduccion;
 import is2011.reproductor.vista.VistaReproduccion;
 
@@ -28,6 +29,8 @@ import javax.swing.UIManager;
 
 
 import javax.swing.JFrame;
+
+
 
 import de.javasoft.plaf.synthetica.SyntheticaBlackEyeLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaBlackMoonLookAndFeel;
@@ -105,7 +108,7 @@ public class VistaPrincipal extends JFrame
 	private VistaBiblioteca vistaBiblioteca;
 	private VistaPreferencias vistaPreferencias;
 	
-	
+	private VistaLateral vistaLateral;
 	
 	//private boolean reproduciendo;
 	//private boolean reproduciendo2;
@@ -117,7 +120,22 @@ public class VistaPrincipal extends JFrame
 		grid = new GridBagConstraints();
 		initialize();
 		
+		this.addVistaLateral();
+	}
+	
+	public void addVistaLateral() {
+		this.vistaLateral = new VistaLateral(this);
 		
+		grid.gridx       = 0; //0
+        grid.gridy       = 0; //1
+        grid.gridheight  = 1;
+        grid.gridwidth   = 1;
+        grid.weightx     = 0.1;
+        grid.weighty     = 1;
+        grid.fill        = GridBagConstraints.BOTH;
+		
+        this.vistaLateral.setVisible(true);
+        this.add(vistaLateral,grid);
 	}
 
 	public void setVistaReproductor( VistaReproduccion vistaRep) {
@@ -132,21 +150,23 @@ public class VistaPrincipal extends JFrame
         grid.fill        = GridBagConstraints.BOTH;
 		
         this.add(vistaRep,grid);
+       
 
 	}
 	
 	
 	public void setVistaListaReproduccion(VistaListaReproduccion vlr) {
 		vistaListaReproduccion = vlr;
-		grid.gridx       = 0; //0
+		grid.gridx       = 1; //0
         grid.gridy       = 0; // 2
         grid.gridheight  = 1;
         grid.gridwidth   = 1;
-        grid.weightx     = 1;
+        grid.weightx     = 0.75;
         grid.weighty     = 1;
         grid.fill        = GridBagConstraints.BOTH;
         
         this.add(vlr,grid);
+        vlr.setVisible(false);
         
         /*
         grid.gridx       = 0;
@@ -169,7 +189,7 @@ public class VistaPrincipal extends JFrame
         grid.gridy       = 0; // 2
         grid.gridheight  = 1;
         grid.gridwidth   = 1;
-        grid.weightx     = 1;
+        grid.weightx     = 0.75;
         grid.weighty     = 1;
         grid.fill        = GridBagConstraints.BOTH;
         
@@ -667,6 +687,9 @@ public class VistaPrincipal extends JFrame
                 controlador.requestSalir();
             }
         });
+		
+		//Panel lateral
+		
 	}
 
 	 
@@ -689,14 +712,34 @@ public class VistaPrincipal extends JFrame
 			this.vistaListaReproduccion.setVisible(false);
 			this.vistaBiblioteca.setVisible(false);
 			this.vistaReproduccion.setBotonCompacto(false);
+			this.menu.setVisible(false);
 			this.pack();
 		}else {
 
 			this.vistaListaReproduccion.setVisible(true);
 			this.vistaBiblioteca.setVisible(true);
 			this.vistaReproduccion.setBotonCompacto(true);
+			this.menu.setVisible(true);
 			this.pack();
 		}
+	}
+	
+	public void mostrarBiblioteca() {
+		this.vistaBiblioteca.setVisible(true);
+		this.vistaListaReproduccion.setVisible(false);
+	}
+	
+	public void mostrarListaReproduccion() {
+		this.vistaBiblioteca.setVisible(false);
+		this.vistaListaReproduccion.setVisible(true);
+	}
+
+	/**
+	 * @param string
+	 */
+	public void openLr(String string) {
+		controlador.openLR(string);
+		
 	}
 	
 }

@@ -281,4 +281,9 @@ public interface IAppController {
 	 */
 	public void mute();
 
+	/**
+	 * @param string
+	 */
+	public void openLR(String string);
+
 }

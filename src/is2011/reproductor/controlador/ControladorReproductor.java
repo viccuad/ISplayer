@@ -40,8 +40,6 @@ public class ControladorReproductor {
 	/** Instancia de la lista de reproduccion*/
 	private ListaReproduccion listaReproduccion;
 	
-	/** Objeto utilizado para generar números aleatorios. */
-	private transient Random rnd;
 	
 	// ********************************************************************** //
 	// *************                CONSTRUCTOR                 ************* //
@@ -51,7 +49,7 @@ public class ControladorReproductor {
 	 * Constructor por defecto.
 	 */
 	public ControladorReproductor() {
-		this.rnd = new Random();
+		super();
 	}
 	
 	/**

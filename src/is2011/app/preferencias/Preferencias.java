@@ -24,6 +24,7 @@ public class Preferencias {
 	private boolean hayCambios;
 
 	private final String NOMBRE_DIR = "ISPlayer";
+	private final String DIR_LISTAS = "Listas";
 	private final String NOMBRE_PREFERENCIAS = "ISPlayerPreferences.xml";
 	private final String NOMBRE_BIBLIOTECA = "Biblioteca.xml";
 	private final String NOMBRE_LISTA = "listaDefecto.xml";
@@ -101,7 +102,11 @@ public class Preferencias {
 		
 	}
 	
-	
+	public String getDirecctorioListasDeReproduccion() {
+		return  System.getProperty("user.home") + File.separator+NOMBRE_DIR 
+				+ File.separator+DIR_LISTAS;
+		
+	}
 	public void guardarXML() {
 		try {
 			stream.toXML(preferencias, new FileOutputStream(this.pathPreferenciasSistema));
