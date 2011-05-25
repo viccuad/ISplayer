@@ -105,7 +105,6 @@ public class ListaReproduccion {
 		listaReproduccion = new ArrayList<CancionContainer>();
 		actual = 0;
 		modoReproduccion = ModoReproduccionEnum.NORMAL;
-		//TODO comprobar
 		modificado = true;
 		if(borrarOyentes) {
 			listeners = new ArrayList<ListaReproduccionListener>();
@@ -126,7 +125,6 @@ public class ListaReproduccion {
 	 */
 	private void addCancion(CancionContainer cancion, int pos) {
 		listaReproduccion.add(pos, cancion);
-		//TODO comprobar
 		modificado = true;
 		notificaNuevaCancionAniadida(cancion, pos);
 	}
@@ -137,7 +135,6 @@ public class ListaReproduccion {
 	 */
 	private void addCancionAlFinal(CancionContainer cancion) {
 		addCancion(cancion,listaReproduccion.size());
-		//TODO comprobar
 		modificado = true;
 	}
 	
@@ -150,7 +147,6 @@ public class ListaReproduccion {
 		if(pos < listaReproduccion.size() && pos >= 0) {
 			listaReproduccion.remove(pos);
 			notificaCancionBorrada(pos);
-			//TODO comprobar
 			modificado = true;
 		} else {
 			throw new IndexOutOfBoundsException();
@@ -166,7 +162,6 @@ public class ListaReproduccion {
 	 */
 	public void addCancion(CancionContainer c){
 		this.addCancionAlFinal(c);
-		//TODO comprobar
 		modificado = true;
 	}
 	
@@ -218,7 +213,6 @@ public class ListaReproduccion {
 				setActual(actual -1);
 			}
 			
-			//TODO comprobar
 			modificado = true;
 		}
 
@@ -398,6 +392,9 @@ public class ListaReproduccion {
 	 * @param modoReproduccion the modoReproduccion to set
 	 */
 	public void setModoReproduccion(ModoReproduccionEnum modoReproduccion) {
+		if(this.modoReproduccion.equals(modoReproduccion)){
+			modoReproduccion = ModoReproduccionEnum.NORMAL;
+		}
 		this.modoReproduccion = modoReproduccion;
 		
 		notificaCambioTipoReproduccion(modoReproduccion);

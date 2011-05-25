@@ -3,7 +3,11 @@ package is2011.reproductor.vista;
 import is2011.app.controlador.IAppController;
 import is2011.app.preferencias.Preferencias;
 import is2011.app.vista.VistaPrincipal;
+import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
+import is2011.reproductor.modelo.listeners.BorrarCancionEvent;
+import is2011.reproductor.modelo.listeners.ListaReproduccionListener;
+import is2011.reproductor.modelo.listeners.NuevaCancionEvent;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -12,6 +16,7 @@ import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
@@ -40,7 +45,8 @@ import javazoom.jlgui.basicplayer.BasicPlayerListener;
  *
  */
 @SuppressWarnings("serial")
-public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
+public class VistaReproduccion extends JPanel implements BasicPlayerListener,
+		ListaReproduccionListener{
 
 	// ********************************************************************** //
 	// *************           ATRIBUTOS Y CONSTANTES           ************* //
@@ -112,6 +118,10 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	private JLabel mute;
 	private JLabel repetir;
 	private JLabel aleatorio;
+	
+	
+	private OyenteEtiquetas oyenteEtqAleatorio;
+	private OyenteEtiquetas oyenteEtqRepetir;
 	
 	private JLabel botonVistaCompacta;
 	
@@ -226,11 +236,15 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		repetir = new JLabel();
 		repetir.setBorder(BorderFactory.createEmptyBorder());
 		repetir.setIcon(new ImageIcon(getClass().getResource(REPEAT_PNG)));
+		oyenteEtqRepetir = new OyenteEtiquetas("/Recursos/repeat", repetir);
+		repetir.addMouseListener(this.oyenteEtqRepetir);
 		panelBotones.add(repetir);
-		
+
 		aleatorio = new JLabel();
 		aleatorio.setBorder(BorderFactory.createEmptyBorder());
 		aleatorio.setIcon(new ImageIcon(getClass().getResource(SHUFFLE_PNG)));
+		oyenteEtqAleatorio = new OyenteEtiquetas("/Recursos/shuffle", aleatorio);
+		aleatorio.addMouseListener(this.oyenteEtqAleatorio);
 		panelBotones.add(aleatorio);
 		
 		stop  = new JLabel();
@@ -700,6 +714,69 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	}
 	
 	
+	/**
+	 * Si le llega un true, el boton de la vista de reproduccion sera el de 
+	 * compactar. (hacer pequeño), sino, lo contrario.
+	 * @param True si queremos icuono de compacto, false en caso contrario.
+	 */
+	public void setBotonCompacto(boolean b) {
+		if(b) {
+			botonVistaCompacta.setIcon((new ImageIcon(getClass().getResource("/Recursos/m_small.png"))));
+		}else {
+			botonVistaCompacta.setIcon((new ImageIcon(getClass().getResource("/Recursos/m_big.png"))));
+		}
+		
+	}
+
+	
+	@Override
+	public void cambioTipoReproduccion(ModoReproduccionEnum modo) {
+
+		//Los ponemos por defecto
+		repetir.setIcon(new ImageIcon(getClass().getResource(REPEAT_PNG)));
+		aleatorio.setIcon(new ImageIcon(getClass().getResource(SHUFFLE_PNG)));
+		
+		oyenteEtqAleatorio.setNombreImagen("/Recursos/shuffle");
+		oyenteEtqRepetir.setNombreImagen("/Recursos/repeat");
+		
+		switch (modo) {
+		case ALEATORIO:
+			aleatorio.setIcon(new ImageIcon(getClass().getResource("/Recursos/shuffles.png")));
+			oyenteEtqAleatorio.setNombreImagen("/Recursos/shuffles");
+			break;
+		case REPETIR_TODOS:
+			repetir.setIcon(new ImageIcon(getClass().getResource("/Recursos/repeats.png")));
+			oyenteEtqRepetir.setNombreImagen("/Recursos/repeats");
+			break;
+		case NORMAL:
+		}
+			
+
+	}
+	
+	@Override
+	public void borrarCancion(BorrarCancionEvent e) {
+	}
+
+	@Override
+	public void nuevaCancion(NuevaCancionEvent e) {
+		
+	}
+
+	@Override
+	public void nuevaListaReproduccion(ArrayList<CancionContainer> c) {
+	
+	}
+
+	@Override
+	public void reinicia() {
+	
+	}
+
+	@Override
+	public void setActual(int actualNuevo, int actualViejo) {
+	
+	}
 	
 	
 	/**
@@ -792,17 +869,5 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		}
 	}
 
-	/**
-	 * Si le llega un true, el boton de la vista de reproduccion sera el de 
-	 * compactar. (hacer pequeño), sino, lo contrario.
-	 * @param True si queremos icuono de compacto, false en caso contrario.
-	 */
-	public void setBotonCompacto(boolean b) {
-		if(b) {
-			botonVistaCompacta.setIcon((new ImageIcon(getClass().getResource("/Recursos/m_small.png"))));
-		}else {
-			botonVistaCompacta.setIcon((new ImageIcon(getClass().getResource("/Recursos/m_big.png"))));
-		}
-		
-	}
+	
 }

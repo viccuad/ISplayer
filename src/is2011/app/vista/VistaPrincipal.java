@@ -9,35 +9,22 @@ import is2011.reproductor.vista.VistaListaReproduccion;
 import is2011.reproductor.vista.VistaReproduccion;
 
 
-import java.awt.Dimension;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.text.ParseException;
-import java.util.Map;
 
 
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 
 import javax.swing.JFrame;
@@ -56,14 +43,9 @@ import de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaSkyMetallicLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaWhiteVisionLookAndFeel;
 
-import javazoom.jlgui.basicplayer.BasicController;
-import javazoom.jlgui.basicplayer.BasicPlayerEvent;
-import javazoom.jlgui.basicplayer.BasicPlayerListener;
-
-
 
 @SuppressWarnings("serial")
-public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
+public class VistaPrincipal extends JFrame 
 {
 	
 	private IAppController controlador;
@@ -697,30 +679,6 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 	}
 
 	
-	
-	@Override
-	public void opened(Object stream, Map properties) {
-		//No hace falta
-	}
-
-	
-	@Override
-	public void progress(int bytesread, long microseconds, byte[] pcmdata,
-			Map properties) {
-		//No hace falta
-	}
-
-	
-	@Override
-	public void setController(BasicController controller) {
-		//No hace falta
-	}
-
-	@Override
-	public void stateUpdated(BasicPlayerEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	/**
 	 * Cambia alternativamente la vista compacta. 
@@ -736,168 +694,9 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 
 			this.vistaListaReproduccion.setVisible(true);
 			this.vistaBiblioteca.setVisible(true);
-			this.vistaReproduccion.setBotonCompacto(false);
+			this.vistaReproduccion.setBotonCompacto(true);
 			this.pack();
 		}
 	}
 	
-
-
-	/*
-	@Override
-	public void stateUpdated(BasicPlayerEvent event) {
-		if(event.getCode() == BasicPlayerEvent.PLAYING
-				|| event.getCode() == BasicPlayerEvent.RESUMED) {
-			
-			playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pause.png")));
-			
-			MouseListener[] listeners = playPause.getMouseListeners();
-			for (MouseListener l : listeners) {
-				playPause.removeMouseListener(l);
-			}
-			
-			ActionListener[] alis = playPause.getActionListeners();
-			for (ActionListener l : alis) {
-				playPause.removeActionListener(l);
-			}
-			
-			
-			playPause.addActionListener(new ActionListener(){
-
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					controlador.pause();
-					
-				}
-				
-			});
-			
-			
-			
-			
-			
-			playPause.addMouseListener(new MouseAdapter() {
-				public void mousePressed (MouseEvent e) {
-					playPause.setBorder(BorderFactory.createEmptyBorder,
-					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pausePush.png")));	
-					controlador.pause();
-				}			
-				
-				public void mouseReleased (MouseEvent e) {
-					playPause.setBorder(BorderFactory.createEmptyBorder,
-					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pauseEnt.png")));
-					
-				}
-				
-				public void mouseEntered  (MouseEvent e) { 
-					playPause.setBorder(BorderFactory.createEmptyBorder,
-					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pauseEnt.png")));
-					
-			      }
-
-				public void mouseExited (MouseEvent e) {
-					playPause.setBorder(BorderFactory.createEmptyBorder,
-					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/pause.png")));
-					
-				}
-			});
-
-		} else if (event.getCode() == BasicPlayerEvent.EOM 
-				|| event.getCode() == BasicPlayerEvent.PAUSED
-				
-				
-				|| event.getCode() == BasicPlayerEvent.OPENED) {
-			
-			MouseListener[] listeners = playPause.getMouseListeners();
-			for (MouseListener l : listeners) {
-				playPause.removeMouseListener(l);
-			}
-			
-			
-			ActionListener[] alis = playPause.getActionListeners();
-			for (ActionListener l : alis) {
-				playPause.removeActionListener(l);
-			}
-			
-
-			
-			playPause.addActionListener(new ActionListener(){
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					int cancionSeleccionada = vistaListaReproduccion.getCancionSeleccionada();
-					
-					controlador.pause();
-					
-				}
-				
-			});
-			
-			playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
-			playPause.addMouseListener(new MouseAdapter() {
-				public void mousePressed (MouseEvent e) {
-					playPause.setBorder(BorderFactory.createEmptyBorder,
-					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playPush.png")));		
-					controlador.pause();
-				}			
-				
-				public void mouseReleased (MouseEvent e) {
-					playPause.setBorder(BorderFactory.createEmptyBorder,
-					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));				
-				}
-				
-				public void mouseEntered  (MouseEvent e) { 
-					playPause.setBorder(BorderFactory.createEmptyBorder,
-					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));
-			      }
-
-				public void mouseExited (MouseEvent e) {
-					playPause.setBorder(BorderFactory.createEmptyBorder,
-					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
-				}
-			});			
-			
-		} else if (event.getCode() == BasicPlayerEvent.STOP || event.getCode() == BasicPlayerEvent.STOPPED ) {
-			MouseListener[] listeners = playPause.getMouseListeners();
-			for (MouseListener l : listeners) {
-				playPause.removeMouseListener(l);
-			}
-			
-			
-			ActionListener[] alis = playPause.getActionListeners();
-			for (ActionListener l : alis) {
-				playPause.removeActionListener(l);
-			}
-			
-
-			playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
-			playPause.addMouseListener(new MouseAdapter() {
-				public void mousePressed (MouseEvent e) {
-					playPause.setBorder(BorderFactory.createEmptyBorder,
-					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playPush.png")));		
-					int cancionSeleccionada = vistaListaReproduccion.getCancionSeleccionada();
-					controlador.play(cancionSeleccionada);
-				}			
-				
-				public void mouseReleased (MouseEvent e) {
-					playPause.setBorder(BorderFactory.createEmptyBorder,
-					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));				
-				}
-				
-				public void mouseEntered  (MouseEvent e) { 
-					playPause.setBorder(BorderFactory.createEmptyBorder,
-					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));
-			      }
-
-				public void mouseExited (MouseEvent e) {
-					playPause.setBorder(BorderFactory.createEmptyBorder,
-					playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
-				}
-			});		
-		}
-	}
-	
-	
-	*/  //TODO
 }
