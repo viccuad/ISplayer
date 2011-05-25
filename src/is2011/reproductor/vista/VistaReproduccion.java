@@ -2,28 +2,22 @@ package is2011.reproductor.vista;
 
 import is2011.app.controlador.IAppController;
 import is2011.app.preferencias.Preferencias;
+import is2011.app.vista.VistaPrincipal;
+import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.util.Map;
 
-
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -34,9 +28,14 @@ import javazoom.jlgui.basicplayer.BasicPlayerEvent;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
 /**
- * Vista que muestra los datos de reproduccion.
- * El avance, el tiempo, el bitrate...
- * Por ahora solo funciona para MP3.
+ * Vista encargada de la reproduccion.
+ * Mostrara todos lo botones relevantes para reproducir una cancion (play, puase
+ * , stop, adelante, atras... ) asi como la barra de progreso.
+ * 
+ * Sera oyente del BasicPlayer, lo que le permitira estar actualizadose 
+ * constantemente.
+ *
+ *
  * @author Administrator
  *
  */
@@ -47,6 +46,15 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	// *************           ATRIBUTOS Y CONSTANTES           ************* //
 	// ********************************************************************** //
 	
+
+	private static final String VOL_PNG = "/Recursos/vol.png";
+	private static final String NEXT_SONG_PNG = "/Recursos/next_song.png";
+	private static final String PLAY_PNG = "/Recursos/play.png";
+	private static final String PREVIOUS_SONG_PNG = "/Recursos/previous_song.png";
+	private static final String STOP_PNG = "/Recursos/stop.png";
+	private static final String SHUFFLE_PNG = "/Recursos/shuffle.png";
+	private static final String REPEAT_PNG = "/Recursos/repeat.png";
+	
 	/** Referencia al controlador de la aplicacion*/
 	private IAppController controlador;
 	
@@ -56,22 +64,13 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	/** Muestra el estado de la reproduccion*/
 	private JLabel labelEstado;
 	
-	/** 
-	 * Variable que indica que estamos buscando una posicion en la barra de 
-	 * progreso
-	 */
+	/** Variable que indica que estamos buscando una posicion en el progreso */
 	private boolean buscando;
 	
 	/** Posicion del scroll bar*/
 	private int posicion;
 	
-	private JLabel playPause;
-
-	//private JButton aniadir;
-	
-	private JLabel siguiente;
-	private JLabel anterior;
-	
+	/** Slider del volumen */
 	private JSlider volumen;
 	
 	//--------------------------------------------------------------------------
@@ -107,303 +106,236 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	/** Tiempo actual de reproduccion de esta cancion*/
 	private int tiempoActual;
 
+	/** Indica si se debe actualizar o no la vista*/
 	private boolean actualizar;
 	
-	private JPanel panelIz;
-	private JPanel panelDr;
+	//--------------------------------------------------------------------------
+	//Botones de la interfaz.
+	
+	private VistaPrincipal vPrincipal;
+	//Botones de la reproduccion
+	private JLabel playPause;
+	private JLabel stop;
+	private JLabel siguiente;
+	private JLabel anterior;
+	private JLabel mute;
+	private JLabel repetir;
+	private JLabel aleatorio;
+	
+	private JLabel botonVistaCompacta;
+	
+	/** Oyenete encargado de cambias las etiquetas*/
+	private OyenteEtiquetas oyenteEtqPlayPause;
+	private OyentePlayPause oyenteAccionPlayPause;
+	
+	/** Paneles contenedores de las diferentes partes de la vista*/
 	private JPanel panelBotones;
 	private JPanel panelProg;
-	private GridBagConstraints grid;
+	private JLabel tiempoTranscurrido;
+	private JLabel tiempoRestante;
 	
 	// ********************************************************************** //
 	// *************              CONSTRUCTOR                   ************* //
 	// ********************************************************************** //
 	
+	
 	/** 
 	 * Constructor por defecto.
 	 */
-	public VistaReproduccion() {
-		
+	public VistaReproduccion(VistaPrincipal vp) {
 		super();
 		reset();
-		grid = new GridBagConstraints();
+		this.vPrincipal = vp;
+		//Establecemos un boxLayout.
+		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		
+		//Añadimos la vista referente al progreso
+		this.panelProg = new JPanel();
+		this.panelProg.setLayout(new BorderLayout());
 		
-		this.setLayout(new GridBagLayout());
-		/*
-		 * PANEL PROGRESO
-		 */
-		panelProg = new JPanel(new BorderLayout());
-		grid.gridx       = 0; //0
-        grid.gridy       = 0; // 2
-        grid.gridheight  = 1;
-        grid.gridwidth   = 3;
-        grid.weightx     = 1;
-        grid.weighty     = 1;
-        grid.fill        = GridBagConstraints.BOTH;
-        this.add(panelProg,grid);
-        this.resetProgreso();
-		/*
-		 * PANEL IZQUIERDA
-		 */
-		panelIz = new JPanel();
-		panelIz.add(new JLabel());
-		grid.gridx       = 0; //0
-        grid.gridy       = 1; // 2
-        grid.gridheight  = 1;
-        grid.gridwidth   = 1;
-        grid.weightx     = 1;
-        grid.weighty     = 1;
-        grid.fill        = GridBagConstraints.BOTH;
-		this.add(panelIz,grid);
+		//Labels que indican el tiempo restante y actual de la reproduccion.
+		this.tiempoTranscurrido = new JLabel();
+		this.tiempoRestante = new JLabel();
+		this.resetLabelTiempos();
 		
-		/*
-		 * PANEL DERECHA
-		 */
-		panelDr = new JPanel();
-		panelDr.add(new JLabel());
-		grid.gridx       = 2; //0
-        grid.gridy       = 1; // 2
-        grid.gridheight  = 1;
-        grid.gridwidth   = 1;
-        grid.weightx     = 1;
-        grid.weighty     = 1;
-        grid.fill        = GridBagConstraints.BOTH;
-		this.add(panelDr,grid);
-		/*
-		 * PANEL BOTONES
-		 */
+		//Añadimos las etiquetas del tiempo.
+		panelProg.add(tiempoTranscurrido, BorderLayout.WEST);
+		panelProg.add(tiempoRestante, BorderLayout.EAST);
+		this.resetProgreso();
 		
+		this.panelProg.add(this.progreso, BorderLayout.CENTER);
+		
+		//Fianalmente añadimos el panel del progreso a la vista.
+		this.add(this.panelProg);
+	
+		// Panel inferior (Info reproduccion, botones, boton de agrandar).
+		// Creamos un panel auxiliar que contendra toda la informacion
+		// citada anteriormente.
+		JPanel panelAux = new JPanel();
+		panelAux.setLayout(new BoxLayout(panelAux,BoxLayout.X_AXIS ));
+		
+		// Informacion.
+		this.labelEstado = new JLabel();
+		panelAux.add(this.labelEstado);
+		labelEstado.setAlignmentX(LEFT_ALIGNMENT);
+		
+		//Ponemos un espacio
+		panelAux.add(Box.createHorizontalGlue());
+		
+		//Añadimos el panel de los botones
 		panelBotones = new JPanel();
-		panelBotones.setLayout(new GridLayout());
-		panelBotones.setPreferredSize(new Dimension(500,200));
+		panelBotones.setLayout(new FlowLayout());
+		panelBotones.setAlignmentX(CENTER_ALIGNMENT);
+		//Iniciamos el panel de los botones
+		this.initPanelBotones();
 		
-		grid.gridx       = 1; //0
-        grid.gridy       = 1; // 2
-        grid.gridheight  = 1;
-        grid.gridwidth   = 1;
-        grid.weightx     = 0.1;
-        grid.weighty     = 1;
-        grid.fill        = GridBagConstraints.BOTH;
-		this.add(panelBotones,grid);
+		panelAux.add(panelBotones);
 		
 		
+		//Ponemos un espacio
+		panelAux.add(Box.createHorizontalGlue());
+		
+		this.botonVistaCompacta = new JLabel();
+		//botonVistaCompacta.setAlignmentX(RIGHT_ALIGNMENT);
+		botonVistaCompacta.setAlignmentY(Component.TOP_ALIGNMENT);
+		botonVistaCompacta.setIcon((new ImageIcon(getClass().getResource("/Recursos/m_big.png"))));
+		panelAux.add(botonVistaCompacta);
+		
+		
+		this.add(panelAux);
+	}
+	
+
+	/**
+	 * Inicia el panel de los botones con las acciones que debe realizar.
+	 */
+	private void initPanelBotones() {
+		JLabel labelAux = new JLabel();
+		labelAux.setPreferredSize(new Dimension(50,0));
+		panelBotones.add(labelAux);
+		
+		repetir = new JLabel();
+		repetir.setBorder(BorderFactory.createEmptyBorder());
+		repetir.setIcon(new ImageIcon(getClass().getResource(REPEAT_PNG)));
+		panelBotones.add(repetir);
+		
+		aleatorio = new JLabel();
+		aleatorio.setBorder(BorderFactory.createEmptyBorder());
+		aleatorio.setIcon(new ImageIcon(getClass().getResource(SHUFFLE_PNG)));
+		panelBotones.add(aleatorio);
+		
+		stop  = new JLabel();
+		stop.setBorder(BorderFactory.createEmptyBorder());
+		stop.setIcon(new ImageIcon(getClass().getResource(STOP_PNG)));
+		panelBotones.add(stop);
+		stop.addMouseListener(new OyenteEtiquetas("/Recursos/stop" , stop));
+				
 		anterior  = new JLabel();
 		anterior.setBorder(BorderFactory.createEmptyBorder());
-		anterior.setIcon(new ImageIcon(getClass().getResource("/Recursos/previous_song.png")));
+		anterior.setIcon(new ImageIcon(getClass().getResource(PREVIOUS_SONG_PNG)));
 		panelBotones.add(anterior);
+		
 		
 		playPause = new JLabel();
 		playPause.setBorder(BorderFactory.createEmptyBorder());
-		playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
+		playPause.setIcon(new ImageIcon(getClass().getResource(PLAY_PNG)));
 		panelBotones.add(playPause);
 		
 		siguiente  = new JLabel();
 		siguiente.setBorder(BorderFactory.createEmptyBorder());
-		siguiente.setIcon(new ImageIcon(getClass().getResource("/Recursos/next_song.png")));
+		siguiente.setIcon(new ImageIcon(getClass().getResource(NEXT_SONG_PNG)));
 		panelBotones.add(siguiente);
 	
+		mute  = new JLabel();
+		mute.setBorder(BorderFactory.createEmptyBorder());
+		mute.setIcon(new ImageIcon(getClass().getResource(VOL_PNG)));
+		panelBotones.add(mute);
 		
-		siguiente.addMouseListener(new MouseAdapter(){
-			public void mousePressed (MouseEvent e) {
-				siguiente.setBorder(BorderFactory.createEmptyBorder());
-				siguiente.setIcon(new ImageIcon(getClass().getResource("/Recursos/next_songPush.png")));				
-			}			
-			
-			public void mouseReleased (MouseEvent e) {
-				siguiente.setBorder(BorderFactory.createEmptyBorder());
-				siguiente.setIcon(new ImageIcon(getClass().getResource("/Recursos/next_songEnt.png")));				
-			}
-			
-			public void mouseEntered  (MouseEvent e) { 
-				siguiente.setBorder(BorderFactory.createEmptyBorder());
-				siguiente.setIcon(new ImageIcon(getClass().getResource("/Recursos/next_songEnt.png")));
-		      }
+		siguiente.addMouseListener(new OyenteEtiquetas("/Recursos/next_song" , siguiente));
+		
 
-			public void mouseExited (MouseEvent e){
-				siguiente.setBorder(BorderFactory.createEmptyBorder());
-				siguiente.setIcon(new ImageIcon(getClass().getResource("/Recursos/next_song.png")));
+		
+		anterior.addMouseListener(new OyenteEtiquetas("/Recursos/previous_song" , anterior));
+		
+		
+		
+	
+		
+		
+		// Creamos el volumen. Le ponemos un oyente para que se mueva correcta
+		// mente al hacer click.
+		this.volumen = new JSlider(JSlider.HORIZONTAL, 0, 100, 0);
+		this.volumen.setPreferredSize(new Dimension(100,20));
+		this.panelBotones.add(this.volumen);
+		this.volumen.removeMouseListener(volumen.getMouseListeners()[0]);
+		this.volumen.addMouseListener(new MouseAdapter(){
+			
+			public void mouseReleased(MouseEvent e) {
+				if(volumen.isEnabled()) {
+					int ancho = volumen.getWidth();
+					
+					int x = e.getX();
+					float porcentaje;
+					
+					if( x < 0) {
+						x = 0;
+					}
+					
+					if(x > ancho) {
+						x = ancho;
+					}
+					porcentaje = ((float)x)/ancho;
+					
+					volumen.setValue((int)(100*porcentaje));
+					controlador.setVolumen((porcentaje));
+				}
 			}
-			
-			
 		});
 		
+		
+		// Añadimos todos los oyentes encargados de realizar la accion.
+		
+		repetir.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controlador.setModoReproduccion(ModoReproduccionEnum.REPETIR_TODOS);
+			}
+		});
+		
+		aleatorio.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controlador.setModoReproduccion(ModoReproduccionEnum.ALEATORIO);
+			}
+		});
+		stop.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				controlador.stop();
+			}
+		});
 
-		siguiente.addMouseListener(new MouseListener(){
+		siguiente.addMouseListener(new MouseAdapter(){
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				controlador.siguienteCancion();				
 			}
 
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
 		});
-		
-		
 		anterior.addMouseListener(new MouseAdapter() {
-			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				controlador.cancionAnterior();
 			}
-			
-			public void mousePressed (MouseEvent e) {
-				anterior.setBorder(BorderFactory.createEmptyBorder());
-				anterior.setIcon(new ImageIcon(getClass().getResource("/Recursos/previous_songPush.png")));				
-			}			
-			
-			public void mouseReleased (MouseEvent e) {
-				anterior.setBorder(BorderFactory.createEmptyBorder());
-				anterior.setIcon(new ImageIcon(getClass().getResource("/Recursos/previous_songEnt.png")));				
-			}
-			public void mouseEntered  (MouseEvent e) { 
-				anterior.setBorder(BorderFactory.createEmptyBorder());
-				anterior.setIcon(new ImageIcon(getClass().getResource("/Recursos/previous_songEnt.png")));
-		      }
-
-			public void mouseExited (MouseEvent e) {
-				anterior.setBorder(BorderFactory.createEmptyBorder());
-				anterior.setIcon(new ImageIcon(getClass().getResource("/Recursos/previous_song.png")));
-			}
 		});		
 		
-	
+		this.oyenteEtqPlayPause = new OyenteEtiquetas("/Recursos/play",  playPause);
+		this.oyenteAccionPlayPause = new OyentePlayPause();
 		
-		playPause.addMouseListener(new MouseAdapter() {
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				//int cancionSeleccionada = vistaListaReproduccion.getCancionSeleccionada();
-				
-				//controlador.play(cancionSeleccionada); TODO
-				
-			}
-			
-			public void mousePressed (MouseEvent e) {
-				playPause.setBorder(BorderFactory.createEmptyBorder());
-				playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playPush.png")));				
-			}			
-			
-			public void mouseReleased (MouseEvent e) {
-				playPause.setBorder(BorderFactory.createEmptyBorder());
-				playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));				
-			}
-			
-			public void mouseEntered  (MouseEvent e) { 
-				playPause.setBorder(BorderFactory.createEmptyBorder());
-				playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/playEnt.png")));
-		      }
-
-			public void mouseExited (MouseEvent e) {
-				playPause.setBorder(BorderFactory.createEmptyBorder());
-				playPause.setIcon(new ImageIcon(getClass().getResource("/Recursos/play.png")));
-			}
-		});
-		
-		
-
-
-		this.setFocusable(true);
-		this.addKeyListener(new KeyAdapter(){
-
-			@Override
-			public void keyPressed(KeyEvent event) {
-				switch(event.getKeyCode()) {
-				case KeyEvent.VK_RIGHT:
-					controlador.fastForward();
-					break;
-				case KeyEvent.VK_LEFT:
-					controlador.rewind();
-					break;
-				case KeyEvent.VK_DOWN:
-					controlador.siguienteCancion();
-					break;
-				case KeyEvent.VK_UP:
-					controlador.cancionAnterior();
-					break;
-				}
-					
-			}
-			
-		});
-		
-		this.volumen = new JSlider(JSlider.HORIZONTAL, 0, 100, 0);
-		
-		this.volumen.removeMouseListener(volumen.getMouseListeners()[0]);
-		this.volumen.addMouseListener(new MouseAdapter(){
-			
-			public void mouseReleased(MouseEvent e) {
-				if(volumen.isEnabled()) {
-					
-					/*int altoReal = volumen.getHeight() - volumen.getWidth()*2;
-					int yReal = e.getY() - volumen.getWidth();
-
-					float porcentaje;
-					if(yReal <= altoReal && yReal > 0) {
-						porcentaje = ((float)yReal)/altoReal;
-					}else {
-						porcentaje = ((float)volumen.getValue())/100;
-					}
-					*/
-					int alto = volumen.getHeight();
-					
-					int y = e.getY();
-					float porcentaje;
-					
-					if( y < 0) {
-						y = 0;
-					}
-					
-					if(y > alto) {
-						y = alto;
-					}
-					//if(y <= alto && y > 0) {
-						porcentaje = ((float)y)/alto;
-					/*}else {
-						porcentaje = ((float)(100-volumen.getValue()))/100;
-					}*/
-					
-					volumen.setValue((int)(100*porcentaje));
-					controlador.setVolumen((1-porcentaje));
-				}
-			}
-		});
-		
-		panelBotones.add(anterior);
-		panelBotones.add(playPause);
-		panelBotones.add(siguiente);
-		panelBotones.add(volumen);
-
-		/*
-		 * FIN PANEL BOTONES
-		 */
-		
-		this.labelEstado = new JLabel("");
-		this.add(this.labelEstado);
-		
+		playPause.addMouseListener(this.oyenteEtqPlayPause);
+		playPause.addMouseListener(this.oyenteAccionPlayPause);
 		
 	}
 	
@@ -451,16 +383,14 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	
 	private void resetProgreso() {
 		if(this.progreso != null) {
-			this.remove(progreso);
-		}
+			//this.remove(progreso);
+			this.progreso.setValue(0);
+		} else {
 		this.progreso = new JSlider(JSlider.HORIZONTAL, 0, 1000, 0);
 		this.progreso.setEnabled(false);
-		panelProg.add(progreso);
+		panelProg.add(progreso, BorderLayout.CENTER);
 
         
-		System.out.println(this.progreso.getMouseListeners().length);
-		
-		
 		this.progreso.removeMouseListener(this.progreso.getMouseListeners()[0]);
 		
 		this.progreso.addMouseMotionListener(new MouseMotionAdapter(){
@@ -468,15 +398,6 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 			public void mouseDragged(MouseEvent e) {
 				synchronized (progreso) {
 					if(progreso.isEnabled()) {
-						/*int anchoReal = progreso.getWidth()  -progreso.getHeight()*2;
-						int xReal = e.getX() - progreso.getHeight();
-
-						float porcentaje;
-						if(xReal <= anchoReal) {
-							porcentaje = ((float)xReal)/anchoReal;
-						}else {
-							porcentaje = ((float)progreso.getValue())/1000;
-						}*/
 						
 						int ancho = progreso.getWidth();
 						int x = e.getX();
@@ -504,17 +425,6 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 				
 				synchronized (progreso) {
 					if(progreso.isEnabled()) {
-
-						/*int anchoReal = progreso.getWidth()  -progreso.getHeight()*2;
-						int xReal = e.getX() - progreso.getHeight();
-
-						float porcentaje;
-						if(xReal <= anchoReal) {
-							porcentaje = ((float)xReal)/anchoReal;
-						}else {
-							porcentaje = ((float)progreso.getValue())/1000;
-						}*/
-						
 						int ancho = progreso.getWidth();
 						int x = e.getX();
 						
@@ -534,14 +444,9 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 					}
 				}
 			}
+		
 		});
 		
-		
-		panelProg.add(this.progreso);
-		
-		if(this.labelEstado != null){
-			this.remove(labelEstado);
-			this.add(labelEstado);
 		}
 	}
 	/**
@@ -579,7 +484,6 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
             			(Integer) properties.get("mp3.header.pos")).intValue();
             } else if( this.formato.equalsIgnoreCase("ogg")) {
             	//Calculamos en que byte se inicia la musica
-            	//TODO esto no va asi.
             	this.byteInicioMusica  = 1;	
             	this.framerate = this.bitrate;
             }
@@ -608,7 +512,17 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		info += toHora(tiempoTotal-tiempoActual) + " ♫♫♫ " ;
 		info += toHora(tiempoTotal);
 		
-		this.labelEstado.setText(info);
+		this.tiempoTranscurrido.setText(this.toHora(this.tiempoActual));
+		this.tiempoRestante.setText(toHora(tiempoTotal-tiempoActual));
+		//this.labelEstado.setText(info);
+	}
+	
+	/**
+	 * Pone la etiqueta "00:00" en el label de los tiempos.
+	 */
+	private void resetLabelTiempos() {
+		this.tiempoTranscurrido.setText("00:00");
+		this.tiempoRestante.setText("00:00");
 	}
 	
 	// ********************************************************************** //
@@ -705,7 +619,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 				this.resetProgreso();
 			}
 			this.volumen.setEnabled(false);
-			
+			this.resetLabelTiempos();
 			this.labelEstado.setText("");
 			controlador.siguienteCancion();
 		}else if ( event.getCode() == BasicPlayerEvent.STOP ) {
@@ -715,6 +629,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 				this.progreso.setEnabled(false);
 				this.progreso.setValue(0);
 			}
+			this.resetLabelTiempos();
 			this.labelEstado.setText("");
 		}else if(event.getCode() == BasicPlayerEvent.SEEKED) {
 			this.progreso.setValue((int)(((float)event.getPosition()
@@ -725,9 +640,25 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		
 		}
 		
-		//estado = event.getDescription().toString();
-		//this.labelEstado.setText(estado + " " + tiempoTotal + "/" + 
-		//bitPerSample + " kpbs");
+		//Cambiamos la imagen al boton de play
+		if(event.getCode() == BasicPlayerEvent.PLAYING
+				|| event.getCode() == BasicPlayerEvent.RESUMED) {
+			this.playPause.setIcon((new ImageIcon(getClass().getResource("/Recursos/pause.png"))));
+			this.oyenteEtqPlayPause.setNombreImagen("/Recursos/pause");
+			this.oyenteAccionPlayPause.setPlaying(true);
+		}
+		else if (event.getCode() == BasicPlayerEvent.PAUSED){
+			this.playPause.setIcon((new ImageIcon(getClass().getResource(PLAY_PNG))));
+			this.oyenteEtqPlayPause.setNombreImagen("/Recursos/play");
+			this.oyenteAccionPlayPause.setPlaying(true);
+		}
+		else if (event.getCode() == BasicPlayerEvent.EOM 
+				|| event.getCode() == BasicPlayerEvent.STOP 
+				|| event.getCode() == BasicPlayerEvent.STOPPED ) {
+			this.playPause.setIcon((new ImageIcon(getClass().getResource(PLAY_PNG))));
+			this.oyenteEtqPlayPause.setNombreImagen("/Recursos/play");
+			this.oyenteAccionPlayPause.setPlaying(false);
+		}
 	}
 	
 	
@@ -746,12 +677,97 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	public JSlider getVolumen() {
 		return this.volumen;
 	}
-	/*
-	public static void main(String args[]) {
+	
+	
+	
+	
+	/**
+	 * Clase oyente del raton que sera añadida a los diferentes botones para 
+	 * cambiarles la apariencia cuando se hace click se seleccionan etc...
+	 * 
+	 * @author Administrator
+	 *
+	 */
+	private class OyenteEtiquetas extends MouseAdapter {
+
+		/** El nombre de esta imagen en concreto*/
+		private String nombreImagen;
 		
-		JFrame v=  new JFrame();
-		v.add(new VistaReproduccion());
-		v.setSize(400,400);
-		v.setVisible(true);
-	}*/
+		/** El label del que es oyente esta clase*/
+		private JLabel label;
+		
+		/** Constantes para cambiar el nombre de las etiquetas*/
+		private static final String PULSADO = "Push";
+		private static final String SELECCIONADO = "Ent";
+		private static final String EXT = ".png";
+		
+		
+		
+		/**
+		 * Constructor que establece la raiz de la ruta de la imgagen
+		 * @param nombreImagen El nombre de la imagen
+		 */
+		public OyenteEtiquetas(String nombreImagen, JLabel label) {
+			this.nombreImagen = nombreImagen;
+			this.label = label;
+		}
+
+		
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			label.setIcon(new ImageIcon(getClass().
+					getResource(nombreImagen + SELECCIONADO + EXT)));	
+		}
+		
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			label.setIcon(new ImageIcon(getClass().
+					getResource(nombreImagen + EXT)));	
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+				label.setIcon(new ImageIcon(getClass().
+						getResource(nombreImagen + PULSADO + EXT)));	
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			label.setIcon(new ImageIcon(getClass().
+					getResource(nombreImagen + SELECCIONADO + EXT)));	
+		}
+		
+		/**
+		 * Cambia el nombre de l aimagen
+		 * @param s El nuevo onmbre de la imagen.
+		 */
+		public void setNombreImagen(String s) {
+			this.nombreImagen = s;
+		}
+		
+	}
+	
+	private class OyentePlayPause extends MouseAdapter {
+		/** Si es true, hay una cancion sonando (pausada o no)*/
+		boolean playing;
+		
+		public OyentePlayPause() {
+			super();
+			this.playing = false;
+		}
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if(playing) {
+				controlador.pause();
+			}else {
+				int cancionSeleccionada = vPrincipal.getVistaListaReproduccion()
+						.getCancionSeleccionada();
+				controlador.play(cancionSeleccionada);
+			}
+		}
+		
+		public void setPlaying(boolean playing) {
+			this.playing = playing;
+		}
+	}
 }
