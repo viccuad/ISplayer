@@ -75,7 +75,6 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 	@Override
 	public void irA(float porcentaje) throws BasicPlayerException {
 		if (porcentaje >= 0 && porcentaje <= 1) {
-			//System.out.println(m_audioFileFormat.properties().toString().replace(",", "\n"));
 			this.buscar((long)(bytesMusica*porcentaje));
 		}
 	}
@@ -116,9 +115,13 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 	@Override
 	public void setVolumen(float porcentaje) {
 		try {
-			setGain(porcentaje*porcentaje);
+			if(!mute) {
+				setGain(porcentaje*porcentaje);
+			}else {
+				setGain(0.0f);
+			}
+			Preferencias.getInstance().setVolumen((float) porcentaje);
 		} catch (BasicPlayerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -132,5 +135,38 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 		}
 		this.setVolumen(Preferencias.getInstance().getVolumen());
 	}
+
+	/**
+	 * Indica si esta seleccionada la opcion sin volumen en el sistema
+	 * @return the mute
+	 */
+	@Override
+	public boolean isMute() {
+		return mute;
+	}
+
+	/**
+	 * @param mute the mute to set
+	 */
+	@Override
+	public void setMute(boolean mute) {
+		this.mute = mute;
+		
+		if(mute) {
+			notifyEvent(BasicPlayerEvent.MUTE, 0,-1,null);
+			try {
+				setGain(0.0f);
+			} catch (BasicPlayerException e) {
+				e.printStackTrace();
+			}
+		} else {
+			//Hemos quitado el mute
+			notifyEvent(BasicPlayerEvent.NOT_MUTE, 0,-1,null);
+			setVolumen(Preferencias.getInstance().getVolumen());
+		}
+		
+	}
+	
+
 	
 }

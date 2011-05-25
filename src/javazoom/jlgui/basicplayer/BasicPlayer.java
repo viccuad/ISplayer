@@ -72,6 +72,7 @@ public class BasicPlayer implements BasicController, Runnable
     private int m_lineCurrentBufferSize = -1;
     private int lineBufferSize = -1;
     private long threadSleep = -1;
+    protected boolean mute;
     private static Log log = LogFactory.getLog(BasicPlayer.class);
     /**
      * These variables are used to distinguish stopped, paused, playing states.
@@ -94,6 +95,7 @@ public class BasicPlayer implements BasicController, Runnable
      */
     public BasicPlayer()
     {
+    	mute = false;
         m_dataSource = null;
         m_listeners = new ArrayList();
         reset();
@@ -1107,7 +1109,9 @@ public class BasicPlayer implements BasicController, Runnable
             double valueDB = minGainDB + (1 / cste) * Math.log(1 + (Math.exp(cste * ampGainDB) - 1) * fGain);
             //log.debug("Gain : " + valueDB);
             m_gainControl.setValue((float) valueDB);
-            notifyEvent(BasicPlayerEvent.GAIN, getEncodedStreamPosition(), fGain, null);
+            if(!mute) {
+            	notifyEvent(BasicPlayerEvent.GAIN, getEncodedStreamPosition(), fGain, null);
+            }
         }
         else throw new BasicPlayerException(BasicPlayerException.GAINCONTROLNOTSUPPORTED);
     }

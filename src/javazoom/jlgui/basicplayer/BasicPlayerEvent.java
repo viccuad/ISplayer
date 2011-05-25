@@ -40,6 +40,8 @@ public class BasicPlayerEvent
     public static final int PAN = 9;
     public static final int GAIN = 10;
 	public static final int STOP = 15;
+	public static final int MUTE = 20;
+	public static final int NOT_MUTE = 21;
     private int code = UNKNOWN;
     private int position = -1;
     private double value = -1.0;

@@ -466,4 +466,12 @@ public class ControladorReproductor {
 		return listaReproduccion.getBusquedaRealizada();
 	}
 
+	/**
+	 * Deja sin sonido el reproductor
+	 */
+	public void mute() {
+		this.reproductor.setMute(!this.reproductor.isMute());
+		
+	}
+
 }

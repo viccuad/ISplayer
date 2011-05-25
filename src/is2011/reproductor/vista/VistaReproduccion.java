@@ -46,15 +46,6 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	// *************           ATRIBUTOS Y CONSTANTES           ************* //
 	// ********************************************************************** //
 	
-
-	private static final String VOL_PNG = "/Recursos/vol.png";
-	private static final String NEXT_SONG_PNG = "/Recursos/next_song.png";
-	private static final String PLAY_PNG = "/Recursos/play.png";
-	private static final String PREVIOUS_SONG_PNG = "/Recursos/previous_song.png";
-	private static final String STOP_PNG = "/Recursos/stop.png";
-	private static final String SHUFFLE_PNG = "/Recursos/shuffle.png";
-	private static final String REPEAT_PNG = "/Recursos/repeat.png";
-	
 	/** Referencia al controlador de la aplicacion*/
 	private IAppController controlador;
 	
@@ -134,6 +125,18 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 	private JLabel tiempoTranscurrido;
 	private JLabel tiempoRestante;
 	
+	
+	// Rutas constantes.
+
+	private static final String VOL_PNG = "/Recursos/vol.png";
+	private static final String VOL_MUTE_PNG = "/Recursos/mute.png";
+	private static final String NEXT_SONG_PNG = "/Recursos/next_song.png";
+	private static final String PLAY_PNG = "/Recursos/play.png";
+	private static final String PREVIOUS_SONG_PNG = "/Recursos/previous_song.png";
+	private static final String STOP_PNG = "/Recursos/stop.png";
+	private static final String SHUFFLE_PNG = "/Recursos/shuffle.png";
+	private static final String REPEAT_PNG = "/Recursos/repeat.png";
+	
 	// ********************************************************************** //
 	// *************              CONSTRUCTOR                   ************* //
 	// ********************************************************************** //
@@ -198,9 +201,15 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		this.botonVistaCompacta = new JLabel();
 		//botonVistaCompacta.setAlignmentX(RIGHT_ALIGNMENT);
 		botonVistaCompacta.setAlignmentY(Component.TOP_ALIGNMENT);
-		botonVistaCompacta.setIcon((new ImageIcon(getClass().getResource("/Recursos/m_big.png"))));
+		botonVistaCompacta.setIcon((new ImageIcon(getClass().getResource("/Recursos/m_small.png"))));
 		panelAux.add(botonVistaCompacta);
 		
+		botonVistaCompacta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				vPrincipal.vistaCompacta();
+			}
+		});
 		
 		this.add(panelAux);
 	}
@@ -330,6 +339,14 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 				controlador.cancionAnterior();
 			}
 		});		
+		
+		mute.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controlador.mute();
+			}
+		});		
+		
 		
 		this.oyenteEtqPlayPause = new OyenteEtiquetas("/Recursos/play",  playPause);
 		this.oyenteAccionPlayPause = new OyentePlayPause();
@@ -636,8 +653,12 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 					/bytesMusica)*1000));
 		}else if (event.getCode() == BasicPlayerEvent.GAIN) {
 			this.volumen.setValue( (int) ((Math.sqrt(event.getValue()))*100));
-			Preferencias.getInstance().setVolumen((float) Math.sqrt(event.getValue()));
+			
 		
+		}else if(event.getCode() == BasicPlayerEvent.MUTE) {
+			mute.setIcon(new ImageIcon(getClass().getResource(VOL_MUTE_PNG)));
+		}else if (event.getCode() == BasicPlayerEvent.NOT_MUTE) {
+			mute.setIcon(new ImageIcon(getClass().getResource(VOL_PNG)));
 		}
 		
 		//Cambiamos la imagen al boton de play
@@ -769,5 +790,19 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener  {
 		public void setPlaying(boolean playing) {
 			this.playing = playing;
 		}
+	}
+
+	/**
+	 * Si le llega un true, el boton de la vista de reproduccion sera el de 
+	 * compactar. (hacer pequeño), sino, lo contrario.
+	 * @param True si queremos icuono de compacto, false en caso contrario.
+	 */
+	public void setBotonCompacto(boolean b) {
+		if(b) {
+			botonVistaCompacta.setIcon((new ImageIcon(getClass().getResource("/Recursos/m_small.png"))));
+		}else {
+			botonVistaCompacta.setIcon((new ImageIcon(getClass().getResource("/Recursos/m_big.png"))));
+		}
+		
 	}
 }

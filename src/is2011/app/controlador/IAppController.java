@@ -275,4 +275,10 @@ public interface IAppController {
 	 * Guarda la las preferencias, lista de reproduccion....
 	 */
 	public void requestSalir();
+
+	/**
+	 * Deja sin sonido el reproductor.
+	 */
+	public void mute();
+
 }

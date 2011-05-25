@@ -93,5 +93,17 @@ public interface Reproductor {
 	 */
 	public void setVolumen(float porcentaje);
 
+	/**
+	 * Indica si el reproductor esta en silencio.
+	 * @return True si esta en silencio
+	 */
+	boolean isMute();
+
+	/**
+	 * Pone el reproductor en silencio
+	 * @param mute True si queremos ponerlo en silencio
+	 */
+	void setMute(boolean mute);
+
 	
 }

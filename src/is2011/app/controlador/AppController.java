@@ -155,6 +155,12 @@ public class AppController implements IAppController {
 	}
 
 	@Override
+	public void mute() {
+		this.reproductor.mute();
+		
+	}
+	
+	@Override
 	public void aniadir() {
 		File[] files = abrirArchivo();
 		if(files != null) {
@@ -501,5 +507,9 @@ public class AppController implements IAppController {
 		}
 		
 	}
+
+	
+
+	
 
 }
