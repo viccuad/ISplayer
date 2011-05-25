@@ -1,7 +1,6 @@
 package is2011.reproductor.vista;
 
 import is2011.app.controlador.IAppController;
-import is2011.app.preferencias.Preferencias;
 import is2011.app.vista.VistaPrincipal;
 import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
@@ -47,6 +46,16 @@ import javazoom.jlgui.basicplayer.BasicPlayerListener;
 @SuppressWarnings("serial")
 public class VistaReproduccion extends JPanel implements BasicPlayerListener,
 		ListaReproduccionListener{
+
+	/**
+	 * 
+	 */
+	private static final String BIG_PNG = "/Recursos/m_big.png";
+
+	/**
+	 * 
+	 */
+	private static final String SMALL_PNG = "/Recursos/m_small.png";
 
 	// ********************************************************************** //
 	// *************           ATRIBUTOS Y CONSTANTES           ************* //
@@ -138,14 +147,18 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener,
 	
 	// Rutas constantes.
 
+	private static final String SHUFFLE_PNG = "/Recursos/shuffle.png";
+	private static final String REPEAT_PNG = "/Recursos/repeat.png";
+	private static final String SHUFFLES_PNG = "/Recursos/shuffles.png";
+	private static final String REPEATS_PNG = "/Recursos/repeats.png";
 	private static final String VOL_PNG = "/Recursos/vol.png";
 	private static final String VOL_MUTE_PNG = "/Recursos/mute.png";
 	private static final String NEXT_SONG_PNG = "/Recursos/next_song.png";
 	private static final String PLAY_PNG = "/Recursos/play.png";
-	private static final String PREVIOUS_SONG_PNG = "/Recursos/previous_song.png";
+	private static final String PAUSE_PNG = "/Recursos/pause.png";
+	private static final String PRE_SONG_PNG = "/Recursos/previous_song.png";
 	private static final String STOP_PNG = "/Recursos/stop.png";
-	private static final String SHUFFLE_PNG = "/Recursos/shuffle.png";
-	private static final String REPEAT_PNG = "/Recursos/repeat.png";
+	
 	
 	// ********************************************************************** //
 	// *************              CONSTRUCTOR                   ************* //
@@ -211,7 +224,8 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener,
 		this.botonVistaCompacta = new JLabel();
 		//botonVistaCompacta.setAlignmentX(RIGHT_ALIGNMENT);
 		botonVistaCompacta.setAlignmentY(Component.TOP_ALIGNMENT);
-		botonVistaCompacta.setIcon((new ImageIcon(getClass().getResource("/Recursos/m_small.png"))));
+		botonVistaCompacta.setIcon((new ImageIcon(getClass().getResource(
+				SMALL_PNG))));
 		panelAux.add(botonVistaCompacta);
 		
 		botonVistaCompacta.addMouseListener(new MouseAdapter() {
@@ -236,14 +250,14 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener,
 		repetir = new JLabel();
 		repetir.setBorder(BorderFactory.createEmptyBorder());
 		repetir.setIcon(new ImageIcon(getClass().getResource(REPEAT_PNG)));
-		oyenteEtqRepetir = new OyenteEtiquetas("/Recursos/repeat", repetir);
+		oyenteEtqRepetir = new OyenteEtiquetas(REPEAT_PNG, repetir);
 		repetir.addMouseListener(this.oyenteEtqRepetir);
 		panelBotones.add(repetir);
 
 		aleatorio = new JLabel();
 		aleatorio.setBorder(BorderFactory.createEmptyBorder());
 		aleatorio.setIcon(new ImageIcon(getClass().getResource(SHUFFLE_PNG)));
-		oyenteEtqAleatorio = new OyenteEtiquetas("/Recursos/shuffle", aleatorio);
+		oyenteEtqAleatorio = new OyenteEtiquetas(SHUFFLE_PNG, aleatorio);
 		aleatorio.addMouseListener(this.oyenteEtqAleatorio);
 		panelBotones.add(aleatorio);
 		
@@ -255,7 +269,8 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener,
 				
 		anterior  = new JLabel();
 		anterior.setBorder(BorderFactory.createEmptyBorder());
-		anterior.setIcon(new ImageIcon(getClass().getResource(PREVIOUS_SONG_PNG)));
+		anterior.setIcon(new ImageIcon(getClass().getResource(PRE_SONG_PNG)));  
+		anterior.addMouseListener(new OyenteEtiquetas(PRE_SONG_PNG , anterior));
 		panelBotones.add(anterior);
 		
 		
@@ -268,21 +283,13 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener,
 		siguiente.setBorder(BorderFactory.createEmptyBorder());
 		siguiente.setIcon(new ImageIcon(getClass().getResource(NEXT_SONG_PNG)));
 		panelBotones.add(siguiente);
-	
+		siguiente.addMouseListener(new OyenteEtiquetas(
+				NEXT_SONG_PNG , siguiente));
+		
 		mute  = new JLabel();
 		mute.setBorder(BorderFactory.createEmptyBorder());
 		mute.setIcon(new ImageIcon(getClass().getResource(VOL_PNG)));
 		panelBotones.add(mute);
-		
-		siguiente.addMouseListener(new OyenteEtiquetas("/Recursos/next_song" , siguiente));
-		
-
-		
-		anterior.addMouseListener(new OyenteEtiquetas("/Recursos/previous_song" , anterior));
-		
-		
-		
-	
 		
 		
 		// Creamos el volumen. Le ponemos un oyente para que se mueva correcta
@@ -317,11 +324,11 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener,
 		
 		
 		// Añadimos todos los oyentes encargados de realizar la accion.
-		
 		repetir.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controlador.setModoReproduccion(ModoReproduccionEnum.REPETIR_TODOS);
+				controlador.setModoReproduccion(
+						ModoReproduccionEnum.REPETIR_TODOS);
 			}
 		});
 		
@@ -331,6 +338,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener,
 				controlador.setModoReproduccion(ModoReproduccionEnum.ALEATORIO);
 			}
 		});
+		
 		stop.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -347,6 +355,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener,
 			}
 
 		});
+		
 		anterior.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -362,7 +371,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener,
 		});		
 		
 		
-		this.oyenteEtqPlayPause = new OyenteEtiquetas("/Recursos/play",  playPause);
+		this.oyenteEtqPlayPause = new OyenteEtiquetas(PLAY_PNG,  playPause);
 		this.oyenteAccionPlayPause = new OyentePlayPause();
 		
 		playPause.addMouseListener(this.oyenteEtqPlayPause);
@@ -678,20 +687,23 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener,
 		//Cambiamos la imagen al boton de play
 		if(event.getCode() == BasicPlayerEvent.PLAYING
 				|| event.getCode() == BasicPlayerEvent.RESUMED) {
-			this.playPause.setIcon((new ImageIcon(getClass().getResource("/Recursos/pause.png"))));
-			this.oyenteEtqPlayPause.setNombreImagen("/Recursos/pause");
+			this.playPause.setIcon((new ImageIcon(getClass().getResource(
+					PAUSE_PNG))));
+			this.oyenteEtqPlayPause.setNombreImagen(PAUSE_PNG);
 			this.oyenteAccionPlayPause.setPlaying(true);
 		}
 		else if (event.getCode() == BasicPlayerEvent.PAUSED){
-			this.playPause.setIcon((new ImageIcon(getClass().getResource(PLAY_PNG))));
-			this.oyenteEtqPlayPause.setNombreImagen("/Recursos/play");
+			this.playPause.setIcon((new ImageIcon(getClass().getResource(
+					PLAY_PNG))));
+			this.oyenteEtqPlayPause.setNombreImagen(PLAY_PNG);
 			this.oyenteAccionPlayPause.setPlaying(true);
 		}
 		else if (event.getCode() == BasicPlayerEvent.EOM 
 				|| event.getCode() == BasicPlayerEvent.STOP 
 				|| event.getCode() == BasicPlayerEvent.STOPPED ) {
-			this.playPause.setIcon((new ImageIcon(getClass().getResource(PLAY_PNG))));
-			this.oyenteEtqPlayPause.setNombreImagen("/Recursos/play");
+			this.playPause.setIcon((new ImageIcon(getClass().getResource(
+					PLAY_PNG))));
+			this.oyenteEtqPlayPause.setNombreImagen(PLAY_PNG);
 			this.oyenteAccionPlayPause.setPlaying(false);
 		}
 	}
@@ -721,9 +733,11 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener,
 	 */
 	public void setBotonCompacto(boolean b) {
 		if(b) {
-			botonVistaCompacta.setIcon((new ImageIcon(getClass().getResource("/Recursos/m_small.png"))));
+			botonVistaCompacta.setIcon((new ImageIcon(getClass().getResource(
+					SMALL_PNG))));
 		}else {
-			botonVistaCompacta.setIcon((new ImageIcon(getClass().getResource("/Recursos/m_big.png"))));
+			botonVistaCompacta.setIcon((new ImageIcon(getClass().getResource(
+					BIG_PNG))));
 		}
 		
 	}
@@ -736,17 +750,18 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener,
 		repetir.setIcon(new ImageIcon(getClass().getResource(REPEAT_PNG)));
 		aleatorio.setIcon(new ImageIcon(getClass().getResource(SHUFFLE_PNG)));
 		
-		oyenteEtqAleatorio.setNombreImagen("/Recursos/shuffle");
-		oyenteEtqRepetir.setNombreImagen("/Recursos/repeat");
+		oyenteEtqAleatorio.setNombreImagen(SHUFFLE_PNG);
+		oyenteEtqRepetir.setNombreImagen(REPEAT_PNG);
 		
 		switch (modo) {
 		case ALEATORIO:
-			aleatorio.setIcon(new ImageIcon(getClass().getResource("/Recursos/shuffles.png")));
-			oyenteEtqAleatorio.setNombreImagen("/Recursos/shuffles");
+			aleatorio.setIcon(new ImageIcon(getClass().getResource(
+					SHUFFLES_PNG)));
+			oyenteEtqAleatorio.setNombreImagen(SHUFFLES_PNG);
 			break;
 		case REPETIR_TODOS:
-			repetir.setIcon(new ImageIcon(getClass().getResource("/Recursos/repeats.png")));
-			oyenteEtqRepetir.setNombreImagen("/Recursos/repeats");
+			repetir.setIcon(new ImageIcon(getClass().getResource(REPEATS_PNG)));
+			oyenteEtqRepetir.setNombreImagen(REPEATS_PNG);
 			break;
 		case NORMAL:
 		}
@@ -806,7 +821,7 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener,
 		 * @param nombreImagen El nombre de la imagen
 		 */
 		public OyenteEtiquetas(String nombreImagen, JLabel label) {
-			this.nombreImagen = nombreImagen;
+			this.nombreImagen = nombreImagen.replaceAll(EXT,"");
 			this.label = label;
 		}
 
@@ -836,11 +851,11 @@ public class VistaReproduccion extends JPanel implements BasicPlayerListener,
 		}
 		
 		/**
-		 * Cambia el nombre de l aimagen
+		 * Cambia el nombre de la imagen
 		 * @param s El nuevo onmbre de la imagen.
 		 */
 		public void setNombreImagen(String s) {
-			this.nombreImagen = s;
+			this.nombreImagen = s.replaceAll(EXT, "");
 		}
 		
 	}
