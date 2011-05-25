@@ -55,7 +55,7 @@ public class Principal {
     	finally {
     		
 		VistaPrincipal vista = new VistaPrincipal();
-		VistaReproduccion vr = new VistaReproduccion();
+		VistaReproduccion vr = new VistaReproduccion(vista);
 		VistaBiblioteca vb = new VistaBiblioteca();
 		VistaListaReproduccion vlr = new VistaListaReproduccion();
 		VistaPreferencias vp = new VistaPreferencias();
