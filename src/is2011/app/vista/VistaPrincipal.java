@@ -310,6 +310,10 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 				    
 				    if(osName.startsWith("Windows")) {
 				      
+
+
+				
+
 				    	//String url = "src/Recursos/manual/Introduccion.html";
 				    	File f = new File("src/Recursos/manual/Introduccion.html");
 				    	//File f = new File("C:/Users/carlosmoya/Desktop/Grupo31_Practica7.pdf");
@@ -319,6 +323,7 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 				    	java.awt.Desktop.getDesktop().open(f);
 				    	//Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler src/Recursos/manual/Introduccion.html");
 				    	//Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler src/Recursos/manual/Introduccion.html");
+
 				
 				    } else if (osName.startsWith("Mac OS X")) {
 				  	  
@@ -683,7 +688,9 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 	}
 
 	 
-	
+	public VistaListaReproduccion getVistaListaReproduccion() {
+		return this.vistaListaReproduccion;
+	}
 	public void setControlador(IAppController appController) {
 		this.controlador = appController;
 		
@@ -713,6 +720,25 @@ public class VistaPrincipal extends JFrame 	implements BasicPlayerListener
 	public void stateUpdated(BasicPlayerEvent event) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	/**
+	 * Cambia alternativamente la vista compacta. 
+	 */
+	public void vistaCompacta() {
+		if(vistaListaReproduccion.isVisible()) {
+			//Cambiamos a ivsta compacta.
+			this.vistaListaReproduccion.setVisible(false);
+			this.vistaBiblioteca.setVisible(false);
+			this.vistaReproduccion.setBotonCompacto(false);
+			this.pack();
+		}else {
+
+			this.vistaListaReproduccion.setVisible(true);
+			this.vistaBiblioteca.setVisible(true);
+			this.vistaReproduccion.setBotonCompacto(false);
+			this.pack();
+		}
 	}
 	
 
