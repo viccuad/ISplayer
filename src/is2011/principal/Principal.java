@@ -4,10 +4,6 @@
 package is2011.principal;
 
 
-
-import java.io.IOException;
-
-
 import javax.swing.UIManager;
 
 import de.javasoft.plaf.synthetica.*;
