@@ -4,9 +4,6 @@ import is2011.app.preferencias.Preferencias;
 import is2011.app.vista.VistaPrincipal;
 
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -18,7 +15,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -33,12 +29,20 @@ import javax.swing.tree.TreePath;
 
 /**
  * Vista que permitira alternar entre la vista de reproduccion y la de
- * biblioteca asi como cargar listas de reproduccion.
+ * biblioteca.
+ * 
+ * Mostrara las listas de reproduccion que tenga guardadas el usuario, asi
+ * como permitira crear o borrar dichas listas.
  * @author Administrator
  *
  */
+@SuppressWarnings("serial")
 public class VistaLateral extends JPanel{
 
+	/** Ruta de las imagenes*/
+	private static final String LIBRARY_PNG   = "/Recursos/library.png";
+	private static final String PLAY_LIST_PNG = "/Recursos/playList.png";
+	
 	/** Label que nos envia a la biblioteca*/
 	private JLabel biblioteca;
 	
@@ -47,7 +51,11 @@ public class VistaLateral extends JPanel{
 	
 	/** Arbol que mostrara las listas de reproduccion*/
 	private DefaultMutableTreeNode top;
+	
+	/** El modelo del JTree */
 	private DefaultTreeModel modelo;
+	
+	/** El JTree*/
 	private JTree tree;
 	
 	/** ArrayList con las listas disponibles*/
@@ -59,6 +67,7 @@ public class VistaLateral extends JPanel{
 	/** Menu pop up */
 	private JPopupMenu popup;
 	
+	/** El ultimo elemento del arbol seleccionado.*/
 	private TreePath elementoSeleccionado;
 	
 	/**
@@ -75,36 +84,19 @@ public class VistaLateral extends JPanel{
 		//Asignamos el layOut
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		
+		// Cargamos el label de la biblioteca
 		biblioteca = new JLabel("Biblioteca");
 		biblioteca.setAlignmentX(Box.LEFT_ALIGNMENT);
-		biblioteca.setIcon(new ImageIcon(getClass().getResource(
-				"/Recursos/library.png")));
+		biblioteca.setIcon(new ImageIcon(getClass().getResource(LIBRARY_PNG)));
 		this.add(biblioteca);
-		biblioteca.addMouseListener(new MouseAdapter(){
-
-			public void mouseClicked(MouseEvent arg0) {
-			
-				vPrincipal.mostrarBiblioteca();
-			}
-			
-			
-		});
+		
 		
 		listaActual = new JLabel("Lista actual");
 		listaActual.setAlignmentX(Box.LEFT_ALIGNMENT);
 		this.add(listaActual);
-		listaActual.setIcon(new ImageIcon(getClass().getResource(
-		"/Recursos/playList.png")));
-		listaActual.addMouseListener(new MouseAdapter(){
-
-			public void mouseClicked(MouseEvent arg0) {
-				vPrincipal.mostrarListaReproduccion();
-			
-			}
-			
-			
-		});
+		listaActual.setIcon(new ImageIcon(getClass().getResource(PLAY_LIST_PNG)));
 		
+				
 		JScrollPane panel = new JScrollPane();
 		JPanel panelArbol = new JPanel();
 		top = new DefaultMutableTreeNode("Lista de Reproduccion");
@@ -120,9 +112,8 @@ public class VistaLateral extends JPanel{
 		this.add(panel);
 		this.refrescar();
 		
+		// Creamos el popup
 		this.popup = new JPopupMenu();
-		
-		
 		
 		JMenuItem borrar = new JMenuItem("Borrar");
 		popup.add(borrar);
@@ -135,7 +126,7 @@ public class VistaLateral extends JPanel{
 			}
 		});
 		
-		JMenuItem favorita = new JMenuItem("Hacer favorita");
+		JMenuItem favorita = new JMenuItem("Cargar por defecto");
 		favorita.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -155,39 +146,80 @@ public class VistaLateral extends JPanel{
 				
 			}
 		});
-		tree.addMouseListener(new MouseAdapter(){ 
-			
+		
 
+		
+		this.initActions();
+	}
+	
+	/**
+	 * Inicializa las acciones d elos diferentes botones de la vista.
+	 */
+	public void initActions() {
+		
+		//Accion de pulsar sobre el boton de la biblioteca.
+		biblioteca.addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			
+				vPrincipal.mostrarBiblioteca();
+			}
+			
+			
+		});
+		
+		//Accion de pulsar sobre el boton de ir a lista actual
+		listaActual.addMouseListener(new MouseAdapter(){
+
+			public void mouseClicked(MouseEvent arg0) {
+				vPrincipal.mostrarListaReproduccion();
+			
+			}
+			
+			
+		});
+		
+		// Cuando hacemos click sobre los elementos del arbol
+		tree.addMouseListener(new MouseAdapter(){ 
+			@Override
 			public void mousePressed(MouseEvent e) 
 			{
 				if ( SwingUtilities.isRightMouseButton(e)){
 					popup.show(e.getComponent(), e.getX(), e.getY());
-					elementoSeleccionado = tree.getPathForLocation(e.getX(), e.getY());
+					elementoSeleccionado = tree.getPathForLocation(e.getX(),
+							e.getY());
 				}else if(e.getClickCount() == 2) {
-					// Se obtiene el path para esa fila. Con el path podemos obtener
-					// los nodos.
-					TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
+					// Se obtiene el path para esa fila. Con el path podemos 
+					// obtener los nodos.
+					TreePath selPath = tree.getPathForLocation(e.getX(), 
+							e.getY());
 					if(selPath != null) {
-						vPrincipal.openLr(selPath.getLastPathComponent().toString());
+						vPrincipal.openLr(selPath.getLastPathComponent().
+								toString());
 						vPrincipal.mostrarListaReproduccion();
 					}
 				}
 			}
 		});
 
-		
-		
 	}
 	
+	/**
+	 * Vuelve a recorrer el directorio donde se guardan las listas de 
+	 * reproduccion para recargarlas.
+	 */
 	public void refrescar() {
-		File f = new File(Preferencias.getInstance().getDirecctorioListasDeReproduccion());
+		File f = new File(Preferencias.getInstance().
+				getDirecctorioListasDeReproduccion());
 		if(f.isDirectory()) {
 			listas = f.list();
 		}
 		
+		//Borramos los datos que tiene ya el JTree
 		top.removeAllChildren();
 		modelo.reload();
 		
+		//Le vamos añadiendo los hijos en el mismo orden que nos los encontramos
 		if(listas != null) {
 			int i = 0;
 			for (String nombre : listas) {
@@ -200,9 +232,13 @@ public class VistaLateral extends JPanel{
 		
 	}
 	
+	/**
+	 * Borra el nodo del arbol sobre el que se hizo click la utlima vez
+	 */
 	private void borrar() {
-		File f = new File(Preferencias.getInstance().getDirecctorioListasDeReproduccion() +
-				File.separator + elementoSeleccionado.
+		File f = new File(
+				Preferencias.getInstance().getDirecctorioListasDeReproduccion()
+				+ File.separator + elementoSeleccionado.
 				getLastPathComponent().toString() + ".xml");
 		
 		
@@ -210,9 +246,14 @@ public class VistaLateral extends JPanel{
 		refrescar();
 	}
 	
+	/**
+	 * Pone el ultimo nodo seleccionado del arbol como la lista de reproduccion
+	 * por defecto.
+	 */
 	private void favorita() {
-		File f = new File(Preferencias.getInstance().getDirecctorioListasDeReproduccion() +
-				File.separator + elementoSeleccionado.
+		File f = new File(
+				Preferencias.getInstance().getDirecctorioListasDeReproduccion()
+				+ File.separator + elementoSeleccionado.
 				getLastPathComponent().toString() + ".xml");
 		
 		Preferencias.getInstance().setPathListaReproduccion(f.getAbsolutePath());

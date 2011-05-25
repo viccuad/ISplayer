@@ -2,41 +2,27 @@ package is2011.reproductor.vista;
 
 import java.awt.BorderLayout;
 import java.awt.Choice;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import is2011.app.controlador.IAppController;
 import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.biblioteca.search.*;
-import is2011.reproductor.modelo.listeners.BibliotecaListener;
-import is2011.reproductor.modelo.listeners.BorrarCancionEvent;
-import is2011.reproductor.modelo.listeners.NuevaCancionEvent;
+import is2011.reproductor.modelo.listeners.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
+
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
 /**
- * Vista que implementa al listener de la lista de reproduccion y que se 
- * encargara de mostrarla por pantalla.
- *
+ * Vista que implementa al listener de la bibliteca y la cual se encargara
+ * de mostrar toda la informacion por pantalla. Esto es, las busquedas,
+ * las canciones....
+ * 
  */
 @SuppressWarnings("serial")
 public class VistaBiblioteca extends JPanel implements
@@ -130,16 +116,7 @@ public class VistaBiblioteca extends JPanel implements
 		textoBusqueda = new JRoundTextField("Buscar...", 0);
 		
 		// añadimos el listener para el evento de pulsar teclas
-		textoBusqueda.addKeyListener(new KeyListener(){
-			
-			/**
-			 * No es necesario implementar este método
-			 */
-			@Override
-			public void keyPressed(KeyEvent arg0) {
-				//No es necesario implementarlo
-			}
-
+		textoBusqueda.addKeyListener(new KeyAdapter(){
 			/** 
 			 * Cada vez que se libera una tecla se realiza la búsqueda
 			 */
@@ -147,28 +124,20 @@ public class VistaBiblioteca extends JPanel implements
 			public void keyReleased(KeyEvent arg0) {				
 				switch (tipoBusqueda.getSelectedIndex()) {
 					case titulo  : controlador.buscaBibliotecaAvanzada(
-											new BuscarTitulo(textoBusqueda.getText()));										   
-											break;
+									new BuscarTitulo(textoBusqueda.getText()));										   
+									break;
 					case genero  : controlador.buscaBibliotecaAvanzada(
-											new BuscarGenero(textoBusqueda.getText()));
-											break;
+									new BuscarGenero(textoBusqueda.getText()));
+									break;
 					case artista : controlador.buscaBibliotecaAvanzada(
-											new BuscarArtista(textoBusqueda.getText()));
-											break;
+									new BuscarArtista(textoBusqueda.getText()));
+									break;
 					case album   : controlador.buscaBibliotecaAvanzada(
-										    new BuscarAlbum(textoBusqueda.getText()));
-											break;
+									new BuscarAlbum(textoBusqueda.getText()));
+									break;
 				}
 			
 				
-			}
-
-			/**
-			 * No es necesario implementar este método
-			 */
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-				//No es necesario implementarlo
 			}
 		});
 		
@@ -334,7 +303,8 @@ public class VistaBiblioteca extends JPanel implements
 
 				}else{ */
 					for(int i : canciones) {
-						String path = controlador.getCanciones().get(i).getTotalPath();
+						String path = controlador.getCanciones().get(i).
+						getTotalPath();
 						//System.out.println(path);
 						controlador.fromBibliotecaToListaReproduccion(path);
 					}
@@ -367,7 +337,8 @@ public class VistaBiblioteca extends JPanel implements
 						//System.out.println(row);
 						
 	
-						String path = controlador.getCanciones().get(row).getTotalPath();
+						String path = controlador.getCanciones().get(row).
+						getTotalPath();
 						//System.out.println(path);
 						controlador.fromBibliotecaToListaReproduccion(path);
 						
@@ -476,15 +447,17 @@ public class VistaBiblioteca extends JPanel implements
 		
 		CancionContainer aux=null;
 		
-		// Eliminamos lo que contiene la tabla para no mostrar lo anterior y lo nuevo
+		// Eliminamos lo que contiene la tabla para no mostrar lo anterior 
+		// y lo nuevo
 		for (int i = tabla.getRowCount()-1;i>=0;i--) modelo.removeRow(i);
 
 		int pos = 0;
 		while (itr.hasNext()){
 			aux = itr.next();
 
-			nuevaCancion(new NuevaCancionEvent(aux.getTitulo(), aux.getAlbum(), aux.getPista(), 
-					     aux.getArtista(), aux.getGenero(), aux.getDuracion(), pos++));
+			nuevaCancion(new NuevaCancionEvent(aux.getTitulo(), aux.getAlbum(), 
+					aux.getPista(), aux.getArtista(), aux.getGenero(),
+					aux.getDuracion(), pos++));
 			//System.out.println(aux.getTitulo());
 		}
 	}
@@ -511,8 +484,6 @@ public class VistaBiblioteca extends JPanel implements
 			
 			pos++;
 		}
-		System.out.println(pos);
-		
 	};
 	
 }
