@@ -18,7 +18,6 @@ import is2011.biblioteca.search.BuscarAlbum;
 import is2011.biblioteca.search.BuscarArtista;
 import is2011.biblioteca.search.BuscarGenero;
 import is2011.biblioteca.search.BuscarTitulo;
-import is2011.biblioteca.search.CriterioBusqueda;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 import is2011.reproductor.modelo.listeners.BorrarCancionEvent;
 import is2011.reproductor.modelo.listeners.ListaReproduccionListener;

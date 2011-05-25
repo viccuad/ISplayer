@@ -16,6 +16,9 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
  * implementar la interfaz de reproductor.
  * Este reproductor reproduce canciones MP3.
  * 
+ * Tiene las funciones de abrir, buscar, adelante, atras, ff, rewind, 
+ * poner el volumen...
+ * 
  * @author Administrator
  *
  */

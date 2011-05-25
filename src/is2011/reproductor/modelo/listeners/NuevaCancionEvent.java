@@ -1,10 +1,12 @@
 /**
- * 
+ * Este paquete contiene las interfaces del modelo del reproductor, las cuales
+ * se deberan implementar por las vistas pra poder visualizar los datos del
+ * modelo (El play list, cancion actual...)
  */
 package is2011.reproductor.modelo.listeners;
 
 /**
- * 
+ * Evento que alamacena toda la informacion de una cancion.
  * @author Administrator
  */
 public class NuevaCancionEvent {

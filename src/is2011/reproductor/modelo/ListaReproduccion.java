@@ -240,7 +240,8 @@ public class ListaReproduccion {
 	public void cargarXML(String pathYfichero) throws FileNotFoundException{
 		File aux = new File(pathYfichero);
 		if (aux.canRead()){
-			this.listaReproduccion = (ArrayList<CancionContainer>) stream.fromXML(new FileInputStream(pathYfichero));
+			this.listaReproduccion = (ArrayList<CancionContainer>)stream.fromXML
+			(new FileInputStream(pathYfichero));
 			modificado = true;
 			notificaNuevaListaReproduccion(listaReproduccion,0);
 		}else System.out.println("El fichero no existe");
@@ -261,7 +262,8 @@ public class ListaReproduccion {
 	/**
 	 * Ordena la lista de reproducción siguiendo un criterio de ordenación
 	 * que recibe como parámetro
-	 * @param orden: es el criterio por el cuál se desea ordenar la lista de reproducción
+	 * @param orden: es el criterio por el cuál se desea ordenar la lista de 
+	 * reproducción
 	 */
 	public void ordenar(Comparator<CancionContainer> orden){
 		
@@ -278,12 +280,15 @@ public class ListaReproduccion {
 				
 				this.notificaNuevaListaReproduccion(this.listaReproduccion, 0);
 			} else {
-				CancionContainer cancionActual = this.listaReproduccion.get(actual-1);
+				CancionContainer cancionActual = this.listaReproduccion.get(
+						actual-1);
 				Collections.sort(this.listaReproduccion, orden);
 				modificado = true;
 				
-				int indiceActual = this.listaReproduccion.indexOf(cancionActual) +1;
-				this.notificaNuevaListaReproduccion(this.listaReproduccion, indiceActual);
+				int indiceActual = this.listaReproduccion.indexOf(
+						cancionActual) +1;
+				this.notificaNuevaListaReproduccion(
+						this.listaReproduccion, indiceActual);
 			}
 		}
 
@@ -293,9 +298,13 @@ public class ListaReproduccion {
 
 	
 	/**
-	 * Realiza una búsqueda en la lista de canciones según un criterio que recibe como parámetro
-	 * @param busqueda es el criterio por el cuál se desea buscar en la lista de reproducción
-	 * @return la nueva colección con los elementos que satisface el criterio de búsqueda
+	 * Realiza una búsqueda en la lista de canciones según un criterio que 
+	 * recibe como parámetro
+	 * 
+	 * @param busqueda es el criterio por el cuál se desea buscar en la lista de
+	 *  reproducción
+	 * @return la nueva colección con los elementos que satisface el criterio de
+	 *  búsqueda
 	 */
 	/*
 	public ArrayList<CancionContainer> getBusqueda(CriterioBusqueda busqueda){		
@@ -304,9 +313,12 @@ public class ListaReproduccion {
 	*/
 	
 	/**
-	 * Realiza una búsqueda avanzada en la lista de canciones según un criterio que recibe como parámetro
-	 * @param busqueda es el criterio por el cuál se desea buscar en la lista de reproducción
-	 * @return la nueva colección con los elementos que satisface el criterio de búsqueda
+	 * Realiza una búsqueda avanzada en la lista de canciones según un criterio 
+	 * que recibe como parámetro
+	 * @param busqueda es el criterio por el cuál se desea buscar en la lista de
+	 *  reproducción
+	 * @return la nueva colección con los elementos que satisface el criterio de
+	 *  búsqueda
 	 */
 	public void realizarBusquedaAvanzada(CriterioBusqueda busqueda){		
 		this.buscadas = busqueda.buscarAvanzado(this.listaReproduccion);
@@ -442,7 +454,8 @@ public class ListaReproduccion {
 			
 			if (!busquedaRealizada){
 			l.nuevaCancion(new NuevaCancionEvent(c.getTitulo(),c.getAlbum(),
-					c.getPista(),c.getArtista(), c.getGenero(),c.getDuracion(), pos));
+					c.getPista(),c.getArtista(), c.getGenero(),c.getDuracion(),
+					pos));
 			}
 		}
 		
@@ -452,7 +465,8 @@ public class ListaReproduccion {
 	 * Notifica que se ha cambiado de cancion actual.
 	 * @param actual La nueva cancion actual.
 	 */
-	private void notificaCambioNumeroCancionActual(int actualNuevo, int actualViejo) {
+	private void notificaCambioNumeroCancionActual(int actualNuevo, 
+			int actualViejo) {
 		for (ListaReproduccionListener l : listeners) {
 			l.setActual(actualNuevo, actualViejo);
 		}

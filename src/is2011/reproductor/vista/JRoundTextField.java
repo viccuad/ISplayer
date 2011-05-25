@@ -76,9 +76,11 @@ public class JRoundTextField extends JTextField {
         Graphics2D g2 = (Graphics2D) g;
         Paint oldPaint = g2.getPaint();
 
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+        		RenderingHints.VALUE_ANTIALIAS_ON);
         
-        RoundRectangle2D.Float r2d = new RoundRectangle2D.Float(0,0,getWidth(),getHeight(), curvatura, curvatura);
+        RoundRectangle2D.Float r2d = new RoundRectangle2D.Float(0,0,getWidth(),
+        		getHeight(), curvatura, curvatura);
         g2.clip(r2d);
 
         g2.setColor(getBackground());
@@ -94,16 +96,18 @@ public class JRoundTextField extends JTextField {
                 setText("  ");
             
             TextLayout layout = new TextLayout(descripcion == null ? " ":descripcion,
-                    							getFont(), g2.getFontRenderContext());
+                    					getFont(), g2.getFontRenderContext());
             
             Rectangle2D bounds = layout.getBounds();
 
-            int x = (int) (getWidth() - insets.left - insets.right - bounds.getWidth()) / 2;
+            int x = (int) (getWidth() - insets.left - insets.right - 
+            		bounds.getWidth()) / 2;
             
             if(getHorizontalAlignment()!=CENTER)
                 x = 0+insets.left;
             
-            int y = (getHeight() - insets.top - insets.bottom - fm.getMaxAscent() - fm.getMaxDescent()) / 2;
+            int y = (getHeight() - insets.top - insets.bottom - 
+            		fm.getMaxAscent() - fm.getMaxDescent()) / 2;
             y += fm.getAscent() - 1;
             g2.setColor(colorDeTextoBackground);
             layout.draw(g2, x, y);
@@ -120,7 +124,8 @@ public class JRoundTextField extends JTextField {
         int x = 1, y = 1;
         int w = getWidth() - 2, h = getHeight() - 2;
         Graphics2D g2 = (Graphics2D) g.create();
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+        		RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setStroke(new BasicStroke(anchoDeBorde));
         g2.setColor(colorDeBorde);
         g2.drawRoundRect(x, y, w, h, curvatura, curvatura);

@@ -22,7 +22,9 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
 
 /**
  * Clase con una instancia del reproductor y otra del playList. Se encarga de
- * reproducir el playList segun las operaciones del usuario.
+ * ir cogiendo las canciones del playlist, segun la opcion de reproduccion(
+ * normal, aleatorio...) e irselas dado al reproductor musical para que se
+ * reproduzcan.
  * 
  * @author Administrator
  *
@@ -80,11 +82,13 @@ public class ControladorReproductor {
 		
 		if(listaReproduccion.getNumeroCanciones() >= cancionActual 
 				&& cancionActual > 0) {
-			CancionContainer cancion = this.listaReproduccion.getCancionAt(cancionActual -1 );
+			CancionContainer cancion = this.listaReproduccion.getCancionAt(
+					cancionActual -1 );
 			try {
 				this.reproductor.open(cancion);
 				this.reproductor.play();
-				this.reproductor.setVolumen(Preferencias.getInstance().getVolumen());
+				this.reproductor.setVolumen(Preferencias.getInstance().
+						getVolumen());
 			} catch (BasicPlayerException e) {
 				e.printStackTrace();
 			}
@@ -99,15 +103,21 @@ public class ControladorReproductor {
 	public void play(int cancionSeleccionada) {
 		
 		if (listaReproduccion.getBusquedaRealizada()){
-			if(cancionSeleccionada >= 0 && cancionSeleccionada < this.listaReproduccion.getCancionesBuscadas().size()){
+			if(cancionSeleccionada >= 0 && cancionSeleccionada 
+					< this.listaReproduccion.getCancionesBuscadas().size()){
 				
-				// Indice en la lista de reproduccion de la cancion a reproducir (que es cogida de la busqueda)
-				int cancionEnListaReproduccion = listaReproduccion.getIndexOf(listaReproduccion.getCancionesBuscadas().get(cancionSeleccionada), listaReproduccion.getCancionesListaReproduccion());
+				// Indice en la lista de reproduccion de la cancion a reproducir 
+				//(que es cogida de la busqueda)
+				int cancionEnListaReproduccion = listaReproduccion.getIndexOf(
+						listaReproduccion.getCancionesBuscadas().
+						get(cancionSeleccionada), 
+						listaReproduccion.getCancionesListaReproduccion());
 				listaReproduccion.setActual(cancionEnListaReproduccion + 1);
 			}
 			this.play();
 		}else{
-			if(cancionSeleccionada >= 0 && cancionSeleccionada < this.listaReproduccion.getNumeroCanciones()){
+			if(cancionSeleccionada >= 0 && cancionSeleccionada 
+					< this.listaReproduccion.getNumeroCanciones()){
 				listaReproduccion.setActual(cancionSeleccionada + 1);
 			}
 			this.play();
@@ -117,7 +127,8 @@ public class ControladorReproductor {
 	
 	public void guardarListaActual() {
 		try {
-			this.listaReproduccion.guardarXML(Preferencias.getInstance().getPathListaReproduccionDefecto());
+			this.listaReproduccion.guardarXML(Preferencias.getInstance().
+					getPathListaReproduccionDefecto());
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -196,12 +207,6 @@ public class ControladorReproductor {
 		if(absolutePath.toLowerCase().endsWith(".mp3")) {
 			listaReproduccion.addCancion(new CancionContainer(absolutePath));
 		} 
-		//TODO quitar esto si al final no se hace ogg!
-		/*
-		else if(absolutePath.toLowerCase().endsWith(".ogg")) {
-			listaReproduccion.addCancion(new CancionOGG(absolutePath));
-		}
-		*/
 	}
 
 	/**
@@ -237,7 +242,8 @@ public class ControladorReproductor {
 			actual = this.listaReproduccion.getActual();
 			
 		}else if(modo == ModoReproduccionEnum.REPETIR_TODOS) {
-			actual = (this.listaReproduccion.getActual() % this.listaReproduccion.getNumeroCanciones()) +1;
+			actual = (this.listaReproduccion.getActual() 
+					% this.listaReproduccion.getNumeroCanciones()) +1;
 			
 		}else if (modo == ModoReproduccionEnum.ALEATORIO){
 			actual = rnd.nextInt(this.listaReproduccion.getNumeroCanciones()) +1;
@@ -349,8 +355,11 @@ public class ControladorReproductor {
 		
 		
 		if (listaReproduccion.getBusquedaRealizada()){
-			// Indice en la lista de reproduccion de la cancion a borrar (que es cogida de la busqueda)
-			int cancionEnListaReproduccion = listaReproduccion.getIndexOf(listaReproduccion.getCancionesBuscadas().get(numCancion), listaReproduccion.getCancionesListaReproduccion());
+			// Indice en la lista de reproduccion de la cancion a borrar 
+			//(que es cogida de la busqueda)
+			int cancionEnListaReproduccion = listaReproduccion.getIndexOf(
+					listaReproduccion.getCancionesBuscadas().get(numCancion),
+					listaReproduccion.getCancionesListaReproduccion());
 			int actual = this.listaReproduccion.getActual();
 			
 			//Si estamos borrando la cancion actual...
@@ -405,7 +414,8 @@ public class ControladorReproductor {
 	
 
 	/**
-	 * Llama a la lista de reproduccion para decirle que se guarde en un lugar concreto.
+	 * Llama a la lista de reproduccion para decirle que se guarde en un 
+	 * lugar concreto.
 	 * @param path
 	 */
 	public void guardarListaReproduccion(String path){
@@ -417,7 +427,8 @@ public class ControladorReproductor {
 	}
 	
 	/**
-	 * Llama a la lista de repoduccion para que cargue el contenido de una lista guardada
+	 * Llama a la lista de repoduccion para que cargue el contenido de una 
+	 * lista guardada
 	 * @param path
 	 */
 	public void cargarListaReproduccion(String path){
@@ -434,12 +445,15 @@ public class ControladorReproductor {
 	 */
 	public ArrayList<CancionContainer> getCancionesListaReproduccion(){
 		
-		if (listaReproduccion.getBusquedaRealizada()) return listaReproduccion.getCancionesBuscadas();
-		else return listaReproduccion.getCancionesListaReproduccion();
+		if (listaReproduccion.getBusquedaRealizada()) 
+			return listaReproduccion.getCancionesBuscadas();
+		else 
+			return listaReproduccion.getCancionesListaReproduccion();
 	}
 	
 	/**
-	 * Metodo que devuelve la lista de reproduccion filtrada con los parametros de busqueda
+	 * Metodo que devuelve la lista de reproduccion filtrada con los 
+	 * parametros de busqueda
 	 * @param c
 	 * @return
 	 */
@@ -450,7 +464,8 @@ public class ControladorReproductor {
 	*/
 	
 	/**
-	 * Metodo que devuelve la lista de reproduccion filtrada con los parametros de busqueda avanzada
+	 * Metodo que devuelve la lista de reproduccion filtrada con los
+	 *  parametros de busqueda avanzada
 	 * @param c
 	 * @return
 	 */
