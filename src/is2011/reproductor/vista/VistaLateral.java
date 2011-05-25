@@ -106,10 +106,12 @@ public class VistaLateral extends JPanel{
 		});
 		
 		JScrollPane panel = new JScrollPane();
+		JPanel panelArbol = new JPanel();
 		top = new DefaultMutableTreeNode("Lista de Reproduccion");
 		modelo = new DefaultTreeModel(top);
 		tree = new JTree(modelo);
-		panel.setViewportView(tree);
+		panelArbol.add(tree);
+		panel.setViewportView(panelArbol);
 		
 		tree.setAlignmentX(Box.LEFT_ALIGNMENT);
 		tree.setBackground(this.getBackground());
@@ -189,7 +191,6 @@ public class VistaLateral extends JPanel{
 		if(listas != null) {
 			int i = 0;
 			for (String nombre : listas) {
-				System.out.println(nombre);
 				File fAux = new File(nombre);
 				nombre = fAux.getName().replaceAll("\\.xml", "");;
 				DefaultMutableTreeNode padre = new DefaultMutableTreeNode(nombre);

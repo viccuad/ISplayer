@@ -196,7 +196,7 @@ public class ListaReproduccion {
 		if(this.actualAleatoria < this.listaReproduccion.size()) {
 			this.actualAleatoria = 0;
 		} 
-		System.out.println(listaAleatoria);
+		
 	}
 	// ********************************************************************** //
 	// *************              MÉTODOS PUBLICOS              ************* //
@@ -431,7 +431,6 @@ public class ListaReproduccion {
 		int viejo = this.actual;
 		this.actual = actual;
 		
-		System.out.println("Actual "+actual);
 		if (!busquedaRealizada)		
 			notificaCambioNumeroCancionActual(actual,viejo);
 

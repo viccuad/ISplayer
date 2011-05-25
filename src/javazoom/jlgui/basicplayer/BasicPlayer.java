@@ -100,7 +100,6 @@ public class BasicPlayer implements BasicController, Runnable
     	String osName = System.getProperty("os.name");
     	if(osName.startsWith("Windows")) {
     		windows = true;
-    		System.out.println("win");
     	}else {
     		windows = false;
     	}
