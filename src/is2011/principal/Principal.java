@@ -43,7 +43,7 @@ public class Principal {
         	String[] li = {"Licensee=Victor Cuadrado Juan", "LicenseRegistrationNumber=NCVC110518", "Product=Synthetica", "LicenseType=Non Commercial", "ExpireDate=--.--.----", "MaxVersion=2.999.999"};
         	UIManager.put("Synthetica.license.info", li);
         	UIManager.put("Synthetica.license.key", "F8A52C36-F58CE8EF-8D455B99-C3456027-CF87F5BA");
-        	/*
+        	
         	//UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
         	String look = Preferencias.getInstance().getNombreLook();
 			if (look.equals("SyntheticaSimple2DLookAndFeel")) {
@@ -75,7 +75,7 @@ public class Principal {
 			}else {
 				System.out.println("Esto no deberia pasar!!");
 			}
-*/
+
         	
         }
         catch (Exception ignored) {}

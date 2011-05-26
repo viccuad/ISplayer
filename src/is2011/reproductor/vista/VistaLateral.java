@@ -41,7 +41,7 @@ public class VistaLateral extends JPanel{
 
 	/** Ruta de las imagenes*/
 	private static final String LIBRARY_PNG   = "/Recursos/library.png";
-	private static final String PLAY_LIST_PNG = "/Recursos/playList.png";
+	private static final String PLAY_LIST_PNG = "/Recursos/playlist.png";
 	
 	/** Label que nos envia a la biblioteca*/
 	private JLabel biblioteca;
@@ -95,7 +95,6 @@ public class VistaLateral extends JPanel{
 		listaActual.setAlignmentX(Box.LEFT_ALIGNMENT);
 		this.add(listaActual);
 		listaActual.setIcon(new ImageIcon(getClass().getResource(PLAY_LIST_PNG)));
-		
 				
 		JScrollPane panel = new JScrollPane();
 		JPanel panelArbol = new JPanel();
@@ -104,6 +103,7 @@ public class VistaLateral extends JPanel{
 		tree = new JTree(modelo);
 		panelArbol.add(tree);
 		panel.setViewportView(panelArbol);
+		
 		
 		tree.setAlignmentX(Box.LEFT_ALIGNMENT);
 		tree.setBackground(this.getBackground());

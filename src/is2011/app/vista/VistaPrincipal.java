@@ -628,7 +628,7 @@ public class VistaPrincipal extends JFrame
 		public void actionPerformed(ActionEvent e) {
 			Preferencias.getInstance().setLookAndFeel(this.nombreLook);
 			 JOptionPane.showMessageDialog(	 
-					 null,"Los cambios no surtiran efecto"
+					 null,"Los cambios no surtiran efecto "
 					 + "hasta que vuelva a abrir el reproductor.","Apariencia",
                      JOptionPane.WARNING_MESSAGE);
 		}
