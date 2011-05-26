@@ -458,8 +458,8 @@ public class VistaListaReproduccion extends JPanel implements
 		}
 		
 		if(modelo.getRowCount() >= (actualNuevo) && actualNuevo >0) {
-			modelo.setValueAt("->", actualNuevo-1, NUM_COLUMNA_REPRODUCIENDO);
-			
+			modelo.setValueAt("   ►", actualNuevo-1, NUM_COLUMNA_REPRODUCIENDO);
+
 		}
 	}
 
