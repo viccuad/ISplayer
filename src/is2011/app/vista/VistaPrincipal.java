@@ -3,6 +3,7 @@ package is2011.app.vista;
 
 
 import is2011.app.controlador.IAppController;
+import is2011.app.preferencias.Preferencias;
 import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 import is2011.reproductor.vista.VistaBiblioteca;
 import is2011.reproductor.vista.VistaLateral;
@@ -25,6 +26,7 @@ import java.io.File;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 
@@ -380,183 +382,55 @@ public class VistaPrincipal extends JFrame
 		
 		this.menu.add(menuApariencia);
 		
-
-		this.SyntheticaSimple2DLookAndFeel.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				update(getGraphics());
-			}
-
-		});
 		
-		this.SyntheticaBlackEyeLookAndFeel.addActionListener(new ActionListener(){
+		this.SyntheticaSimple2DLookAndFeel.addActionListener(new 
+				OyenteLookAndFeel("SyntheticaSimple2DLookAndFeel"));
 
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					UIManager.setLookAndFeel(new SyntheticaBlackEyeLookAndFeel());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				update(getGraphics());
-			}
-
-		});
+		this.SyntheticaBlackEyeLookAndFeel.addActionListener(new 
+				OyenteLookAndFeel("SyntheticaBlackEyeLookAndFeel"));
 		
-		this.SyntheticaBlackMoonLookAndFeel.addActionListener(new ActionListener(){
+		this.SyntheticaBlackMoonLookAndFeel.addActionListener(new 
+				OyenteLookAndFeel("SyntheticaBlackMoonLookAndFeel"));
 
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					UIManager.setLookAndFeel(new SyntheticaBlackMoonLookAndFeel());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				update(getGraphics());
-			}
+		this.SyntheticaBlackStarLookAndFeel.addActionListener(new 
+				OyenteLookAndFeel("SyntheticaBlackStarLookAndFeel"));
 
-		});
-		this.SyntheticaBlackStarLookAndFeel.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					UIManager.setLookAndFeel(new SyntheticaBlackStarLookAndFeel());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				update(getGraphics());
-			}
-
-		});
 		
-		this.SyntheticaBlueIceLookAndFeel.addActionListener(new ActionListener(){
+		this.SyntheticaBlueIceLookAndFeel.addActionListener(new 
+				OyenteLookAndFeel("SyntheticaBlueIceLookAndFeel"));
 
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					UIManager.setLookAndFeel(new SyntheticaBlueIceLookAndFeel());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				update(getGraphics());
-			}
-
-		});
-		this.SyntheticaBlueMoonLookAndFeel.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					UIManager.setLookAndFeel(new SyntheticaBlueMoonLookAndFeel());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				update(getGraphics());
-			}
-
-		});
 		
-		this.SyntheticaClassyLookAndFeel.addActionListener(new ActionListener(){
+		this.SyntheticaBlueMoonLookAndFeel.addActionListener(new 
+				OyenteLookAndFeel("SyntheticaBlueMoonLookAndFeel"));
 
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					UIManager.setLookAndFeel(new SyntheticaClassyLookAndFeel());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				update(getGraphics());
-			}
-
-		});
+			
 		
-		this.SyntheticaGreenDreamLookAndFeel.addActionListener(new ActionListener(){
+		this.SyntheticaClassyLookAndFeel.addActionListener(new 
+				OyenteLookAndFeel("SyntheticaClassyLookAndFeel"));
 
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					UIManager.setLookAndFeel(new SyntheticaGreenDreamLookAndFeel());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				update(getGraphics());
-			}
-
-		});
 		
-		this.SyntheticaMauveMetallicLookAndFeel.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					UIManager.setLookAndFeel(new SyntheticaMauveMetallicLookAndFeel());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				update(getGraphics());
-			}
-
-		});
-		this.SyntheticaOrangeMetallicLookAndFeel.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					UIManager.setLookAndFeel(new SyntheticaOrangeMetallicLookAndFeel());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				update(getGraphics());
-			}
-
-		});
-		this.SyntheticaSilverMoonLookAndFeel.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					UIManager.setLookAndFeel(new SyntheticaSilverMoonLookAndFeel());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				update(getGraphics());
-			}
-
-		});
-		this.SyntheticaSkyMetallicLookAndFeel.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					UIManager.setLookAndFeel(new SyntheticaSkyMetallicLookAndFeel());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				update(getGraphics());
-			}
-
-		});
 		
-		this.SyntheticaWhiteVisionLookAndFeel.addActionListener(new ActionListener(){
+		this.SyntheticaGreenDreamLookAndFeel.addActionListener(new 
+				OyenteLookAndFeel("SyntheticaGreenDreamLookAndFeel"));
+			
+		
+		this.SyntheticaMauveMetallicLookAndFeel.addActionListener(new 
+				OyenteLookAndFeel("SyntheticaMauveMetallicLookAndFeel"));
+		
+		this.SyntheticaOrangeMetallicLookAndFeel.addActionListener(new 
+				OyenteLookAndFeel("SyntheticaOrangeMetallicLookAndFeel"));
+		
+		this.SyntheticaSilverMoonLookAndFeel.addActionListener(new 
+				OyenteLookAndFeel("SyntheticaSilverMoonLookAndFeel"));
 
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					UIManager.setLookAndFeel(new SyntheticaWhiteVisionLookAndFeel());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				update(getGraphics());
-			}
+		
+		this.SyntheticaSkyMetallicLookAndFeel.addActionListener(new 
+				OyenteLookAndFeel("SyntheticaSkyMetallicLookAndFeel"));
 
-		});
+		
+		this.SyntheticaWhiteVisionLookAndFeel.addActionListener(new 
+				OyenteLookAndFeel("SyntheticaWhiteVisionLookAndFeel"));
+
 
 		this.crearBiblioteca.addActionListener(new ActionListener(){
 
@@ -743,6 +617,26 @@ public class VistaPrincipal extends JFrame
 	public void openLr(String string) {
 		controlador.openLR(string);
 		
+	}
+	
+	
+	private class OyenteLookAndFeel implements ActionListener {
+
+		private String nombreLook; 
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Preferencias.getInstance().setLookAndFeel(this.nombreLook);
+			 JOptionPane.showMessageDialog(	 
+					 null,"Los cambios no surtiran efecto"
+					 + "hasta que vuelva a abrir el reproductor.","Apariencia",
+                     JOptionPane.WARNING_MESSAGE);
+		}
+	
+		public OyenteLookAndFeel(String nombre) {
+			this.nombreLook = nombre;
+		}
+	
 	}
 	
 }

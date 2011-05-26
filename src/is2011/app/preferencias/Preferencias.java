@@ -21,6 +21,7 @@ public class Preferencias {
 	private Double volumen;
 	private boolean abrirUltimaLista; 
 	private String ultimoDirectorioAbierto;
+	private String nombreLook;
 	private boolean hayCambios;
 
 	private final String NOMBRE_DIR = "ISPlayer";
@@ -32,6 +33,7 @@ public class Preferencias {
 	
 	/** Flujo de lectura/escritura para ficheros XML */
 	private XStream stream;
+	
 	
 	private Preferencias(){
 		
@@ -61,6 +63,7 @@ public class Preferencias {
 			hayCambios = true;
 			modoReproduccion = ModoReproduccionEnum.NORMAL;
 			abrirUltimaLista = true;
+			nombreLook = "SyntheticaSimple2DLookAndFeel";
 			
 		}else { 
 			pathBiblioteca = null;
@@ -94,7 +97,7 @@ public class Preferencias {
 			setAbrirUltimaLista(aux.isAbrirUltimaLista());
 			setUltimoDirectorioAbierto(aux.getUltimoDirectorioAbierto());
 			setVolumen(aux.getVolumen());
-			
+			setLookAndFeel(aux.getNombreLook());
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -213,6 +216,15 @@ public class Preferencias {
 
 	public void setPathListaReproduccionDefecto(String pathListaReproduccionDefecto) {
 		this.pathListaReproduccionDefecto = pathListaReproduccionDefecto;
+	}
+
+	public void setLookAndFeel(String nombreLook) {
+		this.nombreLook = nombreLook;
+		hayCambios = true;
+	}
+	
+	public String getNombreLook() {
+		return this.nombreLook;
 	}
 	
 	

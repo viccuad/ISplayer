@@ -10,6 +10,7 @@ import de.javasoft.plaf.synthetica.*;
 
 import is2011.app.controlador.AppController;
 import is2011.app.controlador.IAppController;
+import is2011.app.preferencias.Preferencias;
 import is2011.app.vista.VistaPreferencias;
 import is2011.app.vista.VistaPrincipal;
 import is2011.biblioteca.BibliotecaMusical;
@@ -43,8 +44,38 @@ public class Principal {
         	UIManager.put("Synthetica.license.info", li);
         	UIManager.put("Synthetica.license.key", "F8A52C36-F58CE8EF-8D455B99-C3456027-CF87F5BA");
         	
-        	UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
-	
+        	//UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
+        	String look = Preferencias.getInstance().getNombreLook();
+			if (look.equals("SyntheticaSimple2DLookAndFeel")) {
+				UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
+			}else if(look.equals("SyntheticaBlackEyeLookAndFeel")) {
+				UIManager.setLookAndFeel(new SyntheticaBlackEyeLookAndFeel());
+			}else if(look.equals("SyntheticaBlackMoonLookAndFeel")) {
+				UIManager.setLookAndFeel(new SyntheticaBlackMoonLookAndFeel());
+			}else if(look.equals("SyntheticaBlackStarLookAndFeel")) {
+				UIManager.setLookAndFeel(new SyntheticaBlackStarLookAndFeel());
+			}else if(look.equals("SyntheticaBlueIceLookAndFeel")) {
+				UIManager.setLookAndFeel(new SyntheticaBlueIceLookAndFeel());
+			}else if(look.equals("SyntheticaBlueMoonLookAndFeel")) {
+				UIManager.setLookAndFeel(new SyntheticaBlueMoonLookAndFeel());
+			}else if(look.equals("SyntheticaClassyLookAndFeel")) {
+				UIManager.setLookAndFeel(new SyntheticaClassyLookAndFeel());
+			}else if(look.equals("SyntheticaGreenDreamLookAndFeel")) {
+				UIManager.setLookAndFeel(new SyntheticaGreenDreamLookAndFeel());
+			}else if(look.equals("SyntheticaMauveMetallicLookAndFeel")) {
+				UIManager.setLookAndFeel(new SyntheticaMauveMetallicLookAndFeel());
+			}else if(look.equals("SyntheticaOrangeMetallicLookAndFeel")) {
+				UIManager.setLookAndFeel(new SyntheticaOrangeMetallicLookAndFeel());
+			}else if(look.equals("SyntheticaSilverMoonLookAndFeel")) {
+				UIManager.setLookAndFeel(new SyntheticaSilverMoonLookAndFeel());
+			}else if(look.equals("SyntheticaSkyMetallicLookAndFeel")) {
+				UIManager.setLookAndFeel(new SyntheticaSkyMetallicLookAndFeel());
+			}else if (look.equals("SyntheticaWhiteVisionLookAndFeel")) {
+				UIManager.setLookAndFeel(new SyntheticaWhiteVisionLookAndFeel());	
+			}else {
+				System.out.println("Esto no deberia pasar!!");
+			}
+
         	
         }
         catch (Exception ignored) {}
@@ -85,6 +116,8 @@ public class Principal {
 		appController.cargarArchivosPreferencias();
 
 	
+    	}
 	}
 
-}}
+    
+}
