@@ -77,8 +77,7 @@ public class AppController implements IAppController {
 	        
 	        //Añadimos un filtro para permitir solo apertura de tipo plg
 	        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-	        		"mp3 & ogg", "mp3", "ogg","MP3", "Mp3", "mP3", "OGG" , "OGg" 
-	        				,"oGG" ,"oGg", "ogG");
+	        		"mp3", "mp3","MP3", "Mp3", "mP3");
 	        
 	        //FileNameExtensionFilter filter = new FileNameExtensionFilter("ogg", "ogg");
 	        fileChooser.setFileFilter(filter);
