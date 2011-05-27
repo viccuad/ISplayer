@@ -243,7 +243,7 @@ public class VistaPrincipal extends JFrame
 		
 		
 		this.ayuda = new JMenu("Ayuda");
-		this.ayudaOnLine = new JMenuItem("Mostrar ayuda online");
+		this.ayudaOnLine = new JMenuItem("Mostrar ayuda");
 		ayuda.add(ayudaOnLine);
 		ayudaOnLine.addActionListener(new ActionListener(){
 

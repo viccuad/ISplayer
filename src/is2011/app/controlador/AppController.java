@@ -590,10 +590,6 @@ public class AppController implements IAppController {
 		    
 		    if(osName.startsWith("Windows")) {
 		      
-
-
-		
-
 		    	//String url = "src/Recursos/manual/Introduccion.html";
 		    	File f = new File("src/Recursos/Manual.pdf");
 		    	java.awt.Desktop.getDesktop().open(f);
@@ -624,6 +620,8 @@ public class AppController implements IAppController {
 		    }
 	    
 		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(vPrincipal, "Necesita tener instalado sofware" +
+					"para abrir PDF", "Error", JOptionPane.ERROR_MESSAGE);
 			e1.printStackTrace();
 		}
 		

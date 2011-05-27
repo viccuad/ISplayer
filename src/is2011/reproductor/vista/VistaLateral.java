@@ -92,7 +92,7 @@ public class VistaLateral extends JPanel{
 		this.add(biblioteca);
 		
 		
-		listaActual = new JLabel("Lista actual");
+		listaActual = new JLabel("Está sonando");
 		listaActual.setAlignmentX(Box.LEFT_ALIGNMENT);
 		this.add(listaActual);
 		listaActual.setIcon(new ImageIcon(getClass().getResource(PLAY_LIST_PNG)));

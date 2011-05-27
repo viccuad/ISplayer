@@ -255,7 +255,7 @@ public class VistaListaReproduccion extends JPanel implements
 		setVisible(true);
 		tabla.setVisible(true);
 		
-		this.setBorder(new TitledBorder("Lista de reproducción"));
+		this.setBorder(new TitledBorder("Está sonando"));
 		
 		//Menu desplegable
 		
@@ -453,7 +453,7 @@ public class VistaListaReproduccion extends JPanel implements
 		}
 		
 		if(modelo.getRowCount() >= (actualNuevo) && actualNuevo >0) {
-			modelo.setValueAt("   ►", actualNuevo-1, NUM_COLUMNA_REPRODUCIENDO);
+			modelo.setValueAt("   -> ", actualNuevo-1, NUM_COLUMNA_REPRODUCIENDO);
 
 		}
 	}
