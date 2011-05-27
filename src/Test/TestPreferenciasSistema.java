@@ -1,4 +1,6 @@
 package Test;
+
+import is2011.app.preferencias.Preferencias;
 /*
 import java.io.File;
 import java.io.FileNotFoundException;
