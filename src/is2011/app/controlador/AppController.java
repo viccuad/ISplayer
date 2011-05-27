@@ -590,16 +590,10 @@ public class AppController implements IAppController {
 		    
 		    if(osName.startsWith("Windows")) {
 		      
-		    	//String url = "src/Recursos/manual/Introduccion.html";
+		    	//File f = new File("src/Recursos/manual/Introduccion.html");
 		    	File f = new File("src/Recursos/Manual.pdf");
 		    	java.awt.Desktop.getDesktop().open(f);
-		    	//File f = new File("C:/Users/carlosmoya/Desktop/Grupo31_Practica7.pdf");
-		    	//String url = f.getAbsolutePath();
-
-		    	//java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
-		    	
-		    	//Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler src/Recursos/manual/Introduccion.html");
-		    	//Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler src/Recursos/manual/Introduccion.html");
+	
 
 		
 		    } else if (osName.startsWith("Mac OS X")) {
@@ -620,9 +614,9 @@ public class AppController implements IAppController {
 		    }
 	    
 		} catch (Exception e1) {
-			JOptionPane.showMessageDialog(vPrincipal, "Necesita tener instalado sofware" +
-					"para abrir PDF", "Error", JOptionPane.ERROR_MESSAGE);
-			e1.printStackTrace();
+			JOptionPane.showMessageDialog(vPrincipal, "Necesita tener instalado software " +
+					"para abrir archivos con extension .pdf", "Error", JOptionPane.ERROR_MESSAGE);
+
 		}
 		
 	}
