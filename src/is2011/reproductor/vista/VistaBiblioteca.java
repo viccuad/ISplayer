@@ -286,7 +286,7 @@ public class VistaBiblioteca extends JPanel implements
 		});
 		
 		
-		JMenuItem aniadirLR = new JMenuItem("Añadir a la lista");
+		JMenuItem aniadirLR = new JMenuItem("Añadir a está sonando");
 		
 	
 		aniadirLR.addActionListener(new ActionListener(){
