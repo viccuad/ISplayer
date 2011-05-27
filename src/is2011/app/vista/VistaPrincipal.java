@@ -573,7 +573,8 @@ public class VistaPrincipal extends JFrame
 	
 	public void setInfo(String s) {
 		this.infoCancion = s;
-		if(!s.equals("") && vistaCompacta) {
+		if(s!= null && !s.equals("") && vistaCompacta) {
+			System.out.println(s);
 			this.setTitle(this.infoCancion);
 		}else {
 			this.setTitle(ISPLAYER);
