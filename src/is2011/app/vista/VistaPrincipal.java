@@ -36,6 +36,13 @@ import javax.swing.JFrame;
 public class VistaPrincipal extends JFrame 
 {
 	
+	/**
+	 * 
+	 */
+	private static final String ISPLAYER = "ISPlayer";
+
+
+
 	private IAppController controlador;
 	
 
@@ -73,7 +80,7 @@ public class VistaPrincipal extends JFrame
 	private JMenuItem aniadirCancionBiblioteca;
 	private JMenuItem aniadirCancionYCarpetaBiblioteca;
 	
-	
+	private String infoCancion = "";
 	
 	GridBagConstraints grid;
 	private VistaReproduccion vistaReproduccion;
@@ -185,7 +192,7 @@ public class VistaPrincipal extends JFrame
 	@SuppressWarnings("deprecation")
 	public void initialize()
 	{
-		this.setTitle("ISPlayer v0.1");
+		this.setTitle(ISPLAYER);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLayout(new GridBagLayout());
 		//this.reproduciendo = false;
@@ -521,6 +528,7 @@ public class VistaPrincipal extends JFrame
 			this.pack();
 			this.setResizable(false);
 			this.vistaCompacta = true;
+			this.setInfo(this.infoCancion);
 			
 		}else{
 			if(vistaBibliotecaVisible) {
@@ -534,6 +542,7 @@ public class VistaPrincipal extends JFrame
 			this.setResizable(true);
 			this.cargarPosicion();
 			this.vistaCompacta = false;
+			this.setInfo(this.infoCancion);
 		}
 	}
 	
@@ -592,6 +601,16 @@ public class VistaPrincipal extends JFrame
 	 */
 	public void play() {
 		this.controlador.play(-1);
+		
+	}
+	
+	public void setInfo(String s) {
+		this.infoCancion = s;
+		if(!s.equals("") && vistaCompacta) {
+			this.setTitle(this.infoCancion);
+		}else {
+			this.setTitle(ISPLAYER);
+		}
 		
 	}
 	

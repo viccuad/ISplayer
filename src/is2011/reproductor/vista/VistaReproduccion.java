@@ -485,9 +485,22 @@ ListaReproduccionListener{
 	@SuppressWarnings("unchecked")
 	private void getInfo(Map properties)
 	{
-		//System.out.println(properties.toString().replace(",", "\n"));
+		System.out.println(properties.toString().replace(",", "\n"));
 		if (properties != null)
 		{	
+			String autor = (String)properties.get("author");
+			
+			if (autor.equals("")) {
+				autor = "Desconocido";
+			}
+			
+			String tema = (String)properties.get("title");
+			if (tema.equals("")) {
+				tema = "Desconocido";
+			}
+			
+			//Todo
+			vPrincipal.setInfo("Ahora suena: " + autor + "/" + tema);
 			//Vemos en que formato esta el fichero.
 			this.formato = 	(String) properties.get("audio.type");
 
@@ -651,6 +664,7 @@ ListaReproduccionListener{
 			this.resetLabelTiempos();
 			this.labelEstado.setText("");
 			controlador.siguienteCancion();
+			vPrincipal.setInfo("");
 		}else if ( event.getCode() == BasicPlayerEvent.STOP ) {
 			synchronized (progreso) {
 				this.reset();
@@ -660,6 +674,7 @@ ListaReproduccionListener{
 			}
 			this.resetLabelTiempos();
 			this.labelEstado.setText("");
+			vPrincipal.setInfo("");
 		}else if(event.getCode() == BasicPlayerEvent.SEEKED) {
 			this.progreso.setValue((int)(((float)event.getPosition()
 					/bytesMusica)*1000));
