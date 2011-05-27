@@ -575,6 +575,14 @@ public class AppController implements IAppController {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see is2011.app.controlador.IAppController#borrarListaReproduccion()
+	 */
+	@Override
+	public void borrarListaReproduccion() {
+		reproductor.reiniciaListaReproduccion(false);
+	}
+
 	
 
 	

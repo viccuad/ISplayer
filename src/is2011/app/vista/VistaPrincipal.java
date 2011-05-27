@@ -46,8 +46,7 @@ public class VistaPrincipal extends JFrame
 	private JMenuItem menuItemAbrir;
 	private JMenuItem menuItemAniadir;
 	private JMenuItem menuItemGuardarLrXML;
-	private JMenuItem menuItemAbrirLrXML;
-	//private JMenuItem menuPreferencias;
+
 	
 	private JMenu menuApariencia;
 	private JMenuItem SyntheticaSimple2DLookAndFeel;
@@ -67,21 +66,10 @@ public class VistaPrincipal extends JFrame
 	private JMenu ayuda;
 	private JMenuItem ayudaOnLine;
 	
-	private JMenu modoReproduccion;
-	private JMenuItem aleatorio;
-	private JMenuItem repetiruno;
-	private JMenuItem repetirTodos;
-	private JMenuItem normal;
-	
-	private JMenu modoVista;
-	private JMenuItem verListaReporduccion;
-	private JMenuItem ocultaListaReporduccion;
 	
 	private JMenu menuBiblioteca;
 	private JMenuItem crearBiblioteca;
 	private JMenuItem actualizarBiblioteca;
-	//private JMenuItem cargarBiblioteca;
-	//private JMenuItem guardarBiblioteca;
 	private JMenuItem aniadirCancionBiblioteca;
 	private JMenuItem aniadirCancionYCarpetaBiblioteca;
 	
@@ -91,16 +79,13 @@ public class VistaPrincipal extends JFrame
 	private VistaReproduccion vistaReproduccion;
 	private VistaListaReproduccion vistaListaReproduccion;
 	private VistaBiblioteca vistaBiblioteca;
-	//private VistaPreferencias vistaPreferencias;
 	
 	private VistaLateral vistaLateral;
 	
 	private boolean vistaCompacta;
 	
 	private boolean vistaBibliotecaVisible = false;
-	//private boolean reproduciendo;
-	//private boolean reproduciendo2;
-
+	
 	
 
 	public VistaPrincipal(){
@@ -220,62 +205,16 @@ public class VistaPrincipal extends JFrame
 		this.menuItemAbrir = new JMenuItem ("Abrir");
 		this.menuItemAniadir = new JMenuItem ("Añadir");
 		this.menuItemGuardarLrXML = new JMenuItem("Guardar Lista Reproduccion");
-		this.menuItemAbrirLrXML = new JMenuItem("Abrir Lista Reproduccion");
+		
 		//this.menuPreferencias = new JMenuItem("Preferencias");
-		this.modoVista = new JMenu("Vista");
+		
 		this.menuArchivo.add(menuItemAbrir);
 		this.menuArchivo.add(menuItemAniadir);
 		this.menuArchivo.add(menuItemGuardarLrXML);
-		this.menuArchivo.add(menuItemAbrirLrXML);
+		//this.menuArchivo.add(menuItemAbrirLrXML);
 		//this.menuArchivo.add(menuPreferencias);
 		
 		this.menu.add(menuArchivo);
-		
-		this.modoReproduccion = new JMenu("Modo reproduccion");
-		this.aleatorio = new JMenuItem ("Aleatorio");
-		this.repetiruno = new JMenuItem ("Repetir uno");
-		this.repetirTodos = new JMenuItem ("Repetir todas");
-		this.normal = new JMenuItem ("Normal");
-				
-		this.modoReproduccion.add(aleatorio);
-		this.modoReproduccion.add(repetiruno);
-		this.modoReproduccion.add(repetirTodos);
-		this.modoReproduccion.add(normal);
-		
-		this.menu.add(modoReproduccion);
-		
-		this.modoVista = new JMenu("Vista");
-		this.verListaReporduccion = new JMenuItem("Ver Lista de Reproduccion");
-		this.ocultaListaReporduccion = new JMenuItem("Ocultar Lista de Reproduccion");
-		
-		this.modoVista.add(verListaReporduccion);
-		this.modoVista.add(ocultaListaReporduccion);
-		
-		this.menu.add(modoVista);
-		
-		
-		
-		this.verListaReporduccion.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				vistaListaReproduccion.setVisible(true);
-				//vistaBiblioteca.updateUI();
-				//vistaListaReproduccion.updateUI();
-				//setSize(800,650);
-			}
-
-		});
-		this.ocultaListaReporduccion.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				vistaListaReproduccion.setVisible(false);
-				update(getGraphics());
-				vistaBiblioteca.setVisible(false);
-				vistaBiblioteca.setVisible(true);
-				//setSize(800,181);
-			}
-
-		});
 		
 		this.menuBiblioteca = new JMenu("Biblioteca");
 		
@@ -349,19 +288,19 @@ public class VistaPrincipal extends JFrame
 		this.menu.add(ayuda);
 		
 		this.menuApariencia = new JMenu("Apariencia");
-		this.SyntheticaSimple2DLookAndFeel= new JMenuItem("Simple2D");
-		this.SyntheticaBlackEyeLookAndFeel= new JMenuItem("BlackEye");
-		this.SyntheticaBlackMoonLookAndFeel= new JMenuItem("BlackMoon");
-		this.SyntheticaBlackStarLookAndFeel= new JMenuItem("BlackStar");
-		this.SyntheticaBlueIceLookAndFeel= new JMenuItem("BlueIce");
-		this.SyntheticaBlueMoonLookAndFeel= new JMenuItem("BlueMoon");
-		this.SyntheticaClassyLookAndFeel= new JMenuItem("ClassyLook");
-		this.SyntheticaGreenDreamLookAndFeel= new JMenuItem("GreenDream");
-		this.SyntheticaMauveMetallicLookAndFeel= new JMenuItem("MauveMetallic");
-		this.SyntheticaOrangeMetallicLookAndFeel= new JMenuItem("OrangeMetallic");
-		this.SyntheticaSilverMoonLookAndFeel= new JMenuItem("SilverMoon");
-		this.SyntheticaSkyMetallicLookAndFeel= new JMenuItem("SkyMetallic");
-		this.SyntheticaWhiteVisionLookAndFeel= new JMenuItem("WhiteVision");
+		this.SyntheticaSimple2DLookAndFeel= new JMenuItem("Frio");
+		this.SyntheticaBlackEyeLookAndFeel= new JMenuItem("Oscuridad");
+		this.SyntheticaBlackMoonLookAndFeel= new JMenuItem("Clasico");
+		this.SyntheticaBlackStarLookAndFeel= new JMenuItem("Estrella negra");
+		this.SyntheticaBlueIceLookAndFeel= new JMenuItem("Hielo azul");
+		this.SyntheticaBlueMoonLookAndFeel= new JMenuItem("Luna azul");
+		this.SyntheticaClassyLookAndFeel= new JMenuItem("Aluminio");
+		this.SyntheticaGreenDreamLookAndFeel= new JMenuItem("Primavera");
+		this.SyntheticaMauveMetallicLookAndFeel= new JMenuItem("Femenino");
+		this.SyntheticaOrangeMetallicLookAndFeel= new JMenuItem("Naranja");
+		this.SyntheticaSilverMoonLookAndFeel= new JMenuItem("Luna");
+		this.SyntheticaSkyMetallicLookAndFeel= new JMenuItem("Glaciar");
+		this.SyntheticaWhiteVisionLookAndFeel= new JMenuItem("Nube");
 		  
 		this.menuApariencia.add(SyntheticaSimple2DLookAndFeel);
 		this.menuApariencia.add(SyntheticaBlackEyeLookAndFeel);
@@ -433,6 +372,7 @@ public class VistaPrincipal extends JFrame
 
 			public void actionPerformed(ActionEvent e) {
 				controlador.crearBiblioteca();
+				mostrarBiblioteca();
 			}
 
 		});
@@ -440,6 +380,7 @@ public class VistaPrincipal extends JFrame
 
 			public void actionPerformed(ActionEvent e) {
 				controlador.actualizarBiblioteca();
+				mostrarBiblioteca();
 			}
 
 		});
@@ -465,6 +406,7 @@ public class VistaPrincipal extends JFrame
 
 			public void actionPerformed(ActionEvent e) {
 				controlador.aniadirCancionesBiblioteca();
+				mostrarBiblioteca();
 			}
 
 		});
@@ -473,40 +415,11 @@ public class VistaPrincipal extends JFrame
 
 			public void actionPerformed(ActionEvent e) {
 				controlador.aniadirCancionesYCarpetasBiblioteca();
+				mostrarBiblioteca();
 			}
 
 		});
 		
-		
-		this.aleatorio.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				controlador.setModoReproduccion(ModoReproduccionEnum.ALEATORIO);
-			}
-
-		});
-
-		this.repetiruno.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				controlador.setModoReproduccion(ModoReproduccionEnum.REPETIR_UNO);
-			}
-
-		});
-		this.repetirTodos.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				controlador.setModoReproduccion(ModoReproduccionEnum.REPETIR_TODOS);
-			}
-
-		});
-		this.normal.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				controlador.setModoReproduccion(ModoReproduccionEnum.NORMAL);
-			}
-
-		});
 		
 		this.menuItemAbrir.addActionListener(new ActionListener(){
 			
@@ -533,23 +446,7 @@ public class VistaPrincipal extends JFrame
 			
 		});
 		
-		this.menuItemAbrirLrXML.addActionListener(new ActionListener(){
-			
-			public void actionPerformed(ActionEvent e) {
-				controlador.cargarListaReproduccion();
-			}
-			
-		});
-		
-		/*
-		this.menuPreferencias.addActionListener(new ActionListener(){
 
-			public void actionPerformed(ActionEvent e) {
-				vistaPreferencias.actualizarValores();
-				vistaPreferencias.setVisible(true);
-			}
-
-		});*/
 		this.setJMenuBar(menu);
 		
 		this.addWindowListener(new WindowAdapter()
@@ -687,6 +584,14 @@ public class VistaPrincipal extends JFrame
 			this.vistaBiblioteca.setVisible(false);
 			this.vistaListaReproduccion.setVisible(true);
 		}
+		
+	}
+
+	/**
+	 * 
+	 */
+	public void play() {
+		this.controlador.play(-1);
 		
 	}
 	

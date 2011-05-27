@@ -1,5 +1,5 @@
 package Test;
-
+/*
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import javax.swing.JFileChooser;
 import is2011.app.preferencias.Preferencias;
 import is2011.biblioteca.BibliotecaMusical;
 import is2011.biblioteca.contenedores.CancionContainer;
-import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
+import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;*/
 
 public class TestPreferenciasSistema {
 
@@ -34,7 +34,7 @@ public class TestPreferenciasSistema {
 			
 			
 			System.out.println(preferencias.getPathBiblioteca());
-			System.out.println(preferencias.getPathListaReproduccion());
+			//System.out.println(preferencias.getPathListaReproduccion());
 			System.out.println(preferencias.getPathPreferenciasSistema());
 			System.out.println(preferencias.getVolumen());
 			System.out.println(preferencias.isAbrirUltimaLista());

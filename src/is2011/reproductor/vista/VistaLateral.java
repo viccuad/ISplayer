@@ -15,6 +15,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -126,7 +127,9 @@ public class VistaLateral extends JPanel{
 			}
 		});
 		
-		JMenuItem favorita = new JMenuItem("Cargar por defecto");
+		JMenu menuListaDefecto = new JMenu("Lista por defecto");
+		
+		JMenuItem favorita = new JMenuItem("Cargar esta");
 		favorita.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -135,7 +138,22 @@ public class VistaLateral extends JPanel{
 				}
 			}
 		});
-		popup.add(favorita);
+		menuListaDefecto.add(favorita);
+		
+		JMenuItem defecto = new JMenuItem("Cargar última lista");
+		defecto.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(elementoSeleccionado != null) {
+					defecto();
+				}
+			}
+		});
+		menuListaDefecto.add(favorita);
+		
+		
+		
+		popup.add(menuListaDefecto);
 		
 		JMenuItem refrescar = new JMenuItem("Refrescar");
 		popup.add(refrescar);
@@ -197,6 +215,7 @@ public class VistaLateral extends JPanel{
 						vPrincipal.openLr(selPath.getLastPathComponent().
 								toString());
 						vPrincipal.mostrarListaReproduccion();
+						//vPrincipal.play();
 					}
 				}
 			}
@@ -258,6 +277,11 @@ public class VistaLateral extends JPanel{
 		
 		Preferencias.getInstance().setPathListaReproduccionDefecto(
 				f.getAbsolutePath());
+	}
+	
+	private void defecto() {
+		Preferencias.getInstance().setPathListaReproduccionDefecto(
+			Preferencias.getInstance().getPathUltimaLista());
 	}
 }
 

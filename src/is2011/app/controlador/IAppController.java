@@ -291,4 +291,9 @@ public interface IAppController {
 	 */
 	public void muestraListaReproduccion();
 
+	/**
+	 * 
+	 */
+	public void borrarListaReproduccion();
+
 }

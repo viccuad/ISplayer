@@ -286,7 +286,9 @@ public class VistaBiblioteca extends JPanel implements
 		});
 		
 		
-		JMenuItem aniadirLR = new JMenuItem("Añadir a la LR");
+		JMenuItem aniadirLR = new JMenuItem("Añadir a la lista");
+		
+	
 		aniadirLR.addActionListener(new ActionListener(){
 
 			@Override
@@ -318,6 +320,32 @@ public class VistaBiblioteca extends JPanel implements
 		
 		popup.add(aniadirLR);
 		
+		JMenuItem reproducir = new JMenuItem("Reproducir");
+		reproducir.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				int[] canciones = tabla.getSelectedRows();
+				
+				if (canciones.length > 1) {
+					controlador.borrarListaReproduccion();
+					for(int i : canciones) {
+						String path = controlador.getCanciones().get(i).
+						getTotalPath();
+						controlador.fromBibliotecaToListaReproduccion(path);
+						
+		
+					}
+					controlador.muestraListaReproduccion();
+
+					controlador.play(-1);
+				}
+								
+			}
+			
+		});
+		
+		popup.add(reproducir);
 		
 		tabla.addMouseListener(new MouseAdapter() {
 			@Override
@@ -334,6 +362,7 @@ public class VistaBiblioteca extends JPanel implements
 					 * int row = e.getY()/tabla.getRowHeight();
 					controlador.fromBibliotecaToListaReproduccion(row);
 					 */
+						controlador.borrarListaReproduccion();
 						int row = e.getY()/tabla.getRowHeight();
 						//System.out.println(row);
 						
@@ -341,7 +370,9 @@ public class VistaBiblioteca extends JPanel implements
 						String path = controlador.getCanciones().get(row).
 						getTotalPath();
 						//System.out.println(path);
+						controlador.stop();
 						controlador.fromBibliotecaToListaReproduccion(path);
+						controlador.play(-1);
 						controlador.muestraListaReproduccion();
 						
 
