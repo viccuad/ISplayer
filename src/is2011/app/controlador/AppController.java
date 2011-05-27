@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import is2011.app.preferencias.Preferencias;
+import is2011.app.vista.VistaPrincipal;
 import is2011.biblioteca.BibliotecaMusical;
 import is2011.biblioteca.contenedores.CancionContainer;
 import is2011.biblioteca.search.CriterioBusqueda;
@@ -37,6 +38,8 @@ public class AppController implements IAppController {
 	private BibliotecaMusical biblioteca;
 	/** Archivo de preferencias del sistema */
 	private Preferencias preferencias;
+	/** Referencia a la vista principal*/
+	private VistaPrincipal vPrincipal;
 	
 	// ********************************************************************** //
 	// *************                CONSTRUCTOR                 ************* //
@@ -44,10 +47,12 @@ public class AppController implements IAppController {
 	/**
 	 * Constructor por defecto.
 	 */
-	public AppController(ControladorReproductor rep, BibliotecaMusical bib) {
+	public AppController(ControladorReproductor rep, BibliotecaMusical bib, 
+			VistaPrincipal vp) {
 		reproductor = rep;
 		biblioteca = bib;
 		preferencias = Preferencias.getInstance();
+		vPrincipal = vp;
 	}
 	
 	// ********************************************************************** //
@@ -545,6 +550,7 @@ public class AppController implements IAppController {
 		String ruta = Preferencias.getInstance().getPathUltimaLista();
 		reproductor.guardarListaReproduccion(ruta);
 		
+		
 		if(Preferencias.getInstance().isHayCambios()) {
 			Preferencias.getInstance().guardarXML();
 			if (this.reproductor.getCancionesListaReproduccion().size() >0) {
@@ -558,6 +564,15 @@ public class AppController implements IAppController {
 		String ruta = Preferencias.getInstance().getDirecctorioListasDeReproduccion() + 
 		File.separator + string + ".xml";
 		reproductor.cargarListaReproduccion(ruta);
+	}
+
+	/* (non-Javadoc)
+	 * @see is2011.app.controlador.IAppController#muestraListaReproduccion()
+	 */
+	@Override
+	public void muestraListaReproduccion() {
+		this.vPrincipal.muestraListaRep();
+		
 	}
 
 	

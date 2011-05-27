@@ -286,4 +286,9 @@ public interface IAppController {
 	 */
 	public void openLR(String string);
 
+	/**
+	 * 
+	 */
+	public void muestraListaReproduccion();
+
 }
