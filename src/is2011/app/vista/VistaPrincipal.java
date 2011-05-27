@@ -262,12 +262,13 @@ public class VistaPrincipal extends JFrame
 				
 
 				    	//String url = "src/Recursos/manual/Introduccion.html";
-				    	File f = new File("src/Recursos/manual/Introduccion.html");
+				    	File f = new File("src/Recursos/Manual.pdf");
+				    	java.awt.Desktop.getDesktop().open(f);
 				    	//File f = new File("C:/Users/carlosmoya/Desktop/Grupo31_Practica7.pdf");
 				    	//String url = f.getAbsolutePath();
 
 				    	//java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
-				    	java.awt.Desktop.getDesktop().open(f);
+				    	
 				    	//Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler src/Recursos/manual/Introduccion.html");
 				    	//Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler src/Recursos/manual/Introduccion.html");
 
@@ -275,13 +276,17 @@ public class VistaPrincipal extends JFrame
 				    } else if (osName.startsWith("Mac OS X")) {
 				  	  
 						
-						Runtime.getRuntime().exec("open -a Safari src/Recursos/index.html");
+						//Runtime.getRuntime().exec("open -a Safari src/Recursos/index.html");
+				    	File f = new File("src/Recursos/Manual.pdf");
+				    	java.awt.Desktop.getDesktop().open(f);
 
 				
 				    }else if (osName.startsWith("Linux")) {
 				  	  
 						
-						Runtime.getRuntime().exec("./firefox src/Recursos/index.html");
+						//Runtime.getRuntime().exec("./firefox src/Recursos/index.html");
+						File f = new File("src/Recursos/Manual.pdf");
+				    	java.awt.Desktop.getDesktop().open(f);
 				
 				    }
 			    

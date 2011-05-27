@@ -338,7 +338,8 @@ public class VistaBiblioteca extends JPanel implements
 					}
 					controlador.muestraListaReproduccion();
 
-					controlador.play(-1);
+					//controlador.play(-1);
+					controlador.siguienteCancion();
 				}
 								
 			}
@@ -372,9 +373,9 @@ public class VistaBiblioteca extends JPanel implements
 						//System.out.println(path);
 						controlador.stop();
 						controlador.fromBibliotecaToListaReproduccion(path);
-						controlador.play(-1);
+						//controlador.play(-1);
 						controlador.muestraListaReproduccion();
-						
+						controlador.siguienteCancion();
 
 					}
 					
