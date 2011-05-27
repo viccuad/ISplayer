@@ -396,6 +396,8 @@ public class VistaPrincipal extends JFrame
 			
 			public void actionPerformed(ActionEvent e) {
 				controlador.abrirArchivos();
+				mostrarListaReproduccion();
+				
 			}
 			
 		});
@@ -404,6 +406,7 @@ public class VistaPrincipal extends JFrame
 			
 			public void actionPerformed(ActionEvent e) {
 				controlador.aniadir();
+				mostrarListaReproduccion();
 			}
 			
 		});
