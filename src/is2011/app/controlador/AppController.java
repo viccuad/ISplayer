@@ -98,12 +98,21 @@ public class AppController implements IAppController {
 	            
 	            //Si algun fichero no esta soportado, lo quitamos de la 
 	            //seleccion.
+	            ArrayList<File> filesAux = new ArrayList<File>();
 	            for (int i = 0 ; i < files.length ; i++) {
-	            	if(!(filter.accept(files[i]))){
-	            		files[i] = null;
+	            	if(filter.accept(files[i])){
+	            		filesAux.add(files[i]);
 	            	}
 	            }
-	            return files;
+	            
+	            File[] aux = new File[filesAux.size()];
+	            
+	            int i = 0;
+	            for(File f : filesAux) {
+	            	aux[i++] = f;
+	            }
+	            
+	            return aux;
 	        }
 	        else
 	        {
@@ -180,15 +189,17 @@ public class AppController implements IAppController {
 	@Override
 	public void abrirArchivos() {
 		File[] files = abrirArchivo();
-		if(files != null) {
+		System.out.println(files.length);
+		if( (files != null) && (files.length > 0) ) {
 			reproductor.stop();
 			reproductor.reiniciaListaReproduccion(false);
 			for (File f : files) {
 				if (f != null) {
 					reproductor.aniadirCancion(f.getAbsolutePath());
+					System.out.println(f.toString());
 				}
 			}
-			reproductor.play(-1);
+			this.siguienteCancion();
 		}
 		
 	}
