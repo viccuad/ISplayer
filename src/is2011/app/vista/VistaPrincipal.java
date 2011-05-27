@@ -95,6 +95,9 @@ public class VistaPrincipal extends JFrame
 	
 	private VistaLateral vistaLateral;
 	
+	private boolean vistaCompacta;
+	
+	private boolean vistaBibliotecaVisible = false;
 	//private boolean reproduciendo;
 	//private boolean reproduciendo2;
 
@@ -102,6 +105,7 @@ public class VistaPrincipal extends JFrame
 
 	public VistaPrincipal(){
 		super();
+		vistaCompacta = false;
 		grid = new GridBagConstraints();
 		initialize();
 		
@@ -135,6 +139,7 @@ public class VistaPrincipal extends JFrame
         grid.fill        = GridBagConstraints.BOTH;
 		
         this.add(vistaRep,grid);
+        vistaRep.setVisible(true);
        
 
 	}
@@ -151,7 +156,7 @@ public class VistaPrincipal extends JFrame
         grid.fill        = GridBagConstraints.BOTH;
         
         this.add(vlr,grid);
-        vlr.setVisible(false);
+        vlr.setVisible(true);
         
         /*
         grid.gridx       = 0;
@@ -179,6 +184,7 @@ public class VistaPrincipal extends JFrame
         grid.fill        = GridBagConstraints.BOTH;
         
         this.add(vb,grid);
+        vb.setVisible(false);
             				
 	}
 	
@@ -187,6 +193,11 @@ public class VistaPrincipal extends JFrame
        vistaPreferencias = vp;             				
 	}*/
 	
+	public void mostrar() {
+		this.setVisible(true);
+        cargarPosicion();
+	}
+	@SuppressWarnings("deprecation")
 	public void initialize()
 	{
 		this.setTitle("ISPlayer v0.1");
@@ -196,8 +207,10 @@ public class VistaPrincipal extends JFrame
 		//this.reproduciendo2 = false;
 
         
-        this.setVisible(true);
-		this.setSize(1100,660);
+        this.setVisible(false);
+        
+        
+       
 		//this.setResizable(false);
 		
 		this.menu = new JMenuBar();
@@ -545,8 +558,12 @@ public class VistaPrincipal extends JFrame
             @Override
             public void windowClosing(WindowEvent e)
             {
-                controlador.requestSalir();
+                //Guaradmos en las preferencias el tamaño y la posicion de la v
+            	guardarPosicion();
+            	controlador.requestSalir();
             }
+
+			
         });
 		
 		//Panel lateral
@@ -554,6 +571,19 @@ public class VistaPrincipal extends JFrame
 	}
 
 	 
+	/**
+	 * 
+	 */
+	private void cargarPosicion() {
+		 Preferencias p = Preferencias.getInstance();
+			this.setSize(p.getAncho(),p.getAlto());
+			this.move(p.getPosX(),p.getPosY());
+			
+			if(p.isVistaCompacta()) {
+				this.vistaCompacta();
+			}
+	}
+
 	public VistaListaReproduccion getVistaListaReproduccion() {
 		return this.vistaListaReproduccion;
 	}
@@ -562,28 +592,51 @@ public class VistaPrincipal extends JFrame
 		
 	}
 
-	
+	private void guardarPosicion() {
+		if(!vistaCompacta) {
+			Preferencias.getInstance().setPosX(getX());
+	    	Preferencias.getInstance().setPosY(getY());
+	    	Preferencias.getInstance().setAlto(getHeight());
+	    	Preferencias.getInstance().setAncho(getWidth());
+		}
+		Preferencias.getInstance().setCompacta(vistaCompacta);
+
+		
+	}
 
 	/**
 	 * Cambia alternativamente la vista compacta. 
 	 */
 	public void vistaCompacta() {
-		if(vistaListaReproduccion.isVisible()) {
+		if(!this.vistaCompacta) {
 			//Cambiamos a ivsta compacta.
+			if(vistaBiblioteca.isVisible()){
+				vistaBibliotecaVisible = true;
+			}else {
+				vistaBibliotecaVisible = false;
+			}
+			this.guardarPosicion();
 			this.vistaListaReproduccion.setVisible(false);
 			this.vistaBiblioteca.setVisible(false);
 			this.vistaReproduccion.setBotonCompacto(false);
 			this.menu.setVisible(false);
 			this.vistaLateral.setVisible(false);
 			this.pack();
-		}else {
-
-			this.vistaListaReproduccion.setVisible(true);
-			this.vistaBiblioteca.setVisible(true);
+			this.setResizable(false);
+			this.vistaCompacta = true;
+			
+		}else{
+			if(vistaBibliotecaVisible) {
+				this.vistaBiblioteca.setVisible(true);
+			}else {
+				this.vistaListaReproduccion.setVisible(true);
+			}
 			this.vistaReproduccion.setBotonCompacto(true);
 			this.menu.setVisible(true);
 			this.vistaLateral.setVisible(true);
-			this.setSize(1100,660);
+			this.setResizable(true);
+			this.cargarPosicion();
+			this.vistaCompacta = false;
 		}
 	}
 	
@@ -602,7 +655,7 @@ public class VistaPrincipal extends JFrame
 	 */
 	public void openLr(String string) {
 		controlador.openLR(string);
-		
+		controlador.stop();
 	}
 	
 	
@@ -623,6 +676,18 @@ public class VistaPrincipal extends JFrame
 			this.nombreLook = nombre;
 		}
 	
+	}
+
+
+	/**
+	 * 
+	 */
+	public void muestraListaRep() {
+		if( !this.vistaCompacta) {
+			this.vistaBiblioteca.setVisible(false);
+			this.vistaListaReproduccion.setVisible(true);
+		}
+		
 	}
 	
 }

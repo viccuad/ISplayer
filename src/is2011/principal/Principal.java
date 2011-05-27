@@ -106,7 +106,8 @@ public class Principal {
 		//vista.setVistaPreferencias(vp);
 		vista.setVisible(true);
 		
-		IAppController appController = new AppController(controlador, bib);
+		IAppController appController = new AppController(controlador, bib,vista);
+		
 		vista.setControlador(appController);
 		vr.setControlador(appController);
 		vlr.setControlador(appController);
@@ -114,7 +115,7 @@ public class Principal {
 		//vp.setControlador(appController);
 		appController.cargarArchivosPreferencias();
 
-	
+		vista.mostrar();
     	}
 	}
 

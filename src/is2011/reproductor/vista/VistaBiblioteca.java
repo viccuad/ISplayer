@@ -307,6 +307,7 @@ public class VistaBiblioteca extends JPanel implements
 						getTotalPath();
 						//System.out.println(path);
 						controlador.fromBibliotecaToListaReproduccion(path);
+						controlador.muestraListaReproduccion();
 					}
 				//}
 				
@@ -341,6 +342,7 @@ public class VistaBiblioteca extends JPanel implements
 						getTotalPath();
 						//System.out.println(path);
 						controlador.fromBibliotecaToListaReproduccion(path);
+						controlador.muestraListaReproduccion();
 						
 
 					}

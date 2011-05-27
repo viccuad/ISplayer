@@ -32,6 +32,14 @@ public class Preferencias {
 	/** Aqui guardamos el path de la ultima lista abierta*/
 	private String pathUltimaLista;
 	
+	
+	private int posX;
+	private int posY;
+	private int ancho;
+	private int alto;
+	private boolean compacta;
+	
+	
 	private ModoReproduccionEnum modoReproduccion;
 	private Double volumen;
 	private boolean abrirUltimaLista; 
@@ -76,6 +84,14 @@ public class Preferencias {
 								NOMBRE_LISTA; 
 		//Si no existen las preferencias,creamos unas por defecto.
 		if(!pref.exists()){
+			//Posicion y tamaño por defecto;
+			posX = 200;
+			posY = 200;
+			
+			ancho = 800;
+			alto = 700;
+			
+			compacta = false;
 			pathBiblioteca = pathPreferencias + File.separator 
 							+  NOMBRE_BIBLIOTECA;
 			pathListaReproduccionDefecto = this.pathUltimaLista;
@@ -87,6 +103,7 @@ public class Preferencias {
 			nombreLook = "SyntheticaSimple2DLookAndFeel";
 			
 		}else { 
+			
 			pathBiblioteca = null;
 			modoReproduccion = null;
 			volumen = 1.0;
@@ -118,6 +135,12 @@ public class Preferencias {
 			setVolumen(aux.getVolumen());
 			setLookAndFeel(aux.getNombreLook());
 			setPathListaReproduccionDefecto(aux.getPathListaReproduccionDefecto());
+			posX = aux.getPosX();
+			posY = aux.getPosY();
+			
+			ancho = aux.getAncho();
+			alto = aux.getAlto();
+			compacta = aux.isVistaCompacta();
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -125,6 +148,64 @@ public class Preferencias {
 		
 	}
 	
+	/**
+	 * @return the posX
+	 */
+	public int getPosX() {
+		return posX;
+	}
+
+	/**
+	 * @param posX the posX to set
+	 */
+	public void setPosX(int posX) {
+		hayCambios = true;
+		this.posX = posX;
+	}
+
+	/**
+	 * @return the posY
+	 */
+	public int getPosY() {
+		return posY;
+	}
+
+	/**
+	 * @param posY the posY to set
+	 */
+	public void setPosY(int posY) {
+		hayCambios = true;
+		this.posY = posY;
+	}
+
+	/**
+	 * @return the ancho
+	 */
+	public int getAncho() {
+		return ancho;
+	}
+
+	/**
+	 * @param ancho the ancho to set
+	 */
+	public void setAncho(int ancho) {
+		this.ancho = ancho;
+	}
+
+	/**
+	 * @return the alto
+	 */
+	public int getAlto() {
+		return alto;
+	}
+
+	/**
+	 * @param alto the alto to set
+	 */
+	public void setAlto(int alto) {
+		this.alto = alto;
+	}
+
 	public String getDirecctorioListasDeReproduccion() {
 		return  this.pahtListasDeReproduccion;
 		
@@ -242,6 +323,18 @@ public class Preferencias {
 	
 	public String getPathUltimaLista() {
 		return this.pathUltimaLista;
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean isVistaCompacta() {
+		return compacta;
+	}
+	
+	public void setCompacta(boolean c) {
+		this.compacta = c;
+		hayCambios = true;
 	}
 	
 }
