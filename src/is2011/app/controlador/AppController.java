@@ -591,7 +591,7 @@ public class AppController implements IAppController {
 		    if(osName.startsWith("Windows")) {
 		      
 		    	//File f = new File("src/Recursos/manual/Introduccion.html");
-		    	File f = new File("src/Recursos/Manual.pdf");
+		    	File f = new File("src/Recursos/manual.pdf");
 		    	java.awt.Desktop.getDesktop().open(f);
 	
 
@@ -600,7 +600,7 @@ public class AppController implements IAppController {
 		  	  
 				
 				//Runtime.getRuntime().exec("open -a Safari src/Recursos/index.html");
-		    	File f = new File("src/Recursos/Manual.pdf");
+		    	File f = new File("src/Recursos/manual.pdf");
 		    	java.awt.Desktop.getDesktop().open(f);
 
 		
@@ -608,7 +608,7 @@ public class AppController implements IAppController {
 		  	  
 				
 				//Runtime.getRuntime().exec("./firefox src/Recursos/index.html");
-				File f = new File("src/Recursos/Manual.pdf");
+				File f = new File("src/Recursos/manual.pdf");
 		    	java.awt.Desktop.getDesktop().open(f);
 		
 		    }
