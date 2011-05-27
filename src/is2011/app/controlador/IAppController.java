@@ -296,4 +296,6 @@ public interface IAppController {
 	 */
 	public void borrarListaReproduccion();
 
+	public void lanzarAyuda();
+
 }
