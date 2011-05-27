@@ -27,27 +27,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
+
 
 
 import javax.swing.JFrame;
-
-
-
-import de.javasoft.plaf.synthetica.SyntheticaBlackEyeLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaBlackMoonLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaBlackStarLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaBlueIceLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaBlueMoonLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaClassyLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaGreenDreamLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaMauveMetallicLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaOrangeMetallicLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaSilverMoonLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaSkyMetallicLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaWhiteVisionLookAndFeel;
-
 
 @SuppressWarnings("serial")
 public class VistaPrincipal extends JFrame 
@@ -64,7 +47,7 @@ public class VistaPrincipal extends JFrame
 	private JMenuItem menuItemAniadir;
 	private JMenuItem menuItemGuardarLrXML;
 	private JMenuItem menuItemAbrirLrXML;
-	private JMenuItem menuPreferencias;
+	//private JMenuItem menuPreferencias;
 	
 	private JMenu menuApariencia;
 	private JMenuItem SyntheticaSimple2DLookAndFeel;
@@ -97,8 +80,8 @@ public class VistaPrincipal extends JFrame
 	private JMenu menuBiblioteca;
 	private JMenuItem crearBiblioteca;
 	private JMenuItem actualizarBiblioteca;
-	private JMenuItem cargarBiblioteca;
-	private JMenuItem guardarBiblioteca;
+	//private JMenuItem cargarBiblioteca;
+	//private JMenuItem guardarBiblioteca;
 	private JMenuItem aniadirCancionBiblioteca;
 	private JMenuItem aniadirCancionYCarpetaBiblioteca;
 	
@@ -108,7 +91,7 @@ public class VistaPrincipal extends JFrame
 	private VistaReproduccion vistaReproduccion;
 	private VistaListaReproduccion vistaListaReproduccion;
 	private VistaBiblioteca vistaBiblioteca;
-	private VistaPreferencias vistaPreferencias;
+	//private VistaPreferencias vistaPreferencias;
 	
 	private VistaLateral vistaLateral;
 	
@@ -199,9 +182,10 @@ public class VistaPrincipal extends JFrame
             				
 	}
 	
+	/*
 	public void setVistaPreferencias(VistaPreferencias vp) {
        vistaPreferencias = vp;             				
-	}
+	}*/
 	
 	public void initialize()
 	{
@@ -224,13 +208,13 @@ public class VistaPrincipal extends JFrame
 		this.menuItemAniadir = new JMenuItem ("Añadir");
 		this.menuItemGuardarLrXML = new JMenuItem("Guardar Lista Reproduccion");
 		this.menuItemAbrirLrXML = new JMenuItem("Abrir Lista Reproduccion");
-		this.menuPreferencias = new JMenuItem("Preferencias");
+		//this.menuPreferencias = new JMenuItem("Preferencias");
 		this.modoVista = new JMenu("Vista");
 		this.menuArchivo.add(menuItemAbrir);
 		this.menuArchivo.add(menuItemAniadir);
 		this.menuArchivo.add(menuItemGuardarLrXML);
 		this.menuArchivo.add(menuItemAbrirLrXML);
-		this.menuArchivo.add(menuPreferencias);
+		//this.menuArchivo.add(menuPreferencias);
 		
 		this.menu.add(menuArchivo);
 		
@@ -285,16 +269,16 @@ public class VistaPrincipal extends JFrame
 		this.crearBiblioteca = new JMenuItem("Crear biblioteca");
 		this.actualizarBiblioteca = new JMenuItem("Actualizar Biblioteca");
 		this.aniadirCancionYCarpetaBiblioteca = new JMenuItem("Añadir canciones y carpetas");
-		this.cargarBiblioteca = new JMenuItem("Cargar Biblioteca Existente");
-		this.guardarBiblioteca = new JMenuItem("Guardar Biblioteca Actual");
+		//this.cargarBiblioteca = new JMenuItem("Cargar Biblioteca Existente");
+		//this.guardarBiblioteca = new JMenuItem("Guardar Biblioteca Actual");
 		this.aniadirCancionBiblioteca = new JMenuItem("Añadir Cancion Biblioteca");
 		
 		this.menuBiblioteca.add(crearBiblioteca);
 		this.menuBiblioteca.add(actualizarBiblioteca);
 		this.menuBiblioteca.add(aniadirCancionYCarpetaBiblioteca);
 		this.menuBiblioteca.add(aniadirCancionBiblioteca);
-		this.menuBiblioteca.add(cargarBiblioteca);
-		this.menuBiblioteca.add(guardarBiblioteca);
+		//this.menuBiblioteca.add(cargarBiblioteca);
+		//this.menuBiblioteca.add(guardarBiblioteca);
 		
 		this.menu.add(menuBiblioteca);
 		
@@ -447,21 +431,22 @@ public class VistaPrincipal extends JFrame
 
 		});
 		
-		this.cargarBiblioteca.addActionListener(new ActionListener(){
+		/*this.cargarBiblioteca.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
 				controlador.cargarBiblioteca();
 			}
 
-		});
+		});*/
 		
+		/*
 		this.guardarBiblioteca.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
 				controlador.guardarBiblioteca();
 			}
 
-		});
+		});*/
 		
 		this.aniadirCancionBiblioteca.addActionListener(new ActionListener(){
 
@@ -543,6 +528,7 @@ public class VistaPrincipal extends JFrame
 			
 		});
 		
+		/*
 		this.menuPreferencias.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
@@ -550,7 +536,7 @@ public class VistaPrincipal extends JFrame
 				vistaPreferencias.setVisible(true);
 			}
 
-		});
+		});*/
 		this.setJMenuBar(menu);
 		
 		this.addWindowListener(new WindowAdapter()

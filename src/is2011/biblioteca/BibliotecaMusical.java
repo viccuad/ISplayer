@@ -41,7 +41,7 @@ public class BibliotecaMusical {
 	private XStream stream;
 	
 	/** Indica si se añaden canciones de los subdirectorios */
-	private boolean busquedaRecursiva;
+	//private boolean busquedaRecursiva;
 	
 	/** Lista de listeners de la biblioteca */
 	private ArrayList<BibliotecaListener> listeners;
@@ -53,7 +53,7 @@ public class BibliotecaMusical {
 	 * Constructor privado para implementar en patrón Singleton
 	 */
 	private BibliotecaMusical(){
-		busquedaRecursiva = false;
+		//busquedaRecursiva = false;
 		buscadas = null;
 		busquedaRealizada = false;
 		canciones = new BibliotecaContainer();
@@ -118,7 +118,7 @@ public class BibliotecaMusical {
 	 * @param busquedaRecursiva
 	 */
 	public void setBusquedaRecursiva(boolean busquedaRecursiva) {
-		this.busquedaRecursiva = busquedaRecursiva;
+		//this.busquedaRecursiva = busquedaRecursiva;
 	}
 	
 	
@@ -254,17 +254,6 @@ public class BibliotecaMusical {
 		
 	}
 	
-	
-	
-	//TODO hacer la notificación al listener
-	/*
-	private void notificaAutoresBuscados( ArrayList<String> autores) {
-		for (BibliotecaListener l : listeners) {
-			l.autoresBuscados(autores);
-		}
-		
-	}	
-	*/
 	
 	
 	/**

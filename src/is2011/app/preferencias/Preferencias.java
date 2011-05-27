@@ -13,10 +13,25 @@ import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
 public class Preferencias {
 	
 	private static Preferencias preferencias = null;
-	private String pathPreferenciasSistema;
+	
+	/** Path de la carpeta donde estan todos los archivos del sistema*/
+	private String pathPreferencias;
+	
+	/** Path del archivo de preferencias */
+	private String pathArchivoPreferenciasSistema;
+	
+	/** Path de la biblioteca*/
 	private String pathBiblioteca;
-	private String pathListaReproduccion;
+	
+	/** Path de la carpeta que contiene las listas de reproduccion*/
+	private String pahtListasDeReproduccion;
+	
+	/** Path de la lista de reproduccion por defecto*/
 	private String pathListaReproduccionDefecto;
+	
+	/** Aqui guardamos el path de la ultima lista abierta*/
+	private String pathUltimaLista;
+	
 	private ModoReproduccionEnum modoReproduccion;
 	private Double volumen;
 	private boolean abrirUltimaLista; 
@@ -38,27 +53,33 @@ public class Preferencias {
 	private Preferencias(){
 		
 		String home = System.getProperty("user.home");
-		home = home+File.separator+NOMBRE_DIR;
+		//Creamos el la carpeta donde estaran todas las preferencias.
+		this.pathPreferencias = home+File.separator+NOMBRE_DIR ;
 		
-		File f = new File(home);
+		File f = new File(pathPreferencias);
 		f.mkdir();
 		
-		home = home+File.separator;
+		this.pathArchivoPreferenciasSistema = this.pathPreferencias
+						+File.separator + NOMBRE_PREFERENCIAS;
 		
-		pathPreferenciasSistema = home+NOMBRE_PREFERENCIAS;
-		
-		File pref = new File(pathPreferenciasSistema);
+		File pref = new File(pathArchivoPreferenciasSistema);
 		
 		stream = new XStream(new DomDriver());
 		stream.alias("Preferencias", Preferencias.class);
 		stream.omitField(Preferencias.class, "stream");
 		
+		
+		this.pahtListasDeReproduccion = this.pathPreferencias + 
+				File.separator + DIR_LISTAS;
+		
+		this.pathUltimaLista = this.pathPreferencias + File.separator + 
+								NOMBRE_LISTA; 
 		//Si no existen las preferencias,creamos unas por defecto.
 		if(!pref.exists()){
-			pathBiblioteca = home + NOMBRE_BIBLIOTECA;
-			pathListaReproduccion = "";
-			pathListaReproduccionDefecto = home + NOMBRE_LISTA;
-			ultimoDirectorioAbierto = home;
+			pathBiblioteca = pathPreferencias + File.separator 
+							+  NOMBRE_BIBLIOTECA;
+			pathListaReproduccionDefecto = this.pathUltimaLista;
+			ultimoDirectorioAbierto = this.pathPreferencias;
 			volumen = 1.0;
 			hayCambios = true;
 			modoReproduccion = ModoReproduccionEnum.NORMAL;
@@ -67,12 +88,11 @@ public class Preferencias {
 			
 		}else { 
 			pathBiblioteca = null;
-			pathListaReproduccion = null;
 			modoReproduccion = null;
 			volumen = 1.0;
 			abrirUltimaLista = false;
 			ultimoDirectorioAbierto = null;
-			cargarXML(pathPreferenciasSistema);
+			cargarXML(pathArchivoPreferenciasSistema);
 			hayCambios = false;
 		}
 		
@@ -91,13 +111,13 @@ public class Preferencias {
 		try {
 			aux = (Preferencias) stream.fromXML(new FileInputStream(path));
 			setPathBiblioteca(aux.getPathBiblioteca());
-			setPathListaReproduccion(aux.getPathListaReproduccion());
 			setModoReproduccion(aux.getModoReproduccion());
 			setPathListaReproduccionDefecto(aux.getPathListaReproduccionDefecto());
 			setAbrirUltimaLista(aux.isAbrirUltimaLista());
 			setUltimoDirectorioAbierto(aux.getUltimoDirectorioAbierto());
 			setVolumen(aux.getVolumen());
 			setLookAndFeel(aux.getNombreLook());
+			setPathListaReproduccionDefecto(aux.getPathListaReproduccionDefecto());
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -106,13 +126,12 @@ public class Preferencias {
 	}
 	
 	public String getDirecctorioListasDeReproduccion() {
-		return  System.getProperty("user.home") + File.separator+NOMBRE_DIR 
-				+ File.separator+DIR_LISTAS;
+		return  this.pahtListasDeReproduccion;
 		
 	}
 	public void guardarXML() {
 		try {
-			stream.toXML(preferencias, new FileOutputStream(this.pathPreferenciasSistema));
+			stream.toXML(preferencias, new FileOutputStream(this.pathArchivoPreferenciasSistema));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -144,33 +163,28 @@ public class Preferencias {
 
 	
 	public String getPathPreferenciasSistema(){
-		return pathPreferenciasSistema;
+		return pathArchivoPreferenciasSistema;
 	}
 	public String getPathBiblioteca(){
 		return pathBiblioteca;
 	}
 	
-	public String getPathListaReproduccion(){
-		return pathListaReproduccion;
-	}
+
 	
 	public ModoReproduccionEnum getModoReproduccion(){
 		return modoReproduccion;
 	}
 	
 	public void setPathPreferenciasSistema(String input){
-		pathPreferenciasSistema = input;
+		pathArchivoPreferenciasSistema = input;
 		this.hayCambios = true;
 	}
+	
 	public void setPathBiblioteca(String input){
 		pathBiblioteca = input;
 		this.hayCambios = true;
 	}
 	
-	public void setPathListaReproduccion(String input){
-		pathListaReproduccion = input;
-		this.hayCambios = true;
-	}
 	
 	public void setModoReproduccion(ModoReproduccionEnum input){
 		modoReproduccion = input;
@@ -213,7 +227,6 @@ public class Preferencias {
 	/**
 	 * @param pathListaReproduccionDefecto the pathListaReproduccionDefecto to set
 	 */
-
 	public void setPathListaReproduccionDefecto(String pathListaReproduccionDefecto) {
 		this.pathListaReproduccionDefecto = pathListaReproduccionDefecto;
 	}
@@ -227,5 +240,8 @@ public class Preferencias {
 		return this.nombreLook;
 	}
 	
+	public String getPathUltimaLista() {
+		return this.pathUltimaLista;
+	}
 	
 }

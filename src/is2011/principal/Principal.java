@@ -11,7 +11,6 @@ import de.javasoft.plaf.synthetica.*;
 import is2011.app.controlador.AppController;
 import is2011.app.controlador.IAppController;
 import is2011.app.preferencias.Preferencias;
-import is2011.app.vista.VistaPreferencias;
 import is2011.app.vista.VistaPrincipal;
 import is2011.biblioteca.BibliotecaMusical;
 import is2011.reproductor.controlador.ControladorReproductor;
@@ -85,7 +84,7 @@ public class Principal {
 		VistaReproduccion vr = new VistaReproduccion(vista);
 		VistaBiblioteca vb = new VistaBiblioteca();
 		VistaListaReproduccion vlr = new VistaListaReproduccion();
-		VistaPreferencias vp = new VistaPreferencias();
+		//VistaPreferencias vp = new VistaPreferencias();
 		
 		
 		ControladorReproductor controlador = new ControladorReproductor();
@@ -104,7 +103,7 @@ public class Principal {
 		vista.setVistaReproductor(vr);
 		vista.setVistaListaReproduccion(vlr);
 		vista.setVistaBiblioteca(vb);
-		vista.setVistaPreferencias(vp);
+		//vista.setVistaPreferencias(vp);
 		vista.setVisible(true);
 		
 		IAppController appController = new AppController(controlador, bib);
@@ -112,7 +111,7 @@ public class Principal {
 		vr.setControlador(appController);
 		vlr.setControlador(appController);
 		vb.setControlador(appController);
-		vp.setControlador(appController);
+		//vp.setControlador(appController);
 		appController.cargarArchivosPreferencias();
 
 	
