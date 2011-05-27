@@ -203,31 +203,51 @@ public class AppController implements IAppController {
 	@Override
 	public void crearBiblioteca() {
 		
-		String ruta = "";
-		ArrayList<String> dir = new ArrayList<String>();
-		
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setMultiSelectionEnabled(true);
-		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		
 		int seleccion;
-		seleccion =fileChooser.showOpenDialog(null);
-		if (seleccion == JFileChooser.APPROVE_OPTION){			
-			File[] files = fileChooser.getSelectedFiles();
-			for (File f : files) {		
-				ruta = f.getAbsolutePath();
-				dir.add(ruta);
-				//System.out.println(f.getAbsolutePath());
-			}			
+		
+		//Miramos is ya existe una biblioteca
+		
+		File fAux = new File (Preferencias.getInstance().getPathBiblioteca());
+		
+		//Si existe avisamos que se va a borrar
+		if(fAux.exists()) {
+			seleccion = JOptionPane.showConfirmDialog(null, 
+					"Al crear una biblioteca se borrara la existente\n" +
+					"¿Desea continuar?", "Crear biblioteca", 
+					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+		} else {
+			seleccion = JOptionPane.YES_OPTION;
 		}
 		
-		biblioteca.actualizarDirectorios(dir);
+
+		if(seleccion == JOptionPane.YES_OPTION) {
+			String ruta = "";
+			ArrayList<String> dir = new ArrayList<String>();
+
+
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setMultiSelectionEnabled(true);
+			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+			seleccion =fileChooser.showOpenDialog(null);
+			if (seleccion == JFileChooser.APPROVE_OPTION){			
+				File[] files = fileChooser.getSelectedFiles();
+				for (File f : files) {		
+					ruta = f.getAbsolutePath();
+					dir.add(ruta);
+					//System.out.println(f.getAbsolutePath());
+				}			
+			}
+
+			biblioteca.actualizarDirectorios(dir);
+			this.guardarBiblioteca();
+		}
 	}
 
 	@Override
 	public void actualizarBiblioteca() {
-		
 		biblioteca.actualizar();
+		this.guardarBiblioteca();
 	}
 
 	@Override
@@ -235,7 +255,7 @@ public class AppController implements IAppController {
 
 		String ruta = "";
 		
-		ArrayList<String> dir = new ArrayList<String>();
+		//ArrayList<String> dir = new ArrayList<String>();
 
 		
 		JFileChooser fileChooser = new JFileChooser();
@@ -255,9 +275,9 @@ public class AppController implements IAppController {
 
 	@Override
 	public void guardarBiblioteca() {
-		String ruta = "";
+		/*String ruta = "";
 		
-		ArrayList<String> dir = new ArrayList<String>();
+		//ArrayList<String> dir = new ArrayList<String>();
 		
 		JFileChooser fileChooser = new JFileChooser();
 		
@@ -271,7 +291,15 @@ public class AppController implements IAppController {
 			biblioteca.guardarXML(ruta);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		}*/
+		try {
+			//File f = new File(Preferencias.getInstance().getPathBiblioteca());
+			//f.mkdirs();
+			biblioteca.guardarXML(Preferencias.getInstance().getPathBiblioteca());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
+		
 	}
 
 	@Override
@@ -286,7 +314,8 @@ public class AppController implements IAppController {
 				}
 			}
 		}
-		biblioteca.aniadirCanciones(dir);		
+		biblioteca.aniadirCanciones(dir);
+		this.guardarBiblioteca();
 	}
 
 	@Override
@@ -297,6 +326,7 @@ public class AppController implements IAppController {
 		
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setMultiSelectionEnabled(true);
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 		
 		int seleccion;
 		seleccion =fileChooser.showOpenDialog(null);
@@ -310,6 +340,7 @@ public class AppController implements IAppController {
 		}
 
 		biblioteca.aniadir(dir);	
+		this.guardarBiblioteca();
 	}
 	@Override
 	public ArrayList<CancionContainer> getCanciones() {
@@ -344,15 +375,15 @@ public class AppController implements IAppController {
 		// Carga la lista de reproduccion si existe
 		String path;
 		
-		if(!preferencias.getPathListaReproduccion().equals("")) {
-			path = preferencias.getPathListaReproduccion();
-		}else {
+		if(!preferencias.getPathListaReproduccionDefecto().equals("")) {
 			path = preferencias.getPathListaReproduccionDefecto();
-		}
-		File listaRepXML = new File(path);
-		if (listaRepXML.canRead()) {
 			
-			reproductor.cargarListaReproduccion(path);
+			File listaRepXML = new File(path);
+			if (listaRepXML.canRead()) {
+				
+				reproductor.cargarListaReproduccion(path);
+
+			}
 
 		}
 	}
@@ -421,9 +452,6 @@ public class AppController implements IAppController {
 			reproductor.guardarListaReproduccion(ruta);
 		}
 
-
-		
-		
 	}
 
 	@Override
@@ -513,13 +541,16 @@ public class AppController implements IAppController {
 
 	@Override
 	public void requestSalir() {
+		//Guardamos la lista actual.
+		String ruta = Preferencias.getInstance().getPathUltimaLista();
+		reproductor.guardarListaReproduccion(ruta);
+		
 		if(Preferencias.getInstance().isHayCambios()) {
 			Preferencias.getInstance().guardarXML();
 			if (this.reproductor.getCancionesListaReproduccion().size() >0) {
 				this.reproductor.guardarListaActual();
 			}
 		}
-		
 	}
 
 	@Override
