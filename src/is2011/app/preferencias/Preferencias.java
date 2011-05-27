@@ -85,11 +85,11 @@ public class Preferencias {
 		//Si no existen las preferencias,creamos unas por defecto.
 		if(!pref.exists()){
 			//Posicion y tamaño por defecto;
-			posX = 200;
-			posY = 200;
+			posX = 100;
+			posY = 100;
 			
-			ancho = 800;
-			alto = 700;
+			ancho = 900;
+			alto = 600;
 			
 			compacta = false;
 			pathBiblioteca = pathPreferencias + File.separator 

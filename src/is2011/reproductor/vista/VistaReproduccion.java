@@ -485,16 +485,22 @@ ListaReproduccionListener{
 	@SuppressWarnings("unchecked")
 	private void getInfo(Map properties)
 	{
-		System.out.println(properties.toString().replace(",", "\n"));
+		//System.out.println(properties.toString().replace(",", "\n"));
 		if (properties != null)
 		{	
 			String autor = (String)properties.get("author");
 			
+			if(autor == null) {
+				autor = "";
+			}
 			if (autor.equals("")) {
 				autor = "Desconocido";
 			}
 			
 			String tema = (String)properties.get("title");
+			if(tema == null) {
+				tema = "";
+			}
 			if (tema.equals("")) {
 				tema = "Desconocido";
 			}
