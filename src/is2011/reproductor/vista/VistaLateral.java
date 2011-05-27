@@ -41,7 +41,7 @@ import javax.swing.tree.TreePath;
 public class VistaLateral extends JPanel{
 
 	/** Ruta de las imagenes*/
-	private static final String LIBRARY_PNG   = "/Recursos/Library.png";
+	private static final String LIBRARY_PNG   = "/Recursos/library.png";
 	private static final String PLAY_LIST_PNG = "/Recursos/playlist.png";
 	
 	/** Label que nos envia a la biblioteca*/
