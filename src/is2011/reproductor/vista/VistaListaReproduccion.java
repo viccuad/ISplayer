@@ -29,7 +29,6 @@ public class VistaListaReproduccion extends JPanel implements
 	// ********************************************************************** //
 	
 	/** Rutas de las imagene*/
-	private static final String A_SEARCH_PNG = "/Recursos/advanced_search.png";
 	private static final String SEARCH_PNG = "/Recursos/search.png";
 	
 	/** Referencia al controlador de la aplicacion*/
@@ -50,8 +49,7 @@ public class VistaListaReproduccion extends JPanel implements
 	/** Boton que genera la accion de buscar */
 	private JButton buscar;
 	
-	/** Boton que genera la accion de buscar avanzada*/
-	private JButton buscarAvanzada;
+	
 	
 	/** Area de texto donde insertar los valores a buscar */
 	private JRoundTextField textoBusqueda;
@@ -124,10 +122,7 @@ public class VistaListaReproduccion extends JPanel implements
 		buscar.setBorder(BorderFactory.createEmptyBorder());
 		buscar.setIcon(new ImageIcon(getClass().getResource(SEARCH_PNG)));
 		
-		buscarAvanzada = new JButton();
-		buscarAvanzada.setBorder(BorderFactory.createEmptyBorder());
-		buscarAvanzada.setIcon(new ImageIcon(getClass().getResource(
-				A_SEARCH_PNG)));
+		
 		
 	
 		
