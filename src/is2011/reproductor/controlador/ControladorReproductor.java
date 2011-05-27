@@ -122,7 +122,7 @@ public class ControladorReproductor {
 		}
 
 	}
-	
+	/*
 	public void guardarListaActual() {
 		try {
 			this.listaReproduccion.guardarXML(Preferencias.getInstance().
@@ -130,7 +130,7 @@ public class ControladorReproductor {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	
 	

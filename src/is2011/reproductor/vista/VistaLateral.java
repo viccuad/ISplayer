@@ -99,7 +99,7 @@ public class VistaLateral extends JPanel{
 				
 		JScrollPane panel = new JScrollPane();
 		JPanel panelArbol = new JPanel();
-		top = new DefaultMutableTreeNode("Lista de Reproduccion");
+		top = new DefaultMutableTreeNode("Listas guardadas");
 		modelo = new DefaultTreeModel(top);
 		tree = new JTree(modelo);
 		panelArbol.add(tree);
@@ -149,7 +149,7 @@ public class VistaLateral extends JPanel{
 				}
 			}
 		});
-		menuListaDefecto.add(favorita);
+		menuListaDefecto.add(defecto);
 		
 		
 		
@@ -260,6 +260,10 @@ public class VistaLateral extends JPanel{
 				+ File.separator + elementoSeleccionado.
 				getLastPathComponent().toString() + ".xml");
 		
+		if(Preferencias.getInstance().getPathListaReproduccionDefecto().
+				equals(f.getAbsolutePath())) {
+			defecto();
+		}
 		
 		f.delete();
 		refrescar();
@@ -274,7 +278,7 @@ public class VistaLateral extends JPanel{
 				Preferencias.getInstance().getDirecctorioListasDeReproduccion()
 				+ File.separator + elementoSeleccionado.
 				getLastPathComponent().toString() + ".xml");
-		
+		System.out.println(f);
 		Preferencias.getInstance().setPathListaReproduccionDefecto(
 				f.getAbsolutePath());
 	}

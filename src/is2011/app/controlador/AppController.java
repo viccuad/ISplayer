@@ -553,9 +553,9 @@ public class AppController implements IAppController {
 		
 		if(Preferencias.getInstance().isHayCambios()) {
 			Preferencias.getInstance().guardarXML();
-			if (this.reproductor.getCancionesListaReproduccion().size() >0) {
+			/*if (this.reproductor.getCancionesListaReproduccion().size() >0) {
 				this.reproductor.guardarListaActual();
-			}
+			}*/
 		}
 	}
 
