@@ -669,8 +669,9 @@ ListaReproduccionListener{
 			this.volumen.setEnabled(false);
 			this.resetLabelTiempos();
 			this.labelEstado.setText("");
-			controlador.siguienteCancion();
 			vPrincipal.setInfo("");
+			controlador.siguienteCancion();
+
 		}else if ( event.getCode() == BasicPlayerEvent.STOP ) {
 			synchronized (progreso) {
 				this.reset();
