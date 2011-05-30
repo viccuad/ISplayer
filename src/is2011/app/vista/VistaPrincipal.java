@@ -242,7 +242,7 @@ public class VistaPrincipal extends JFrame
 		this.menuArchivo = new JMenu("Archivo");
 		this.menuItemAbrir = new JMenuItem ("Abrir");
 		this.menuItemAniadir = new JMenuItem ("Añadir");
-		this.menuItemGuardarLrXML = new JMenuItem("Guardar Lista Reproduccion");
+		this.menuItemGuardarLrXML = new JMenuItem("Guardar Lista Reproducción");
 		
 		//this.menuPreferencias = new JMenuItem("Preferencias");
 		
@@ -257,11 +257,11 @@ public class VistaPrincipal extends JFrame
 		this.menuBiblioteca = new JMenu("Biblioteca");
 		
 		this.crearBiblioteca = new JMenuItem("Crear biblioteca");
-		this.actualizarBiblioteca = new JMenuItem("Actualizar Biblioteca");
+		this.actualizarBiblioteca = new JMenuItem("Actualizar biblioteca");
 		this.aniadirCancionYCarpetaBiblioteca = new JMenuItem("Añadir canciones y carpetas");
 		//this.cargarBiblioteca = new JMenuItem("Cargar Biblioteca Existente");
 		//this.guardarBiblioteca = new JMenuItem("Guardar Biblioteca Actual");
-		this.aniadirCancionBiblioteca = new JMenuItem("Añadir Cancion Biblioteca");
+		this.aniadirCancionBiblioteca = new JMenuItem("Añadir canción biblioteca");
 		
 		this.menuBiblioteca.add(crearBiblioteca);
 		this.menuBiblioteca.add(actualizarBiblioteca);
@@ -290,9 +290,9 @@ public class VistaPrincipal extends JFrame
 		this.menu.add(ayuda);
 		
 		this.menuApariencia = new JMenu("Apariencia");
-		this.SyntheticaSimple2DLookAndFeel= new JMenuItem("Frio");
+		this.SyntheticaSimple2DLookAndFeel= new JMenuItem("Frío");
 		this.SyntheticaBlackEyeLookAndFeel= new JMenuItem("Oscuridad");
-		this.SyntheticaBlackMoonLookAndFeel= new JMenuItem("Clasico");
+		this.SyntheticaBlackMoonLookAndFeel= new JMenuItem("Clásico");
 		this.SyntheticaBlackStarLookAndFeel= new JMenuItem("Estrella negra");
 		this.SyntheticaBlueIceLookAndFeel= new JMenuItem("Hielo azul");
 		this.SyntheticaBlueMoonLookAndFeel= new JMenuItem("Luna azul");
