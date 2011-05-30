@@ -69,6 +69,13 @@ Pruebas de la lista de reproducciÃ³n y/o interfaz:
 		2. Play
 		3. pulsar el balance a la derecha y cerciorarse de que se oiga mas por la derecha.
 		4. pulsar el balance a la izquierda y cerciorarse de que se oiga mas por la izquierda.
+	
+	Mute: 
+		1. cargar la canción mediante el botón cargar.
+		2. Play
+		3. pulsar el botón de mute y cerciorarse de que se silencia la canción.
+		4. cerciorarse que la canción sigue su curso y sigue reproduciéndose
+		
 		
 Pruebas de optimizaciÃ³n del reproductor:
 	Realizar todas las pruebas de "Pruebas Reproductor", y cerciorarse de que tarda menos. 
@@ -126,6 +133,12 @@ Añadir una/varias canciones a la lista de reproduccion desde biblioteca
 		b.3 click derecho y "añadir a LR"
 		b.4 cerciorarse que la cancion se ha añadido a la lista de reproduccion actual
 
+
+Crear y guardar listas de reproducción
+
+	1. cargar una biblioteca 
+	2. añadir canciones a "está sonando"
+	3. clic derecho a 
 
 	
 	
