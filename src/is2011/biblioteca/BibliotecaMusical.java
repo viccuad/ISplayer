@@ -50,7 +50,9 @@ public class BibliotecaMusical {
 	
 	
 	/**
-	 * Constructor privado para implementar el patrón Singleton
+	 * Constructor privado para implementar el patrón Singleton.
+	 * Define también que atributos no son incluidos en el formato XML de 
+	 * la biblioteca. 
 	 */
 	private BibliotecaMusical(){
 		//busquedaRecursiva = false;
@@ -69,6 +71,7 @@ public class BibliotecaMusical {
 		stream.omitField(CancionContainer.class, "totalPath");
 		listeners = new ArrayList<BibliotecaListener>();
 	}
+	
 	
 	public void reset(){
 		buscadas = null;
@@ -104,7 +107,9 @@ public class BibliotecaMusical {
 	
 	/**
 	 * Carga la biblioteca XML recibiendo la ruta en la que se ubica.
+	 * 
 	 * @param pathYfichero ruta absoluta al fichero XML de la biblioteca musical
+	 * 
 	 * @throws FileNotFoundException
 	 */
 	public void cargarXML(String pathYfichero) throws FileNotFoundException{
@@ -112,7 +117,9 @@ public class BibliotecaMusical {
 			File aux = new File(pathYfichero);
 			if (aux.canRead()){
 				
-				canciones = (BibliotecaContainer) stream.fromXML(new FileInputStream(pathYfichero));
+				canciones = 
+					(BibliotecaContainer) 
+					stream.fromXML(new FileInputStream(pathYfichero));
 				this.canciones.generarRutasAbsolutas();
 				canciones.setModificado(true);
 				notificaCancionesModificadas();
@@ -128,7 +135,9 @@ public class BibliotecaMusical {
 	
 	/**
 	 * Solo guarda el XML si ha habido cambios en la biblioteca
+	 * 
 	 * @param pathYfichero
+	 * 
 	 * @throws FileNotFoundException
 	 */
 	public void guardarXML(String pathYfichero) throws FileNotFoundException{
@@ -141,6 +150,7 @@ public class BibliotecaMusical {
 	
 	/**
 	 * Fija si se quiere hacer búsqueda en los subdirectorios
+	 * 
 	 * @param busquedaRecursiva
 	 */
 	public void setBusquedaRecursiva(boolean busquedaRecursiva) {
@@ -150,7 +160,8 @@ public class BibliotecaMusical {
 	
 	/**
 	 * Devuelve una lista con todas las canciones de la biblioteca musical
-	 * @return
+	 * 
+	 * @return ArrayList<CancionContainer>
 	 */
 	public ArrayList<CancionContainer> getCanciones(){
 		return this.canciones.getArrayListCanciones();
@@ -158,15 +169,17 @@ public class BibliotecaMusical {
 	
 	/**
 	 * Devuelve una lista con todas las canciones dbuscadas
-	 * @return
+	 * 
+	 * @return ArrayList<CancionContainer>
 	 */
 	public ArrayList<CancionContainer> getCancionesBuscadas(){
 		return this.buscadas;
 	}
 	
-	/**
-	 * Devuelve los elementos de la biblioteca musical que coincidan con el criterio de búsqueda
-	 * que recibe como parámetro
+	/*
+	 * Devuelve los elementos de la biblioteca musical que coincidan con el 
+	 * criterio de búsqueda que recibe como parámetro.
+	 * 
 	 * @param busqueda es el criterio de búsqueda
 	 * @return colección con los elementos que satisfacen el criterio de búsqueda
 	 */
@@ -178,6 +191,8 @@ public class BibliotecaMusical {
 		 else busquedaRealizada = true;
 	}*/
 	
+	
+	
 	/**
 	 * Devuelve si hay o no busqueda realizada
 	 * @return
@@ -187,11 +202,14 @@ public class BibliotecaMusical {
 	}
 	
 	/**
-	 * Devuelve los elementos de la biblioteca musical que coincidan con el criterio de búsqueda
-	 * que recibe como parámetro. En vez de por coincidencia total se hace la búsqueda por
-	 * cualquier subcadena que este contenida en otra.
+	 * Devuelve los elementos de la biblioteca musical que coincidan con el 
+	 * criterio de búsqueda	que recibe como parámetro. En vez de por 
+	 * coincidencia total se hace la búsqueda por cualquier subcadena que este 
+	 * contenida en otra.
+	 * 
 	 * @param busqueda es el criterio de búsqueda
-	 * @return colección con los elementos que satisfacen el criterio de búsqueda
+	 * 
+	 * @return colección con elementos que satisfacen el criterio de búsqueda
 	 */
 	public void realizaBusquedaAvanzada(CriterioBusqueda busqueda){
 		this.buscadas =  this.canciones.getListaBusquedaAvanzada(busqueda);
@@ -209,6 +227,7 @@ public class BibliotecaMusical {
 	
 	/**
 	 * Dice si la biblioteca musical ha sido modificada en algún momento
+	 * 
 	 * @return true si la biblioteca ha sido modificada, false en otro caso
 	 */
 	public boolean isModificado(){
@@ -233,10 +252,11 @@ public class BibliotecaMusical {
 	
 	
 	/**
-	 * Añade y actualiza (en caso de que ya exista) directorios y canciones. Si los directorios
-	 * ya existían los borra y añade su información de nuevo. Las canciones sólo se añaden
-	 * si no existen previamente.
-	 * @param ficheros lista de ficheros y canciones para actualizar la biblioteca
+	 * Añade y actualiza (en caso de que ya exista) directorios y canciones. 
+	 * Si los directorios ya existían los borra y añade su información de nuevo. 
+	 * Las canciones sólo se añaden si no existen previamente.
+	 * 
+	 * @param ficheros lista de ficheros y canciones para actualizar la biblio.
 	 */
 	@Deprecated
 	public void actualizarDirectorios(ArrayList<String> ficheros){
@@ -272,8 +292,10 @@ public class BibliotecaMusical {
 	
 	/**
 	 * Añade canciones a la biblioteca en caso de que no existan previamente, 
-	 * de ser así no hace nada al igual que si recibiese algún directorio en vez de canciones. 
+	 * de ser así no hace nada al igual que si recibiese algún directorio en vez 
+	 * de canciones. 
 	 * Las canciones y directorios que ya existían no se ven modificadas
+	 * 
 	 * @param canciones lista de canciones a insertar
 	 */
 	public void aniadirCanciones(ArrayList<String> canciones){
@@ -285,8 +307,10 @@ public class BibliotecaMusical {
 	}
 	
 	/**
-	 * Añade canciones y directorios a la biblioteca en caso de que no existan previamente, 
-	 * de ser así no hace nada. Las canciones y directorios que ya existían no se ven modificadas
+	 * Añade canciones y directorios a la biblioteca en caso de que no existan 
+	 * previamente, de ser así no hace nada. Las canciones y directorios que ya 
+	 * existían no se ven modificadas.
+	 * 
 	 * @param canciones lista de canciones a insertar
 	 */
 	public void aniadir(ArrayList<String> canciones){
@@ -313,6 +337,7 @@ public class BibliotecaMusical {
 	
 	/**
 	 * Añade oyentes a la biblioteca
+	 * 
 	 * @param listener
 	 */
 	public void addBibliotecaListeners(BibliotecaListener listener){
@@ -322,7 +347,8 @@ public class BibliotecaMusical {
 	/**
 	 * Ordena la lista biblioteca siguiendo un criterio de ordenacion
 	 * que recibe como parametro
-	 * @param orden: es el criterio por el cual se desea ordenar la lista de reproduccion
+	 * 
+	 * @param orden: criterio por el cual se desea ordenar la lista de reproduc.
 	 */
 	public void ordenar(Comparator<CancionContainer> orden){
 		
@@ -339,6 +365,7 @@ public class BibliotecaMusical {
 	/**
 	 * Notifica a los oyentes que se ha cargado una nueva lista de canciones.
 	 * Manda borrar la anteriory notifica la nueva
+	 * 
 	 * @param las canciones nuevas de la biblioteca
 	 */
 	private void notificaNuevaBiblioteca(ArrayList<CancionContainer> canciones){
@@ -348,6 +375,11 @@ public class BibliotecaMusical {
 		}
 	}
 	
+	/**
+	 * Devuelve true si la biblioteca es vacia
+	 * 
+	 * @return boolean
+	 */
 	public boolean isVacia() {
 		return (this.getCanciones().size() == 0);
 	}

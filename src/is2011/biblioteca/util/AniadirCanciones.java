@@ -26,8 +26,10 @@ public class AniadirCanciones extends EstrategiaActualizacionBiblioteca {
 	
 	
 	/**
-	 * Actualiza las canciones que recibe como parámetro. Si estas ya existían las sobreescribe.
-	 * En caso de recibir otras rutas de directorios o canciones con formato no válido no hace nada
+	 * Actualiza las canciones que recibe como parámetro. 
+	 * Si estas ya existían las sobreescribe.
+	 * En caso de recibir otras rutas de directorios o canciones con formato 
+	 * no válido no hace nada
 	 */
 	@Override
 	public void actualiza(String filePath) {
@@ -35,21 +37,27 @@ public class AniadirCanciones extends EstrategiaActualizacionBiblioteca {
 		// si es un fichero y tiene un formato permitido
 		if(fichero.isFile() && super.esFicheroValido(fichero)){     	
 			try {
-		    	AudioFile filemp3 = AudioFileIO.read(new File(fichero.getAbsolutePath()));
+		    	AudioFile filemp3 = AudioFileIO.
+		    		read(new File(fichero.getAbsolutePath()));
 		    	Tag tag = filemp3.getTag();
 		    	// creamos la canción
-				CancionContainer nuevaCancion = new CancionContainer(fichero.getName(), super.getName(tag) , super.getAlbum(tag),
-												super.getGenero(tag), super.getCompositor(tag),  
-												filemp3.getAudioHeader().getTrackLength(), super.getPista(tag));
+				CancionContainer nuevaCancion = 
+					new CancionContainer(fichero.getName(), super.getName(tag) ,
+							super.getAlbum(tag), super.getGenero(tag), 
+							super.getCompositor(tag),  
+							filemp3.getAudioHeader().getTrackLength(), 
+							super.getPista(tag));
 				nuevaCancion.setTotalPath(fichero.getAbsolutePath());
 				
 				// si el directorio no existe lo creamos
 				if(!super.biblioteca.existeDirectorio(fichero.getParent()))
 					super.biblioteca.addDir(fichero.getParent());
 				
-				// si la canción no existe previamente la insertamos en la biblioteca
-				if(!super.biblioteca.existeCancion(fichero.getParent(), fichero.getName()))
-					super.biblioteca.addCancion(nuevaCancion, fichero.getParent());
+				// si la canción no existia antes la insertamos en la biblioteca
+				if(!super.biblioteca.
+						existeCancion(fichero.getParent(), fichero.getName()))
+					super.biblioteca.
+					addCancion(nuevaCancion, fichero.getParent());
 				
 			} catch (Exception e) {
 				e.printStackTrace();
