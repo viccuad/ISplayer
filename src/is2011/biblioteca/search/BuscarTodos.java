@@ -60,10 +60,11 @@ public class BuscarTodos implements CriterioBusqueda {
 		
 		while(it.hasNext()){
 			CancionContainer actual = it.next();
-			if(actual.getTitulo() != null &&(actual.getTitulo().contains(cadena)
-					||actual.getArtista().contains(cadena)
-					||actual.getAlbum().contains(cadena)
-					||actual.getGenero().contains(cadena)))
+			if(actual.getTitulo() != null && ( 
+					actual.getTitulo().toLowerCase().contains(cadena.toLowerCase())
+					||actual.getArtista().toLowerCase().contains(cadena.toLowerCase())
+					||actual.getAlbum().toLowerCase().contains(cadena.toLowerCase())
+					||actual.getGenero().toLowerCase().contains(cadena.toLowerCase())))
 				encontrados.add(actual);
 		}
 		

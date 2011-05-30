@@ -649,6 +649,7 @@ public class AppController implements IAppController {
 		public void run() {
 			vPrincipal.bloqueaBiblioteca();
 			
+			
 			biblioteca.aniadir(dir);	
 			guardarBiblioteca();
 			
