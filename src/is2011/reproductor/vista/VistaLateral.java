@@ -95,7 +95,8 @@ public class VistaLateral extends JPanel{
 		listaActual = new JLabel("Está sonando");
 		listaActual.setAlignmentX(Box.LEFT_ALIGNMENT);
 		this.add(listaActual);
-		listaActual.setIcon(new ImageIcon(getClass().getResource(PLAY_LIST_PNG)));
+		listaActual.setIcon(new ImageIcon(getClass().
+				getResource(PLAY_LIST_PNG)));
 				
 		JScrollPane panel = new JScrollPane();
 		JPanel panelArbol = new JPanel();
@@ -244,7 +245,8 @@ public class VistaLateral extends JPanel{
 			for (String nombre : listas) {
 				File fAux = new File(nombre);
 				nombre = fAux.getName().replaceAll("\\.xml", "");;
-				DefaultMutableTreeNode padre = new DefaultMutableTreeNode(nombre);
+				DefaultMutableTreeNode padre = 
+					new DefaultMutableTreeNode(nombre);
 				modelo.insertNodeInto(padre, top, i++);
 			}
 		}
@@ -282,6 +284,7 @@ public class VistaLateral extends JPanel{
 				f.getAbsolutePath());
 	}
 	
+
 	private void defecto() {
 		Preferencias.getInstance().setPathListaReproduccionDefecto(
 			Preferencias.getInstance().getPathUltimaLista());

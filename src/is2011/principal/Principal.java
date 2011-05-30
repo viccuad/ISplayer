@@ -34,46 +34,53 @@ public class Principal {
 
 
 		/**
-		 * Muy importante para mostrarlo con el look and feel del sistema operativo!!
+		 * Muy importante para mostrarlo con el L&f del sistema operativo!!
 		 */
 		try
 		{
-			// PARA LA LICENCIA DE Synthetica:
-			String[] li = {"Licensee=Victor Cuadrado Juan", "LicenseRegistrationNumber=NCVC110518", "Product=Synthetica", "LicenseType=Non Commercial", "ExpireDate=--.--.----", "MaxVersion=2.999.999"};
+			// IMPORTANTE; NO TOCAR; PARA LA LICENCIA DE Synthetica:
+			String[] li = 
+			{"Licensee=Victor Cuadrado Juan", 
+					"LicenseRegistrationNumber=NCVC110518", 
+					"Product=Synthetica", 
+					"LicenseType=Non Commercial", 
+					"ExpireDate=--.--.----", 
+					"MaxVersion=2.999.999"};
 			UIManager.put("Synthetica.license.info", li);
-			UIManager.put("Synthetica.license.key", "F8A52C36-F58CE8EF-8D455B99-C3456027-CF87F5BA");
+			UIManager.put("Synthetica.license.key", 
+					"F8A52C36-F58CE8EF-8D455B99-C3456027-CF87F5BA");
 
-			//UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
-			String look = Preferencias.getInstance().getNombreLook();
-			if (look.equals("SyntheticaSimple2DLookAndFeel")) {
-				UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
-			}else if(look.equals("SyntheticaBlackEyeLookAndFeel")) {
-				UIManager.setLookAndFeel(new SyntheticaBlackEyeLookAndFeel());
-			}else if(look.equals("SyntheticaBlackMoonLookAndFeel")) {
-				UIManager.setLookAndFeel(new SyntheticaBlackMoonLookAndFeel());
-			}else if(look.equals("SyntheticaBlackStarLookAndFeel")) {
-				UIManager.setLookAndFeel(new SyntheticaBlackStarLookAndFeel());
-			}else if(look.equals("SyntheticaBlueIceLookAndFeel")) {
-				UIManager.setLookAndFeel(new SyntheticaBlueIceLookAndFeel());
-			}else if(look.equals("SyntheticaBlueMoonLookAndFeel")) {
-				UIManager.setLookAndFeel(new SyntheticaBlueMoonLookAndFeel());
-			}else if(look.equals("SyntheticaClassyLookAndFeel")) {
-				UIManager.setLookAndFeel(new SyntheticaClassyLookAndFeel());
-			}else if(look.equals("SyntheticaGreenDreamLookAndFeel")) {
-				UIManager.setLookAndFeel(new SyntheticaGreenDreamLookAndFeel());
-			}else if(look.equals("SyntheticaMauveMetallicLookAndFeel")) {
-				UIManager.setLookAndFeel(new SyntheticaMauveMetallicLookAndFeel());
-			}else if(look.equals("SyntheticaOrangeMetallicLookAndFeel")) {
-				UIManager.setLookAndFeel(new SyntheticaOrangeMetallicLookAndFeel());
-			}else if(look.equals("SyntheticaSilverMoonLookAndFeel")) {
-				UIManager.setLookAndFeel(new SyntheticaSilverMoonLookAndFeel());
-			}else if(look.equals("SyntheticaSkyMetallicLookAndFeel")) {
-				UIManager.setLookAndFeel(new SyntheticaSkyMetallicLookAndFeel());
-			}else if (look.equals("SyntheticaWhiteVisionLookAndFeel")) {
-				UIManager.setLookAndFeel(new SyntheticaWhiteVisionLookAndFeel());	
-			}else {
-				System.out.println("Esto no deberia pasar!!");
-			}
+		//UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
+		String look = Preferencias.getInstance().getNombreLook();
+		if (look.equals("SyntheticaSimple2DLookAndFeel")) {
+			UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
+		}else if(look.equals("SyntheticaBlackEyeLookAndFeel")) {
+			UIManager.setLookAndFeel(new SyntheticaBlackEyeLookAndFeel());
+		}else if(look.equals("SyntheticaBlackMoonLookAndFeel")) {
+			UIManager.setLookAndFeel(new SyntheticaBlackMoonLookAndFeel());
+		}else if(look.equals("SyntheticaBlackStarLookAndFeel")) {
+			UIManager.setLookAndFeel(new SyntheticaBlackStarLookAndFeel());
+		}else if(look.equals("SyntheticaBlueIceLookAndFeel")) {
+			UIManager.setLookAndFeel(new SyntheticaBlueIceLookAndFeel());
+		}else if(look.equals("SyntheticaBlueMoonLookAndFeel")) {
+			UIManager.setLookAndFeel(new SyntheticaBlueMoonLookAndFeel());
+		}else if(look.equals("SyntheticaClassyLookAndFeel")) {
+			UIManager.setLookAndFeel(new SyntheticaClassyLookAndFeel());
+		}else if(look.equals("SyntheticaGreenDreamLookAndFeel")) {
+			UIManager.setLookAndFeel(new SyntheticaGreenDreamLookAndFeel());
+		}else if(look.equals("SyntheticaMauveMetallicLookAndFeel")) {
+			UIManager.setLookAndFeel(new SyntheticaMauveMetallicLookAndFeel());
+		}else if(look.equals("SyntheticaOrangeMetallicLookAndFeel")) {
+			UIManager.setLookAndFeel(new SyntheticaOrangeMetallicLookAndFeel());
+		}else if(look.equals("SyntheticaSilverMoonLookAndFeel")) {
+			UIManager.setLookAndFeel(new SyntheticaSilverMoonLookAndFeel());
+		}else if(look.equals("SyntheticaSkyMetallicLookAndFeel")) {
+			UIManager.setLookAndFeel(new SyntheticaSkyMetallicLookAndFeel());
+		}else if (look.equals("SyntheticaWhiteVisionLookAndFeel")) {
+			UIManager.setLookAndFeel(new SyntheticaWhiteVisionLookAndFeel());	
+		}else {
+			System.out.println("Esto no deberia pasar!!");
+		}
 
 
 		}

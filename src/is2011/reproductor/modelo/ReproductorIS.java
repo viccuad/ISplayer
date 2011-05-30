@@ -103,7 +103,8 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 
 	@Override 
 	public void stop() {
-		notifyEvent(BasicPlayerEvent.STOP, getEncodedStreamPosition(), -1, null);
+		notifyEvent(BasicPlayerEvent.STOP, 
+				getEncodedStreamPosition(), -1, null);
 		try {
 			super.stop();
 		} catch (BasicPlayerException e) {

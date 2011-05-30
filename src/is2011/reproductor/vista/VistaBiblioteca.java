@@ -462,6 +462,11 @@ public class VistaBiblioteca extends JPanel implements
 
 
 	@Override
+	/**
+	 * Actualiza el contenido de la tabla de la biblioteca, limpiandola primero
+	 * para no mostrar lo antiguo. 
+	 * 
+	 */
 	public void mostrarTodas() {
 		
 		ArrayList<CancionContainer> cancionesBib = controlador.getCanciones();
@@ -489,6 +494,9 @@ public class VistaBiblioteca extends JPanel implements
 
 
 	@Override
+	/**
+	 *  Añade un array de canciones a la tabla de la biblioteca
+	 */
 	public void nuevaListaCanciones(ArrayList<CancionContainer> canciones) {
 		
 		int pos = 0;
@@ -510,6 +518,10 @@ public class VistaBiblioteca extends JPanel implements
 	}
 
 
+	/**
+	 * Activa la tabla y el texto de las busquedas
+	 * 
+	 */
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 		this.tabla.setEnabled(enabled);

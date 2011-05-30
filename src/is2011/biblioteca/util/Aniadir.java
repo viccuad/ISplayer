@@ -11,7 +11,8 @@ import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.tag.Tag;
 
 /**
- * Esta clase añade canciones nuevas a la biblioteca musical si no existían antes.
+ * Esta clase añade canciones nuevas a la biblioteca musical si no 
+ * existían antes.
  * Crea los directorios necesarios para insertar las canciones.
  * Las canciones y directorios que ya existián no se modifican.
  *
@@ -45,7 +46,8 @@ public class Aniadir extends EstrategiaActualizacionBiblioteca {
 	    } else if(super.esFicheroValido(fichero)){ 
 			//añadimos la cancion a la biblioteca	    	
 			try {
-		    	AudioFile filemp3 = AudioFileIO.read(new File(fichero.getAbsolutePath()));
+		    	AudioFile filemp3 = 
+		    		AudioFileIO.read(new File(fichero.getAbsolutePath()));
 		    	Tag tag = filemp3.getTag();
 				CancionContainer nuevaCancion = 
 					new CancionContainer(fichero.getName(), super.getName(tag) , 
@@ -59,7 +61,7 @@ public class Aniadir extends EstrategiaActualizacionBiblioteca {
 				if(!super.biblioteca.existeDirectorio(fichero.getParent()))
 					super.biblioteca.addDir(fichero.getParent());
 				
-				// si la canción no existe previamente la insertamos en la biblioteca
+				// si la canción no existia antes la insertamos en la biblioteca
 				if(!super.biblioteca.
 						existeCancion(fichero.getParent(), fichero.getName()))
 					super.biblioteca.

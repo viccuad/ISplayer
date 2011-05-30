@@ -27,21 +27,24 @@ public class RecorreFicheros{
 		
 		
 		/**
-		 * 
+		 * usa un iterator para recorrer los ficheros pendientes, 
+		 * actualizandolos.
 		 */
-		public void recorre(){
+	   public void recorre(){
 			Iterator<String> it = this.pendientesActualizar.iterator();
 			while(it.hasNext())
 				this.estrategia.actualiza(it.next());
-		}
+	   }
 		
 		
 		/**
-		 * 
+		 * Da valor a la estrategia a usar.
+		 *
 		 * @param estrategia
 		 */
-		public void setEstrategia(EstrategiaActualizacionBiblioteca estrategia) {
+	   public void setEstrategia(EstrategiaActualizacionBiblioteca estrategia) {
 			this.estrategia = estrategia;
-		}
+	   }
+
 		
 }

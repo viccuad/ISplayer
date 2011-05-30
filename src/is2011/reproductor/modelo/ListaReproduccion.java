@@ -287,7 +287,8 @@ public class ListaReproduccion {
 		try {
 			File aux = new File(pathYfichero);
 			if (aux.canRead()){
-				this.listaReproduccion = (ArrayList<CancionContainer>)stream.fromXML
+				this.listaReproduccion = 
+					(ArrayList<CancionContainer>)stream.fromXML
 				(new FileInputStream(pathYfichero));
 				modificado = true;
 				notificaNuevaListaReproduccion(listaReproduccion,0);

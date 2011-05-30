@@ -13,7 +13,8 @@ public abstract class EstrategiaActualizacionBiblioteca {
 	/** extensiones de ficheros permitidos en el reproductor */
 	protected final String[] tratarSoloFicheros = {".mp3"};
 	
-	/** Referencia al contenedor de biblioteca para insertar canciones y directorios */
+	/** Referencia al contenedor de biblioteca 
+	 * para insertar canciones y directorios */
 	protected BibliotecaContainer biblioteca;
 	
 	
@@ -51,7 +52,7 @@ public abstract class EstrategiaActualizacionBiblioteca {
 	/**
 	 * 
 	 * @param tag
-	 * @return
+	 * @return el titulo de la canción o "desconocido" si es null 
 	 */
 	protected String getName(Tag tag) {
 		if(tag == null || tag.getFirstField(FieldKey.TITLE) == null)
@@ -64,10 +65,11 @@ public abstract class EstrategiaActualizacionBiblioteca {
 	/**
 	 * 
 	 * @param tag
-	 * @return
+	 * @return el album de la canción o "desconocido" si es null 
 	 */
 	public String getAlbum(Tag tag) {
-		if (tag == null || tag.getFirstField(FieldKey.ALBUM) == null) return "Desconocido";
+		if (tag == null || tag.getFirstField(FieldKey.ALBUM) == null) 
+			return "Desconocido";
 		else return tag.getFirst(FieldKey.ALBUM);
 	}
 	
@@ -75,10 +77,11 @@ public abstract class EstrategiaActualizacionBiblioteca {
 	/**
 	 * 
 	 * @param tag
-	 * @return
+	 * @return el artista de la canción o "desconocido" si es null 
 	 */
 	public String getCompositor(Tag tag) {
-		if (tag == null || tag.getFirstField(FieldKey.ARTIST) == null) return "Desconocido";
+		if (tag == null || tag.getFirstField(FieldKey.ARTIST) == null) 
+			return "Desconocido";
 		else return tag.getFirst(FieldKey.ARTIST);
 
 	}
@@ -87,10 +90,11 @@ public abstract class EstrategiaActualizacionBiblioteca {
 	/**
 	 * 
 	 * @param tag
-	 * @return
+	 * @return el genero de la canción o "desconocido" si es null 
 	 */
 	public String getGenero(Tag tag) {
-		if (tag == null || tag.getFirstField(FieldKey.GENRE) == null) return "Desconocido";
+		if (tag == null || tag.getFirstField(FieldKey.GENRE) == null) 
+			return "Desconocido";
 		else return tag.getFirst(FieldKey.GENRE);
 
 	}
@@ -99,10 +103,11 @@ public abstract class EstrategiaActualizacionBiblioteca {
 	/**
 	 * 
 	 * @param tag
-	 * @return
+	 * @return el track de la canción o "desconocido" si es null 
 	 */
 	public int getPista(Tag tag) {
-		if (tag == null || tag.getFirstField(FieldKey.TRACK) == null) return 0;
+		if (tag == null || tag.getFirstField(FieldKey.TRACK) == null) 
+			return 0;
 		else return Integer.parseInt(tag.getFirst(FieldKey.TRACK));
 
 	}
