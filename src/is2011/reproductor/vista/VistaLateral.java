@@ -278,7 +278,6 @@ public class VistaLateral extends JPanel{
 				Preferencias.getInstance().getDirecctorioListasDeReproduccion()
 				+ File.separator + elementoSeleccionado.
 				getLastPathComponent().toString() + ".xml");
-		System.out.println(f);
 		Preferencias.getInstance().setPathListaReproduccionDefecto(
 				f.getAbsolutePath());
 	}

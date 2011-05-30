@@ -291,7 +291,9 @@ public class ListaReproduccion {
 				notificaNuevaListaReproduccion(listaReproduccion,0);
 				this.crearListaAleatoria();
 				this.setActual(1);
-			}else System.out.println("El fichero no existe");
+			}else {
+				System.out.println("El fichero no existe");
+			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

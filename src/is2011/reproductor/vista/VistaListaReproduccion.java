@@ -226,7 +226,6 @@ public class VistaListaReproduccion extends JPanel implements
 		    { 
 		      JTableHeader h = (JTableHeader)e.getSource() ; 
 		      int nColumn = h.columnAtPoint(e.getPoint());
-		      System.out.println(nColumn);
 		      switch (nColumn) {
 		      case NUM_COLUMNA_ALBUM:
 		    	  controlador.ordenarPorAlbum();

@@ -11,7 +11,7 @@ import is2011.biblioteca.contenedores.BibliotecaContainer;
 public abstract class EstrategiaActualizacionBiblioteca {
 
 	/** extensiones de ficheros permitidos en el reproductor */
-	protected final String[] tratarSoloFicheros = {".mp3", ".ogg"};
+	protected final String[] tratarSoloFicheros = {".mp3"};
 	
 	/** Referencia al contenedor de biblioteca para insertar canciones y directorios */
 	protected BibliotecaContainer biblioteca;

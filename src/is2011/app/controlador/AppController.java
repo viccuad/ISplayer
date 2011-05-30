@@ -189,14 +189,12 @@ public class AppController implements IAppController {
 	@Override
 	public void abrirArchivos() {
 		File[] files = abrirArchivo();
-		System.out.println(files.length);
 		if( (files != null) && (files.length > 0) ) {
 			reproductor.stop();
 			reproductor.reiniciaListaReproduccion(false);
 			for (File f : files) {
 				if (f != null) {
 					reproductor.aniadirCancion(f.getAbsolutePath());
-					System.out.println(f.toString());
 				}
 			}
 			this.siguienteCancion();
@@ -250,7 +248,7 @@ public class AppController implements IAppController {
 				for (File f : files) {		
 					ruta = f.getAbsolutePath();
 					dir.add(ruta);
-					//System.out.println(f.getAbsolutePath());
+					
 				}			
 			}
 
@@ -350,7 +348,7 @@ public class AppController implements IAppController {
 			for (File f : files) {		
 				ruta = f.getAbsolutePath();
 				dir.add(ruta);
-				//System.out.println(f.getAbsolutePath());
+				
 			}			
 		}
 
@@ -597,7 +595,7 @@ public class AppController implements IAppController {
 	public void lanzarAyuda() {
 		try{
 		    String osName = System.getProperty("os.name");
-		    System.out.println(osName);
+		    
 		    
 		    if(osName.startsWith("Windows")) {
 		      

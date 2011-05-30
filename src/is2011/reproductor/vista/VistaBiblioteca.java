@@ -199,7 +199,7 @@ public class VistaBiblioteca extends JPanel implements
 		    { 
 		      JTableHeader h = (JTableHeader)e.getSource() ; 
 		      int nColumn = h.columnAtPoint(e.getPoint());
-		      System.out.println(nColumn);
+		     
 		      switch (nColumn) {
 		      case NUM_COLUMNA_ALBUM:
 		    	  controlador.ordenarBibliotecaPorAlbum();
@@ -295,22 +295,13 @@ public class VistaBiblioteca extends JPanel implements
 			public void actionPerformed(ActionEvent e) {
 				int[] canciones = tabla.getSelectedRows();
 				
-				/*
-				if (busquedaRealizada){
-					for(int i : canciones) {
-						String path = busqueda.get(i).getTotalPath();
-						//System.out.println(path);
-						controlador.fromBibliotecaToListaReproduccion(path);	
-					}
-
-				}else{ */
 					for(int i : canciones) {
 						CancionContainer c = controlador.getCanciones().get(i);
-						//System.out.println(path);
+				
 						controlador.fromBibliotecaToListaReproduccion(c);
 						controlador.muestraListaReproduccion();
 					}
-				//}
+				
 				
 				
 			}
@@ -349,34 +340,27 @@ public class VistaBiblioteca extends JPanel implements
 		tabla.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 				//Si es boton derecho
 				if ( SwingUtilities.isRightMouseButton(e)){
 					popup.show(e.getComponent(), e.getX(), e.getY());
-					
-				}
-				
-				else if(e.getClickCount() == 2) {
-					/*
-					 * int row = e.getY()/tabla.getRowHeight();
-					controlador.fromBibliotecaToListaReproduccion(row);
-					 */
-						controlador.borrarListaReproduccion();
-						int row = e.getY()/tabla.getRowHeight();
-						//System.out.println(row);
-						
-	
-						CancionContainer c = controlador.getCanciones().get(row);
-						//System.out.println(path);
-						controlador.stop();
-						controlador.fromBibliotecaToListaReproduccion(c);
-						//controlador.play(-1);
-						controlador.muestraListaReproduccion();
-						controlador.siguienteCancion();
 
-					}
-					
-				
+				}
+
+				else if(e.getClickCount() == 2) {
+
+					controlador.borrarListaReproduccion();
+					int row = e.getY()/tabla.getRowHeight();
+					CancionContainer c = controlador.getCanciones().get(row);
+					controlador.stop();
+					controlador.fromBibliotecaToListaReproduccion(c);
+
+					controlador.muestraListaReproduccion();
+					controlador.siguienteCancion();
+
+				}
+
+
 			}
 		});
 

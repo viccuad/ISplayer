@@ -114,7 +114,9 @@ public class BibliotecaMusical {
 				this.canciones.generarRutasAbsolutas();
 				canciones.setModificado(true);
 				notificaCancionesModificadas();
-			}else System.out.println("El fichero no existe");
+			}else{
+				System.out.println("El fichero no existe");
+			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
