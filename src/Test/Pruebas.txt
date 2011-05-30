@@ -102,6 +102,52 @@ Pruebas de la lista de reproducciÃ³n y/o interfaz:
 		3. Reproducir una cancion.
 		4. Pulsar el boton repetir ninguno y cerciorarse de que cambia a repetir todos
 		5. Cerciorarse de que al acabar la lista de reproduccion, vuelve a la primera cancion. 
+
+	Botón repetir todos:
+		1. Abrir la aplicación 
+		2. Abrir una lista de reproduccion.
+		3. Reproducir una cancion.
+		4. Pulsar el boton repetir todos y cerciorarse de que cambia a repetir ninguno
+		5. Cerciorarse de que al acabar la lista de reproduccion, no vuelve a la primera cancion. 
+
+	Botón aleatorio desactivado con 2 canciones:
+		1. Abrir la aplicación 
+		2. Abrir una lista de reproduccion con 2 canciones.
+		3. Reproducir una cancion.
+		4. Pulsar el boton aleatorio desactivado y cerciorarse de que cambia a aleatorio activado
+		5. Cerciorarse de que al acabar la cancion en curso, la siguiente cancion de reproduccion no es la primera otra vez (no repite 				canciones). 
+
+	Botón aleatorio desactivado con mas de dos canciones:
+		1. Abrir la aplicación 
+		2. Abrir una lista de reproduccion con mas de 2 canciones.
+		3. Reproducir una cancion.
+		4. Pulsar el boton aleatorio desactivado y cerciorarse de que cambia a aleatorio activado
+		5. Cerciorarse de que al acabar la cancion en curso, la siguiente cancion de reproduccion es cualquiera de la lista.
+		6. seguir reproduciendo canciones y ver que no repite ninguna.
+
+	Label de tiempo reproducido/tiempo total
+		1. Abrir la aplicación 
+		2. Abrir una lista de reproduccion con mas de 2 canciones.
+		3. Reproducir una cancion.
+		4. ver que el tiempo de la label izquierda aumenta.
+		5. pasar a la siguiente cancion
+		6. cerciorarse de que el tiempo vuelve a empezar desde cero.
+
+	Looks And Feels:
+		1. borrar el directorio de preferencias		
+		2. Abrir la aplicación
+		3. cerciorarse de que se carga el l&f por defecto (2D)
+
+
+	Looks And Feels:
+		1. Abrir la aplicación
+		2. cerciorarse de que se carga el l&f por defecto (2D)
+		3. cambiar el look and feel.
+		4. cerrar aplicacion y volver a abrir.
+		5. cerciorarse de que el l&f funciona correctamente.
+		6. repetir para el resto de l&f
+		
+
 		
 Pruebas de optimizaciÃ³n del reproductor:
 	Realizar todas las pruebas de "Pruebas Reproductor", y cerciorarse de que tarda menos. 
@@ -136,7 +182,10 @@ Pruebas Preferencias del Sistema
 	3. Recuperar del XML
 	4. Comprobar que no se pierde informacion y que todos los pasos son coherentes.
 	
-	
+Prueba del manual
+	1. abrir aplicacion
+	2. pulsar en el menu ayuda manual de usuario.
+	3. cerciorarse de que se abre el visor por defecto de pdf, con el manual de usuario cargado.
 	
 Eliminar una/varias canciones
 
@@ -163,8 +212,28 @@ Añadir una/varias canciones a la lista de reproduccion desde biblioteca
 Crear y guardar listas de reproducción
 
 	1. cargar una biblioteca 
-	2. añadir canciones a "está sonando"
-	3. clic derecho a 
+	2. clic derecho a añadir canciones a "está sonando"
+	3. cerciorarse de que la cancion aparece en esta sonando
+	4. guardar la lista de reproduccion (archivo guardar lista rep)
+	5. cerciorarse de que aparece en las listas guardadas.
+ 
+cargar listas de reproduccion
+	
+	1. realizar el test anterior
+	2. cerrar la aplicacion
+	3. abrir de nuevo la aplicacion
+	4. cerciorarse de que aparece la lista de reproduccion en las listas guardadas
 
+Gestion de "esta sonando"
+
+	Mandar canciones a "esta sonando" desde la biblioteca
+		1. cargar una biblioteca 
+		2. clic derecho a añadir canciones a "está sonando"
+		3. cerciorarse de que la cancion aparece en esta sonando
+
+Arbol de listas guardadas
+	
+	1. realizar el test de Crear y guardar listas de reproducción 10 veces.
+	2. cerciorarse de que el arbol de listas guardadas tiene todas las listas creadas
 	
 	
