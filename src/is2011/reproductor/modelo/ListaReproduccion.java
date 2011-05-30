@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -312,8 +314,20 @@ public class ListaReproduccion {
 		File f2 = f.getParentFile();
 		f2.mkdirs();
 		
-		if(modificado)
-			stream.toXML(listaReproduccion, new FileOutputStream(pathYfichero));
+		if(modificado) {
+			OutputStreamWriter ww;
+			try {
+				ww = new OutputStreamWriter(
+						new FileOutputStream(pathYfichero),"UTF-8");
+				stream.toXML(listaReproduccion, ww);
+			} catch (UnsupportedEncodingException e) {
+				System.out.println("no se pudo guardar la lista en xml");
+				e.printStackTrace();
+			}
+			
+		}
+			
+			
 	}
 	
 	

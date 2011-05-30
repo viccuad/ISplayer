@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -59,6 +61,7 @@ public class BibliotecaMusical {
 		buscadas = null;
 		busquedaRealizada = false;
 		canciones = new BibliotecaContainer();
+		
 		stream = new XStream(new DomDriver());
 		stream.alias("biblioteca", BibliotecaContainer.class);
 		stream.alias("dir", DirectorioContainer.class);
@@ -116,7 +119,6 @@ public class BibliotecaMusical {
 		try {
 			File aux = new File(pathYfichero);
 			if (aux.canRead()){
-				
 				canciones = 
 					(BibliotecaContainer) 
 					stream.fromXML(new FileInputStream(pathYfichero));
@@ -142,8 +144,16 @@ public class BibliotecaMusical {
 	 */
 	public void guardarXML(String pathYfichero) throws FileNotFoundException{
 		if(canciones.isModificado()){
-			stream.toXML(canciones, new FileOutputStream(pathYfichero));
-			this.canciones.guardado();
+			
+			try {
+				OutputStreamWriter w = new OutputStreamWriter(
+						new FileOutputStream(pathYfichero),"UTF-8");
+				stream.toXML(canciones, w);
+				this.canciones.guardado();
+			} catch (UnsupportedEncodingException e) {
+				System.out.println("No se pudo guardar la biblioteca");
+			}
+			
 		}
 	}
 	
@@ -383,4 +393,5 @@ public class BibliotecaMusical {
 	public boolean isVacia() {
 		return (this.getCanciones().size() == 0);
 	}
+	
 }

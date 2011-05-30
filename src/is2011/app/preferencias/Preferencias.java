@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -232,13 +234,21 @@ public class Preferencias {
 	 * (path de home + NOMBRE_PREFERENCIAS) las preferencias del sistema. 
 	 */
 	public void guardarXML() {
+
 		try {
-			stream.toXML(preferencias, new FileOutputStream(this.pathArchivoPreferenciasSistema));
-		} catch (FileNotFoundException e) {
+			OutputStreamWriter w = new OutputStreamWriter(
+					new FileOutputStream(this.pathArchivoPreferenciasSistema),"UTF-8");
+			stream.toXML(preferencias, w);
+		} catch (UnsupportedEncodingException e) {
+			System.out.println("No se pudo guardar las preferencias.");
+			e.printStackTrace();
+		}
+
+		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	
 	
 	/**

@@ -4,6 +4,8 @@
 package is2011.principal;
 
 
+import java.nio.charset.Charset;
+
 import javax.swing.UIManager;
 
 import de.javasoft.plaf.synthetica.*;
@@ -33,18 +35,18 @@ public class Principal {
 	public static void main(String[] args) {
 
 
-		 /**
-         * Muy importante para mostrarlo con el look and feel del sistema operativo!!
-         */
-        try
-        {
-        	// PARA LA LICENCIA DE Synthetica:
-        	String[] li = {"Licensee=Victor Cuadrado Juan", "LicenseRegistrationNumber=NCVC110518", "Product=Synthetica", "LicenseType=Non Commercial", "ExpireDate=--.--.----", "MaxVersion=2.999.999"};
-        	UIManager.put("Synthetica.license.info", li);
-        	UIManager.put("Synthetica.license.key", "F8A52C36-F58CE8EF-8D455B99-C3456027-CF87F5BA");
-        	
-        	//UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
-        	String look = Preferencias.getInstance().getNombreLook();
+		/**
+		 * Muy importante para mostrarlo con el look and feel del sistema operativo!!
+		 */
+		try
+		{
+			// PARA LA LICENCIA DE Synthetica:
+			String[] li = {"Licensee=Victor Cuadrado Juan", "LicenseRegistrationNumber=NCVC110518", "Product=Synthetica", "LicenseType=Non Commercial", "ExpireDate=--.--.----", "MaxVersion=2.999.999"};
+			UIManager.put("Synthetica.license.info", li);
+			UIManager.put("Synthetica.license.key", "F8A52C36-F58CE8EF-8D455B99-C3456027-CF87F5BA");
+
+			//UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
+			String look = Preferencias.getInstance().getNombreLook();
 			if (look.equals("SyntheticaSimple2DLookAndFeel")) {
 				UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
 			}else if(look.equals("SyntheticaBlackEyeLookAndFeel")) {
@@ -75,49 +77,50 @@ public class Principal {
 				System.out.println("Esto no deberia pasar!!");
 			}
 
-        	
-        }
-        catch (Exception ignored) {}
-    	finally {
-    		
-		VistaPrincipal vista = new VistaPrincipal();
-		VistaReproduccion vr = new VistaReproduccion(vista);
-		VistaBiblioteca vb = new VistaBiblioteca();
-		VistaListaReproduccion vlr = new VistaListaReproduccion();
-		//VistaPreferencias vp = new VistaPreferencias();
-		
-		
-		ControladorReproductor controlador = new ControladorReproductor();
-		ReproductorIS rep = new ReproductorIS();
-		rep.addBasicPlayerListener(vr);
-		controlador.setReproductor(rep);
-		
-		ListaReproduccion lr = new ListaReproduccion();
-		lr.addListaReproduccionListener(vlr);
-		lr.addListaReproduccionListener(vr);
-		controlador.setListaReproduccion(lr);
-		
-		BibliotecaMusical bib = BibliotecaMusical.getInstacia();
-		bib.addBibliotecaListeners(vb);
-		
-		vista.setVistaReproductor(vr);
-		vista.setVistaListaReproduccion(vlr);
-		vista.setVistaBiblioteca(vb);
-		//vista.setVistaPreferencias(vp);
-		vista.setVisible(true);
-		
-		IAppController appController = new AppController(controlador, bib,vista);
-		
-		vista.setControlador(appController);
-		vr.setControlador(appController);
-		vlr.setControlador(appController);
-		vb.setControlador(appController);
-		//vp.setControlador(appController);
-		appController.cargarArchivosPreferencias();
 
-		vista.mostrar();
-    	}
+		}
+		catch (Exception ignored) {}
+		finally {
+
+			VistaPrincipal vista = new VistaPrincipal();
+			VistaReproduccion vr = new VistaReproduccion(vista);
+			VistaBiblioteca vb = new VistaBiblioteca();
+			VistaListaReproduccion vlr = new VistaListaReproduccion();
+			//VistaPreferencias vp = new VistaPreferencias();
+
+
+			ControladorReproductor controlador = new ControladorReproductor();
+			ReproductorIS rep = new ReproductorIS();
+			rep.addBasicPlayerListener(vr);
+			controlador.setReproductor(rep);
+
+			ListaReproduccion lr = new ListaReproduccion();
+			lr.addListaReproduccionListener(vlr);
+			lr.addListaReproduccionListener(vr);
+			controlador.setListaReproduccion(lr);
+
+			BibliotecaMusical bib = BibliotecaMusical.getInstacia();
+			bib.addBibliotecaListeners(vb);
+
+			vista.setVistaReproductor(vr);
+			vista.setVistaListaReproduccion(vlr);
+			vista.setVistaBiblioteca(vb);
+			//vista.setVistaPreferencias(vp);
+			vista.setVisible(true);
+
+			IAppController appController = new AppController(controlador, bib,vista);
+
+			vista.setControlador(appController);
+			vr.setControlador(appController);
+			vlr.setControlador(appController);
+			vb.setControlador(appController);
+			//vp.setControlador(appController);
+			appController.cargarArchivosPreferencias();
+
+			vista.mostrar();
+
+		}
 	}
 
-    
+
 }

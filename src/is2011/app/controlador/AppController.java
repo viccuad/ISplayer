@@ -338,7 +338,7 @@ public class AppController implements IAppController {
 			}			
 		}
 
-		Thread t = new Thread(new AñadirDirectorios(dir));
+		Thread t = new Thread(new AniadirDirectorios(dir));
 		t.start();
 		
 		
@@ -633,10 +633,10 @@ public class AppController implements IAppController {
 		}
 	}
 
-	private class AñadirDirectorios implements Runnable {
+	private class AniadirDirectorios implements Runnable {
 		ArrayList<String> dir;
 
-		public AñadirDirectorios(ArrayList<String> dir) {
+		public AniadirDirectorios(ArrayList<String> dir) {
 			this.dir = dir;
 		}
 
