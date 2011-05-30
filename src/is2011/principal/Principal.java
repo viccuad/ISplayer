@@ -4,8 +4,6 @@
 package is2011.principal;
 
 
-import java.nio.charset.Charset;
-
 import javax.swing.UIManager;
 
 import de.javasoft.plaf.synthetica.*;
