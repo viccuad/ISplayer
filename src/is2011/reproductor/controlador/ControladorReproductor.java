@@ -88,6 +88,7 @@ public class ControladorReproductor {
 				this.reproductor.setVolumen(Preferencias.getInstance().
 						getVolumen());
 			} catch (Exception e) {
+				System.out.println("que pasa");
 				this.listaReproduccion.desactivaActual();
 				this.siguiente();
 			}
