@@ -620,6 +620,12 @@ public class ListaReproduccion {
 		}
 	}
 	
+
+	public void setActualAleatoria(int cancionSeleccionada) {
+		this.actualAleatoria = cancionSeleccionada +1;
+		
+	}
+	
 	/**
 	 * Incrementa la cancion Actual en 1. Solo se debe utilizar en modo de
 	 * reproduccion aleatorio, ya que este metodo no notificara 
@@ -648,5 +654,7 @@ public class ListaReproduccion {
 		
 		
 	}
+
+	
 
 }

@@ -415,7 +415,6 @@ public class VistaPrincipal extends JFrame
 			
 			public void actionPerformed(ActionEvent e) {
 				controlador.guardarListaReproduccion();
-				vistaLateral.refrescar();
 			}
 			
 		});
@@ -599,4 +598,7 @@ public class VistaPrincipal extends JFrame
 		this.vistaBiblioteca.setEnabled(true);
 	}
 	
+	public void refrescarVistaLateral() {
+		vistaLateral.refrescar();
+	}
 }

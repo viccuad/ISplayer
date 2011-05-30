@@ -112,12 +112,14 @@ public class ControladorReproductor {
 						get(cancionSeleccionada), 
 						listaReproduccion.getCancionesListaReproduccion());
 				listaReproduccion.setActual(cancionEnListaReproduccion + 1);
+				listaReproduccion.setActualAleatoria(cancionSeleccionada);
 			}
 			this.play();
 		}else{
 			if(cancionSeleccionada >= 0 && cancionSeleccionada 
 					< this.listaReproduccion.getNumeroCanciones()){
 				listaReproduccion.setActual(cancionSeleccionada + 1);
+				listaReproduccion.setActualAleatoria(cancionSeleccionada);
 			}
 			this.play();
 		}

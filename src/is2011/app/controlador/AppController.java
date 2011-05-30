@@ -288,23 +288,6 @@ public class AppController implements IAppController {
 
 	@Override
 	public void guardarBiblioteca() {
-		/*String ruta = "";
-		
-		//ArrayList<String> dir = new ArrayList<String>();
-		
-		JFileChooser fileChooser = new JFileChooser();
-		
-		int seleccion;
-		seleccion =fileChooser.showSaveDialog(null);
-		if (seleccion == JFileChooser.APPROVE_OPTION){					
-			ruta = fileChooser.getSelectedFile().getAbsolutePath();					
-		}
-		
-		try {
-			biblioteca.guardarXML(ruta);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}*/
 		try {
 			//File f = new File(Preferencias.getInstance().getPathBiblioteca());
 			//f.mkdirs();
@@ -442,16 +425,6 @@ public class AppController implements IAppController {
 	@Override
 	public void guardarListaReproduccion() {
 		String ruta = "";
-		
-		//ArrayList<String> dir = new ArrayList<String>();
-		
-		/*JFileChooser fileChooser = new JFileChooser();
-		
-		int seleccion;
-		seleccion =fileChooser.showSaveDialog(null);
-		if (seleccion == JFileChooser.APPROVE_OPTION){					
-			ruta = fileChooser.getSelectedFile().getAbsolutePath();					
-		}*/
 		String s = (String)JOptionPane.showInputDialog(
 				null,
 				"Introduzca el nombre de la lista de reproduccion","",
@@ -463,6 +436,7 @@ public class AppController implements IAppController {
 			  getDirecctorioListasDeReproduccion() + File.separator + s + ".xml";
 			
 			reproductor.guardarListaReproduccion(ruta);
+			vPrincipal.refrescarVistaLateral();
 		}
 
 	}

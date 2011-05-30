@@ -260,8 +260,12 @@ public class VistaListaReproduccion extends JPanel implements
 		
 		popup = new JPopupMenu();
 		
+		JMenuItem guardar = new JMenuItem("Guardar");
+		popup.add(guardar);
+		
 		JMenuItem borrar = new JMenuItem("Borrar");
 		popup.add(borrar);
+		
 		
 		
 		JMenu ordenar = new JMenu("Ordenar");
@@ -279,6 +283,13 @@ public class VistaListaReproduccion extends JPanel implements
 		ordenar.add(ordenarTitulo);
 		
 		popup.add(ordenar);
+		
+		guardar.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controlador.guardarListaReproduccion();
+			}
+		});
 		
 		borrar.addActionListener(new ActionListener() {
 

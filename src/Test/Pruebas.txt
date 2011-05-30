@@ -126,5 +126,6 @@ Añadir una/varias canciones a la lista de reproduccion desde biblioteca
 		b.3 click derecho y "añadir a LR"
 		b.4 cerciorarse que la cancion se ha añadido a la lista de reproduccion actual
 
+
 	
 	

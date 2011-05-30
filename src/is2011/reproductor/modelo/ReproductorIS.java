@@ -124,7 +124,7 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 	public void setVolumen(float porcentaje) {
 		try {
 			if(!mute) {
-				setGain(porcentaje*porcentaje);
+				setGain(Math.pow(porcentaje,3));
 			}else {
 				setGain(0.0f);
 			}

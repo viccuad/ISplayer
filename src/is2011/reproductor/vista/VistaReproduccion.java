@@ -288,8 +288,30 @@ ListaReproduccionListener{
 		this.panelBotones.add(this.volumen);
 		this.volumen.removeMouseListener(volumen.getMouseListeners()[0]);
 		this.volumen.addMouseListener(new MouseAdapter(){
-
 			public void mouseReleased(MouseEvent e) {
+				if(volumen.isEnabled()) {
+					int ancho = volumen.getWidth();
+
+					int x = e.getX();
+					float porcentaje;
+
+					if( x < 0) {
+						x = 0;
+					}
+
+					if(x > ancho) {
+						x = ancho;
+					}
+					porcentaje = ((float)x)/ancho;
+
+					volumen.setValue((int)(100*porcentaje));
+					controlador.setVolumen((porcentaje));
+				}
+			}
+		});
+		
+		this.volumen.addMouseMotionListener(new MouseAdapter(){
+			public void mouseDragged(MouseEvent e) {
 				if(volumen.isEnabled()) {
 					int ancho = volumen.getWidth();
 
@@ -686,7 +708,7 @@ ListaReproduccionListener{
 			this.progreso.setValue((int)(((float)event.getPosition()
 					/bytesMusica)*1000));
 		}else if (event.getCode() == BasicPlayerEvent.GAIN) {
-			this.volumen.setValue( (int) ((Math.sqrt(event.getValue()))*100));
+			this.volumen.setValue( (int) ((Math.pow(event.getValue(),(1.0/3)))*100));
 
 
 		}else if(event.getCode() == BasicPlayerEvent.MUTE) {
