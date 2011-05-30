@@ -223,7 +223,7 @@ public class AppController implements IAppController {
 		File fAux = new File (Preferencias.getInstance().getPathBiblioteca());
 		
 		//Si existe avisamos que se va a borrar
-		if(fAux.exists()) {
+		if(fAux.exists() && !biblioteca.isVacia()) {
 			seleccion = JOptionPane.showConfirmDialog(null, 
 					"Al crear una biblioteca se borrara la existente\n" +
 					"¿Desea continuar?", "Crear biblioteca", 
@@ -259,8 +259,8 @@ public class AppController implements IAppController {
 
 	@Override
 	public void actualizarBiblioteca() {
-		biblioteca.actualizar();
-		this.guardarBiblioteca();
+		Thread t = new Thread(new ActualizarBiblioteca());
+		t.start();
 	}
 
 	@Override
@@ -335,8 +335,10 @@ public class AppController implements IAppController {
 			}			
 		}
 
-		biblioteca.aniadir(dir);	
-		this.guardarBiblioteca();
+		Thread t = new Thread(new AñadirDirectorios(dir));
+		t.start();
+		
+		
 	}
 	@Override
 	public ArrayList<CancionContainer> getCanciones() {
@@ -604,28 +606,58 @@ public class AppController implements IAppController {
 		
 	}
 
-	
+
 
 	private class CrearBiblioteca implements Runnable {
-		
+
 		ArrayList<String> dir;
-		
+
 		public CrearBiblioteca(ArrayList<String> dir) {
 			this.dir = dir;
 		}
 
 		public void run() {
 			vPrincipal.bloqueaBiblioteca();
-			
-			biblioteca.actualizarDirectorios(dir);
+
+			biblioteca.creaDirectorios(dir);
 			guardarBiblioteca();
-		
+
+			vPrincipal.activaBiblioteca();
+			vPrincipal.mostrarBiblioteca();
+		}
+	}
+
+	private class ActualizarBiblioteca implements Runnable {
+
+		public void run() {
+			vPrincipal.bloqueaBiblioteca();
+			biblioteca.actualizar();
+			guardarBiblioteca();
+
+			vPrincipal.activaBiblioteca();
+			vPrincipal.mostrarBiblioteca();
+		}
+	}
+
+	private class AñadirDirectorios implements Runnable {
+		ArrayList<String> dir;
+
+		public AñadirDirectorios(ArrayList<String> dir) {
+			this.dir = dir;
+		}
+
+		public void run() {
+			vPrincipal.bloqueaBiblioteca();
+			
+			biblioteca.aniadir(dir);	
+			guardarBiblioteca();
+			
 			vPrincipal.activaBiblioteca();
 			vPrincipal.mostrarBiblioteca();
 		}
 	}
 
 
-	
+
 
 }

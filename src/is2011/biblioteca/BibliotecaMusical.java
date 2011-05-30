@@ -218,7 +218,10 @@ public class BibliotecaMusical {
 	 * Actualiza todos los directorios existentes en la biblioteca
 	 */
 	public void actualizar(){
-		RecorreFicheros recorre = new RecorreFicheros(this.canciones.getDirectorios());
+		ArrayList<String> dir = this.canciones.getDirectorios();
+		this.canciones = new BibliotecaContainer();
+		this.canciones.setModificado(true);
+		RecorreFicheros recorre = new RecorreFicheros(dir);
 		recorre.setEstrategia(new CrearBiblioteca(this.canciones));
 		recorre.recorre();
 		notificaCancionesModificadas();
@@ -231,25 +234,35 @@ public class BibliotecaMusical {
 	 * si no existen previamente.
 	 * @param ficheros lista de ficheros y canciones para actualizar la biblioteca
 	 */
+	@Deprecated
 	public void actualizarDirectorios(ArrayList<String> ficheros){
+		//Añadimos los directorios.
+		RecorreFicheros recorre = new RecorreFicheros(ficheros);
+		recorre.setEstrategia(new CrearBiblioteca(this.canciones));
+		recorre.recorre();
 		
+		
+		ArrayList<String> dir = this.canciones.getDirectorios();
+		this.canciones = new BibliotecaContainer();
+		this.canciones.setModificado(true);
+		
+		recorre = new RecorreFicheros(dir);
+		recorre.setEstrategia(new CrearBiblioteca(this.canciones));
+		recorre.recorre();
+		notificaCancionesModificadas();
+	}
+	
+	
+	public void creaDirectorios(ArrayList<String> ficheros){
+		this.canciones = new BibliotecaContainer();
+		this.canciones.setModificado(true);
 		RecorreFicheros recorre = new RecorreFicheros(ficheros);
 		recorre.setEstrategia(new CrearBiblioteca(this.canciones));
 		recorre.recorre();
 		notificaCancionesModificadas();
 	}
 	
-	/**
-	 * Borra la informacion y existente, y añade nueva.
-	 * @param ficheros
-	 */
-	public void crearDirectorios(ArrayList<String> ficheros){
-		reset();
-		RecorreFicheros recorre = new RecorreFicheros(ficheros);
-		recorre.setEstrategia(new CrearBiblioteca(this.canciones));
-		recorre.recorre();
-		notificaCancionesModificadas();
-	}
+
 	
 	/**
 	 * Añade canciones a la biblioteca en caso de que no existan previamente, 
@@ -328,5 +341,9 @@ public class BibliotecaMusical {
 			l.reinicia();
 			l.nuevaListaCanciones(canciones);
 		}
+	}
+	
+	public boolean isVacia() {
+		return (this.getCanciones().size() == 0);
 	}
 }

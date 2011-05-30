@@ -55,7 +55,7 @@ public class VistaBiblioteca extends JPanel implements
 	/** Campo sobre el que quieres realizar la busqueda */
 	private Choice tipoBusqueda;
 	
-	
+	private boolean enabled;
 	/**Label que contiene el valor de aleatorio*/
 	//private JLabel modoReproduccion;
 	
@@ -105,7 +105,7 @@ public class VistaBiblioteca extends JPanel implements
 	 * Prepara a la vista de reproduccion para mostrar las canciones.
 	 */
 	public VistaBiblioteca() {
-		
+		enabled = true;
 		panelScroll = new JScrollPane();
 		border = new BorderLayout();
 		this.setLayout(border);
@@ -122,22 +122,23 @@ public class VistaBiblioteca extends JPanel implements
 			 */
 			@Override
 			public void keyReleased(KeyEvent arg0) {				
-				switch (tipoBusqueda.getSelectedIndex()) {
+				if(enabled) {
+					switch (tipoBusqueda.getSelectedIndex()) {
 					case titulo  : controlador.buscaBibliotecaAvanzada(
-									new BuscarTitulo(textoBusqueda.getText()));										   
-									break;
+							new BuscarTitulo(textoBusqueda.getText()));										   
+					break;
 					case genero  : controlador.buscaBibliotecaAvanzada(
-									new BuscarGenero(textoBusqueda.getText()));
-									break;
+							new BuscarGenero(textoBusqueda.getText()));
+					break;
 					case artista : controlador.buscaBibliotecaAvanzada(
-									new BuscarArtista(textoBusqueda.getText()));
-									break;
+							new BuscarArtista(textoBusqueda.getText()));
+					break;
 					case album   : controlador.buscaBibliotecaAvanzada(
-									new BuscarAlbum(textoBusqueda.getText()));
-									break;
+							new BuscarAlbum(textoBusqueda.getText()));
+					break;
+					}
 				}
-			
-				
+
 			}
 		});
 		
@@ -166,7 +167,7 @@ public class VistaBiblioteca extends JPanel implements
 			}
 		}; 
 
-		//AÃ±adimos las columnas del modelo
+		//Añadimos las columnas del modelo
 		modelo.addColumn("Título");
 		modelo.addColumn("Género");
 		modelo.addColumn("Artista");
@@ -340,27 +341,27 @@ public class VistaBiblioteca extends JPanel implements
 		tabla.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(enabled) {
+					//Si es boton derecho
+					if ( SwingUtilities.isRightMouseButton(e)){
+						popup.show(e.getComponent(), e.getX(), e.getY());
 
-				//Si es boton derecho
-				if ( SwingUtilities.isRightMouseButton(e)){
-					popup.show(e.getComponent(), e.getX(), e.getY());
+					}
+
+					else if(e.getClickCount() == 2) {
+
+						controlador.borrarListaReproduccion();
+						int row = e.getY()/tabla.getRowHeight();
+						CancionContainer c = controlador.getCanciones().get(row);
+						controlador.stop();
+						controlador.fromBibliotecaToListaReproduccion(c);
+
+						controlador.muestraListaReproduccion();
+						controlador.siguienteCancion();
+
+					}
 
 				}
-
-				else if(e.getClickCount() == 2) {
-
-					controlador.borrarListaReproduccion();
-					int row = e.getY()/tabla.getRowHeight();
-					CancionContainer c = controlador.getCanciones().get(row);
-					controlador.stop();
-					controlador.fromBibliotecaToListaReproduccion(c);
-
-					controlador.muestraListaReproduccion();
-					controlador.siguienteCancion();
-
-				}
-
-
 			}
 		});
 
@@ -499,6 +500,14 @@ public class VistaBiblioteca extends JPanel implements
 			
 			pos++;
 		}
-	};
+	}
+
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+		this.tabla.setEnabled(enabled);
+		this.textoBusqueda.setEnabled(enabled);
+	}
+
 	
 }

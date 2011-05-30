@@ -587,7 +587,6 @@ public class VistaPrincipal extends JFrame
 	public void bloqueaBiblioteca() {
 		this.menuBiblioteca.setEnabled(false);
 		this.vistaBiblioteca.setEnabled(false);
-		
 	}
 
 	/**

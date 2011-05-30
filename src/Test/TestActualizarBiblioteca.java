@@ -14,6 +14,7 @@ public class TestActualizarBiblioteca {
 	/**
 	 * @param args
 	 */
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 		ArrayList<String> dir = new ArrayList<String>();		
 		String ruta = "";

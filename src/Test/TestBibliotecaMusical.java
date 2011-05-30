@@ -15,6 +15,7 @@ public class TestBibliotecaMusical {
 	/**
 	 * @param args
 	 */
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 		
 		
