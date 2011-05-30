@@ -82,16 +82,19 @@ public class VistaBiblioteca extends JPanel implements
 	private static final int NUM_CAMPOS = 6;
 	
 	/** Posición del choice para el titulo */
-	private final int titulo = 0;
+	private final int todos = 0;
+	
+	/** Posición del choice para el titulo */
+	private final int titulo = 1;
 	
 	/** Posición del choice para el genero */
-	private final int genero = 1;
+	private final int genero = 2;
 	
 	/** Posición del choice para el artista */
-	private final int artista = 2;
+	private final int artista = 3;
 	
 	/** Posición del choice para el album */
-	private final int album = 3;
+	private final int album = 4;
 	
 	/** Menu pop up */
 	private JPopupMenu popup;
@@ -124,6 +127,9 @@ public class VistaBiblioteca extends JPanel implements
 			public void keyReleased(KeyEvent arg0) {				
 				if(enabled) {
 					switch (tipoBusqueda.getSelectedIndex()) {
+					case todos  : controlador.buscaBibliotecaAvanzada(
+							new BuscarTodos(textoBusqueda.getText()));										   
+					break;
 					case titulo  : controlador.buscaBibliotecaAvanzada(
 							new BuscarTitulo(textoBusqueda.getText()));										   
 					break;
@@ -144,6 +150,7 @@ public class VistaBiblioteca extends JPanel implements
 		
 		
 		tipoBusqueda = new Choice();
+		tipoBusqueda.add("Todos");
 		tipoBusqueda.add("Título");
 		tipoBusqueda.add("Género");
 		tipoBusqueda.add("Artista");
