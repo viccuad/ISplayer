@@ -75,6 +75,7 @@ public class BasicPlayer implements BasicController, Runnable
     protected boolean mute;
     protected boolean windows;
     private static Log log = LogFactory.getLog(BasicPlayer.class);
+    private ArrayList<SourceDataLine> lineas;
     /**
      * These variables are used to distinguish stopped, paused, playing states.
      * We need them to control Thread.
@@ -96,7 +97,7 @@ public class BasicPlayer implements BasicController, Runnable
      */
     public BasicPlayer()
     {
-    	
+    	lineas = new ArrayList<SourceDataLine>();
     	String osName = System.getProperty("os.name");
     	if(osName.startsWith("Windows")) {
     		windows = true;
@@ -144,6 +145,7 @@ public class BasicPlayer implements BasicController, Runnable
                 		//En mac peta
                 		m_line.close();
                 	}
+        			lineas.add(m_line);
         			m_line = null;
         		}
         	}
@@ -156,7 +158,7 @@ public class BasicPlayer implements BasicController, Runnable
         		m_line.close();
         	}
         	
-        	
+        	lineas.add(m_line);
         	m_line = null;
         	}
         }
@@ -557,6 +559,7 @@ public class BasicPlayer implements BasicController, Runnable
                 if(windows) {
             		//En mac peta
             		m_line.close();
+            		lineas.add(m_line);
             	}
             }
             m_status = STOPPED;
@@ -684,6 +687,7 @@ public class BasicPlayer implements BasicController, Runnable
             		//En mac peta
             		m_line.close();
             	}
+                lineas.add(m_line);
                 m_line = null;
             }
 		}
@@ -694,6 +698,10 @@ public class BasicPlayer implements BasicController, Runnable
         }
         // Close stream.
         closeStream();
+        
+       while (lineas.size()>0) {
+    	   lineas.remove(0).close();
+        }
 	}
 
     /**
