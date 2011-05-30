@@ -103,6 +103,7 @@ public class BasicPlayer implements BasicController, Runnable
     	}else {
     		windows = false;
     	}
+    	windows = false;
     	
     	mute = false;
         m_dataSource = null;

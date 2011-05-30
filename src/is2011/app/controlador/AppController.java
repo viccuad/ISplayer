@@ -254,8 +254,8 @@ public class AppController implements IAppController {
 				}			
 			}
 
-			biblioteca.actualizarDirectorios(dir);
-			this.guardarBiblioteca();
+			Thread t = new Thread(new CrearBiblioteca(dir));
+			t.start();
 		}
 	}
 
@@ -370,8 +370,8 @@ public class AppController implements IAppController {
 		this.reproductor.setVolumen(porcentaje);
 	}
 
-	public void fromBibliotecaToListaReproduccion(String path){
-		reproductor.aniadirCancion(path);
+	public void fromBibliotecaToListaReproduccion(CancionContainer c){
+		reproductor.aniadirCancion(c);
 	}
 	
 	@Override
@@ -633,6 +633,26 @@ public class AppController implements IAppController {
 	}
 
 	
+
+	private class CrearBiblioteca implements Runnable {
+		
+		ArrayList<String> dir;
+		
+		public CrearBiblioteca(ArrayList<String> dir) {
+			this.dir = dir;
+		}
+
+		public void run() {
+			vPrincipal.bloqueaBiblioteca();
+			
+			biblioteca.actualizarDirectorios(dir);
+			guardarBiblioteca();
+		
+			vPrincipal.activaBiblioteca();
+			vPrincipal.mostrarBiblioteca();
+		}
+	}
+
 
 	
 

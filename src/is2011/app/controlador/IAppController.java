@@ -142,7 +142,7 @@ public interface IAppController {
 	/**
 	 * Cargar una cancion en laLista de Reproduccion desde la biblioteca
 	 */
-	public void fromBibliotecaToListaReproduccion(String path);
+	public void fromBibliotecaToListaReproduccion(CancionContainer c);
 	
 	
 	/**

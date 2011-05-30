@@ -8,6 +8,7 @@ import junit.framework.TestSuite;
 
 public class testEscrituraXMLJUnit extends TestCase{
 	
+	@SuppressWarnings("unused")
 	private CancionContainer c1;
 	
 	public testEscrituraXMLJUnit(String name) {

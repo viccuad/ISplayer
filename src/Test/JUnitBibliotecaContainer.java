@@ -9,6 +9,7 @@ import junit.framework.TestSuite;
 
 public class JUnitBibliotecaContainer extends TestCase{
 
+	@SuppressWarnings("unused")
 	private BibliotecaContainer bib;
 	private CancionContainer c1;
 	

@@ -803,6 +803,12 @@ ListaReproduccionListener{
 	public void setActual(int actualNuevo, int actualViejo) {
 
 	}
+	@Override
+	public void desactivaCancion(int indice) {
+		
+		
+	}
+
 
 
 	/**
@@ -910,6 +916,7 @@ ListaReproduccionListener{
 			this.playing = playing;
 		}
 	}
+
 
 
 }

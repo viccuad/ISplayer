@@ -62,8 +62,9 @@ public interface Reproductor {
 	 * Abre el fichero que le pasamos como parametro para su reproduccion
 	 * @param c La cancion que queremos abrir
 	 * @throws BasicPlayerException
+	 * @throws Exception 
 	 */
-	public void open(CancionContainer c) throws BasicPlayerException;
+	public void open(CancionContainer c) throws BasicPlayerException, Exception;
 	
 	/**
 	 * Añade un oyente al reproductor

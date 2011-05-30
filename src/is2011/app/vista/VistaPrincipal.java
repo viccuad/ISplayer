@@ -4,7 +4,7 @@ package is2011.app.vista;
 
 import is2011.app.controlador.IAppController;
 import is2011.app.preferencias.Preferencias;
-import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
+
 import is2011.reproductor.vista.VistaBiblioteca;
 import is2011.reproductor.vista.VistaLateral;
 import is2011.reproductor.vista.VistaListaReproduccion;
@@ -19,7 +19,7 @@ import java.awt.event.ActionListener;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
+
 
 
 
@@ -189,7 +189,7 @@ public class VistaPrincipal extends JFrame
 		this.setVisible(true);
         cargarPosicion();
 	}
-	@SuppressWarnings("deprecation")
+	
 	public void initialize()
 	{
 		this.setTitle(ISPLAYER);
@@ -445,6 +445,7 @@ public class VistaPrincipal extends JFrame
 	/**
 	 * 
 	 */
+	@SuppressWarnings("deprecation")
 	private void cargarPosicion() {
 		 Preferencias p = Preferencias.getInstance();
 			this.setSize(p.getAncho(),p.getAlto());
@@ -580,6 +581,23 @@ public class VistaPrincipal extends JFrame
 			this.setTitle(ISPLAYER);
 		}
 		
+	}
+
+	/**
+	 * 
+	 */
+	public void bloqueaBiblioteca() {
+		this.menuBiblioteca.setEnabled(false);
+		this.vistaBiblioteca.setEnabled(false);
+		
+	}
+
+	/**
+	 * 
+	 */
+	public void activaBiblioteca() {
+		this.menuBiblioteca.setEnabled(true);
+		this.vistaBiblioteca.setEnabled(true);
 	}
 	
 }

@@ -1,17 +1,14 @@
 package is2011.biblioteca.contenedores;
 
 import java.io.File;
-import java.io.IOException;
+
 
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
-import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
-import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.audio.mp3.MP3AudioHeader;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
-import org.jaudiotagger.tag.TagException;
+
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
@@ -41,6 +38,8 @@ public class CancionContainer {
 	
 	/** pista  de la canción **/
 	private int pista;
+
+	private boolean valida;
 	
 	
 	
@@ -62,6 +61,7 @@ public class CancionContainer {
 		artista = art;
 		duracion = dur;
 		pista = pist;
+		valida = true;
 	}
 	
 	
@@ -72,6 +72,7 @@ public class CancionContainer {
 	 * @param absolutePath ruta absoluta del fichero canción
 	 */
 	public CancionContainer(String absolutePath){
+		valida = true;
 		this.totalPath = absolutePath;
 		File fichero = new File(absolutePath);
 		
@@ -230,7 +231,11 @@ public class CancionContainer {
 	 * @return duracion
 	 */
 	public int getDuracion() {
-		return duracion;
+		if (valida) {
+			return duracion;
+		}else {
+			return 0;
+		}
 	}
 
 	
@@ -290,8 +295,9 @@ public class CancionContainer {
 	 * Abre el archivo canción para ello. 
 	 *  
 	 * @return int 
+	 * @throws Exception 
 	 */
-	public int getBytesMusica() {
+	public int getBytesMusica() throws Exception {
 		AudioFile filemp3;
 		MP3AudioHeader headermp3;
 		
@@ -301,18 +307,10 @@ public class CancionContainer {
 			
 			return (int)( (new File(this.totalPath)).length() - headermp3.getMp3StartByte());
 			
-		} catch (CannotReadException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (TagException e) {
-			e.printStackTrace();
-		} catch (ReadOnlyFileException e) {
-			e.printStackTrace();
-		} catch (InvalidAudioFrameException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			throw new Exception();
 		}
-		return -1;
+		
 	}
 	
 	
@@ -335,6 +333,19 @@ public class CancionContainer {
 		if (this.getTotalPath() != s.getTotalPath()) return false;
 		if (this.getTrackPath() != s.getTrackPath()) return false;
 		return true;
+	}
+
+
+	/**
+	 * @param b
+	 */
+	public void setValida(boolean b) {
+		this.valida = b;
+		
+	}
+	
+	public boolean getValida() {
+		return this.valida;
 	}
 
 }

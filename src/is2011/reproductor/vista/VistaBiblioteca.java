@@ -305,10 +305,9 @@ public class VistaBiblioteca extends JPanel implements
 
 				}else{ */
 					for(int i : canciones) {
-						String path = controlador.getCanciones().get(i).
-						getTotalPath();
+						CancionContainer c = controlador.getCanciones().get(i);
 						//System.out.println(path);
-						controlador.fromBibliotecaToListaReproduccion(path);
+						controlador.fromBibliotecaToListaReproduccion(c);
 						controlador.muestraListaReproduccion();
 					}
 				//}
@@ -330,9 +329,8 @@ public class VistaBiblioteca extends JPanel implements
 				if (canciones.length > 1) {
 					controlador.borrarListaReproduccion();
 					for(int i : canciones) {
-						String path = controlador.getCanciones().get(i).
-						getTotalPath();
-						controlador.fromBibliotecaToListaReproduccion(path);
+						CancionContainer c = controlador.getCanciones().get(i);
+						controlador.fromBibliotecaToListaReproduccion(c);
 						
 		
 					}
@@ -368,11 +366,10 @@ public class VistaBiblioteca extends JPanel implements
 						//System.out.println(row);
 						
 	
-						String path = controlador.getCanciones().get(row).
-						getTotalPath();
+						CancionContainer c = controlador.getCanciones().get(row);
 						//System.out.println(path);
 						controlador.stop();
-						controlador.fromBibliotecaToListaReproduccion(path);
+						controlador.fromBibliotecaToListaReproduccion(c);
 						//controlador.play(-1);
 						controlador.muestraListaReproduccion();
 						controlador.siguienteCancion();

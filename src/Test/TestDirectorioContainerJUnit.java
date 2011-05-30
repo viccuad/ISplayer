@@ -1,15 +1,12 @@
 package Test;
 
 import java.io.File;
-import java.io.IOException;
+
 import java.util.ArrayList;
 
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
-import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
-import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.tag.TagException;
+
 
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -51,28 +48,18 @@ public class TestDirectorioContainerJUnit extends TestCase{
 			}
 		
 
-		} catch (CannotReadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TagException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ReadOnlyFileException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidAudioFrameException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+		
 		}
 		
+		@SuppressWarnings("unused")
 		DirectorioContainer dirvacio = new DirectorioContainer(pathprueba);
+		@SuppressWarnings("unused")
 		DirectorioContainer dir = new DirectorioContainer(pathprueba,lista);	
 			
 		lista1 = new ArrayList<CancionContainer>();
 		lista1.add(c1);
+		@SuppressWarnings("unused")
 		DirectorioContainer dir1cancion = new DirectorioContainer(pathprueba,lista1);
 		
 		

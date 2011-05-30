@@ -117,7 +117,6 @@ public class ListaReproduccion {
 		listaReproduccion = new ArrayList<CancionContainer>();
 		listaAleatoria = new ArrayList<Integer>();
 		actual = 0;
-		modoReproduccion = ModoReproduccionEnum.NORMAL;
 		modificado = true;
 		if(borrarOyentes) {
 			listeners = new ArrayList<ListaReproduccionListener>();
@@ -283,15 +282,20 @@ public class ListaReproduccion {
 	 */
 	@SuppressWarnings("unchecked")
 	public void cargarXML(String pathYfichero) throws FileNotFoundException{
-		File aux = new File(pathYfichero);
-		if (aux.canRead()){
-			this.listaReproduccion = (ArrayList<CancionContainer>)stream.fromXML
-			(new FileInputStream(pathYfichero));
-			modificado = true;
-			notificaNuevaListaReproduccion(listaReproduccion,0);
-			this.crearListaAleatoria();
-			this.setActual(1);
-		}else System.out.println("El fichero no existe");
+		try {
+			File aux = new File(pathYfichero);
+			if (aux.canRead()){
+				this.listaReproduccion = (ArrayList<CancionContainer>)stream.fromXML
+				(new FileInputStream(pathYfichero));
+				modificado = true;
+				notificaNuevaListaReproduccion(listaReproduccion,0);
+				this.crearListaAleatoria();
+				this.setActual(1);
+			}else System.out.println("El fichero no existe");
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	
@@ -523,6 +527,14 @@ public class ListaReproduccion {
 		
 	}
 	
+	private void notificaCancioNoValida(int indice) { 
+		for (ListaReproduccionListener l : listeners) {
+			l.desactivaCancion(indice);
+		}
+		
+	}
+	
+	
 	/**
 	 * Indica que se encuentra en reproduccion aleatoria.
 	 * @param aleatorio. Indica si aleatorio es true o false.
@@ -613,6 +625,25 @@ public class ListaReproduccion {
 	 *
 	 */
 	public void incrementaActual() {
+		
+	}
+
+	/**
+	 * 
+	 */
+	public void desactivaActual() {
+		CancionContainer c = this.listaReproduccion.get(this.actual-1);
+		int indexReal ;
+		if (busquedaRealizada) {
+			indexReal = this.getIndexOf(c, this.buscadas);
+		}else {
+			indexReal = actual-1;
+		}
+		
+		c.setValida(false);
+		
+		this.notificaCancioNoValida(indexReal);
+		
 		
 	}
 

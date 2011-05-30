@@ -539,5 +539,13 @@ public class VistaListaReproduccion extends JPanel implements
 	}
 
 
+	@Override
+	public void desactivaCancion(int indice) {
+		if(indice < tabla.getRowCount() && indice >= 0){
+			modelo.setValueAt("00:00", indice,NUM_COLUMNA_DURACION);
+		}
+	}
+
+
 	
 }

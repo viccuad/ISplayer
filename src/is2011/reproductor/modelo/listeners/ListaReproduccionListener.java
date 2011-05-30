@@ -52,4 +52,9 @@ public interface ListaReproduccionListener {
 	 * Se llama cuanso se crea una nueva lista de reproduccion.
 	 */
 	public void nuevaListaReproduccion(ArrayList<CancionContainer> c);
+
+	/**
+	 * @param indice
+	 */
+	public void desactivaCancion(int indice);
 }

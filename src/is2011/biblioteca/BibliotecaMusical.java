@@ -70,6 +70,23 @@ public class BibliotecaMusical {
 		listeners = new ArrayList<BibliotecaListener>();
 	}
 	
+	public void reset(){
+		buscadas = null;
+		busquedaRealizada = false;
+		buscadas = new ArrayList<CancionContainer>();
+		canciones = new BibliotecaContainer();
+		stream = new XStream(new DomDriver());
+		stream.alias("biblioteca", BibliotecaContainer.class);
+		stream.alias("dir", DirectorioContainer.class);
+		stream.alias("track", CancionContainer.class);
+		
+		//atributos que no se incluyen en el formato XML de la biblioteca
+		stream.omitField(BibliotecaContainer.class, "modificadoEscritura");
+		stream.omitField(BibliotecaContainer.class, "modificadoParaMostrar");
+		stream.omitField(BibliotecaContainer.class, "listaCanciones");
+		stream.omitField(CancionContainer.class, "totalPath");
+		listeners = new ArrayList<BibliotecaListener>();
+	}
 	
 	/**
 	 * Sigue el patrón Singleton y devuelve la instancia única de la biblioteca musical.
@@ -89,14 +106,19 @@ public class BibliotecaMusical {
 	 * @throws FileNotFoundException
 	 */
 	public void cargarXML(String pathYfichero) throws FileNotFoundException{
+		try {
+			File aux = new File(pathYfichero);
+			if (aux.canRead()){
+				
+				canciones = (BibliotecaContainer) stream.fromXML(new FileInputStream(pathYfichero));
+				this.canciones.generarRutasAbsolutas();
+				canciones.setModificado(true);
+				notificaCancionesModificadas();
+			}else System.out.println("El fichero no existe");
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		File aux = new File(pathYfichero);
-		if (aux.canRead()){
-			canciones = (BibliotecaContainer) stream.fromXML(new FileInputStream(pathYfichero));
-			this.canciones.generarRutasAbsolutas();
-			canciones.setModificado(true);
-			notificaCancionesModificadas();
-		}else System.out.println("El fichero no existe");
 	}
 	
 	
@@ -208,12 +230,24 @@ public class BibliotecaMusical {
 	 * @param ficheros lista de ficheros y canciones para actualizar la biblioteca
 	 */
 	public void actualizarDirectorios(ArrayList<String> ficheros){
+		
 		RecorreFicheros recorre = new RecorreFicheros(ficheros);
 		recorre.setEstrategia(new CrearBiblioteca(this.canciones));
 		recorre.recorre();
 		notificaCancionesModificadas();
 	}
 	
+	/**
+	 * Borra la informacion y existente, y añade nueva.
+	 * @param ficheros
+	 */
+	public void crearDirectorios(ArrayList<String> ficheros){
+		reset();
+		RecorreFicheros recorre = new RecorreFicheros(ficheros);
+		recorre.setEstrategia(new CrearBiblioteca(this.canciones));
+		recorre.recorre();
+		notificaCancionesModificadas();
+	}
 	
 	/**
 	 * Añade canciones a la biblioteca en caso de que no existan previamente, 

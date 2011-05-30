@@ -87,8 +87,9 @@ public class ControladorReproductor {
 				this.reproductor.play();
 				this.reproductor.setVolumen(Preferencias.getInstance().
 						getVolumen());
-			} catch (BasicPlayerException e) {
-				e.printStackTrace();
+			} catch (Exception e) {
+				this.listaReproduccion.desactivaActual();
+				this.siguiente();
 			}
 			
 		}

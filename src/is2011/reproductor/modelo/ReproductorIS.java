@@ -91,8 +91,13 @@ public class ReproductorIS extends BasicPlayer implements Reproductor {
 
 	
 	@Override
-	public void open(CancionContainer c) throws BasicPlayerException {
-		this.bytesMusica = c.getBytesMusica();
+	public void open(CancionContainer c) throws Exception {
+		try {
+			this.bytesMusica = c.getBytesMusica();
+		}catch (Exception e) {
+			throw e;
+		}
+		
 		super.open(new File(c.getTotalPath()));
 	}
 
