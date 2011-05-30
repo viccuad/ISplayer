@@ -50,7 +50,7 @@ public class BibliotecaMusical {
 	
 	
 	/**
-	 * Constructor privado para implementar en patrón Singleton
+	 * Constructor privado para implementar el patrón Singleton
 	 */
 	private BibliotecaMusical(){
 		//busquedaRecursiva = false;
@@ -89,7 +89,9 @@ public class BibliotecaMusical {
 	}
 	
 	/**
-	 * Sigue el patrón Singleton y devuelve la instancia única de la biblioteca musical.
+	 * Sigue el patrón Singleton y devuelve la instancia única de la biblioteca
+	 *  musical.
+	 *  
 	 * @return singleBibliotecaMusical
 	 */
 	public static BibliotecaMusical getInstacia(){

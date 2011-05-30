@@ -33,11 +33,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
+
+
+/**
+ * VistaPrincipal esta compuesta de 
+ * VistaLateral: Permite seleccionar biblioteca, esta sonando, o listas de rep
+ * 	guardadas
+ * VistaReproduccion: Contiene toda la botonera. 
+ * vistaListaReproduccion: Contiene la tabla con canciones de la lista de rep.
+ * vistaBiblioteca: Contiene la tabla con canciones de la lista de biblio.
+ */
 public class VistaPrincipal extends JFrame 
 {
 	
 	/**
-	 * 
+	 *  título de la ventana
 	 */
 	private static final String ISPLAYER = "ISPlayer";
 
@@ -80,6 +90,7 @@ public class VistaPrincipal extends JFrame
 	private JMenuItem aniadirCancionBiblioteca;
 	private JMenuItem aniadirCancionYCarpetaBiblioteca;
 	
+	/* Título de la aplicación en vista compacta */
 	private String infoCancion = "";
 	
 	GridBagConstraints grid;
@@ -94,7 +105,10 @@ public class VistaPrincipal extends JFrame
 	private boolean vistaBibliotecaVisible = false;
 	
 	
-
+	/**
+	 * Constructora de VistaPrincipal. Crea un gridbag, que contiene la vista
+	 * lateral.
+	 */
 	public VistaPrincipal(){
 		super();
 		vistaCompacta = false;
@@ -104,6 +118,10 @@ public class VistaPrincipal extends JFrame
 		this.addVistaLateral();
 	}
 	
+	/**
+	 * Constructora de VistaLateral, con un gridbag. Añade la vistaLateral a
+	 * vistaPrincipal
+	 */
 	public void addVistaLateral() {
 		this.vistaLateral = new VistaLateral(this);
 		
@@ -119,6 +137,12 @@ public class VistaPrincipal extends JFrame
         this.add(vistaLateral,grid);
 	}
 
+	
+	/**
+	 * Crea un gridbag de VistaReproduccion, añade vistaRep a la VistaPrincipal 
+	 * 
+	 * @param vistaRep
+	 */
 	public void setVistaReproductor( VistaReproduccion vistaRep) {
 		vistaReproduccion = vistaRep;
 		
@@ -136,7 +160,11 @@ public class VistaPrincipal extends JFrame
 
 	}
 	
-	
+	/**
+	 * Añade vlr a la VistaPrincipal. Visible por defecto.
+	 * 
+	 * @param vlr
+	 */
 	public void setVistaListaReproduccion(VistaListaReproduccion vlr) {
 		vistaListaReproduccion = vlr;
 		grid.gridx       = 1; //0
@@ -165,6 +193,12 @@ public class VistaPrincipal extends JFrame
 		
 	} 
 	
+	
+	/**
+	 * Añade vb a la VistaPrincipal. No visible por defecto.
+	 * 
+	 * @param vb
+	 */
 	public void setVistaBiblioteca(VistaBiblioteca vb) {
 		vistaBiblioteca = vb;
 		grid.gridx       = 1; // 1
@@ -180,11 +214,11 @@ public class VistaPrincipal extends JFrame
             				
 	}
 	
-	/*
-	public void setVistaPreferencias(VistaPreferencias vp) {
-       vistaPreferencias = vp;             				
-	}*/
 	
+	/**
+	 *  Actualiza la posicion de la ventana, e informa si estamos en 
+	 *  vistaCompacta
+	 */
 	public void mostrar() {
 		this.setVisible(true);
         cargarPosicion();
@@ -197,13 +231,10 @@ public class VistaPrincipal extends JFrame
 		this.setLayout(new GridBagLayout());
 		//this.reproduciendo = false;
 		//this.reproduciendo2 = false;
-
         
         this.setVisible(false);
         
-        
-       
-		//this.setResizable(false);
+  		//this.setResizable(false);
 		
 		this.menu = new JMenuBar();
 	  
@@ -463,6 +494,10 @@ public class VistaPrincipal extends JFrame
 		
 	}
 
+	/**
+	 * Guarda la posicion de la ventana, y si esta en vista compacta o no,en las 
+	 * preferencias
+	 */
 	private void guardarPosicion() {
 		if(!vistaCompacta) {
 			Preferencias.getInstance().setPosX(getX());
@@ -513,11 +548,21 @@ public class VistaPrincipal extends JFrame
 		}
 	}
 	
+	
+	/** Muestra la biblioteca en la vista principal, ocultando la 
+	 *  lista de reproduccion, independientemente de si estamos en lista 
+	 *  compacta o no.
+	 */
 	public void mostrarBiblioteca() {
 		this.vistaBiblioteca.setVisible(true);
 		this.vistaListaReproduccion.setVisible(false);
 	}
 	
+	
+	
+	/** Muestra la lista de reproduccion en la vista principal, ocultando la 
+	 *  biblioteca, independientemente de si estamos en lista compacta o no.
+	 */
 	public void mostrarListaReproduccion() {
 		this.vistaBiblioteca.setVisible(false);
 		this.vistaListaReproduccion.setVisible(true);
@@ -532,6 +577,14 @@ public class VistaPrincipal extends JFrame
 	}
 	
 	
+	/**
+	 * Guarda el lookandFeel seleccionado en las preferencias del usuario_local,
+	 * informa de que los cambios no surtirán efecto hasta que se vuelva a abrir
+	 * el reproductor.
+	 * 
+	 * @author usuario_local
+	 *
+	 */
 	private class OyenteLookAndFeel implements ActionListener {
 
 		private String nombreLook; 
@@ -553,7 +606,8 @@ public class VistaPrincipal extends JFrame
 
 
 	/**
-	 * 
+	 *  Si no estamos en vista compacta, muestra la lista de reproduccion 
+	 *  en la vista principal, ocultando la biblioteca
 	 */
 	public void muestraListaRep() {
 		if( !this.vistaCompacta) {
@@ -571,6 +625,14 @@ public class VistaPrincipal extends JFrame
 		
 	}
 	
+	
+	/**
+	 * cambia el titulo de la ventana de la aplicacion por el nombre de la 
+	 * cancion que se reproduce, si se está en vista compacta, y hay canción 
+	 * reproduciendose
+	 * 
+	 * @param s informacion de la cancion en reproduccion
+	 */
 	public void setInfo(String s) {
 		this.infoCancion = s;
 		if(s!= null && !s.equals("") && vistaCompacta) {
@@ -582,7 +644,7 @@ public class VistaPrincipal extends JFrame
 	}
 
 	/**
-	 * 
+	 *  Oculta la biblioteca en la vista principal
 	 */
 	public void bloqueaBiblioteca() {
 		this.menuBiblioteca.setEnabled(false);
@@ -590,13 +652,16 @@ public class VistaPrincipal extends JFrame
 	}
 
 	/**
-	 * 
+	 *  Muestra la biblioteca en la vista principal
 	 */
 	public void activaBiblioteca() {
 		this.menuBiblioteca.setEnabled(true);
 		this.vistaBiblioteca.setEnabled(true);
 	}
 	
+	/**
+	 *  Refresca la biblioteca en la vista principal
+	 */
 	public void refrescarVistaLateral() {
 		vistaLateral.refrescar();
 	}

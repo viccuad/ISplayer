@@ -66,8 +66,10 @@ public class AppController implements IAppController {
 	 */
 	private File[] abrirArchivo()
 	    {
-	        JFileChooser fileChooser = new JFileChooser(Preferencias.getInstance().getUltimoDirectorioAbierto());
-	        //FileDialog fileChooser = new FileDialog(new JFrame(), "Cargar", FileDialog.LOAD);
+	        JFileChooser fileChooser = 
+	        	new JFileChooser(Preferencias.getInstance().
+	        			getUltimoDirectorioAbierto());
+
 	        //Lo configuramos para permitir apertura multiple
 	        fileChooser.setMultiSelectionEnabled(true);
 	        
@@ -79,7 +81,7 @@ public class AppController implements IAppController {
 	        FileNameExtensionFilter filter = new FileNameExtensionFilter(
 	        		"mp3", "mp3","MP3", "Mp3", "mP3");
 	        
-	        //FileNameExtensionFilter filter = new FileNameExtensionFilter("ogg", "ogg");
+
 	        fileChooser.setFileFilter(filter);
 
 	        
@@ -227,7 +229,8 @@ public class AppController implements IAppController {
 			seleccion = JOptionPane.showConfirmDialog(null, 
 					"Al crear una biblioteca se borrara la existente\n" +
 					"¿Desea continuar?", "Crear biblioteca", 
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+					JOptionPane.YES_NO_CANCEL_OPTION, 
+					JOptionPane.QUESTION_MESSAGE);
 		} else {
 			seleccion = JOptionPane.YES_OPTION;
 		}
@@ -343,7 +346,8 @@ public class AppController implements IAppController {
 	@Override
 	public ArrayList<CancionContainer> getCanciones() {
 		
-		if (biblioteca.getBusquedaRealizada()) return biblioteca.getCancionesBuscadas();
+		if (biblioteca.getBusquedaRealizada()) 
+			return biblioteca.getCancionesBuscadas();
 		else return biblioteca.getCanciones();
 	}
 
@@ -435,7 +439,7 @@ public class AppController implements IAppController {
 		//If a string was returned, say so.
 		if ((s != null && !s.equals(""))){
 			ruta = Preferencias.getInstance().
-			  getDirecctorioListasDeReproduccion() + File.separator + s + ".xml";
+			 getDirecctorioListasDeReproduccion() + File.separator + s + ".xml";
 			
 			reproductor.guardarListaReproduccion(ruta);
 			vPrincipal.refrescarVistaLateral();
@@ -446,9 +450,6 @@ public class AppController implements IAppController {
 	@Override
 	public void cargarListaReproduccion() {
 		String ruta = "";
-		
-		//ArrayList<String> dir = new ArrayList<String>();
-
 		
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -461,18 +462,12 @@ public class AppController implements IAppController {
 		
 		reproductor.cargarListaReproduccion(ruta);
 	}
-/*
-	public ArrayList<CancionContainer> buscaBiblioteca(CriterioBusqueda criterio){
-		return biblioteca.getBusqueda(criterio);
-	}*/
+
 
 	public void buscaBibliotecaAvanzada(CriterioBusqueda criterio){
 		 biblioteca.realizaBusquedaAvanzada(criterio);
 	}
-/*
-	public ArrayList<CancionContainer> buscaListaReproduccion(CriterioBusqueda criterio){
-		return reproductor.getBusqueda(criterio);
-	}*/
+
 	
 	public void buscaListaReproduccionAvanzada(CriterioBusqueda criterio){
 		reproductor.getBusquedaAvanzada(criterio);
@@ -537,9 +532,7 @@ public class AppController implements IAppController {
 		
 		if(Preferencias.getInstance().isHayCambios()) {
 			Preferencias.getInstance().guardarXML();
-			/*if (this.reproductor.getCancionesListaReproduccion().size() >0) {
-				this.reproductor.guardarListaActual();
-			}*/
+
 		}
 	}
 
@@ -575,7 +568,6 @@ public class AppController implements IAppController {
 		    
 		    if(osName.startsWith("Windows")) {
 		      
-		    	//File f = new File("src/Recursos/manual/Introduccion.html");
 		    	File f = new File("src/Recursos/manual.pdf");
 		    	java.awt.Desktop.getDesktop().open(f);
 	
@@ -584,7 +576,7 @@ public class AppController implements IAppController {
 		    } else if (osName.startsWith("Mac OS X")) {
 		  	  
 				
-				//Runtime.getRuntime().exec("open -a Safari src/Recursos/index.html");
+		  //Runtime.getRuntime().exec("open -a Safari src/Recursos/index.html");
 		    	File f = new File("src/Recursos/manual.pdf");
 		    	java.awt.Desktop.getDesktop().open(f);
 
@@ -592,15 +584,17 @@ public class AppController implements IAppController {
 		    }else if (osName.startsWith("Linux")) {
 		  	  
 				
-				//Runtime.getRuntime().exec("./firefox src/Recursos/index.html");
+		       //Runtime.getRuntime().exec("./firefox src/Recursos/index.html");
 				File f = new File("src/Recursos/manual.pdf");
 		    	java.awt.Desktop.getDesktop().open(f);
 		
 		    }
 	    
 		} catch (Exception e1) {
-			JOptionPane.showMessageDialog(vPrincipal, "Necesita tener instalado software " +
-					"para abrir archivos con extension .pdf", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(vPrincipal, 
+					"Necesita tener instalado software " +
+					"para abrir archivos con extension .pdf", 
+					"Error", JOptionPane.ERROR_MESSAGE);
 
 		}
 		

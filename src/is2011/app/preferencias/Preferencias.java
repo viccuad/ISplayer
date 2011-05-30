@@ -58,6 +58,15 @@ public class Preferencias {
 	private XStream stream;
 	
 	
+	/**
+	 * Constructora de Preferencias. 
+	 * Crea la carpeta donde se guardan las preferencias, en el directorio home
+	 * del usuario. 
+	 * Si no existen preferencias, crea un archivo NOMBRE_PREFERENCIAS(.xml)
+	 * en el directorio home, donde se guardan.
+	 * 
+	 * 
+	 */
 	private Preferencias(){
 		
 		String home = System.getProperty("user.home");
@@ -123,6 +132,11 @@ public class Preferencias {
 	}
 	
 	
+	/**
+	 * Carga las preferencias guardadas en la ruta path
+	 * 
+	 * @param path
+	 */
 	private void cargarXML(String path) {
 		Preferencias aux;
 		try {
@@ -206,10 +220,17 @@ public class Preferencias {
 		this.alto = alto;
 	}
 
+
 	public String getDirecctorioListasDeReproduccion() {
 		return  this.pahtListasDeReproduccion;
 		
 	}
+	
+	
+	/**
+	 * Guarda en el archivo pathArchivoPreferenciasSistema 
+	 * (path de home + NOMBRE_PREFERENCIAS) las preferencias del sistema. 
+	 */
 	public void guardarXML() {
 		try {
 			stream.toXML(preferencias, new FileOutputStream(this.pathArchivoPreferenciasSistema));
@@ -256,13 +277,27 @@ public class Preferencias {
 		return modoReproduccion;
 	}
 	
-	public void setPathPreferenciasSistema(String input){
-		pathArchivoPreferenciasSistema = input;
+	
+	/**
+	 * Iguala pathArchivoPreferenciasSistema a path.
+	 * Actualiza hayCambios a true. 
+	 * 
+	 * @param path
+	 */
+	public void setPathPreferenciasSistema(String path){
+		pathArchivoPreferenciasSistema = path;
 		this.hayCambios = true;
 	}
 	
-	public void setPathBiblioteca(String input){
-		pathBiblioteca = input;
+	
+	/**
+	 * Iguala pathBiblioteca a path.
+	 * Actualiza hayCambios a true. 
+	 * 
+	 * @param path
+	 */
+	public void setPathBiblioteca(String path){
+		pathBiblioteca = path;
 		this.hayCambios = true;
 	}
 	
@@ -271,6 +306,7 @@ public class Preferencias {
 		modoReproduccion = input;
 		this.hayCambios = true;
 	}
+	
 	/**
 	 * @return the volumen
 	 */
@@ -312,6 +348,9 @@ public class Preferencias {
 		this.pathListaReproduccionDefecto = pathListaReproduccionDefecto;
 	}
 
+	/**
+	 * @param nombreLook
+	 */
 	public void setLookAndFeel(String nombreLook) {
 		this.nombreLook = nombreLook;
 		hayCambios = true;
@@ -326,12 +365,19 @@ public class Preferencias {
 	}
 
 	/**
-	 * @return
+	 * Devuelve true si estamos en vista compacta
+	 * 
+	 * @return boolean
 	 */
 	public boolean isVistaCompacta() {
 		return compacta;
 	}
 	
+	/**
+	 * Pone vista compacta a true
+	 * Pone hayCambios a true
+	 * @param c
+	 */
 	public void setCompacta(boolean c) {
 		this.compacta = c;
 		hayCambios = true;

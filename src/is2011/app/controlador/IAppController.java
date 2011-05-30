@@ -11,7 +11,7 @@ import is2011.reproductor.modelo.ListaReproduccion.ModoReproduccionEnum;
  * Controlador de la aplicacion , que recoje las ordenes de la vista principal
  * y ordena al reproductor lo que debe hacer.
  * 
- * Las funciones que podra realizar, en el campo de la reproduccion, seran.
+ * Las funciones que podra realizar, en el campo de la reproduccion, seran:
  * 
  *  -> Cargar archivos en la lista de reproduccion.
  *  -> Encolar archivos en la lista de reproduccion.
@@ -134,6 +134,8 @@ public interface IAppController {
 	public boolean listaReproduccionVacia();
 
 	/**
+	 * Da valor al volumen.
+	 * 
 	 * @param el volumen
 	 * 
 	 */
@@ -147,6 +149,7 @@ public interface IAppController {
 	
 	/**
 	 * Devuevle las preferencias del sistema
+	 * 
 	 * @return
 	 */
 	public Preferencias getPreferencias();
@@ -154,6 +157,7 @@ public interface IAppController {
 	/**
 	 * Borra una cancion determinada por su numero de orden en la lista de repro
 	 * duccion
+	 * 
 	 * @param La cancion
 	 */
 	public void borrarCancion(int numCancion);
@@ -207,6 +211,7 @@ public interface IAppController {
 	
 	/**
 	 * Realiza una busqueda sobre la lista de reproduccion
+	 * 
 	 * @param criterio
 	 * @return
 	 */
@@ -214,18 +219,21 @@ public interface IAppController {
 	
 	/**
 	 * Realiza una busqueda avanzada sobre una biblioteca
+	 * 
 	 * @param criterio
 	 */
 	public void buscaBibliotecaAvanzada(CriterioBusqueda criterio);
 	
 	/**
 	 * Realiza una busqueda avanzada sobre una lista de reproduccion
+	 * 
 	 * @param criterio
 	 */
 	public void buscaListaReproduccionAvanzada(CriterioBusqueda criterio);
 	
 	/**
 	 * Devuelve las canciones que componen la lista de reproduccion actual
+	 * 
 	 * @return
 	 */
 	public ArrayList<CancionContainer> getCancionesListaReproduccion();
@@ -233,6 +241,7 @@ public interface IAppController {
 	/**
 	 * Le pasamos la posicion que la cancion ocupa en la biblioteca y esta 
 	 * se pasa a la lista de reproduccion actual
+	 * 
 	 * @param La posicion de la cancion en la bib
 	 */
 	public void fromBibliotecaToListaReproduccion(int posicion);
@@ -241,6 +250,7 @@ public interface IAppController {
 	 * Le pasamos un array de posiciones, que indican la sposiciones de las 
 	 * canciones en la biblioteca que queremso pasar a la lista de reproduccion
 	 * actual.
+	 *
 	 * @param El array de posiciones
 	 */
 	public void fromBibliotecaToListaReproduccion(int[] posiciones);
@@ -296,6 +306,10 @@ public interface IAppController {
 	 */
 	public void borrarListaReproduccion();
 
+	/**
+	 * Manda la ejecución de manual.pdf ( abre el visor por defecto de archivos
+	 * pdf)
+	 */
 	public void lanzarAyuda();
 
 }
