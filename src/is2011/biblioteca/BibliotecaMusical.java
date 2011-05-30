@@ -220,6 +220,8 @@ public class BibliotecaMusical {
 	public void actualizar(){
 		ArrayList<String> dir = this.canciones.getDirectorios();
 		this.canciones = new BibliotecaContainer();
+		this.buscadas = new ArrayList<CancionContainer>();
+		this.busquedaRealizada = false;
 		this.canciones.setModificado(true);
 		RecorreFicheros recorre = new RecorreFicheros(dir);
 		recorre.setEstrategia(new CrearBiblioteca(this.canciones));
@@ -255,6 +257,8 @@ public class BibliotecaMusical {
 	
 	public void creaDirectorios(ArrayList<String> ficheros){
 		this.canciones = new BibliotecaContainer();
+		this.buscadas = new ArrayList<CancionContainer>();
+		this.busquedaRealizada = false;
 		this.canciones.setModificado(true);
 		RecorreFicheros recorre = new RecorreFicheros(ficheros);
 		recorre.setEstrategia(new CrearBiblioteca(this.canciones));
@@ -324,10 +328,9 @@ public class BibliotecaMusical {
 			Collections.sort(this.buscadas, orden);
 			this.notificaNuevaBiblioteca(this.buscadas);
 		}else{
-			Collections.sort(this.getCanciones(), orden);
-			this.notificaNuevaBiblioteca(this.getCanciones());
-
-			
+			this.buscadas = this.getCanciones();
+			Collections.sort(this.buscadas, orden);
+			this.notificaNuevaBiblioteca(this.buscadas);
 		}
 	}
 	
