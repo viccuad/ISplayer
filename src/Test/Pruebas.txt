@@ -76,6 +76,32 @@ Pruebas de la lista de reproducciÃ³n y/o interfaz:
 		3. pulsar el botón de mute y cerciorarse de que se silencia la canción.
 		4. cerciorarse que la canción sigue su curso y sigue reproduciéndose
 		
+	UNMute: 
+		1. Ejecutar el test Mute
+		2. pulsar el botón de mute y cerciorarse de que se vuelve a oir la canción.
+		3. cerciorarse que la canción sigue su curso y sigue reproduciéndose
+		
+	Botón de modo compacto:
+		1. Abrir la aplicación. 
+		2. Reproducir una cancion.
+		3. Pulsar el boton de modo compacto y cerciorarse de que la vista se cambia adecuadamente.
+		4. Cerciorarse de que la cancion se muestra en el titulo de la aplicacion.
+		5. Cerciorarse de que la cancion continua reproduciendose.
+		
+	Botón de modo completo:
+		1. Ejecutar test de boton de modo compacto. 
+		2. Reproducir una cancion.
+		3. Pulsar el boton de modo completo y cerciorarse de que la vista se cambia adecuadamente.
+		4. Cerciorarse de que la cancion no se muestra en el titulo de la aplicacion.
+		5. Cerciorarse de que la cancion continua reproduciendose.
+		
+		
+	Botón repetir ninguno:
+		1. Abrir la aplicación 
+		2. Abrir una lista de reproduccion.
+		3. Reproducir una cancion.
+		4. Pulsar el boton repetir ninguno y cerciorarse de que cambia a repetir todos
+		5. Cerciorarse de que al acabar la lista de reproduccion, vuelve a la primera cancion. 
 		
 Pruebas de optimizaciÃ³n del reproductor:
 	Realizar todas las pruebas de "Pruebas Reproductor", y cerciorarse de que tarda menos. 
