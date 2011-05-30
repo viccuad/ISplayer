@@ -149,17 +149,17 @@ public class VistaListaReproduccion extends JPanel implements
 				
 				switch (tipoBusqueda.getSelectedIndex()) {
 					case titulo  : controlador.buscaListaReproduccionAvanzada(
-											new BuscarTitulo(textoBusqueda.getText()));										   
-											break;
+									new BuscarTitulo(textoBusqueda.getText()));										   
+									break;
 					case genero  : controlador.buscaListaReproduccionAvanzada(
-											new BuscarGenero(textoBusqueda.getText()));
-											break;
+									new BuscarGenero(textoBusqueda.getText()));
+									break;
 					case artista : controlador.buscaListaReproduccionAvanzada(
-											new BuscarArtista(textoBusqueda.getText()));
-											break;
+									new BuscarArtista(textoBusqueda.getText()));
+									break;
 					case album   : controlador.buscaListaReproduccionAvanzada(
-										    new BuscarAlbum(textoBusqueda.getText()));
-											break;
+									new BuscarAlbum(textoBusqueda.getText()));
+									break;
 				}
 			}
 
@@ -299,8 +299,8 @@ public class VistaListaReproduccion extends JPanel implements
 
 					int[] rows = tabla.getSelectedRows();
 					
-					//Hay que notificar de la cancion mayor a la menor para poder
-					//borrar en bloques.
+					//Hay que notificar de la cancion mayor a la menor para 
+					//poder borrar en bloques.
 					ArrayList<Integer> rowsOrdenadas = new ArrayList<Integer>();
 					for (int row: rows){
 						rowsOrdenadas.add(row);
@@ -426,12 +426,20 @@ public class VistaListaReproduccion extends JPanel implements
 	// *************                METODOS PUBLICOS            ************* //
 	// ********************************************************************** //
 	
+	
 	@Override
+	/**
+	 * quita la cancion e de la tabla
+	 */
 	public void borrarCancion(BorrarCancionEvent e) {
 		modelo.removeRow(e.getPosicion());
 	}
 
 	@Override
+	
+	/**
+	 * añade una cancion a la tabla
+	 */
 	public void nuevaCancion(NuevaCancionEvent e) {
 		int pos = e.getPosicion();
 		
@@ -457,19 +465,27 @@ public class VistaListaReproduccion extends JPanel implements
 	}
 
 	@Override
+	
+	/**
+	 *  informa en la tabla de que cancion está reproduciendose
+	 */
 	public void setActual(int actualNuevo, int actualViejo) {
 		if(modelo.getRowCount() >= (actualViejo) && actualViejo > 0 ) {
 			modelo.setValueAt("", actualViejo-1, NUM_COLUMNA_REPRODUCIENDO);
 		}
 		
 		if(modelo.getRowCount() >= (actualNuevo) && actualNuevo >0) {
-			modelo.setValueAt("   -> ", actualNuevo-1, NUM_COLUMNA_REPRODUCIENDO);
+			modelo.setValueAt("   -> ", actualNuevo-1, 
+					NUM_COLUMNA_REPRODUCIENDO);
 
 		}
 	}
 
 	
 	@Override
+	/**
+	 * informa del tipo de reproduccion
+	 */
 	public void cambioTipoReproduccion(ModoReproduccionEnum modo) {
 		this.modoReproduccion.setText("Modo de reproducción " + modo);
 	}
@@ -501,7 +517,11 @@ public class VistaListaReproduccion extends JPanel implements
 
 
 	@Override
-	public void nuevaListaReproduccion(ArrayList<CancionContainer> listaCanciones) {
+	/**
+	 *  añade una lista de reproduccion a la tabla
+	 */
+	public void nuevaListaReproduccion
+	(ArrayList<CancionContainer> listaCanciones) {
 		
 		int pos = 0;
 		
@@ -522,7 +542,10 @@ public class VistaListaReproduccion extends JPanel implements
 		}
 	}
 
-
+	/**
+	 *  muestra todas las canciones de la lista de reproduccion en la tabla,
+	 *  la limpiamos antes para no mostrar las anteriores
+	 */
 	public void mostrarTodas() {
 		
 		ArrayList<CancionContainer> cancionesLr = controlador.

@@ -284,7 +284,9 @@ public class VistaLateral extends JPanel{
 				f.getAbsolutePath());
 	}
 	
-
+	/**
+	 *  recupera la path de las listas de reproduccion por defecto
+	 */
 	private void defecto() {
 		Preferencias.getInstance().setPathListaReproduccionDefecto(
 			Preferencias.getInstance().getPathUltimaLista());

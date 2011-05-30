@@ -442,7 +442,8 @@ ListaReproduccionListener{
 			panelProg.add(progreso, BorderLayout.CENTER);
 
 
-			this.progreso.removeMouseListener(this.progreso.getMouseListeners()[0]);
+			this.progreso.
+			removeMouseListener(this.progreso.getMouseListeners()[0]);
 
 			this.progreso.addMouseMotionListener(new MouseMotionAdapter(){
 				@Override
@@ -708,7 +709,8 @@ ListaReproduccionListener{
 			this.progreso.setValue((int)(((float)event.getPosition()
 					/bytesMusica)*1000));
 		}else if (event.getCode() == BasicPlayerEvent.GAIN) {
-			this.volumen.setValue( (int) ((Math.pow(event.getValue(),(1.0/3)))*100));
+			this.volumen.
+			setValue( (int) ((Math.pow(event.getValue(),(1.0/3)))*100));
 
 
 		}else if(event.getCode() == BasicPlayerEvent.MUTE) {

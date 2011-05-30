@@ -38,6 +38,7 @@ public class RecorreFicheros {
 	
 		
 		/**
+		 * Constructora.  No tiene estrategia definida. 
 		 * 
 		 * @param ruta La ruta raiz
 		 */
@@ -53,7 +54,8 @@ public class RecorreFicheros {
 		}
 
 
-		public void setRestriccionesDirectorios(String[] restriccionesDirectorios) {
+		public void setRestriccionesDirectorios
+		(String[] restriccionesDirectorios) {
 			this.noAbrirDirectorios = restriccionesDirectorios;
 		}
 
@@ -69,7 +71,8 @@ public class RecorreFicheros {
 				
 				recorre("");
 			}else {
-				System.out.println("No has  asignado ningyuna estrategia todavia");
+				System.out.println("No has  asignado " +
+						"ninguna estrategia todavia");
 			}
 			
 		}
@@ -78,6 +81,13 @@ public class RecorreFicheros {
 			this.estrategiaFichero = estrategia;
 		}
 		
+		
+		/**
+		 *  recorre la subcarpeta y todos sus directorios hijos u archivos 
+		 *  recursivamente para llegar a todos los hijos (archivos).
+		 * 
+		 * @param subcarpeta
+		 */
 		private void recorre(String subcarpeta){
 			String dir = directorioBase + subcarpeta;
 			
@@ -87,7 +97,8 @@ public class RecorreFicheros {
 			if(fichero.isDirectory()  ){
 		    	//Vemos si cumple las restricciones.
 				
-				if(cumpleRestriccionesDirectorios(fichero) || fichero.getAbsolutePath().equals(directorioBase)) {
+				if(cumpleRestriccionesDirectorios(fichero) || 
+						fichero.getAbsolutePath().equals(directorioBase)) {
 					String[] s = fichero.list();
 					for( String nombre : s) {
 						recorre(subcarpeta+"//"+nombre);
@@ -104,12 +115,19 @@ public class RecorreFicheros {
 		
 		
 		
-		
+		/**
+		 * 
+		 * @param fichero
+		 * 
+		 * @return true si el fichero cumple las restricciones de no abrir 
+		 * directorios y las propias de los ficheros, false e.o.c
+		 */
 		private boolean cumpleRestriccionesDirectorios(File fichero) {
 			boolean cumpleRestricciones = true;
 			if(this.noAbrirDirectorios != null) {
 				for( String restriccion : this.noAbrirDirectorios) {
-					cumpleRestricciones &= !fichero.getAbsolutePath().contains(restriccion);
+					cumpleRestricciones &= 
+						!fichero.getAbsolutePath().contains(restriccion);
 					if(!cumpleRestricciones) {
 						return false;
 					}
@@ -121,17 +139,26 @@ public class RecorreFicheros {
 			}else {
 				cumpleRestricciones = false;
 				for( String restriccion : this.tratarSoloDirectorios) {
-					cumpleRestricciones |= fichero.getAbsolutePath().contains(restriccion);
+					cumpleRestricciones |=
+						fichero.getAbsolutePath().contains(restriccion);
 				}
 			}
 			return cumpleRestricciones;
 		}
 		
+		/**
+		 * 
+		 * @param fichero
+		 * 
+		 * @return si el fichero cumple las restricciones de no abrir 
+		 * ficheros y las propias de los ficheros, false e.o.c
+		 */
 		private boolean cumpleRestriccionesFicheros(File fichero) {
 			boolean cumpleRestricciones = true;
 			if(this.noAbrirFicheros != null) {
 				for( String restriccion : this.noAbrirFicheros) {
-					cumpleRestricciones &= !fichero.getName().contains(restriccion);
+					cumpleRestricciones &= 
+						!fichero.getName().contains(restriccion);
 					if(!cumpleRestricciones) {
 						return false;
 					}
@@ -144,11 +171,14 @@ public class RecorreFicheros {
 			}else {
 				cumpleRestricciones = false;
 				for( String restriccion : this.tratarSoloFicheros) {
-					cumpleRestricciones |= fichero.getName().contains(restriccion);
+					cumpleRestricciones |= 
+						fichero.getName().contains(restriccion);
 				}
 			}
 			return cumpleRestricciones;
 		}
+		
+		
 		
 		public void setNoAbrirFicheros(String[] noAbrirFicheros) {
 			this.noAbrirFicheros = noAbrirFicheros;

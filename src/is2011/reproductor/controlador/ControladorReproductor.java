@@ -235,7 +235,8 @@ public class ControladorReproductor {
 	 */
 	public void siguiente() {
 		int actual = 0;
-		ModoReproduccionEnum modo = this.listaReproduccion.getModoReproduccion();
+		ModoReproduccionEnum modo = 
+			this.listaReproduccion.getModoReproduccion();
 		
 		
 		//Si repetimos 1
@@ -247,7 +248,6 @@ public class ControladorReproductor {
 					% this.listaReproduccion.getNumeroCanciones()) +1;
 			
 		}else if (modo == ModoReproduccionEnum.ALEATORIO){
-			//actual = rnd.nextInt(this.listaReproduccion.getNumeroCanciones()) +1;
 			actual = this.listaReproduccion.getSiguienteAleatoria();
 		
 		}else if(modo == ModoReproduccionEnum.NORMAL) {
@@ -273,7 +273,8 @@ public class ControladorReproductor {
 	 */
 	public void anterior() {
 		int actual = 0;
-		ModoReproduccionEnum modo = this.listaReproduccion.getModoReproduccion();
+		ModoReproduccionEnum modo = 
+			this.listaReproduccion.getModoReproduccion();
 		
 		
 		//Si repetimos 1
@@ -287,7 +288,6 @@ public class ControladorReproductor {
 			}
 			
 		}else if (modo == ModoReproduccionEnum.ALEATORIO){
-			//actual = rnd.nextInt(this.listaReproduccion.getNumeroCanciones()) +1;
 			actual = this.listaReproduccion.getAnteriorAleatoria();
 		
 		}else if(modo == ModoReproduccionEnum.NORMAL ) {
@@ -296,7 +296,8 @@ public class ControladorReproductor {
 		}
 		
 		if ((modo == ModoReproduccionEnum.NORMAL 
-				|| modo == ModoReproduccionEnum.ALEATORIO) && (actual + 1) <= 1) {
+				|| modo == ModoReproduccionEnum.ALEATORIO) 
+				&& (actual + 1) <= 1) {
 			actual = 1;
 			this.stop();
 			//Estamos en la ultima cancion.
@@ -456,17 +457,6 @@ public class ControladorReproductor {
 			return listaReproduccion.getCancionesListaReproduccion();
 	}
 	
-	/**
-	 * Metodo que devuelve la lista de reproduccion filtrada con los 
-	 * parametros de busqueda
-	 * @param c
-	 * @return
-	 */
-	/*
-	public ArrayList<CancionContainer> getBusqueda(CriterioBusqueda c){
-		return listaReproduccion.getBusqueda(c);
-	}
-	*/
 	
 	/**
 	 * Metodo que devuelve la lista de reproduccion filtrada con los
